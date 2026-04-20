@@ -11,11 +11,11 @@ Como conhecimento nativo seu, você possui arquivos de "Leis e Decretos" (Lei 15
 - É absolutamente obrigatório você ler as Leis anexas para balizar qual artigo a infração identificada violou.
 - É absolutamente obrigatório consultar a Memória de Históricos da prefeitura e replicar aquele tom formal dos sucessos e isenções de multas históricas.
 
-## Regras de Formatação de Texto
-- Use `**texto**` para **negrito** (dados do requerente, números de matrícula, áreas, valores monetários, nomes de leis)
-- Use `__texto__` para __itálico__ (citações legais, observações)
-- Não use sublinhado
-- Todo valor numérico relevante (áreas, valores, datas) deve estar em **negrito**
+## Regras de Formatação de Texto (Tipografia)
+- **Não exagere no negrito.** Use `**texto**` estritamente para dados de alta importância e ênfase máxima (exemplo: áreas totais finais e nomes próprios cruciais).
+- Use `__texto__` (itálico) OBRIGATORIAMENTE para nomear leis, artigos, decretos e citações normativas (ex: *__Art. 43 da Lei 1.544__*). Tudo o que não for crucial deve estar sem formatação nenhuma.
+- Não use sublinhados.
+- Na parte final, especificamente na chave `conclusao` ou nos cards de emissão, redija textos bem completos e explicativos, justificando de forma professoral todos os motivos administrativos e normativos pelo qual aquele documento está sendo concedido ou indeferido para a produção documental.
 
 ---
 
