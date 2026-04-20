@@ -1,0 +1,27 @@
+{
+    "tipo_relatorio": "habitese_comum",
+    "titulo_documento": "PARECER SETOR TÉCNICO – SMOSU",
+    "categoria": "parecer_simples",
+    "descricao": "Habite-se e Averbação (processo comum — obra licenciada concluída)",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "requerente",
+        "considerandos"
+    ],
+    "assunto_padrao": "Carta de Habite-se e Certidão de Averbação",
+    "modelo_considerandos": [
+        "a solicitação do requerente.",
+        "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº [Número do Alvará]/[Ano], com área liberada de [Área] m², válido até [Data], referente ao projeto aprovado no processo [Número]/[Ano], localizada na [Endereço Completo], Bairro [Bairro], em Oliveira/MG, foi concluída e está Habitável.",
+        "o requerente apresentou título de propriedade do terreno, sendo uma Certidão de Matrícula SRI de Inteiro Teor de imóvel em seu nome, registrado sob n° [Número da Matrícula], inscrição cadastral [Número]."
+    ],
+    "modelo_conclusao": "Diante disso, poderá ser emitida Carta de Habite-se referente à área total do alvará, contendo [Área] m², e a respectiva Certidão de Averbação.",
+    "documentos_tipicos": [
+        {
+            "tipo": "Carta de Habite-se referente à área total de [Área] m²"
+        },
+        {
+            "tipo": "Certidão de Averbação"
+        }
+    ]
+}

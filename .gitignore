@@ -4,6 +4,7 @@
 !*_engine/prompt_modelo.md
 
 # Ignorar pastas de ambiente virtual Python se houver no futuro
+__pycache__/
 venv/
 .env
 

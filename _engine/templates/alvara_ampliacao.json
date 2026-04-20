@@ -1,0 +1,29 @@
+{
+    "tipo_relatorio": "alvara_ampliacao",
+    "titulo_documento": "PARECER SETOR TÉCNICO - SMOSU",
+    "categoria": "parecer_tecnico",
+    "descricao": "Ampliação de edificação existente (sem demolição)",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "assunto",
+        "requerente",
+        "logradouro",
+        "bairro",
+        "area_terreno",
+        "area_total_construida",
+        "taxa_ocupacao",
+        "taxa_permeabilidade",
+        "coef_aproveitamento",
+        "profissional_nome",
+        "considerandos",
+        "documentos_emitir"
+    ],
+    "modelo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face deste Processo Administrativo, onde o requerente solicita a ampliação de edificação residencial unifamiliar com área total de [Área Total] m² (sendo [Área Existente] m² já existente e [Área da Ampliação] m² que será construída), em terreno localizado no Zoneamento [ZUR...], em Categoria de uso [UR...], com área total de [Área Terreno] m², taxa de ocupação de [X]%, taxa de permeabilidade de [Y]% e coeficiente de aproveitamento de [Z], localizado na [Endereço Completo].",
+    "modelo_conclusao": "Diante disto, verificado e aprovado o projecto, poderá ser emitido:",
+    "documentos_tipicos": [
+        {
+            "tipo": "Alvará de Ampliação de edificação residencial unifamiliar de [Área da Ampliação] m², válido por 01 ano."
+        }
+    ]
+}

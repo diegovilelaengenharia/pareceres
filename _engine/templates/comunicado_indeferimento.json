@@ -1,0 +1,19 @@
+{
+    "tipo_relatorio": "comunicado_indeferimento",
+    "titulo_documento": "COMUNICADO",
+    "categoria": "comunicado",
+    "descricao": "Comunicado de indeferimento (Ação Civil Pública — alvará caduco)",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "requerente",
+        "considerandos"
+    ],
+    "assunto_padrao": "Indeferimento de Renovação de Alvará",
+    "modelo_considerandos": [
+        "em atenção ao Processo supracitado, no qual foi solicitada a renovação do Alvará de Construção nº [Número]/[Ano] com área liberada de [Área] m², informamos que, conforme parecer fiscal datado de [Data], a obra não foi iniciada, estando o alvará vencido desde [Data de Vencimento].",
+        "devido à decisão judicial proferida na Ação Civil Pública (Processo nº 5002141-25.2021.8.13.0456), que proíbe a renovação de alvarás caducos cuja obra não tenha sido iniciada (determinando como critério de aferição de início de obra a conclusão das fundações), fica indeferida a renovação.",
+        "no caso de alvarás caducos de obras não iniciadas, deverá ser realizado um novo procedimento administrativo, com todas as etapas necessárias para a concessão de um novo alvará, observando a legislação vigente."
+    ],
+    "modelo_conclusao": "Portanto, o Alvará de Construção nº [Número] encontra-se cancelado."
+}

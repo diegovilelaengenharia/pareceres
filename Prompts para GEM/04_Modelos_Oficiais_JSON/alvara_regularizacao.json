@@ -1,0 +1,62 @@
+{
+    "tipo_relatorio": "alvara_regularizacao",
+    "titulo_documento": "PARECER SETOR TÉCNICO - SMOSU",
+    "categoria": "parecer_tecnico",
+    "descricao": "Regularização de imóvel (As Built) — alvará de regularização, habite-se, certidão de averbação e decadência",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "assunto",
+        "requerente",
+        "logradouro",
+        "bairro",
+        "area_terreno",
+        "area_total_construida",
+        "taxa_ocupacao",
+        "taxa_permeabilidade",
+        "coef_aproveitamento",
+        "profissional_nome",
+        "considerandos",
+        "fundamentacao_legal",
+        "documentos_emitir"
+    ],
+    "campos_opcionais": [
+        "inscricao_municipal",
+        "proprietario",
+        "desenhista",
+        "lote",
+        "quadra",
+        "zoneamento",
+        "paragrafos_adicionais"
+    ],
+    "modelo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, no uso de suas atribuições legais, **emite o presente parecer técnico** conforme segue:",
+    "modelo_considerandos": [
+        "a requerente é proprietária do imóvel registrado sob **Matrícula nº [Número]** do SRI, com área de terreno de **[Área]m²**, situado na [Endereço], Oliveira/MG;",
+        "o parecer fiscal emitido pelos Agentes [Nomes e Matrículas] atesta que a área construída total de **[Área]m²** confere com o Projeto As Built apresentado;",
+        "para o projeto foi emitida a ART/RRT/TRT **nº [Número]** pelo [Profissão] **[Nome]**, CREA/CAU/CFT [Número];"
+    ],
+    "modelo_conclusao": "Diante do exposto, aprovado e verificado o projeto as built, constar:",
+    "documentos_tipicos": [
+        {
+            "tipo": "Alvará de Regularização de Imóvel de [Área] m²",
+            "obs": "Alvará emitido para regularização de imóvel edificado sem projeto aprovado na prefeitura mediante o cumprimento do Art. 79 da Lei 1544/1986 e Arts. 38/39 da Lei 267/2019"
+        },
+        {
+            "tipo": "Carta de Habite-se referente à área total de [Área] m²"
+        },
+        {
+            "tipo": "Certidão de Averbação referente à área total de [Área] m²"
+        },
+        {
+            "tipo": "Certidão de Decadência — [Área] m²",
+            "obs": "Se aplicável, conforme Art. 150, §4º do CTN"
+        }
+    ],
+    "legislacao_aplicavel": [
+        "Art. 150, §4º do CTN (Decadência)",
+        "Art. 79 da Lei nº 1.544/86 (Construir sem licença)",
+        "Arts. 38 e 39 da Lei nº 267/2019 (Parâmetros urbanísticos)",
+        "Art. 43 da Lei nº 1.544/86 (Abertura na divisa)",
+        "Art. 15 da Lei nº 267/2019 (Exceção terreno < 220m²)"
+    ]
+}

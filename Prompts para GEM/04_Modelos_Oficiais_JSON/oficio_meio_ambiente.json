@@ -1,0 +1,23 @@
+{
+    "tipo_relatorio": "oficio_meio_ambiente",
+    "titulo_documento": "OFÍCIO À SECRETARIA DE MEIO AMBIENTE",
+    "categoria": "oficio",
+    "descricao": "Ofício de encaminhamento ao Meio Ambiente (CODEMA) para avaliação ambiental",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "requerente",
+        "destinatario_para",
+        "destinatario_de",
+        "assunto",
+        "considerandos"
+    ],
+    "modelo_destinatario": {
+        "destinatario_titulo": "OFÍCIO À SECRETARIA DE MEIO AMBIENTE",
+        "destinatario_para": "Secretário(a) de Meio Ambiente / CODEMA",
+        "destinatario_de": "Setor Técnico - SMOSU"
+    },
+    "modelo_abertura": "Solicitamos a avaliação da Vossa secretaria para dar andamento ao pedido de alvará de construção de [Nome do Requerente] (Processo nº [Número]/[Ano]). O projeto prevê uma obra próxima a um [córrego / área de preservação]. Precisamos garantir que a nova construção não invada ou prejudique esta área.",
+    "modelo_considerandos": [
+        "Para facilitar a análise, enviamos em anexo a cópia do projeto, a planta de situação e a matrícula do imóvel. Agradecemos a atenção e aguardamos o retorno para darmos sequência ao processo."
+    ]
+}

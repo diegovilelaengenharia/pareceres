@@ -1,0 +1,22 @@
+# Histórico e Memória de Contexto do GEM (SMOSU Oliveira/MG)
+
+Este arquivo documenta as melhores práticas, jargões específicos e resumos dos **melhores pareceres gerados pela Inteligência Artificial**, garantindo que o GEM aprenda com o passado para criar respostas com precisão cirúrgica sem repetir erros.
+
+## DIRETRIZ ESTRITA (SHOT-LEARNING)
+> **Instrução para o GEM:** Ao se deparar com um PDF cujos dados se assemelham fortemente a qualquer um dos relatórios históricos listados abaixo (como regularização de uma planta similar), **REPLIQUE** o tom da escrita, as citações de Leis pertinentes, e as advertências (se presentes) em seu novo JSON, ajustando, naturalmente, os endereços, valores e profissionais.
+
+---
+
+### [ HISTÓRICO DE SUCESSOS A COMPREENDER ]
+
+**1. Regularização de Construção Irregular (As Built com Quebra de Permeabilidade e Exceção Aplicada)**
+- **Situação:** Terreno abaixo de 220m² que não possuía nenhum recuo ou taxa de permeabilidade respeitados. (Ex.: PROCESSO 6100, Habite-se para área de 154,08m²)
+- **Aplicação:** O modelo corretamente isentou o infrator de multas urbanísticas em face da premissa das exceções na conclusão, baseando-se no Código de Obras (Lei 1.544) e na LC Uso do Solo (Lei 267). 
+- **O que aprendeu:** Se terreno livre < 220m², a inteligência ignora multas em "coeficientes", citando explicitamente: "Art. 15 da Lei nº 267/2019 — exceção dos parâmetros de ocupação e permeabilidade".
+
+**2. Exigência Externa Ambiental a Condicionante (Protocolo Meio Ambiente)**
+- **Situação:** Obra próxima à curso de ribeirão ou zona azul de proteção ambiental, necessitando Ofício à CODEMA.
+- **Aplicação:** O parecer emitido informou suspensão temporária da verificação de Habite-se até a baixa protocolar do ofício ambiental em "documentos_emitir": "Ofício à Secretaria de Meio Ambiente para análise e chancela do CODEMA (Condicionante ao Alvará)".
+- **O que aprendeu:** Quando o fiscal deixar nas anotações sobre rio, reserva ou APPs urbanas na planta, OBRIGA-SE a emissão de `"oficio_meio_ambiente"` conjuntamente, adicionando como dependência paralela.
+
+*(Atualize este documento a cada parecer formidável para ancorar o comportamento de elite do GEM).*

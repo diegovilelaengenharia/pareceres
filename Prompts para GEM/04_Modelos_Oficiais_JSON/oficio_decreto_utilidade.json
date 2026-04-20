@@ -1,0 +1,20 @@
+{
+    "tipo_relatorio": "oficio_decreto_utilidade",
+    "titulo_documento": "OFÍCIO À PROCURADORIA DO MUNICÍPIO",
+    "categoria": "oficio",
+    "descricao": "Solicitação de Decreto de Utilidade Pública (Sistema Viário)",
+    "campos_obrigatorios": [
+        "destinatario_para",
+        "assunto",
+        "considerandos"
+    ],
+    "modelo_destinatario": {
+        "destinatario_titulo": "À PROCURADORIA DO MUNICÍPIO",
+        "destinatario_para": "Procuradoria do Município",
+        "destinatario_de": "Setor Técnico - SMOSU"
+    },
+    "modelo_abertura": "Cumprimentando-os cordialmente, venho solicitar a análise técnica e a adoção das providências necessárias para a elaboração de um decreto que reconheça como de domínio e utilidade pública a área localizada em [Bairro/Endereço].",
+    "modelo_considerandos": [
+        "A solicitação fundamenta-se na necessidade de implementação de melhorias urbanas na referida localidade e na adequada articulação do sistema viário municipal existente, conforme a Lei Municipal nº 216/2014."
+    ]
+}

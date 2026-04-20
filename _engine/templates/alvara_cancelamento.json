@@ -1,0 +1,18 @@
+{
+    "tipo_relatorio": "alvara_cancelamento",
+    "titulo_documento": "PARECER SETOR TÉCNICO - SMOSU",
+    "categoria": "parecer_simples",
+    "descricao": "Cancelamento de alvará de construção (obra não iniciada)",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "requerente",
+        "considerandos"
+    ],
+    "assunto_padrao": "Cancelamento de Alvará de Construção",
+    "modelo_considerandos": [
+        "a solicitação de cancelamento referente ao Alvará de Construção nº [Número]/[Ano], com área de [Área] m².",
+        "o requerente não iniciou as obras, conforme atestado no parecer fiscal."
+    ],
+    "modelo_conclusao": "Diante disto, poderá ser efetuado o cancelamento do Alvará de Construção no sistema SISOBRAS, bem como emitir separadamente uma Certidão de Cancelamento do Alvará e um comunicado de cancelamento de CEI junto à RFB, justificado pela não execução da obra."
+}

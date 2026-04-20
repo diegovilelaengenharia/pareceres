@@ -1,0 +1,23 @@
+{
+    "tipo_relatorio": "certidao_numero_2via",
+    "titulo_documento": "PARECER SETOR TÉCNICO - SMOSU",
+    "categoria": "parecer_simples",
+    "descricao": "2ª via de Certidão de Número (para SAAE/CEMIG)",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "requerente",
+        "considerandos"
+    ],
+    "campos_opcionais": [
+        "documentos_emitir"
+    ],
+    "assunto_padrao": "2ª via Certidão de Número",
+    "modelo_considerandos": [
+        "a solicitação do requerente.",
+        "o parecer fiscal no qual se entende que a construção na [Endereço Completo], Bairro [Bairro] está [iniciada/em andamento].",
+        "a requerente apresentou matrícula do SRI em seu próprio nome sob matrícula nº [Número] e inscrição cadastral [Número].",
+        "o alvará de construção de nº [Número], com vencimento na data de [Data]."
+    ],
+    "modelo_conclusao": "Diante disto, poderá ser concedida a 2ª via de certidão de número para SAAE e CEMIG em nome do requerente."
+}

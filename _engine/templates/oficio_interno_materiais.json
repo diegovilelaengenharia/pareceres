@@ -1,0 +1,18 @@
+{
+    "tipo_relatorio": "oficio_interno_materiais",
+    "titulo_documento": "OFÍCIO AO GABINETE",
+    "categoria": "oficio",
+    "descricao": "Ofício interno para requisição de materiais de expediente",
+    "campos_obrigatorios": [
+        "destinatario_para",
+        "assunto",
+        "considerandos"
+    ],
+    "modelo_destinatario": {
+        "destinatario_titulo": "OFÍCIO AO GABINETE",
+        "destinatario_para": "[Nome do Chefe de Gabinete/Secretário]",
+        "destinatario_de": "Setor Técnico - SMOSU"
+    },
+    "modelo_abertura": "Cumprimentando-o cordialmente, venho por meio deste solicitar a aquisição dos materiais de expediente relacionados abaixo. A aquisição destes itens faz-se necessária para a reposição de estoque e manutenção das atividades administrativas diárias desta Secretaria.",
+    "notas": "Incluir no JSON a lista de itens nos considerandos."
+}
