@@ -85,6 +85,48 @@ def build_habitese_oficial(doc, dados):
     _build_assinatura_balcao(doc)
 
 
+def build_certidao_oficial(doc, dados):
+    """
+    Roda a diagramação baseada no 'certidao_oficial.json'.
+    Foca no texto corrido justificado e assinaturas lado a lado.
+    """
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    set_spacing(p, before=100, after=400)
+    add_run(p, dados.get("titulo_documento", "CERTIDÃO"), size=16, bold=True).font.color.rgb = COR_LABEL_FONT
+    
+    p_text = doc.add_paragraph()
+    p_text.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    set_spacing(p_text, before=200, after=400, line=360)
+    add_run(p_text, "        " + dados.get("texto_certidao", ""), size=12).font.color.rgb = RGBColor(0,0,0)
+    
+    from datetime import datetime
+    meses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
+    d = datetime.now()
+    hoje = f"Oliveira, {d.day} de {meses[d.month - 1]} de {d.year}."
+    
+    p_dt = doc.add_paragraph()
+    p_dt.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    set_spacing(p_dt, before=200, after=600)
+    add_run(p_dt, hoje, size=11).font.color.rgb = RGBColor(0,0,0)
+    
+    assinantes = dados.get("assinantes", [])
+    if assinantes:
+        p_ass = doc.add_paragraph()
+        p_ass.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        set_spacing(p_ass, before=400, after=200)
+        for ass in assinantes:
+            add_run(p_ass, str(ass.get("nome", "")) + "\n", bold=True, size=11)
+            add_run(p_ass, str(ass.get("titulo", "")) + "\n\n", size=10)
+    
+    obs = dados.get("observacoes_finais", [])
+    if isinstance(obs, list):
+        for o in obs:
+            po = doc.add_paragraph()
+            po.alignment = WD_ALIGN_PARAGRAPH.LEFT
+            add_run(po, o, size=9, bold=True).font.color.rgb = RGBColor(0,0,0)
+
+
 # Helpers Visuais de Guias Finais
 
 def _build_cabecalho_simples(doc, dados):

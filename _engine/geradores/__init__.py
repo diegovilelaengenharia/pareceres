@@ -22,7 +22,7 @@ from componentes import (
     build_dados_carimbo, build_corpo, build_fundamentacao,
     build_conclusao_e_docs, build_conclusao_simples, build_assinatura,
 )
-from alvaras_finais import build_alvara_oficial, build_habitese_oficial
+from alvaras_finais import build_alvara_oficial, build_habitese_oficial, build_certidao_oficial
 
 
 # ═══════════════════════════════════════════════════════════
@@ -151,6 +151,8 @@ def gerar_documento_pronto(doc, dados, template):
     tipo = dados.get("tipo_relatorio", "")
     if "habitese" in tipo:
         build_habitese_oficial(doc, dados)
+    elif "certidao" in tipo:
+        build_certidao_oficial(doc, dados)
     else:
         build_alvara_oficial(doc, dados)
 

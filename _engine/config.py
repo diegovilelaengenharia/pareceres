@@ -107,4 +107,5 @@ TIPOS_DOCUMENTO = {
     # ── Documentos de Emissão da Secretaria (Prontos / Balcão) ──
     "alvara_oficial":                     "documento_pronto",
     "carta_habitese_oficial":             "documento_pronto",
+    "certidao_oficial":                   "documento_pronto",
 }
