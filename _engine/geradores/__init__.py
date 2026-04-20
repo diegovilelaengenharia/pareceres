@@ -165,6 +165,26 @@ def gerar(dados, caminho_saida=None):
         Caminho do arquivo gerado.
     """
     tipo = dados.get("tipo_relatorio", "regularizacao")
+    
+    # ---------------------------------------------------------
+    # RESILIÊNCIA: Se o LLM agrupar os campos em sub-dicionários
+    # como 'campos_obrigatorios' ou 'campos_opcionais', nós os achata.
+    # ---------------------------------------------------------
+    if "campos_obrigatorios" in dados and isinstance(dados["campos_obrigatorios"], dict):
+        dados.update(dados.pop("campos_obrigatorios"))
+    if "campos_opcionais" in dados and isinstance(dados["campos_opcionais"], dict):
+        dados.update(dados.pop("campos_opcionais"))
+    
+    # Tratamento caso ele faça lista de strings em documentos_emitir no invés de `{tipo:..}`
+    if "documentos_emitir" in dados and isinstance(dados["documentos_emitir"], list):
+        lista_corrigida = []
+        for d in dados["documentos_emitir"]:
+            if isinstance(d, str):
+                lista_corrigida.append({"tipo": d})
+            else:
+                lista_corrigida.append(d)
+        dados["documentos_emitir"] = lista_corrigida
+
     categoria = TIPOS_DOCUMENTO.get(tipo)
 
     if not categoria:
