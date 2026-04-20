@@ -67,14 +67,14 @@ def main():
     # Verificar marcadores de segurança
     json_str = json.dumps(dados)
     if "⚠️ VERIFICAR" in json_str:
-        print("\n" + "═"*70)
-        print("  ⚠️ AVISO: O JSON contém marcações de incerteza do GEM.")
-        print("═"*70)
+        print("\n" + "="*70)
+        print("  [AVISO]: O JSON contém marcações de incerteza do GEM.")
+        print("="*70)
         print("    Para forçar o GEM a re-avaliar as folhas e corrigir as suas")
         print("    próprias dúvidas, copie e envie a ele a mensagem abaixo:\n")
         print("    'Gem, você marcou dados como '⚠️ VERIFICAR'. Releia os anexos")
         print("    com mais atenção e tente cruzar os dados pra ter a certeza.'")
-        print("═"*70 + "\n")
+        print("="*70 + "\n")
 
     # Gerar documento
     caminho_saida = args[1] if len(args) > 1 else None

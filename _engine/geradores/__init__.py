@@ -22,6 +22,7 @@ from componentes import (
     build_dados_carimbo, build_corpo, build_fundamentacao,
     build_conclusao_e_docs, build_conclusao_simples, build_assinatura,
 )
+from alvaras_finais import build_alvara_oficial, build_habitese_oficial
 
 
 # ═══════════════════════════════════════════════════════════
@@ -141,6 +142,19 @@ def gerar_comunicado(doc, dados, template):
     build_assinatura(doc, dados)
 
 
+def gerar_documento_pronto(doc, dados, template):
+    """
+    DOCUMENTOS DE SECRETARIA (ALVARÁ FINAL / HABITE-SE)
+    Design totalmente único, usando o novo motor em alvaras_finais.py
+    Não usa o Header e identificacao padrão.
+    """
+    tipo = dados.get("tipo_relatorio", "")
+    if "habitese" in tipo:
+        build_habitese_oficial(doc, dados)
+    else:
+        build_alvara_oficial(doc, dados)
+
+
 # ═══════════════════════════════════════════════════════════
 #  MAPEAMENTO E DESPACHO
 # ═══════════════════════════════════════════════════════════
@@ -150,6 +164,7 @@ GERADORES = {
     "parecer_simples": gerar_parecer_simples,
     "oficio":          gerar_oficio,
     "comunicado":      gerar_comunicado,
+    "documento_pronto":gerar_documento_pronto,
 }
 
 
@@ -202,9 +217,9 @@ def gerar(dados, caminho_saida=None):
     campos_faltantes = [c for c in obrigatorios if not dados.get(c)]
     
     if campos_faltantes:
-        print("\n" + "═"*70)
-        print("  ❌ ERRO DE VALIDAÇÃO: DADOS INCOMPLETOS NO JSON")
-        print("═"*70)
+        print("\n" + "="*70)
+        print("  [ERRO] DE VALIDAÇÃO: DADOS INCOMPLETOS NO JSON")
+        print("="*70)
         print("  Parece que o Assistente GEM omitiu informações vitais!")
         print(f"  Tipo do Documento: {tipo}")
         print(f"  Campos Faltantes : {', '.join(campos_faltantes)}")
@@ -215,7 +230,7 @@ def gerar(dados, caminho_saida=None):
         print(f"  >>> {', '.join(campos_faltantes)}")
         print(f"  Por favor, revise o PDF do processo, extraia esses dados faltantes")
         print(f"  e gere o bloco de JSON corrigido para eu tentar compilar de novo.")
-        print("═"*70 + "\n")
+        print("="*70 + "\n")
         raise ValueError(f"Faltam {len(campos_faltantes)} campos obrigatórios.")
 
 

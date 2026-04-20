@@ -1,0 +1,31 @@
+{
+    "tipo_relatorio": "alvara_oficial",
+    "numero_documento": "064/2026",
+    "titulo_documento": "ALVARÁ DE CONSTRUÇÃO Nº {numero}",
+    "campos_obrigatorios": [
+        "numero_documento",
+        "proprietario_nome",
+        "proprietario_cpf_cnpj",
+        "autor_projeto_nome",
+        "autor_projeto_crea",
+        "autor_projeto_art",
+        "responsavel_tecnico_nome",
+        "responsavel_tecnico_crea",
+        "responsavel_tecnico_art",
+        "construtora_nome",
+        "construtora_cpf_cnpj",
+        "numero_processo",
+        "data_aprovacao",
+        "nome_obra",
+        "logradouro",
+        "bairro",
+        "area_total_obra",
+        "areas_matriz",
+        "observacoes"
+    ],
+    "areas_matriz": [
+        {"categoria": "Obra Nova", "destinacao": "Casa popular", "tipo_obra": "Alvenaria", "area_m2": "68,83"},
+        {"categoria": "Área Resultante", "destinacao": "", "tipo_obra": "", "area_m2": "68,83"},
+        {"categoria": "Área Liberada", "destinacao": "", "tipo_obra": "", "area_m2": "68,83"}
+    ]
+}
