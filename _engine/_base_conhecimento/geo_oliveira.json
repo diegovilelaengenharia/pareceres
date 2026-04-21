@@ -1,0 +1,518 @@
+{
+  "_meta": {
+    "versao": "1.0",
+    "municipio": "Oliveira/MG",
+    "cep_sede": "35.540-000",
+    "fonte": "Bot_Tudão.pdf — extração das leis: Decreto 4.149/2019, Lei 1.544/86, LC 267/2019, Lei Orgânica Municipal",
+    "instrucao_gem": "Use este arquivo para VERIFICAR e CRUZAR dados de endereço, bairro, zona e tombamento em qualquer processo. Ao receber um endereço no PDF, consulte este codex para: (1) confirmar nome do bairro, (2) identificar a zona, (3) verificar se o imóvel é tombado ou inventariado, (4) sinalizar se está na ADE Cultural do Centro Histórico."
+  },
+
+  "sede_municipal": {
+    "endereco_prefeitura": "Praça XV de Novembro, 127 — Centro — Oliveira/MG — CEP 35.540-000",
+    "endereco_smosu": "Rua Coronel João Alves, 322 — Centro — CEP 35.540-000 — Oliveira/MG",
+    "rodovias": ["BR-494", "BR-369"]
+  },
+
+  "bairros": {
+    "_nota": "Bairros identificados nas leis municipais e inventário de edificações",
+    "lista": [
+      {
+        "nome": "Centro",
+        "tambem_conhecido_como": "Centro Histórico",
+        "observacao": "Sede do município. Concentra a ADE Cultural. Praças XV de Novembro, Dr. José Ribeiro da Silva, Dr. Domingos Ribeiro, Pio XII."
+      },
+      {
+        "nome": "Rosário",
+        "tambem_conhecido_como": "Bairro do Rosário",
+        "praça_referencia": "Praça Dona Francisca Clara de Jesus (Praça Rosário)"
+      },
+      {
+        "nome": "Aparecida",
+        "ruas_referencia": ["Rua Santo Antônio", "Avenida Waldemar Fernal"]
+      },
+      {
+        "nome": "São Sebastião",
+        "referencia": "Igreja Matriz de São Sebastião"
+      },
+      {
+        "nome": "Caetano Mascarenhas",
+        "referencia": "Avenida Benjamim Guimarães — Fábrica de Tecidos (Conjunto arquitetônico inventariado)"
+      },
+      {
+        "nome": "Graças",
+        "referencia": "Igreja Nossa Senhora das Graças"
+      },
+      {
+        "nome": "Bela Vista",
+        "fonte": "Mencionado na LC 160/2011"
+      },
+      {
+        "nome": "Retiro das Pedras",
+        "fonte": "Mencionado na LC 160/2011"
+      },
+      {
+        "nome": "Vila Bela",
+        "fonte": "Mencionado na LC 160/2011"
+      }
+    ]
+  },
+
+  "logradouros": {
+    "_nota": "Logradouros identificados nas leis, inventários e delimitações de zonas",
+
+    "avenidas": [
+      "Avenida Pinheiro Chagas",
+      "Avenida Maracanã",
+      "Avenida Benjamim Guimarães (também grafado Benjamin Guimarães)",
+      "Avenida Coronel Benjamim Guimarães",
+      "Avenida Waldemar Fernal (também grafado Valdemar Fernal)",
+      "Avenida Américo Leite",
+      "Avenida Miguel Resende",
+      "Avenida Sebastião Aguiar",
+      "Avenida Nossa Senhora de Fátima",
+      "Avenida César Barros Almeida"
+    ],
+
+    "ruas": [
+      "Rua Dr. Coelho de Moura",
+      "Rua Dr. Carlos Chagas (também: Rua Carlos Chagas)",
+      "Rua Cel. João Alves (também: Rua Coronel João Alves)",
+      "Rua da Misericórdia",
+      "Rua Venâncio Carrilho",
+      "Rua Alexandrino Chagas",
+      "Rua Francisco Cambraia Campos",
+      "Rua Chagas Sobrinho",
+      "Rua Cícero de Castro",
+      "Rua dos Passos",
+      "Rua Batista de Almeida",
+      "Rua Duque de Caxias",
+      "Rua Cel. Xavier",
+      "Rua Antônio Salgado Ribeiro",
+      "Rua Isac Resende",
+      "Rua Dr. Cândido de Faria Lobato",
+      "Rua Petrônio Fernal",
+      "Rua Marília",
+      "Rua Santo Antônio",
+      "Rua 1º de Janeiro",
+      "Rua Abilio Machado",
+      "Rua Azuil Laranjo",
+      "Rua Vigário José Teodoro",
+      "Rua Dr. Alexandrino Chagas",
+      "Rua Francisco Barreto",
+      "Rua Professor Jacobi",
+      "Rua Osvaldo Cruz",
+      "Rua Valdemar Fernal (também: Waldemar Fernal)",
+      "Rua Dr. Leopoldo",
+      "Rua José Eduardo Abdo",
+      "Rua Marechal Deodoro",
+      "Rua Carijós",
+      "Rua Tupis"
+    ],
+
+    "praças": [
+      "Praça XV de Novembro",
+      "Praça Dr. José Ribeiro da Silva",
+      "Praça Dr. Domingos Ribeiro (também: Praça Dr. Domingos Ribeiro de Oliveira e Silva)",
+      "Praça Pio XII",
+      "Praça Mãe dos Homens (também: Praça Mães dos Homens)",
+      "Praça Pinto Machado",
+      "Praça Dona Francisca Clara de Jesus (Praça Rosário)",
+      "Praça Manoelita Chagas (também: Dona Manoelita Chagas)",
+      "Praça José Lobato"
+    ],
+
+    "alamedas": [
+      "Alameda Nossa Senhora de Fátima",
+      "Alameda Dr. Cícero de Castro Filho",
+      "Alameda Euclides Ribeiro"
+    ],
+
+    "grafias_alternativas": {
+      "_nota": "Erros de grafia comuns encontrados nos próprios documentos",
+      "Benjamim/Benjamin Guimarães": "Ambas as grafias são usadas nas leis. Considerar a mesma avenida.",
+      "Waldemar/Valdemar Fernal": "Ambas as grafias são usadas. Mesma rua.",
+      "Rua Carlos Chagas / Rua Dr. Carlos Chagas": "Podem ser a mesma via — verificar no processo.",
+      "Praça Manoelita / Mãe dos Homens": "São praças distintas — não confundir."
+    }
+  },
+
+  "distritos_e_nucleos": {
+    "distrito_oficial": {
+      "nome": "Morro do Ferro",
+      "observacao": "Único distrito oficial do município. Possui Zona Urbana própria (Zona Urbana do Distrito de Morro do Ferro) com parâmetros próprios conforme LC 267/2019. Os prazos diferenciados da Lei 1.544/86 não se aplicam ao distrito (Art. 1990)."
+    },
+    "zonas_urbanizacao_especifica": {
+      "_nota": "Núcleos urbanos consolidados fora do perímetro urbano — Art. 13 §3º da LC 267/2019. Parâmetros urbanísticos aplicáveis conforme delimitação por ato do Executivo.",
+      "lista": [
+        "Felix dos Santos",
+        "Fradiques",
+        "Morro das Pedras",
+        "Brasilândia",
+        "Fundão",
+        "Pintos",
+        "Bom Retiro",
+        "Matinha",
+        "Barreiro",
+        "Paiol",
+        "Córrego Fundo",
+        "Quebra Cangalha",
+        "Ouro Fino",
+        "Maracanã",
+        "Diamante",
+        "Miranda",
+        "Faleiro",
+        "Morada do Sol",
+        "Sobrado"
+      ]
+    }
+  },
+
+  "loteamentos_e_residenciais": {
+    "_nota": "Loteamentos e residenciais nominados nas leis municipais",
+    "lista": [
+      "Jardim Bandeirantes",
+      "Jardim Panorâmico",
+      "Residencial César Almeida",
+      "Residencial Portal das Oliveiras",
+      "Residencial Recanto da Serra",
+      "Residencial Saraiva",
+      "Residencial Vale do Sol",
+      "Residencial Oliveira Monte Cristo",
+      "Vila Bela (também: Vila Bella)",
+      "Vila Progresso",
+      "Vila Rica"
+    ]
+  },
+
+  "areas_especiais": {
+    "centro_historico_ade_cultural": {
+      "descricao": "ADE — Área de Diretrizes Especiais de Preservação Cultural e Arquitetônica (Art. 21, III da LC 267/2019)",
+      "delimitacao_textual": "Praça XV de Novembro, Praça Dr. José Ribeiro da Silva, Praça Dr. Domingos Ribeiro de Oliveira e Silva, Praça Pio XII, Rua Dr. Coelho de Moura, Rua Dr. Carlos Chagas e Avenida Pinheiro Chagas (conforme LOM Art. 227)",
+      "alerta_gem": "ATENÇÃO: Qualquer processo com imóvel neste perímetro requer verificação de tombamento ou inventário. A análise de projeto deve indicar a situação de proteção (Art. 1º §único do Decreto 4.149/2019). Projetos no entorno do Centro Histórico aprovados após 30/10/2013 requerem encaminhamento ao IEPHA.",
+      "parametros_especiais_tombados": {
+        "base_legal": "Art. 21 §12 da LC 267/2019",
+        "ca_area_aproveitavel": 2.1,
+        "to_area_aproveitavel_pct": 70,
+        "observacao": "Para imóvel tombado: proprietário pode aproveitar área que ultrapassar a edificação tombada + 30%, com CA 2,1 e TO 70% da área aproveitável, desde que visibilidade e acesso sejam garantidos."
+      }
+    },
+
+    "areas_preservacao_ambiental": {
+      "monumentos_naturais_tombados_lom": {
+        "base_legal": "Lei Orgânica Municipal, Art. 225",
+        "lista": [
+          "Usina do Jacaré",
+          "Parque Ecológico",
+          "Nascentes e afluentes do Córrego Maracanã",
+          "Lagoa do Catiguá",
+          "Cachoeira do Fradique",
+          "Cachoeira dos Martins"
+        ]
+      },
+      "ade_bacias_hidrograficas": {
+        "base_legal": "Art. 21, II da LC 267/2019",
+        "bacia_rio_grande": "Rio Jacaré e tributários: Ribeirões Sobrado, Lambari, Recreio, Caxambu e Batalha; Córregos do Boi e da Lagoa (mananciais de abastecimento público)",
+        "bacia_rio_sao_francisco": "Rio Pará e tributários, Ribeirões Tombador e do Engenho, Córrego Água Limpa e Córrego do Calafate (manancial de abastecimento de Morro do Ferro)",
+        "alerta_gem": "Imóvel próximo a esses córregos ou ribeirões → emitir oficio_meio_ambiente obrigatoriamente (CODEMA)."
+      },
+      "ade_ecologica": {
+        "base_legal": "Art. 21, IV da LC 267/2019",
+        "descricao": "Vertentes da bacia do Córrego Maracanã e bacias de contribuição para mananciais de abastecimento público protegidas pela Lei Estadual 10.793/1992."
+      },
+      "parques_municipais": [
+        "Parque Municipal João Reis",
+        "Parque Municipal da Serra da Capelinha",
+        "Parque Florestal"
+      ]
+    },
+
+    "distritos_industriais": {
+      "base_legal": "Art. 15, XII da LC 267/2019 — Zona Industrial (ZIND)",
+      "lista": [
+        "Distrito Industrial Dermeval Chagas de Almeida",
+        "Distrito Industrial David Mattar",
+        "Distrito Industrial Eduardo Abdo",
+        "Distrito Industrial Benedito Landim",
+        "Distrito Industrial Adauto Lopes (às margens da BR-494)",
+        "Distrito Industrial de Morro do Ferro"
+      ]
+    }
+  },
+
+  "tombamentos_e_inventario": {
+    "_nota": "Imóveis tombados e inventariados conforme LC 267/2019 Art. 21 e Lei Orgânica Municipal Art. 226. ALERTA: Processo com endereço coincidente = verificar proteção obrigatoriamente.",
+
+    "tombados_publicos_eclesiasticos_lc267": {
+      "base_legal": "Art. 21, III, a.1 da LC 267/2019 — tombados por esta Lei",
+      "lista": [
+        "Palácio Episcopal",
+        "Santuário de Nossa Senhora Aparecida",
+        "Delegacia de Polícia e Cadeia Pública",
+        "Capela do Cemitério São Miguel Arcanjo",
+        "Capela da Antiga Santa Casa de Misericórdia",
+        "Antigo prédio da Prefeitura Municipal",
+        "Jardim da Praça XV de Novembro",
+        "Residência Rachel Viglioni — Decreto 3.680/2016",
+        "Antiga Casa Dr. Fromm — Decreto 3.657/2016",
+        "Passinhos religiosos"
+      ]
+    },
+
+    "tombados_lei_organica": {
+      "base_legal": "Art. 21, III, a.2 da LC 267/2019 c/c LOM Art. 225 e 226",
+      "monumentos_naturais": [
+        "Usina do Jacaré (LOM Art. 225, I)",
+        "Parque Ecológico (LOM Art. 225, II)",
+        "Nascentes e afluentes do Córrego Maracanã (LOM Art. 225, III)",
+        "Lagoa do Catiguá (LOM Art. 225, IV)",
+        "Cachoeira do Fradique (LOM Art. 225, V)",
+        "Cachoeira dos Martins (LOM Art. 225, VI)"
+      ],
+      "monumentos_historicos": [
+        "Matriz N.S. de Oliveira (LOM Art. 226, I)",
+        "Igreja dos Passos — Igreja Nosso Senhor dos Passos (LOM Art. 226, II/IV)",
+        "Escola Estadual Mário Campos e Silva (LOM Art. 226, III)",
+        "Escola Estadual Francisco Fernandes — prédio velho (LOM Art. 226, V)",
+        "Escola Estadual Professor Pinheiro Campos — prédio velho (LOM Art. 226, VII)",
+        "Escola Estadual Desembargador Continentino (LOM Art. 226, VI)",
+        "Palácio Episcopal (LOM Art. 226, VII)",
+        "Estação Dr. Fromm (LOM Art. 226, VIII)",
+        "Gruta N.S. de Lourdes (LOM Art. 226, IX)",
+        "Todos os Passinhos religiosos (LOM Art. 226, X)",
+        "Prédio Distribuidora de Força e Luz (LOM Art. 226, XI)"
+      ]
+    },
+
+    "inventariados_privados_lc267": {
+      "base_legal": "Art. 21, III, b da LC 267/2019 — sob inventário, suscetíveis de tombamento",
+      "status_juridico": "Declarados sob inventário. O §3º determina processo administrativo (prazo 90 dias da publicação) para decisão de tombamento. O §§7-9 foram declarados parcialmente inconstitucionais pelo TJMG (ADI 1.0000.24.418817-3/000).",
+      "edificacoes": [
+        {"n": 1, "descricao": "Escola Normal Nossa Senhora de Oliveira"},
+        {"n": 2, "descricao": "Casarão da antiga Santa Casa de Misericórdia"},
+        {"n": 3, "descricao": "Fazenda Bom Retiro"},
+        {"n": 4, "endereco": "Rua 1º de Janeiro, 220", "bairro": "Rosário", "referencia": "Casarão do Onofre"},
+        {"n": 5, "endereco": "Rua Cel. João Alves, 557", "bairro": "Centro"},
+        {"n": 6, "endereco": "Rua Dr. Coelho de Moura, 14", "bairro": "Centro"},
+        {"n": 7, "endereco": "Rua Dr. Coelho de Moura, 36", "bairro": "Centro"},
+        {"n": 8, "endereco": "Rua Dr. Coelho de Moura, 40", "bairro": "Centro"},
+        {"n": 9, "endereco": "Rua Dr. Coelho de Moura, 65", "bairro": "Centro", "referencia": "Residência Prof. Múcio Lo-Buono"},
+        {"n": 10, "endereco": "Rua Dr. Coelho de Moura, 80", "bairro": "Centro", "referencia": "Antigo Hotel"},
+        {"n": 11, "endereco": "Rua Dr. Coelho de Moura, 106", "bairro": "Centro"},
+        {"n": 12, "endereco": "Rua Dr. Coelho de Moura, 124", "bairro": "Centro"},
+        {"n": 13, "endereco": "Rua Dr. Coelho de Moura, 146/154", "bairro": "Centro"},
+        {"n": 14, "endereco": "Rua Dr. Coelho de Moura, 159/169", "bairro": "Centro"},
+        {"n": 15, "endereco": "Rua Dr. Coelho de Moura, 189/197", "bairro": "Centro"},
+        {"n": 16, "endereco": "Rua Dr. Coelho de Moura, 198", "bairro": "Centro", "referencia": "Oliveira Clube"},
+        {"n": 17, "endereco": "Rua Dr. Coelho de Moura, 209", "bairro": "Centro"},
+        {"n": 18, "endereco": "Rua Dr. Coelho de Moura, 221", "bairro": "Centro"},
+        {"n": 19, "endereco": "Avenida Benjamim Guimarães, 314", "bairro": "Caetano Mascarenhas"},
+        {"n": 20, "endereco": "Praça Pio XII, 03", "bairro": "Centro"},
+        {"n": 21, "endereco": "Rua Carlos Chagas, 08", "bairro": "Centro"},
+        {"n": 22, "endereco": "Rua Carlos Chagas, 115", "bairro": "Centro"},
+        {"n": 23, "endereco": "Rua Chagas Sobrinho, 116", "bairro": "Centro"},
+        {"n": 24, "endereco": "Praça Dr. José Ribeiro da Silva, 17/25", "bairro": "Centro", "referencia": "Antigo Cine Vitória"},
+        {"n": 25, "endereco": "Praça Dr. José Ribeiro da Silva, 37", "bairro": "Centro", "referencia": "Residência Joaquim Pires"},
+        {"n": 26, "endereco": "Praça Dr. José Ribeiro da Silva, 43", "bairro": "Centro"},
+        {"n": 27, "endereco": "Praça Dr. José Ribeiro da Silva, 51", "bairro": "Centro"},
+        {"n": 28, "endereco": "Praça Dr. José Ribeiro da Silva, 57", "bairro": "Centro"},
+        {"n": 29, "endereco": "Avenida Pinheiro Chagas, 29", "bairro": "Centro"},
+        {"n": 30, "endereco": "Avenida Pinheiro Chagas, 91", "bairro": "Centro"},
+        {"n": 31, "endereco": "Avenida Pinheiro Chagas, 125", "bairro": "Centro"},
+        {"n": 32, "endereco": "Avenida Pinheiro Chagas, 155/161", "bairro": "Centro"},
+        {"n": 33, "endereco": "Praça Pinto Machado, 22", "bairro": "Centro"},
+        {"n": 34, "endereco": "Rua Francisco Cambraia Campos, 06", "bairro": "Centro"},
+        {"n": 35, "endereco": "Rua Francisco Cambraia Campos, 72/108", "bairro": "Centro"},
+        {"n": 36, "endereco": "Rua Francisco Cambraia Campos, 208", "bairro": "Centro"},
+        {"n": 37, "endereco": "Rua Francisco Cambraia Campos, 326", "bairro": "Centro"},
+        {"n": 38, "endereco": "Rua Francisco Cambraia Campos, 368", "bairro": "Centro"},
+        {"n": 39, "endereco": "Rua Francisco Cambraia Campos, 456", "bairro": "Centro"},
+        {"n": 40, "endereco": "Rua Francisco Cambraia Campos, 465", "bairro": "Centro"},
+        {"n": 41, "endereco": "Rua Alexandrino Chagas, s/n", "bairro": "Centro"},
+        {"n": 42, "endereco": "Rua Alexandrino Chagas, 10", "bairro": "Centro"},
+        {"n": 43, "endereco": "Rua Alexandrino Chagas, 66", "bairro": "Centro"},
+        {"n": 44, "endereco": "Rua Alexandrino Chagas, 104", "bairro": "Centro"},
+        {"n": 45, "endereco": "Rua da Misericórdia, s/n", "bairro": "Centro"},
+        {"n": 46, "endereco": "Rua da Misericórdia, 486", "bairro": "Centro"},
+        {"n": 47, "endereco": "Rua da Misericórdia, 578", "bairro": "Centro"},
+        {"n": 48, "endereco": "Rua da Misericórdia, 602", "bairro": "Centro"},
+        {"n": 49, "endereco": "Rua da Misericórdia, 620", "bairro": "Centro"},
+        {"n": 50, "endereco": "Rua da Misericórdia, 650", "bairro": "Centro"},
+        {"n": 51, "endereco": "Rua da Misericórdia, 716", "bairro": "Centro"},
+        {"n": 52, "endereco": "Rua da Misericórdia, 891", "bairro": "Centro"},
+        {"n": 53, "endereco": "Rua da Misericórdia, 942", "bairro": "Centro"},
+        {"n": 54, "endereco": "Praça Mãe dos Homens, 798", "bairro": "Centro"},
+        {"n": 55, "endereco": "Rua Cícero de Castro, 09", "bairro": "Centro"},
+        {"n": 56, "endereco": "Rua Cícero de Castro, 10", "bairro": "Centro"},
+        {"n": 57, "endereco": "Rua Cícero de Castro, 69", "bairro": "Centro"},
+        {"n": 58, "endereco": "Rua Cícero de Castro, 110/114", "bairro": "Centro"},
+        {"n": 59, "endereco": "Rua Cícero de Castro, 149", "bairro": "Centro"},
+        {"n": 60, "endereco": "Rua dos Passos, 04", "bairro": "Centro"},
+        {"n": 61, "endereco": "Rua dos Passos, 09", "bairro": "Centro"},
+        {"n": 62, "endereco": "Rua dos Passos, 98 — anexo", "bairro": "Centro"},
+        {"n": 63, "endereco": "Praça Dr. José Ribeiro da Silva, 60", "bairro": "Centro"},
+        {"n": 64, "endereco": "Praça Dr. José Ribeiro da Silva, s/n — Passinho", "bairro": "Centro"},
+        {"n": 65, "endereco": "Praça Dr. José Ribeiro da Silva, s/n — pequeno Passo integrado", "bairro": "Centro"},
+        {"n": 66, "endereco": "Rua Dr. Carlos Chagas, 143", "bairro": "Centro"},
+        {"n": 67, "endereco": "Praça Dr. José Ribeiro da Silva, 28", "bairro": "Centro"},
+        {"n": 68, "endereco": "Praça XV de Novembro, s/n — Matriz", "bairro": "Centro"},
+        {"n": 69, "endereco": "Praça XV de Novembro, 10", "bairro": "Centro"},
+        {"n": 70, "endereco": "Praça XV de Novembro, 17", "bairro": "Centro"},
+        {"n": 71, "endereco": "Praça XV de Novembro, 33", "bairro": "Centro"},
+        {"n": 72, "endereco": "Praça XV de Novembro, 41/49", "bairro": "Centro"},
+        {"n": 73, "endereco": "Praça XV de Novembro, 61", "bairro": "Centro"},
+        {"n": 74, "endereco": "Praça XV de Novembro, 88", "bairro": "Centro"},
+        {"n": 75, "endereco": "Praça XV de Novembro, 103", "bairro": "Centro"},
+        {"n": 76, "endereco": "Praça XV de Novembro, 110", "bairro": "Centro"},
+        {"n": 77, "endereco": "Praça XV de Novembro, 138", "bairro": "Centro"},
+        {"n": 78, "endereco": "Praça XV de Novembro, 143", "bairro": "Centro"},
+        {"n": 79, "endereco": "Praça XV de Novembro, 151/161", "bairro": "Centro"},
+        {"n": 80, "endereco": "Praça XV de Novembro, 164", "bairro": "Centro"},
+        {"n": 81, "endereco": "Praça XV de Novembro, 169", "bairro": "Centro"},
+        {"n": 82, "endereco": "Praça XV de Novembro, 186", "bairro": "Centro"},
+        {"n": 83, "endereco": "Praça XV de Novembro, 199", "bairro": "Centro"},
+        {"n": 84, "endereco": "Praça XV de Novembro, 216", "bairro": "Centro"},
+        {"n": 85, "endereco": "Praça Dr. Domingos Ribeiro, 199", "bairro": "Centro"},
+        {"n": 86, "endereco": "Rua Duque de Caxias, 80", "bairro": "Centro"},
+        {"n": 87, "endereco": "Rua Batista de Almeida, 116", "bairro": "Centro"},
+        {"n": 88, "endereco": "Rua Batista de Almeida, 111", "bairro": "Centro"},
+        {"n": 89, "endereco": "Rua Batista de Almeida, 35/37/41/43", "bairro": "Centro"},
+        {"n": 90, "endereco": "Rua Venâncio Carrilho, 8", "bairro": "Centro"},
+        {"n": 91, "endereco": "Rua Venâncio Carrilho, 90", "bairro": "Centro"},
+        {"n": 92, "endereco": "Rua Venâncio Carrilho, 104", "bairro": "Centro"},
+        {"n": 93, "endereco": "Rua Venâncio Carrilho, 123", "bairro": "Centro"},
+        {"n": 94, "endereco": "Rua Venâncio Carrilho, 145", "bairro": "Centro"},
+        {"n": 95, "endereco": "Rua Venâncio Carrilho, 161", "bairro": "Centro"},
+        {"n": 96, "endereco": "Rua Venâncio Carrilho, 169", "bairro": "Centro"},
+        {"n": 97, "endereco": "Rua Venâncio Carrilho, 256", "bairro": "Centro"},
+        {"n": 98, "endereco": "Rua Venâncio Carrilho, 268", "bairro": "Centro"},
+        {"n": 99, "endereco": "Rua Venâncio Carrilho, 288", "bairro": "Centro"},
+        {"n": 100, "endereco": "Rua Venâncio Carrilho, 295", "bairro": "Centro"},
+        {"n": 101, "endereco": "Rua Venâncio Carrilho, 298", "bairro": "Centro"},
+        {"n": 102, "endereco": "Rua Cel. João Alves, 353", "bairro": "Centro"},
+        {"n": 103, "endereco": "Rua Cel. João Alves, 700", "bairro": "Centro"},
+        {"n": 104, "endereco": "Praça Pinto Machado, 40", "bairro": "Centro"},
+        {"n": 105, "endereco": "Praça Pinto Machado, 96", "bairro": "Centro"},
+        {"n": 106, "endereco": "Praça Pinto Machado, 230", "bairro": "Centro"},
+        {"n": 107, "endereco": "Avenida Américo Leite, 80", "bairro": "Centro"},
+        {"n": 108, "endereco": "Avenida Américo Leite, 201", "bairro": "Centro"},
+        {"n": 109, "endereco": "Rua Petrônio Fernal, 91", "bairro": "Centro"},
+        {"n": 110, "endereco": "Rua Francisco Cambraia Campos, 10", "bairro": "Centro"},
+        {"n": 111, "endereco": "Rua Francisco Cambraia Campos, 88", "bairro": "Centro"},
+        {"n": 112, "endereco": "Rua Santo Antônio, 55", "bairro": "Aparecida"},
+        {"n": 113, "endereco": "Avenida Waldemar Fernal, 26", "bairro": "Aparecida"},
+        {"n": 114, "endereco": "Avenida Waldemar Fernal, 38", "bairro": "Aparecida"},
+        {"n": 115, "endereco": "Rua Antônio Salgado Ribeiro, 58", "bairro": "Centro"},
+        {"n": 116, "endereco": "Rua Isac Resende, 50", "bairro": "Centro"},
+        {"n": 117, "endereco": "Rua Cel. Xavier, 94", "bairro": "Centro"},
+        {"n": 118, "endereco": "Rua Dr. Cândido de Faria Lobato, 78", "bairro": "Centro"},
+        {"n": 119, "endereco": "Praça Mãe dos Homens (genérico)", "bairro": "Centro"},
+        {"n": 120, "endereco": "Avenida Pinheiro Chagas, 51", "bairro": "Centro"},
+        {"n": 121, "endereco": "Avenida Pinheiro Chagas, 67", "bairro": "Centro"},
+        {"n": 122, "endereco": "Avenida Pinheiro Chagas, 83", "bairro": "Centro"},
+        {"n": 123, "endereco": "Avenida Pinheiro Chagas, 85", "bairro": "Centro"},
+        {"n": 124, "endereco": "Avenida Pinheiro Chagas, 101", "bairro": "Centro"},
+        {"n": 125, "endereco": "Avenida Pinheiro Chagas, 127", "bairro": "Centro"},
+        {"n": 126, "endereco": "Avenida Pinheiro Chagas, 135/145", "bairro": "Centro"},
+        {"n": 127, "endereco": "Avenida Pinheiro Chagas, 177", "bairro": "Centro"},
+        {"n": 128, "endereco": "Conjunto arquitetônico da Fábrica de Tecidos", "bairro": "Caetano Mascarenhas"},
+        {"n": 129, "descricao": "Monumento ao Cristo Redentor"},
+        {"n": 130, "endereco": "Praça Dona Francisca Clara de Jesus (Praça Rosário)", "bairro": "Rosário"},
+        {"n": 131, "descricao": "Capela Nossa Senhora do Rosário", "bairro": "Rosário"},
+        {"n": 132, "descricao": "Terminal Rodoviário Emílio Haddad", "bairro": "Centro"},
+        {"n": 133, "endereco": "Rua Marília, 170 — Escola Municipal Cristo Redentor", "bairro": "Rosário"},
+        {"n": 134, "descricao": "Igreja Matriz de São Sebastião e seu entorno", "bairro": "São Sebastião"},
+        {"n": 135, "descricao": "Igreja Nossa Senhora das Graças", "bairro": "Graças"},
+        {"n": 136, "endereco": "Praça Dr. José Ribeiro da Silva, 6/4/161/247", "bairro": "Centro"},
+        {"n": 137, "endereco": "Praça Dr. José Ribeiro da Silva, 9", "bairro": "Centro"},
+        {"n": 138, "endereco": "Praça Dr. José Ribeiro da Silva, 16", "bairro": "Centro"},
+        {"n": 139, "endereco": "Praça Dr. José Ribeiro da Silva, 37/39", "bairro": "Centro"},
+        {"n": 140, "endereco": "Praça Dr. José Ribeiro da Silva, 59/55", "bairro": "Centro"},
+        {"n": 141, "endereco": "Praça Dr. José Ribeiro da Silva, 69", "bairro": "Centro"},
+        {"n": 142, "endereco": "Praça Dr. José Ribeiro da Silva, 93", "bairro": "Centro"},
+        {"n": 143, "endereco": "Praça Dr. Domingos Ribeiro, 169/175/181", "bairro": "Centro"},
+        {"n": 144, "endereco": "Praça Dr. Domingos Ribeiro, 197/205/179/168", "bairro": "Centro"},
+        {"n": 145, "endereco": "Praça Dr. Domingos Ribeiro, 222", "bairro": "Centro"},
+        {"n": 146, "endereco": "Praça XV de Novembro, 9/7", "bairro": "Centro"},
+        {"n": 147, "endereco": "Praça XV de Novembro, 15", "bairro": "Centro"},
+        {"n": 148, "endereco": "Praça XV de Novembro, 20", "bairro": "Centro"},
+        {"n": 149, "endereco": "Praça XV de Novembro, 47", "bairro": "Centro"},
+        {"n": 150, "endereco": "Praça XV de Novembro, 58", "bairro": "Centro"},
+        {"n": 151, "endereco": "Praça XV de Novembro, 75/81", "bairro": "Centro"},
+        {"n": 152, "endereco": "Praça XV de Novembro, 82/78", "bairro": "Centro"},
+        {"n": 153, "endereco": "Praça XV de Novembro, 104/108", "bairro": "Centro"},
+        {"n": 154, "endereco": "Praça XV de Novembro, 127", "bairro": "Centro"},
+        {"n": 155, "endereco": "Praça XV de Novembro, 137/139/143", "bairro": "Centro"},
+        {"n": 156, "endereco": "Praça XV de Novembro, 142/144/146/148", "bairro": "Centro"},
+        {"n": 157, "endereco": "Praça XV de Novembro, 199", "bairro": "Centro"},
+        {"n": 158, "endereco": "Praça Pio XII, 3", "bairro": "Centro"},
+        {"n": 159, "endereco": "Praça Pio XII, 4", "bairro": "Centro"},
+        {"n": 160, "endereco": "Praça Pio XII, 5", "bairro": "Centro"},
+        {"n": 161, "endereco": "Praça Pio XII, 15/25/35", "bairro": "Centro"},
+        {"n": 162, "endereco": "Praça Pio XII, 19", "bairro": "Centro"},
+        {"n": 163, "endereco": "Praça Pio XII, 44/7", "bairro": "Centro"},
+        {"n": 164, "endereco": "Praça Pio XII, 45", "bairro": "Centro"},
+        {"n": 165, "endereco": "Praça Pio XII, 58", "bairro": "Centro"},
+        {"n": 166, "endereco": "Praça Pio XII, 63/144", "bairro": "Centro"},
+        {"n": 167, "endereco": "Praça Pio XII, 64", "bairro": "Centro"},
+        {"n": 168, "endereco": "Rua Valdemar Fernal, 184/180", "bairro": "Aparecida"},
+        {"n": 169, "endereco": "Rua Valdemar Fernal, 328/04/25/51/65", "bairro": "Aparecida"},
+        {"n": 170, "endereco": "Túmulo Dr. Cícero de Castro", "bairro": "Centro"}
+      ]
+    }
+  },
+
+  "categorias_uso_solo": {
+    "_base_legal": "Art. 36 da LC 267/2019",
+    "residenciais": {
+      "UR1": "Uso Residencial 1 — unifamiliar — uma única unidade em um lote ou conjunto de lotes",
+      "UR2": "Uso Residencial 2 — multifamiliar — duas ou mais unidades numa única edificação",
+      "URM": "Uso Residencial Misto — residência + comércio/serviços com acessos independentes"
+    },
+    "comerciais": {
+      "CV": "Comércio Varejista",
+      "CEAV": "Comércio Especial (Atacado e Varejo) — produtos perigosos, inflamáveis, tóxicos — sujeito a licenciamento ambiental e EIV",
+      "CAGD": "Comércio Atacadista e Grandes Varejistas e Depósitos — exceto produtos do CEAV"
+    },
+    "servicos": {
+      "PSE": "Prestação de Serviços Especiais — impacto na vizinhança, poluição ou tráfego pesado — sujeito a licenciamento ambiental e EIV. Ex: Borracharia, Carpintaria, Postos de gasolina, Oficinas.",
+      "PS1": "Prestação de Serviços — serviços gerais não classificados no PSE ou PS2",
+      "PS2": "Prestação de Serviços de recreação, lazer, espetáculos, turismo, hospedagem, centros de exposições",
+      "PSEST": "Prestação de Serviços de Estacionamentos — garagens e estacionamentos de guarda de veículos",
+      "PSTI": "Prestação de Serviços de Tecnologia da Informação — alta tecnologia e TI"
+    },
+    "industriais": {
+      "UIND": "Usos Industriais — manufatura e produção — sujeito a licenciamento ambiental e EIV"
+    },
+    "mistos_e_institucionais": {
+      "UMCS": "Uso Misto Comercial e de Serviços — CV + PS1 integrados — centros comerciais",
+      "UI": "Uso Institucional — postos de saúde, creches, escolas, associações, religiosos, assistência social, esporte, recreação"
+    },
+    "quando_exige_eiv": {
+      "EIV_obrigatorio": [
+        "CEAV — sempre",
+        "PSE — sempre (ou quando faturamento acima do limite EPP, conforme LC 313/2024)",
+        "CAGD — sempre",
+        "UIND — sempre",
+        "UR1/UR2/URM/UMCS — quando área projetada > 3.000m²",
+        "Qualquer empreendimento que exceda o CA da zona acrescido dos benefícios do Art. 9º §12 com mais de 5 pavimentos"
+      ]
+    }
+  },
+
+  "delimitacoes_zonais_por_via": {
+    "_nota": "Limites de zonas definidos por trecho de vias — extraídos da LC 267/2019",
+    "ZAE2": "Alameda Nossa Senhora de Fátima (toda sua extensão) + trecho Av. Maracanã nº 1930 até Av. Coronel Benjamin Guimarães + trecho Av. Benjamin Guimarães nº 400 a 1360",
+    "ZAE3": "Terrenos lindeiros à Av. Maracanã, Av. Miguel Resende e Alameda Dr. Cícero de Castro Filho (da Av. Maracanã até nº 600)",
+    "ZAE4": "Av. Benjamin Guimarães (nº 1361 ao limite com BR-369) + Alameda Dr. Cícero de Castro Filho (nº 601 ao trevo BR-494) + Av. César Barros Almeida",
+    "ZIND": "Distritos Industriais às margens da BR-494 + Distrito Industrial de Morro do Ferro"
+  },
+
+  "instrucoes_verificacao_gem": {
+    "_nota": "Protocolo de verificação geográfica para cada processo",
+    "passo_1_tombamento": "Ao receber o endereço do processo, verifique se ele aparece em tombamentos_e_inventario.inventariados_privados_lc267. Se sim → incluir nos considerandos: 'o imóvel está sob inventário de preservação cultural conforme Art. 21, III, b da LC 267/2019, devendo o processo ser instruído com parecer do CODEMPAC.'",
+    "passo_2_centro_historico": "Se o logradouro estiver entre os listados em areas_especiais.centro_historico_ade_cultural → incluir nos considerandos a necessidade de verificação da ADE Cultural e, se projeto aprovado após 30/10/2013, encaminhar ao IEPHA.",
+    "passo_3_app_cursos_dagua": "Se a planta indicar proximidade a Ribeirão Sobrado, Lambari, Recreio, Caxambu, Batalha, Córrego do Boi, Córrego da Lagoa, Rio Jacaré, Rio Pará, Ribeirão Tombador, Ribeirão do Engenho, Córrego Água Limpa, Córrego do Calafate, Córrego Maracanã → emitir oficio_meio_ambiente ao CODEMA obrigatoriamente.",
+    "passo_4_zona_urbanizacao_especifica": "Se o endereço pertencer a um núcleo listado em distritos_e_nucleos.zonas_urbanizacao_especifica → os parâmetros construtivos são definidos por ato específico do Executivo. Verificar se há decreto municipal específico para aquele núcleo.",
+    "passo_5_grafia": "Verificar erros de grafia comuns usando logradouros.grafias_alternativas antes de concluir que um endereço não existe na base."
+  }
+}
