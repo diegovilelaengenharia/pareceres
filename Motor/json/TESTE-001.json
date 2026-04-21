@@ -1,0 +1,16 @@
+{
+    "tipo_relatorio": "comunicado_pendencia",
+    "numero_processo": "TESTE-001",
+    "data_processo": "21 de abril de 2026",
+    "assunto": "Comunicação de Pendência Documental (Fase Zero)",
+    "requerente": "José da Silva Santos",
+    "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos (SMOSU), por meio de seu Departamento Técnico, informa que o presente protocolo encontra-se desprovido dos documentos mínimos exigidos para o início da análise urbanística e técnica, conforme previsto na legislação vigente.",
+    "considerandos": [
+        "Ausência de Planta Arquitetônica legível para a conferência das áreas e parâmetros;",
+        "Ausência de Matrícula do Imóvel expedida pelo Serviço Registral de Imóveis (SRI);",
+        "Ausência de Anotação ou Registro de Responsabilidade Técnica (ART/RRT) assinada pelo profissional responsável;",
+        "Ausência de documentos pessoais de identificação civil (CPF/RG) da parte requerente;",
+        "Ausência de comprovação de pagamento de guia de recolhimento de taxas municipais."
+    ],
+    "conclusao": "Diante da totalidade de ausência documental identificada na triagem inicial, a emissão de qualquer parecer de mérito fica absolutamente inviável. O processo encontra-se sobrestado até a devida anexação dos documentos listados, permitindo assim o andamento correto da aprovação."
+}
