@@ -48,6 +48,15 @@ def _parse_numero(texto):
         return None
 
 
+def _ensure_list(data):
+    """Garante que o dado seja uma lista de strings. Se for string única, separa por quebra de linha."""
+    if not data:
+        return []
+    if isinstance(data, str):
+        return [item.strip() for item in data.split('\n') if item.strip()]
+    return data
+
+
 # ═══════════════════════════════════════════════════════════
 #  TÍTULO DO DOCUMENTO
 # ═══════════════════════════════════════════════════════════
@@ -269,14 +278,21 @@ def build_corpo(doc, d):
         rich_segments(p_ab, d["paragrafo_abertura"], size=SZ_CORPO)
 
     if d.get("considerandos"):
-        for cons in d["considerandos"]:
+        for cons in _ensure_list(d["considerandos"]):
+            cons_limpo = cons
+            # Remove o "Considerando que" se o GEM já tiver escrito na string
+            if cons_limpo.lower().startswith("considerando que "):
+                cons_limpo = cons_limpo[17:].strip()
+            elif cons_limpo.lower().startswith("considerando "):
+                cons_limpo = cons_limpo[13:].strip()
+                
             p = add_para(doc, line=LINE_SPC, before=0,
                          after=PAR_AFTER, indent_cm=INDENT)
             add_run(p, "Considerando que ", bold=True, size=SZ_CORPO)
-            rich_segments(p, cons, size=SZ_CORPO)
+            rich_segments(p, cons_limpo, size=SZ_CORPO)
 
     if d.get("paragrafos_adicionais"):
-        for txt in d["paragrafos_adicionais"]:
+        for txt in _ensure_list(d["paragrafos_adicionais"]):
             p_extra = add_para(doc, line=LINE_SPC, before=0,
                                after=PAR_AFTER, indent_cm=INDENT)
             rich_segments(p_extra, txt, size=SZ_CORPO)
@@ -298,11 +314,12 @@ def build_fundamentacao(doc, d):
                     bold=True, size=SZ_CORPO)
     r_tit.font.color.rgb = COR_LABEL_FONT
 
-    for fund in d["fundamentacao_legal"]:
+    for fund in _ensure_list(d["fundamentacao_legal"]):
+        fund_limpo = fund.lstrip("•- \t") # Limpa marcadores se o GEM tiver colocado
         p_fund = add_para(doc, line=LINE_SPC, before=0,
                           after=PAR_AFTER, indent_cm=INDENT)
         add_run(p_fund, "• ", size=SZ_CORPO)
-        rich_segments(p_fund, fund, size=SZ_CORPO)
+        rich_segments(p_fund, fund_limpo, size=SZ_CORPO)
 
 
 # ═══════════════════════════════════════════════════════════
@@ -565,7 +582,7 @@ def build_comunicado_pendencia(doc, d):
     r_sub.font.color.rgb = RGBColor(0x5C, 0x3A, 0x00)
 
     # Lista de pendências
-    considerandos = d.get("considerandos", [])
+    considerandos = _ensure_list(d.get("considerandos", []))
     for item in considerandos:
         p_item = cell_alert.add_paragraph()
         p_item.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -576,6 +593,11 @@ def build_comunicado_pendencia(doc, d):
         r_bullet.font.color.rgb = RGBColor(0xCC, 0x44, 0x00)
         # Texto do item (sem "Considerando que" — é uma lista de pendências)
         texto = item.lstrip("0123456789. ")  # remove "1. ", "2. " se houver
+        if texto.lower().startswith("considerando que "):
+            texto = texto[17:].strip()
+        elif texto.lower().startswith("considerando "):
+            texto = texto[13:].strip()
+            
         r_texto = p_item.add_run(texto)
         set_font(r_texto, size=10)
         r_texto.font.color.rgb = RGBColor(0x3C, 0x28, 0x00)

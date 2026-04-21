@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 title Motor SMOSU - Oliveira/MG
 color 0A
 echo ======================================================================

@@ -1,0 +1,41 @@
+{
+    "tipo_relatorio": "regularizacao",
+    "numero_processo": "164/2026",
+    "data_processo": "09 de janeiro de 2026",
+    "assunto": "Regularização",
+    "requerente": "**Antônio Martins Neto**",
+    "proprietario": "**Antônio Martins Neto**",
+    "logradouro": "Rua Doutor Odorico Ribeiro, nº 107",
+    "bairro": "Acácio Ribeiro",
+    "inscricao_municipal": "**01.01.045.0067.001**",
+    "lote": "17",
+    "quadra": "06",
+    "area_terreno": "**360,00m²**",
+    "area_total_construida": "**283,38m²**",
+    "taxa_ocupacao": "Não informada",
+    "coef_aproveitamento": "Não informado",
+    "taxa_permeabilidade": "Não informada",
+    "profissional_nome": "**Samuel Dias**",
+    "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face deste Processo Administrativo nº **164/2026**, onde o requerente **Antônio Martins Neto** solicita a regularização de obra para edificação residencial, com área total construída de **283,38m²**. A edificação está inserida em uma fração ideal de **240,00m²**, pertencente a um terreno com área total de **360,00m²**. Localizado no zoneamento **ZUR 03** na Rua Doutor Odorico Ribeiro, nº 107, Bairro Acácio Ribeiro, onde de acordo com o parecer fiscal emitido por **Marlei Henrique de Oliveira** e **Wallace Alencar Martins Silveira**, a construção se encontra finalizada, habitável e confere com o projeto apresentado.",
+    "considerandos": "Considerando que o requerente apresentou Título de Propriedade com MATRÍCULA DE INTEIRO TEOR sob nº **9833** (Lote 17, da quadra 06, fração ideal de **240,00m²**) e Inscrição Cadastral **01.01.045.0067.001**.\n\nPara o laudo técnico de estabilidade (Data: **15/12/2025**) e Projeto As Built, foi emitida a Anotação de Responsabilidade Técnica (ART) nº **MG20254540522** pelo profissional Engenheiro Civil **Samuel Dias** CREA-MG nº **201.767/D**.",
+    "fundamentacao_legal": "Considerando que o setor técnico salienta que no que tange a Legislação __Decreto 4.149 de 19/12/2019__, Código de Obras do município de Oliveira (__Lei nº 1.544, de 04 de março de 1986__) e Lei de Uso e Ocupação do Solo (__Lei Complementar 267 de 11/11/2019__).",
+    "conclusao": "No que tange ao processo de averbação, a análise documental demonstra que o imóvel não possui área construída averbada em sua matrícula atual. Tendo em vista que o levantamento constatou uma área total de **283,38m²**, a respectiva averbação incidirá sobre a totalidade desta área.\n\nDiante disso, aprovado e verificado o laudo, as áreas e as considerações do parecer fiscal, tendo sido sanadas as pendências documentais, constar:",
+    "documentos_emitir": [
+        {
+            "tipo": "Alvará de Regularização",
+            "obs": "Alvará emitido para regularização de imóvel edificado sem projeto aprovado pela prefeitura, referente à área total de **283,38m²**, mediante o cumprimento do __Art. 79 da Lei 1.544 de 1986__ e __Art. 38, 39 da Lei Complementar 267 de 2019__."
+        },
+        {
+            "tipo": "Carta de Habite-se",
+            "obs": "Referente à área total de **283,38m²**."
+        },
+        {
+            "tipo": "Certidão de Averbação",
+            "obs": "Referente à área total de **283,38m²**."
+        },
+        {
+            "tipo": "Certidão de Decadência",
+            "obs": "Conforme Planta Cadastral do município com Data de Cadastro em **13/11/2012**, atesta-se a existência consolidada de **163,72m²** de área construída no lote, garantindo a decadência para esta parcela do imóvel."
+        }
+    ]
+}

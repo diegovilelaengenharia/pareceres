@@ -28,34 +28,34 @@ def main():
         if os.path.exists(pasta_padrao) and glob.glob(os.path.join(pasta_padrao, "*.json")):
             args = [pasta_padrao]
         else:
-        print("╔══════════════════════════════════════════════════════════════════╗")
-        print("║  Gerador de Documentos – SMOSU Oliveira/MG                     ║")
-        print("╠══════════════════════════════════════════════════════════════════╣")
-        print("║                                                                ║")
-        print("║  Uso: python compilador.py dados.json [saida.docx]             ║")
-        print("║                                                                ║")
-        print("║  O JSON deve conter o campo 'tipo_relatorio' com um dos tipos  ║")
-        print("║  listados abaixo.                                              ║")
-        print("║                                                                ║")
-        print("╠══════════════════════════════════════════════════════════════════╣")
-        print("║  TIPOS DE DOCUMENTO DISPONÍVEIS:                               ║")
-        print("╠══════════════════════════════════════════════════════════════════╣")
+            print("╔══════════════════════════════════════════════════════════════════╗")
+            print("║  Gerador de Documentos – SMOSU Oliveira/MG                     ║")
+            print("╠══════════════════════════════════════════════════════════════════╣")
+            print("║                                                                ║")
+            print("║  Uso: python compilador.py dados.json [saida.docx]             ║")
+            print("║                                                                ║")
+            print("║  O JSON deve conter o campo 'tipo_relatorio' com um dos tipos  ║")
+            print("║  listados abaixo.                                              ║")
+            print("║                                                                ║")
+            print("╠══════════════════════════════════════════════════════════════════╣")
+            print("║  TIPOS DE DOCUMENTO DISPONÍVEIS:                               ║")
+            print("╠══════════════════════════════════════════════════════════════════╣")
 
-        # Agrupar por categoria
-        categorias = {}
-        for tipo, cat in sorted(TIPOS_DOCUMENTO.items()):
-            categorias.setdefault(cat, []).append(tipo)
+            # Agrupar por categoria
+            categorias = {}
+            for tipo, cat in sorted(TIPOS_DOCUMENTO.items()):
+                categorias.setdefault(cat, []).append(tipo)
 
-        for cat in ["parecer_tecnico", "parecer_simples", "oficio", "comunicado"]:
-            tipos = categorias.get(cat, [])
-            if tipos:
-                print(f"║  [{cat.upper():^20}]                                     ║")
-                for t in tipos:
-                    print(f"║    • {t:<56} ║")
-                print("║                                                                ║")
+            for cat in ["parecer_tecnico", "parecer_simples", "oficio", "comunicado"]:
+                tipos = categorias.get(cat, [])
+                if tipos:
+                    print(f"║  [{cat.upper():^20}]                                     ║")
+                    for t in tipos:
+                        print(f"║    • {t:<56} ║")
+                    print("║                                                                ║")
 
-        print("╚══════════════════════════════════════════════════════════════════╝")
-        sys.exit(0)
+            print("╚══════════════════════════════════════════════════════════════════╝")
+            sys.exit(0)
 
     alvo = args[0]
     arquivos_para_processar = []
@@ -69,14 +69,14 @@ def main():
     elif os.path.isfile(alvo) and alvo.endswith(".json"):
         arquivos_para_processar = [alvo]
     else:
-        print(f"[!] Erro: O caminho não é um JSON válido ou não existe -> {alvo}")
-        sys.exit(1)
+            print(f"[!] Erro: O caminho não é um JSON válido ou não existe -> {alvo}")
+            sys.exit(1)
 
     caminho_saida_fornecido = args[1] if len(args) > 1 else None
     
     if len(arquivos_para_processar) > 1 and caminho_saida_fornecido:
-        print("[!] Aviso: Parâmetro de saída único ignorado devido ao processamento em lote.")
-        caminho_saida_fornecido = None
+            print("[!] Aviso: Parâmetro de saída único ignorado devido ao processamento em lote.")
+            caminho_saida_fornecido = None
 
     sucessos = 0
     erros = 0
@@ -84,33 +84,33 @@ def main():
     from traceback import print_exc
 
     for arquivo in arquivos_para_processar:
-        # Ler JSON de entrada
-        try:
-            with open(arquivo, encoding="utf-8") as f:
-                dados = json.load(f)
-            print(f"\n[>] Processando arquivo: {os.path.basename(arquivo)}")
-        except json.JSONDecodeError as e:
-            print(f"[X] Ignorando {os.path.basename(arquivo)}: JSON inválido ({e})")
-            erros += 1
-            continue
+            # Ler JSON de entrada
+            try:
+                with open(arquivo, encoding="utf-8") as f:
+                    dados = json.load(f)
+                print(f"\n[>] Processando arquivo: {os.path.basename(arquivo)}")
+            except json.JSONDecodeError as e:
+                print(f"[X] Ignorando {os.path.basename(arquivo)}: JSON inválido ({e})")
+                erros += 1
+                continue
 
-        # Verificar marcadores de segurança
-        json_str = json.dumps(dados, ensure_ascii=False)
-        if "⚠️ VERIFICAR" in json_str:
-            print("  - [AVISO TÉCNICO]: O JSON contém marcações incompletas (VERIFICAR).")
-            print("  - Dica para o GEM:")
-            print("    'Gem, você marcou dados como 'VERIFICAR'. Releia os anexos")
-            print("    com mais atenção e tente cruzar os dados pra ter a certeza.'\n")
+            # Verificar marcadores de segurança
+            json_str = json.dumps(dados, ensure_ascii=False)
+            if "⚠️ VERIFICAR" in json_str:
+                print("  - [AVISO TÉCNICO]: O JSON contém marcações incompletas (VERIFICAR).")
+                print("  - Dica para o GEM:")
+                print("    'Gem, você marcou dados como 'VERIFICAR'. Releia os anexos")
+                print("    com mais atenção e tente cruzar os dados pra ter a certeza.'\n")
 
-        # Gerar documento
-        try:
-            gerar(dados, caminho_saida_fornecido)
-            sucessos += 1
-        except Exception as e:
-            # Em modo lote, interceptar erro e continuar o loop sem crashar a prefeitura inteira
-            print(f"  [ALERTA DE SISTEMA] Falha ao compilar {os.path.basename(arquivo)}: {e}")
-            erros += 1
-            
+            # Gerar documento
+            try:
+                gerar(dados, caminho_saida_fornecido)
+                sucessos += 1
+            except Exception as e:
+                # Em modo lote, interceptar erro e continuar o loop sem crashar a prefeitura inteira
+                print(f"  [ALERTA DE SISTEMA] Falha ao compilar {os.path.basename(arquivo)}: {e}")
+                erros += 1
+                
     print("\n" + "="*70)
     print(f" [V] COMPILAÇÃO ENCERRADA. Sucessos: {sucessos} | Falhas de Dados: {erros}")
     print("="*70)
