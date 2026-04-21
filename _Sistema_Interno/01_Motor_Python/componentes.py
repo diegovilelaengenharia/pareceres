@@ -107,8 +107,7 @@ def build_identificacao(doc, d):
         p_val = c_val.paragraphs[0]
         p_val.alignment = WD_ALIGN_PARAGRAPH.LEFT
         set_spacing(p_val, line=280, before=70, after=70)
-        r_val = p_val.add_run(val)
-        set_font(r_val, size=SZ_TABELA, bold=False)
+        rich_segments(p_val, val, size=SZ_TABELA)
 
     add_separator(doc)
 
@@ -216,32 +215,31 @@ def build_dados_carimbo(doc, d):
         p1 = c1.paragraphs[0]
         p1.alignment = WD_ALIGN_PARAGRAPH.LEFT
         set_spacing(p1, line=220, before=25, after=25)
-        r_v1 = p1.add_run(val1)
-        set_font(r_v1, size=SZ_TABELA)
+        
+        cor_v1 = None
+        alerta_msg_v1 = None
 
         # Alerta: Área do Terreno < 220m² → verde + "exceção da lei"
         if lab1 == "Área Terreno:" and alerta_excecao:
-            r_v1.font.color.rgb = RGBColor(0x00, 0x80, 0x00)
-            r_v1.font.bold = True
-            r_alert = p1.add_run("  (exceção da lei)")
-            set_font(r_alert, size=7, bold=True, italic=True)
-            r_alert.font.color.rgb = RGBColor(0x00, 0x80, 0x00)
+            cor_v1 = RGBColor(0x00, 0x80, 0x00)
+            alerta_msg_v1 = "  (exceção da lei)"
 
         # Alerta: Taxa Ocupação > 70% → vermelho + "conferir zoneamento"
         if lab1 == "Taxa Ocupação:" and alerta_zoneamento:
-            r_v1.font.color.rgb = RGBColor(0xCC, 0x00, 0x00)
-            r_v1.font.bold = True
-            r_alert = p1.add_run("  (conferir zoneamento)")
-            set_font(r_alert, size=7, bold=True, italic=True)
-            r_alert.font.color.rgb = RGBColor(0xCC, 0x00, 0x00)
+            cor_v1 = RGBColor(0xCC, 0x00, 0x00)
+            alerta_msg_v1 = "  (conferir zoneamento)"
 
         # Alerta: Permeabilidade < 20% → vermelho
         if lab1 == "Permeabilidade:" and alerta_zoneamento:
-            r_v1.font.color.rgb = RGBColor(0xCC, 0x00, 0x00)
-            r_v1.font.bold = True
-            r_alert = p1.add_run("  (conferir zoneamento)")
+            cor_v1 = RGBColor(0xCC, 0x00, 0x00)
+            alerta_msg_v1 = "  (conferir zoneamento)"
+
+        rich_segments(p1, val1, size=SZ_TABELA, color=cor_v1)
+        
+        if alerta_msg_v1:
+            r_alert = p1.add_run(alerta_msg_v1)
             set_font(r_alert, size=7, bold=True, italic=True)
-            r_alert.font.color.rgb = RGBColor(0xCC, 0x00, 0x00)
+            r_alert.font.color.rgb = cor_v1
 
         # Label 2
         c2 = row.cells[2]
@@ -259,7 +257,7 @@ def build_dados_carimbo(doc, d):
         p3 = c3.paragraphs[0]
         p3.alignment = WD_ALIGN_PARAGRAPH.LEFT
         set_spacing(p3, line=220, before=25, after=25)
-        set_font(p3.add_run(val2), size=SZ_TABELA)
+        rich_segments(p3, val2, size=SZ_TABELA)
 
     add_separator(doc)
 
@@ -372,8 +370,7 @@ def add_doc_item(doc, tipo, obs=None):
         p_obs = cell.add_paragraph()
         p_obs.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         set_spacing(p_obs, line=280, before=0, after=40)
-        r_obs = add_run(p_obs, obs, size=10, italic=True)
-        r_obs.font.color.rgb = COR_CINZA_TEXTO
+        rich_segments(p_obs, obs, size=10, color=COR_CINZA_TEXTO)
 
     # Espaçamento depois do card
     p_space = doc.add_paragraph()
