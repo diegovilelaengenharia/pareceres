@@ -76,9 +76,9 @@ def _gerar_nome_saida(dados):
     for ch in ['<', '>', ':', '"', '|', '?', '*']:
         nome = nome.replace(ch, '')
         
-    # PROJECT_DIR is now _SISTEMA. The root is its parent.
+    # PROJECT_DIR is now _Sistema_Interno. The root is its parent.
     root_dir = os.path.dirname(PROJECT_DIR)
-    out_dir = os.path.join(root_dir, "Saida_Documentos")
+    out_dir = os.path.join(root_dir, "2_Documentos_Prontos")
     os.makedirs(out_dir, exist_ok=True)
     return os.path.join(out_dir, nome)
 
