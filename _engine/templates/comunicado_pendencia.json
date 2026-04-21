@@ -1,0 +1,19 @@
+{
+    "tipo_relatorio": "comunicado_pendencia",
+    "titulo_documento": "COMUNICADO DE PENDÊNCIA",
+    "categoria": "comunicado",
+    "descricao": "Emitido automaticamente quando houver falta ou ilegibilidade em documentos cruciais do processo.",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "requerente",
+        "considerandos"
+    ],
+    "assunto_padrao": "Pendência de Documentação - Regularização/Aprovação",
+    "modelo_considerandos": [
+        "Em atenção ao Processo de Licenciamento supra, protocolado sob responsabilidade de [NOME], informamos que a análise técnica foi suspensa temporariamente devido à constatação de irregularidades ou ausência de peças documentais e/ou técnicas em seus anexos.",
+        "Após triagem anti-fraude e checagem de legibilidade dos arquivos, foram detectadas as seguintes pendências críticas que impossibilitam a conferência da legalidade urbanística do projeto:\n\n1. [DOCUMENTO 1]: Página em branco, ilegível ou documento ausente na íntegra.\n2. [DOCUMENTO 2]: Faltando carimbo ou assinaturas técnicas.\n\n(Note para o GEM: gere este parágrafo como uma lista clara e enumere as faltas concretamente caso as identifique no arquivo).",
+        "Fica estipulado à parte requerente (ou interessado) o prazo legal para protocolar a documentação complementar corrigida em um único envelope ou remessa digital de adendo, a fim de retomarmos a instrução do requerimento."
+    ],
+    "modelo_conclusao": "Até a devida regularização das apontamentos listados acima, o trâmite na Secretaria de Obras permanece sobrestado."
+}

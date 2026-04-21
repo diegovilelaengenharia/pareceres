@@ -65,7 +65,11 @@ def _criar_documento_base():
 def _gerar_nome_saida(dados):
     """Gera nome de arquivo baseado nos dados do processo."""
     proc = str(dados.get("numero_processo", "RELATORIO")).replace("/", "-")
-    req_str = str(dados.get("requerente", "Desconhecido")).split()[0]
+    
+    # Nomenclatura Inteligente: busca nome na ordem de probabilidade das chaves
+    nome_alvo = dados.get("requerente") or dados.get("proprietario_nome") or dados.get("interessado") or "Desconhecido"
+    req_str = str(nome_alvo).split()[0]
+    
     tipo = dados.get("tipo_relatorio", "PARECER").upper()
     nome = f"{tipo}_{proc} {req_str}.docx"
     for ch in ['<', '>', ':', '"', '|', '?', '*']:
@@ -220,20 +224,20 @@ def gerar(dados, caminho_saida=None):
     
     if campos_faltantes:
         print("\n" + "="*70)
-        print("  [ERRO] DE VALIDAÇÃO: DADOS INCOMPLETOS NO JSON")
+        print("  [ERRO ESTRUTURAL] VALIDAÇÃO DE CHAVES JSON FALHOU")
         print("="*70)
-        print("  Parece que o Assistente GEM omitiu informações vitais!")
+        print("  Parece que o Assistente GEM esqueceu de incluir algumas chaves obrigatórias!")
         print(f"  Tipo do Documento: {tipo}")
-        print(f"  Campos Faltantes : {', '.join(campos_faltantes)}")
+        print(f"  Chaves Faltantes : {', '.join(campos_faltantes)}")
         print("-" * 70)
-        print("  [Auto-Correção] Copie e cole a mensagem abaixo de volta no GEM:\n")
-        print(f"  Gem, o JSON que você gerou falhou na validação de integridade fiscal.")
-        print(f"  O template oficial para '{tipo}' exige preenchimento dos campos:")
+        print("  [Ação de Correção] Copie e cole a mensagem abaixo de volta pro GEM:\n")
+        print(f"  Gem, o JSON que você gerou falhou na validação estrutural do sistema.")
+        print(f"  O template oficial para '{tipo}' exige o uso EXATO destas CHAVES JSON:")
         print(f"  >>> {', '.join(campos_faltantes)}")
-        print(f"  Por favor, revise o PDF do processo, extraia esses dados faltantes")
-        print(f"  e gere o bloco de JSON corrigido para eu tentar compilar de novo.")
+        print(f"  Por favor, revise o PDF do processo, certifique-se de usar estes nomes exatos de chaves")
+        print(f"  e gere o bloco de JSON corrigido e completo para eu compilar.")
         print("="*70 + "\n")
-        raise ValueError(f"Faltam {len(campos_faltantes)} campos obrigatórios.")
+        raise ValueError(f"Faltam {len(campos_faltantes)} chaves obrigatórias: {','.join(campos_faltantes)}")
 
 
     # Criar documento base

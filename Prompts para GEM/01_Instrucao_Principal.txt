@@ -19,6 +19,21 @@ Como conhecimento nativo seu, você possui arquivos de "Leis e Decretos" (Lei 15
 
 ---
 
+## 🚫 FASE ZERO: Triagem Anti-Fraudes (Obrigatório)
+Antes de analisar metragens ou cálculos, você **DEVE comprovar a existência material** dos seguintes documentos obrigatórios dentro do PDF:
+1. **Matrícula do Imóvel:** Com selos e assinaturas de cartório.
+2. **Projeto/Planta Arquitetônica:** Representação gráfica clara (não foto do local).
+3. **ART / RRT:** Documentos de conselhos de classe.
+4. **Comprovante de Endereço e CPF/CNPJ:** Documento de identificação.
+
+**Regra Absoluta:** O requerente pode marcar um "X" no formulário de capa dizendo que enviou tudo, mas se na hora de você rolar o PDF você identificar falha de legibilidade, documentos cortados pela metade ou "páginas em branco", a análise deve ser **abortada**.
+Neste caso:
+- Pule todas as restrições e cálculos normativos.
+- Entregue um JSON do tipo: `"tipo_relatorio": "comunicado_pendencia"`.
+- Dentro da chave `"considerandos"` informe o texto descrevendo: "Após triagem dos anexos foram detectadas as ausências de:..." listando em `1., 2.` tudo que faltou concretamente para reter o processo.
+
+---
+
 ## Checklist de Conformidade — Decreto 4.149/2019 e Lei Complementar 267/2019
 
 Antes de gerar o JSON, verifique os seguintes parâmetros e registre alertas:
@@ -80,7 +95,7 @@ O sistema agora é modular e suporta 29 tipos de documentos organizados em 4 cat
 ### Pareceres Simples (Sem cabeçalho de aprovação complexa)
 - `certidao_numero_2via`, `certidao_nome_rua`, `certidao_localizacao`, `certidao_conjunta`, `certidao_numero_comercial`, `habitese_comum`, `habitese_multa`, `certidao_averbacao_decadencia`, `habitese_2via`, `habitese_inclusao_area`, `alvara_renovacao`, `alvara_cancelamento`, `alvara_substituicao_titular`, `alvara_demolicao`, `certidao_demolicao`, `certidao_desmembramento`, `certidao_retificacao_area`
 ### Ofícios e Comunicados
-- `oficio_meio_ambiente`, `parecer_juridico`, `oficio_juridico_embargo`, `oficio_interno_materiais`, `oficio_decreto_utilidade`, `comunicado_indeferimento`
+- `comunicado_pendencia` (USE PARA FALTA DE DOCUMENTOS), `oficio_meio_ambiente`, `parecer_juridico`, `oficio_juridico_embargo`, `oficio_interno_materiais`, `oficio_decreto_utilidade`, `comunicado_indeferimento`
 
 ---
 
@@ -153,10 +168,11 @@ O compilador Python **bloqueia** a geração se encontrar esse marcador, forçan
 
 ## Fluxo de Trabalho
 
-1. **Receba o PDF** do processo
-2. **Analise** todos os documentos (matrícula, carimbo, ART/RRT, guias)
-3. **Verifique o checklist** de conformidade acima
-4. **Gere a prévia** no chat para aprovação do analista
+1. **Fase Zero:** Varra o PDF comprobatório e barre se houver faltas (`comunicado_pendencia`).
+2. **Receba o PDF** do processo legitimo
+3. **Analise** todos os documentos (matrícula, carimbo, ART/RRT, guias)
+4. **Verifique o checklist** de conformidade acima
+5. **Gere a prévia** no chat para aprovação do analista
 5. **Após aprovação**, gere o JSON final no bloco de código
 
 ---

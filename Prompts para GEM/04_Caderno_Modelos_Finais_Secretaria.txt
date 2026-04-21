@@ -1,29 +1,89 @@
 # DOCUMENTOS DE EXPEDIÇÃO (SETOR ADMINISTRATIVO / SECRETARIA)
 
-Este arquivo documenta as estruturas formatadas dos documentos impressos que a secretaria emite para entrega no balcão a partir do seu **Parecer Técnico de Parecer**.  A diagramação do seu JSON e dados deverão espelhar esse conhecimento de "como sairá na folha final" para esses casos.
+Este arquivo documenta as restrições finais para os documentos da Secretaria. 
+A diagramação final do seu JSON (quando do tipo `alvara_oficial`, `carta_habitese_oficial` ou `certidao_oficial`) exige **estrita obediência aos Nomes das Chaves JSON**.
 
-## ESTRUTURA METÁLICA (ALVARÁ DE CONSTRUÇÃO)
-O Alvará de construção deve conter invariavelmente:
-1. `numero_alvara`
-2. Identificação do `Proprietário` (Nome e CPF)
-3. Identificação do `Autor do Projeto` (Nome e CREA e ART PROJETO)
-4. Identificação do `Responsável Técnico` (Nome e CREA e ART OBRA)
-5. Identificação da `Construtora` (Opcional, com Nome e CNPJ)
-6. Escopo (Ex: "Tendo em vista o processo nº X, fica concedida a licença para execução em DD/MM/AAAA da obra denominada Y no endereço Z.")
-7. Matrizes/Dados da Obra:
-   - Categoria | Destinação | Tipo Base | Área(m²)
-   - Área Total da Obra / Especificação (Vagas de Garagem Tabela)
-   - Observações e Fim de Validade.
+NUNCA INVENTE CHAVES. Use estritamente as chaves listadas nos exemplos abaixo para o bloco principal de compilação. O motor de geração (Python) rejeitará o JSON se faltar alguma chave obrigatória exata.
 
-## ESTRUTURA METÁLICA (CARTA DE HABITE-SE)
-O Documento de Habite-se diverge na estrutura:
-1. `numero_habitese`
-2. `endereco_completo` da Obra destacado.
-3. `Proprietário`
-4. `Responsável pela Execução`
-5. `Responsável Técnico` (Texto narrativo: "Conforme despacho... processo X com área Y licenciada pelo Alvará Z concluída em...")
-6. `Tipo_de_Habitese` (Total, Parcial etc).
-7. Tabela de Matrizes Áreas (semelhante ao alvara).
-8. `Observacao` final (Ex: "Em atenção ao processo digital").
+## 1. ALVARÁS Oficiais (alvara_oficial, alvara_renovacao, etc)
+Para emissão dos alvarás finais, você DEVE retornar o seu JSON preenchendo as seguintes chaves obrigatórias e literais.
 
-Ao gerar o seu JSON nestas especificações Administrativas de balcão, construa rigidamente todos estes sub-nós sob a chave "dados_da_licenca" por exemplo, garantindo a fidelidade para impressão oficial da guia em nosso sistema.
+```json
+{
+  "tipo_relatorio": "alvara_oficial",
+  "numero_documento": "XXX/XXXX",
+  "numero_processo": "XXX/XXXX",
+  "data_aprovacao": "DD de Mês de AAAA",
+  "nome_obra": "Nome / Identificação da Obra",
+  "logradouro": "Endereço completo da obra",
+  "bairro": "Bairro",
+  "proprietario_nome": "Nome do Proprietário",
+  "proprietario_cpf_cnpj": "000.000.000-00",
+  "autor_projeto_nome": "Nome do Eng/Arq (Opcional, deixe vazio se ausente)",
+  "autor_projeto_crea": "XX.000/D",
+  "autor_projeto_art": "ART XXXXX",
+  "responsavel_tecnico_nome": "Nome do Eng/Arq Responsável pela Execução",
+  "responsavel_tecnico_crea": "XX.000/D",
+  "responsavel_tecnico_art": "ART XXXXX",
+  "construtora_nome": "(Opcional)",
+  "construtora_cpf_cnpj": "(Opcional)",
+  "area_total_obra": "0,00 m²",
+  "areas_matriz": [
+    {
+      "categoria": "Obra Nova / Área Resultante / Área Liberada",
+      "destinacao": "Residencial / Comercial",
+      "tipo_obra": "Alvenaria",
+      "area_m2": "0,00"
+    }
+  ],
+  "observacoes": "Quaisquer anotações finais ou condições (ex: validade)."
+}
+```
+
+## 2. CARTA DE HABITE-SE Oficial (carta_habitese_oficial)
+Da mesma forma, ao analisar um pedido de habite-se, gere os dados baseados nessas chaves fixas:
+
+```json
+{
+  "tipo_relatorio": "carta_habitese_oficial",
+  "numero_documento": "XXX/XXXX",
+  "numero_processo": "XXX/XXXX",
+  "logradouro": "Endereço",
+  "bairro": "Bairro",
+  "proprietario_nome": "Nome do Dono",
+  "proprietario_cpf_cnpj": "CPF/CNPJ",
+  "responsavel_execucao_nome": "Nome e Titulo",
+  "responsavel_execucao_cpf_cnpj": "Dados de conselho",
+  "texto_despacho_responsavel_tecnico": "Texto narrando a liberação do imóvel segundo vistoria...",
+  "area_total_obra": "0,00",
+  "areas_matriz": [ 
+    {
+      "categoria": "Área Total / Parcial",
+      "destinacao": "Habite-se",
+      "tipo_obra": "Alvenaria",
+      "area_m2": "0,00"
+    }
+  ]
+}
+```
+
+## 3. CERTIDÕES (certidao_oficial)
+Estrutura para as certidões gerais emitidas do balcão:
+
+```json
+{
+  "tipo_relatorio": "certidao_oficial",
+  "titulo_documento": "CERTIDÃO DE ...",
+  "texto_certidao": "Texto corrido com toda a informação da certidão respondendo ao parecer ou deferimento...",
+  "assinantes": [
+    { "nome": "Nome 1", "titulo": "Cargo" }
+  ],
+  "observacoes_finais": [
+    "Nota final de validade",
+    "Pode ser um array de strings das notas de rodapé"
+  ]
+}
+```
+
+### IMPORTANTE AO RESPONDER
+Não utilize a marcação `"⚠️ VERIFICAR"` se puder evitar cruzando as informações do processo em PDF. Se estiver em dúvida entre o Requerente inicial e o Proprietário real na matrícula, assuma o Proprietário conforme matrícula/certidão e entregue os dados finais e diretos. As chaves devem ter esses nomes EXATOS para o script de compilação em Python do setor ler o seu JSON corretamente na prefeitura.

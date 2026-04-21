@@ -103,6 +103,7 @@ TIPOS_DOCUMENTO = {
 
     # ── Comunicados ──
     "comunicado_indeferimento":           "comunicado",
+    "comunicado_pendencia":               "comunicado",
     
     # ── Documentos de Emissão da Secretaria (Prontos / Balcão) ──
     "alvara_oficial":                     "documento_pronto",

@@ -8,6 +8,7 @@ Uso: python _engine\\compilador.py dados.json [saida.docx]
 import sys
 import json
 import os
+import glob
 
 # Adicionar o diretório do script ao path para imports locais
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -52,33 +53,63 @@ def main():
         print("╚══════════════════════════════════════════════════════════════════╝")
         sys.exit(0)
 
-    # Ler JSON de entrada
-    try:
-        with open(args[0], encoding="utf-8") as f:
-            dados = json.load(f)
-        print(f"[>] Lendo arquivo: {args[0]}")
-    except FileNotFoundError:
-        print(f"[!] Não encontrado: {args[0]}")
-        sys.exit(1)
-    except json.JSONDecodeError as e:
-        print(f"[!] JSON inválido: {e}")
+    alvo = args[0]
+    arquivos_para_processar = []
+
+    if os.path.isdir(alvo):
+        print(f"\n[>] MODO EM LOTE: Escaneando pasta '{alvo}'")
+        arquivos_para_processar = glob.glob(os.path.join(alvo, "*.json"))
+        if not arquivos_para_processar:
+            print(f"[!] Nenhum arquivo .json encontrado na pasta de origem.")
+            sys.exit(0)
+    elif os.path.isfile(alvo) and alvo.endswith(".json"):
+        arquivos_para_processar = [alvo]
+    else:
+        print(f"[!] Erro: O caminho não é um JSON válido ou não existe -> {alvo}")
         sys.exit(1)
 
-    # Verificar marcadores de segurança
-    json_str = json.dumps(dados)
-    if "⚠️ VERIFICAR" in json_str:
-        print("\n" + "="*70)
-        print("  [AVISO]: O JSON contém marcações de incerteza do GEM.")
-        print("="*70)
-        print("    Para forçar o GEM a re-avaliar as folhas e corrigir as suas")
-        print("    próprias dúvidas, copie e envie a ele a mensagem abaixo:\n")
-        print("    'Gem, você marcou dados como '⚠️ VERIFICAR'. Releia os anexos")
-        print("    com mais atenção e tente cruzar os dados pra ter a certeza.'")
-        print("="*70 + "\n")
+    caminho_saida_fornecido = args[1] if len(args) > 1 else None
+    
+    if len(arquivos_para_processar) > 1 and caminho_saida_fornecido:
+        print("[!] Aviso: Parâmetro de saída único ignorado devido ao processamento em lote.")
+        caminho_saida_fornecido = None
 
-    # Gerar documento
-    caminho_saida = args[1] if len(args) > 1 else None
-    gerar(dados, caminho_saida)
+    sucessos = 0
+    erros = 0
+
+    from traceback import print_exc
+
+    for arquivo in arquivos_para_processar:
+        # Ler JSON de entrada
+        try:
+            with open(arquivo, encoding="utf-8") as f:
+                dados = json.load(f)
+            print(f"\n[>] Processando arquivo: {os.path.basename(arquivo)}")
+        except json.JSONDecodeError as e:
+            print(f"[X] Ignorando {os.path.basename(arquivo)}: JSON inválido ({e})")
+            erros += 1
+            continue
+
+        # Verificar marcadores de segurança
+        json_str = json.dumps(dados)
+        if "⚠️ VERIFICAR" in json_str:
+            print("  - [AVISO TÉCNICO]: O JSON contém marcações incompletas ('⚠️ VERIFICAR').")
+            print("  - Dica para o GEM:")
+            print("    'Gem, você marcou dados como '⚠️ VERIFICAR'. Releia os anexos")
+            print("    com mais atenção e tente cruzar os dados pra ter a certeza.'\n")
+
+        # Gerar documento
+        try:
+            gerar(dados, caminho_saida_fornecido)
+            sucessos += 1
+        except Exception as e:
+            # Em modo lote, interceptar erro e continuar o loop sem crashar a prefeitura inteira
+            print(f"  [ALERTA DE SISTEMA] Falha ao compilar {os.path.basename(arquivo)}: {e}")
+            erros += 1
+            
+    print("\n" + "="*70)
+    print(f" [V] COMPILAÇÃO ENCERRADA. Sucessos: {sucessos} | Falhas de Dados: {erros}")
+    print("="*70)
 
 
 if __name__ == "__main__":
