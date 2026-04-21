@@ -75,7 +75,12 @@ def _gerar_nome_saida(dados):
     nome = f"{tipo}_{proc} {req_str}.docx"
     for ch in ['<', '>', ':', '"', '|', '?', '*']:
         nome = nome.replace(ch, '')
-    return os.path.join(PROJECT_DIR, nome)
+        
+    # PROJECT_DIR is now _SISTEMA. The root is its parent.
+    root_dir = os.path.dirname(PROJECT_DIR)
+    out_dir = os.path.join(root_dir, "Saida_Documentos")
+    os.makedirs(out_dir, exist_ok=True)
+    return os.path.join(out_dir, nome)
 
 
 # ═══════════════════════════════════════════════════════════
