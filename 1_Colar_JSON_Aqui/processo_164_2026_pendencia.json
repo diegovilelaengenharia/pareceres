@@ -1,0 +1,37 @@
+{
+    "tipo_relatorio": "comunicado_pendencia",
+    "numero_processo": "164/2026",
+    "data_processo": "09 de janeiro de 2026",
+    "assunto": "Regularização de Obra e Habite-se",
+    "requerente": "ANTONIO MARTINS NETO",
+    "logradouro": "Rua DOUTOR ODORICO RIBEIRO, nº 107",
+    "bairro": "ACACIO RIBEIRO",
+    "inscricao_municipal": "01.01.045.0067.001",
+    "proprietario": "ANTONIO MARTINS NETO",
+    "desenhista": "Samuel Dias",
+    "lote": "017A-00",
+    "quadra": "00006",
+    "area_terreno": "240,00m²",
+    "area_total_construida": "283,38m²",
+    "taxa_ocupacao": "⚠️ VERIFICAR",
+    "coef_aproveitamento": "⚠️ VERIFICAR",
+    "taxa_permeabilidade": "⚠️ VERIFICAR",
+    "profissional_nome": "Samuel Dias",
+    "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos (SMOSU), por meio de seu Departamento Técnico, no uso de suas atribuições legais e após análise preliminar dos autos do Processo Administrativo em epígrafe, vem notificar o requerente acerca da constatação de inconsistências técnicas e documentais que obstam a emissão do Alvará de Regularização e da respectiva Carta de Habite-se neste momento processual.",
+    "considerandos": [
+        "a análise preliminar da documentação revelou divergência basilar quanto à titularidade e às dimensões do lote, uma vez que a documentação registral (Matrícula nº 9.833 do SRI e respectiva escritura de compra e venda) atesta que o requerente detém a propriedade legal de apenas **240,00m²** (duzentos e quarenta metros quadrados) da área do lote de **360,00m²**;",
+        "o Parecer Fiscal emitido pelo Setor de Fiscalização identificou a existência de 04 (quatro) unidades habitacionais consolidadas na edificação de **283,38m²**, fazendo-se imperiosa a correção do Projeto Arquitetônico (As Built) para que haja a devida discretização das áreas de cada imóvel, o que viabilizará a correta atribuição das numerações oficiais (107, 109, 111 e 113);",
+        "verificou-se que o selo (carimbo) do projeto apresentado encontra-se desatualizado ou preenchido de forma irregular, devendo ser integralmente corrigido e compatibilizado com os dados reais do imóvel e do profissional responsável;",
+        "as multas decorrentes da ausência de licença prévia (__Art. 79 da Lei nº 1.544/86__) e eventuais quebras de parâmetros urbanísticos serão apuradas, calculadas e lançadas oportunamente, logo após a juntada do projeto retificado aos autos."
+    ],
+    "fundamentacao_legal": [
+        "__Decreto Municipal nº 4.149/2019__: Impõe a necessidade de projeto arquitetônico exato e compatível com a titularidade registral para que seja autorizado o regular processamento e deferimento da licença."
+    ],
+    "conclusao": "Diante do exposto, determino o SOBRESTAMENTO do presente processo administrativo. A continuidade da análise e a emissão dos documentos de regularidade ficam CONDICIONADAS à correção do projeto arquitetônico e ao saneamento das pendências supracitadas. O requerente deverá anexar ao processo digital o arquivo em PDF do novo projeto retificado. Os documentos físicos eventualmente extraídos para correção deverão ser devolvidos.",
+    "documentos_emitir": [
+        {
+            "tipo": "Comunicado de Pendência Técnica",
+            "obs": "Aprovação suspensa. Aguardando anexação do projeto arquitetônico corrigido em formato PDF."
+        }
+    ]
+}

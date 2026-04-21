@@ -595,9 +595,7 @@ def build_comunicado_pendencia(doc, d):
         elif texto.lower().startswith("considerando "):
             texto = texto[13:].strip()
             
-        r_texto = p_item.add_run(texto)
-        set_font(r_texto, size=10)
-        r_texto.font.color.rgb = RGBColor(0x3C, 0x28, 0x00)
+        rich_segments(p_item, texto, size=10, color=RGBColor(0x3C, 0x28, 0x00))
 
     # Espaço após o box
     p_esp2 = doc.add_paragraph()
