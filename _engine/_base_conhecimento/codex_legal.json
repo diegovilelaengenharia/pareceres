@@ -7,18 +7,24 @@
       "Decreto nº 4.149/2019 — Procedimentos de aprovação de projetos",
       "Lei nº 1.544/86 — Código de Obras do Município",
       "Lei Complementar nº 267/2019 — Uso e Ocupação do Solo",
-      "Lei nº 5.172/1966 — CTN (Art. 150 §4º, decadência)"
+      "Lei nº 5.172/1966 — CTN (Art. 150 §4º, decadência)",
+      "Lei nº 1.788/1989 — Código de Posturas do Município",
+      "Lei Complementar nº 216/2014 — Parcelamento do Solo (Redação LC 313/2024)",
+      "Lei Federal nº 6.766/1979 — Parcelamento do Solo Urbano"
     ],
     "instrucao_gem": "CONSULTE ESTE ARQUIVO MECANICAMENTE antes de redigir qualquer considerando ou fundamentação. Use os campos 'citacao_considerando' e 'citacao_fundamentacao' como texto base, substituindo os {placeholders} pelos valores reais do processo. NUNCA invente artigos ou valores fora deste codex."
   },
-
   "excecoes": {
     "lote_igual_ou_menor_220m2": {
       "lei": "Art. 9º, §13 da Lei Complementar nº 267/2019 c/c Arts. 1.299 a 1.301 do Código Civil Brasileiro",
       "condicao": "area_terreno_m2 <= 220",
       "efeito": "Lote pode adotar afastamentos do Código Civil (Arts. 1.299-1.301) em substituição aos definidos pela LC 267/2019 e pela Lei nº 1.544/86. Não se aplica os afastamentos frontais, laterais e de fundo da zona.",
-      "bloqueia_multas": ["multa_parametros_lc267"],
-      "nao_bloqueia": ["multa_sem_licenca_art79"],
+      "bloqueia_multas": [
+        "multa_parametros_lc267"
+      ],
+      "nao_bloqueia": [
+        "multa_sem_licenca_art79"
+      ],
       "citacao_considerando": "o terreno possui área de **{area_terreno}m²**, igual ou inferior a 220,00m² (duzentos e vinte metros quadrados), aplicando-se a __isenção prevista no §13 do Art. 9º da Lei Complementar nº 267/2019__, de modo que os afastamentos frontais, laterais e de fundo adotados atendem ao disposto pelos Arts. 1.299 a 1.301 do Código Civil Brasileiro, não se aplicando ao caso os afastamentos previstos pela Lei nº 1.544/86;",
       "nota_tp": "A taxa de permeabilidade mínima de 20% (Art. 9º §14 da LC 267/2019) se aplica a TODOS os lotes, inclusive os menores que 220m². A exceção do §13 cobre apenas afastamentos, não permeabilidade."
     },
@@ -26,17 +32,17 @@
       "lei": "Art. 150, §4º da Lei nº 5.172/1966 (Código Tributário Nacional — CTN)",
       "condicao": "anos_desde_conclusao_obra >= 5",
       "efeito": "Isenção da multa por construção sem licença sobre a área decadente. Emitir Certidão de Decadência. A homologação tácita ocorre após 5 anos da conclusão da obra.",
-      "bloqueia_multas": ["multa_sem_licenca_art79"],
+      "bloqueia_multas": [
+        "multa_sem_licenca_art79"
+      ],
       "documento_emitir": "certidao_averbacao_decadencia",
       "citacao_considerando": "a edificação apresenta evidências robustas de conclusão há mais de 5 (cinco) anos ininterruptos, constatadas por {evidencias} (ex: imagens de satélite, declarações, comprovantes), configurando a __decadência administrativa nos termos do Art. 150, §4º do CTN__, razão pela qual fica afastada a cobrança de multa sobre a área decadente de **{area_decadente}m²**, que será objeto de Certidão de Decadência;",
       "citacao_fundamentacao": "__Art. 150, §4º do Código Tributário Nacional (Lei nº 5.172/1966):__ Se a lei não fixar prazo à homologação, será ele de 5 (cinco) anos, a contar da ocorrência do fato gerador. Transcorrido esse prazo sem que a Fazenda Pública se tenha pronunciado, considera-se homologado o lançamento e definitivamente extinto o crédito. Aplica-se ao caso por analogia administrativa, afastando a incidência de penalidades pecuniárias sobre área edificada há mais de 5 anos."
     }
   },
-
   "parametros_zonais": {
     "_fonte": "LC 267/2019, Art. 15 e seguintes — valores extraídos das tabelas de parâmetros por zona",
     "_nota_global": "Art. 9º §14 LC 267/2019: taxa de permeabilidade mínima de 20% se aplica a TODOS os lotes de qualquer zona. Art. 9º §15: afastamento frontal e de fundo mínimo de 1,50m aplica-se a todas as zonas.",
-
     "ZUR1": {
       "descricao": "Zona de Uso Predominantemente Residencial 1 — baixa densidade, bacia do manancial e APPs",
       "to_max_pct": 60,
@@ -144,12 +150,9 @@
       "tp_min_pct": 20
     }
   },
-
   "artigos": {
-
     "decreto_4149_2019": {
       "_nome": "Decreto nº 4.149/2019 — Procedimentos para concessão de aprovação de projetos",
-
       "art_2": {
         "descricao": "Prazo para análise e emissão de autorizações",
         "conteudo": "A análise e emissão de autorizações ou alvarás deverá ser executada por 02 (dois) técnicos da SMOSU no prazo máximo de 15 (quinze) dias úteis.",
@@ -209,10 +212,8 @@
         "citacao_considerando": "o requerente solicitou a revalidação do Alvará de Construção nº {numero_alvara}, nos termos do __Art. 9º do Decreto nº 4.149/2019__, sendo a renovação condicionada à confirmação, por parecer fiscal, de que a obra está sendo executada em conformidade com o projeto originalmente aprovado;"
       }
     },
-
     "lei_1544_86": {
       "_nome": "Lei nº 1.544/86 — Código de Obras do Município de Oliveira/MG",
-
       "art_9": {
         "descricao": "Validade do alvará de construção — 1 ano",
         "conteudo": "Após aprovação do projeto e comprovado pagamento das taxas, a Prefeitura fornecerá alvará de construção válido por 1 (um) ano, ressalvando ao interessado requerer revalidação.",
@@ -249,13 +250,31 @@
           "I_sem_licenca": {
             "descricao": "Iniciar ou executar obras sem licença da Prefeitura Municipal",
             "faixas": [
-              {"faixa": "até 60,00m²",          "aliquota_pct_por_m2": 1,  "label": "1% da URM por m²"},
-              {"faixa": "61,00m² a 75,00m²",    "aliquota_pct_por_m2": 3,  "label": "3% da URM por m²"},
-              {"faixa": "76,00m² a 100,00m²",   "aliquota_pct_por_m2": 4,  "label": "4% da URM por m²"},
-              {"faixa": "acima de 100,00m²",    "aliquota_pct_por_m2": 5,  "label": "5% da URM por m²"}
+              {
+                "faixa": "até 60,00m²",
+                "aliquota_pct_por_m2": 1,
+                "label": "1% da URM por m²"
+              },
+              {
+                "faixa": "61,00m² a 75,00m²",
+                "aliquota_pct_por_m2": 3,
+                "label": "3% da URM por m²"
+              },
+              {
+                "faixa": "76,00m² a 100,00m²",
+                "aliquota_pct_por_m2": 4,
+                "label": "4% da URM por m²"
+              },
+              {
+                "faixa": "acima de 100,00m²",
+                "aliquota_pct_por_m2": 5,
+                "label": "5% da URM por m²"
+              }
             ],
             "formula": "area_m2 × (aliquota_pct / 100) × valor_URM_vigente",
-            "excecoes_aplicaveis": ["decadencia_administrativa_5anos"],
+            "excecoes_aplicaveis": [
+              "decadencia_administrativa_5anos"
+            ],
             "citacao_considerando": "foi constatada a execução de obra sem alvará prévio da Prefeitura Municipal, na área de **{area_irregular}m²**, infração tipificada no __Art. 79, Inciso I, alínea {alínea} da Lei nº 1.544/86__, incidindo multa calculada à razão de **{aliquota}% da URM por m²**, totalizando **R$ {valor_multa}** ({area_irregular}m² × {aliquota}% × URM R$ {valor_urm});",
             "citacao_fundamentacao": "__Art. 79, Inciso I da Lei Municipal nº 1.544/86 (Código de Obras):__ As multas são calculadas por alíquotas percentuais sobre a URM, escalonadas conforme a área edificada irregular: (a) até 60m²: 1%/m²; (b) 61 a 75m²: 3%/m²; (c) 76 a 100m²: 4%/m²; (d) acima de 100m²: 5%/m²."
           },
@@ -295,12 +314,15 @@
         },
         "reincidencia": "Art. 79 §3º (acrescido pela LC 267/2019): a penalidade é aplicada em dobro a cada reincidência.",
         "prazo_legalizacao": "Art. 80: O contribuinte tem 8 (oito) dias, a contar da intimação ou autuação, para legalizar a obra. Esgotado o prazo, é considerado reincidente."
+      },
+      "art_16_17_tapumes": {
+        "descricao": "Proteção de Passeio com Tapumes",
+        "conteudo": "Nenhuma construção no alinhamento poderá ser executada sem tapumes (Art. 16). Tapumes e andaimes não poderão ocupar mais do que a metade da largura do passeio (Art. 17).",
+        "citacao_considerando": "constatou-se a ocupação irregular do passeio público por tapumes/andaimes além da metade da sua largura, desrespeitando o limite de livre trânsito previsto no __Art. 17 da Lei nº 1.544/86__;"
       }
     },
-
     "lc_267_2019": {
       "_nome": "Lei Complementar nº 267/2019 — Uso e Ocupação do Solo do Município de Oliveira/MG",
-
       "art_9_par13": {
         "descricao": "Exceção de afastamentos para lotes ≤220m²",
         "ver": "excecoes.lote_igual_ou_menor_220m2"
@@ -331,43 +353,130 @@
         "descricao": "Penalidades por infrações à LC 267/2019 — escala por área",
         "base_calculo": "Valor da taxa cobrada quando da expedição do alvará de construção (consultar SMOSU para valor vigente)",
         "escalonamento": [
-          {"faixa": "até 40,00m²",          "multiplicador": 1,  "label": "equivalente a 1× o valor da taxa de alvará"},
-          {"faixa": "40,10m² a 80,00m²",    "multiplicador": 3,  "label": "equivalente a 3× o valor da taxa de alvará"},
-          {"faixa": "80,10m² a 100,00m²",   "multiplicador": 6,  "label": "equivalente a 6× o valor da taxa de alvará"},
-          {"faixa": "acima de 100,10m²",    "multiplicador": 10, "label": "equivalente a 10× o valor da taxa de alvará"}
+          {
+            "faixa": "até 40,00m²",
+            "multiplicador": 1,
+            "label": "equivalente a 1× o valor da taxa de alvará"
+          },
+          {
+            "faixa": "40,10m² a 80,00m²",
+            "multiplicador": 3,
+            "label": "equivalente a 3× o valor da taxa de alvará"
+          },
+          {
+            "faixa": "80,10m² a 100,00m²",
+            "multiplicador": 6,
+            "label": "equivalente a 6× o valor da taxa de alvará"
+          },
+          {
+            "faixa": "acima de 100,10m²",
+            "multiplicador": 10,
+            "label": "equivalente a 10× o valor da taxa de alvará"
+          }
         ],
         "nota": "Parágrafo único: As penalidades do Art. 39 são aplicadas CUMULATIVAMENTE às infrações cometidas (cada tipo de infração gera sua própria multa).",
-        "excecoes_aplicaveis": ["lote_igual_ou_menor_220m2"],
+        "excecoes_aplicaveis": [
+          "lote_igual_ou_menor_220m2"
+        ],
         "citacao_considerando": "incide multa prevista no __Art. 39 da Lei Complementar nº 267/2019__ sobre a área em desacordo de **{area_desacordo}m²**, enquadrando-se na faixa {faixa_descricao}, equivalente a **{multiplicador}× o valor da taxa de expedição do alvará** (R$ {valor_multa});",
         "citacao_fundamentacao": "__Arts. 38 e 39 da Lei Complementar nº 267/2019 (Uso e Ocupação do Solo):__ Constituem infrações o desatendimento dos parâmetros de ocupação do solo. As penalidades são escalonadas conforme a área em desacordo: até 40m² = 1× a taxa de alvará; de 40,1 a 80m² = 3×; de 80,1 a 100m² = 6×; acima de 100,1m² = 10×. As penalidades são aplicadas cumulativamente."
       }
+    },
+    "lei_1788_89": {
+      "_nome": "Lei nº 1.788/1989 — Código de Posturas do Município de Oliveira/MG",
+      "art_111": {
+        "descricao": "Alvará de Funcionamento e Localização",
+        "conteudo": "Para liberação da licença de funcionamento pela Prefeitura Municipal, o prédio deverá ser previamente vistoriado pelos órgãos competentes quanto às condições de higiene e segurança, qualquer que seja o ramo de atividade.",
+        "citacao_considerando": "o requerimento atende às disposições para concessão de Alvará de Funcionamento e Localização, submetendo-se à vistoria prévia exigida pelo __Art. 111 da Lei nº 1.788/1989 (Código de Posturas)__ para verificação das condições de higiene e segurança;"
+      },
+      "art_114": {
+        "descricao": "Cassação de Alvará de Localização",
+        "conteudo": "A Licença de Localização poderá ser cassada a qualquer tempo quando se tratar de negócio diferente do requerimento, medida preventiva a bem da higiene ou recusa em exibir o Alvará.",
+        "citacao_considerando": "verificou-se infração passível de cassação do Alvará de Localização, com fundamento no __Art. 114 da Lei nº 1.788/1989 (Código de Posturas)__, implicando o fechamento do estabelecimento;"
+      },
+      "art_13_escavacoes": {
+        "descricao": "Escavações e Aberturas em Vias e Passeios Públicos",
+        "conteudo": "Não é permitido fazer aberturas no calçamento ou escavações nas vias públicas sem expressa autorização. Na abertura de valas nos passeios, é obrigatória a adoção de ponte provisória. Deve haver sinalização de perigo (luzes vermelhas).",
+        "citacao_considerando": "foi constatada a abertura não autorizada do calçamento/passeio para execução de escavações, sem a devida adoção de ponte provisória e/ou sinalização de segurança para pedestres, constituindo infração ao __Art. 13 da Lei nº 1.788/1989 (Código de Posturas)__;"
+      },
+      "art_13_invasao_logradouro": {
+        "descricao": "Demolição de Obra que Invade a Calçada ou Rua",
+        "conteudo": "A Prefeitura coibirá invasões de logradouros. Verificada invasão por obra de caráter permanente, será promovida a sua imediata demolição.",
+        "citacao_considerando": "a vistoria atestou que a edificação/obra invade o logradouro público (passeio/via), conduta tipificada no logradouro de invasão de área pública, sujeitando-se o infrator à sumária demolição da obra permanente, em deferência ao __Art. 13, § 1º da Lei nº 1.788/1989 (Código de Posturas)__;"
+      },
+      "art_20_limpeza": {
+        "descricao": "Limpeza e Conservação de Calçadas (Passeios)",
+        "conteudo": "Os moradores (e donos de lotes) são responsáveis pela limpeza do passeio fronteiriço à sua residência/obra. É proibido varrer lixo para o logradouro.",
+        "citacao_considerando": "constatou-se o acúmulo irregular de resíduos, detritos ou falta de higiene no passeio (calçada) fronteiriço ao imóvel, obrigação de conservação que recai sobre o responsável legal pelo lote nos termos do __Art. 20 da Lei nº 1.788/1989 (Código de Posturas)__;"
+      },
+      "art_27_entulhos": {
+        "descricao": "Remoção de Entulhos de Obras",
+        "conteudo": "Restos e materiais de construção, assim como entulhos, são lixo de remoção especial (inciso III). Devem ser removidos pelo construtor diretamente ou recolhidos pela Prefeitura mediante pagamento antecipado da taxa.",
+        "citacao_considerando": "foram depositados entulhos e restos de materiais de construção no logradouro sem a devida remoção especial custeada pelo interessado, ato violador do __Art. 27 da Lei nº 1.788/1989 (Código de Posturas)__;"
+      },
+      "art_45_materiais_construcao": {
+        "descricao": "Depósito de Materiais de Construção em Via Pública",
+        "conteudo": "É proibido embaraçar o livre trânsito das vias com depósitos de quaisquer materiais, inclusive construção. Tolerância máxima de descarga na via é de 5 horas, apenas se a descarga não for possível internamente e com devida sinalização.",
+        "citacao_considerando": "foram mantidos depositados materiais de construção na via pública/passeio de forma injustificada, por lapso temporal superior à operação permitida de descarga (máximo de 5 horas admitido por força maior), violando a garantia de livre trânsito expressa no __Art. 45 da Lei nº 1.788/1989 (Código de Posturas)__;"
+      },
+      "art_81_arvores": {
+        "descricao": "Derrubada e Poda de Árvores no Logradouro",
+        "conteudo": "É proibido podar, cortar ou sacrificar toda e qualquer vegetação das praças e passeios públicos sem pedido formal, recolhimento da taxa (VRM) e imediato plantio substituto.",
+        "citacao_considerando": "houve sacrifício/poda/remoção irregular ou constata-se a pretensão de remoção de cobertura arbórea existente no passeio público, desprovida da licença municipal e desacompanhada da contrapartida de novo plantio fronteiriço imediato, violando o __Art. 81 da Lei nº 1.788/1989 (Código de Posturas)__;"
+      }
+    },
+    "lei_6766_79": {
+      "_nome": "Lei Federal nº 6.766/1979 — Parcelamento do Solo Urbano",
+      "art_2": {
+        "descricao": "Loteamento e Desmembramento",
+        "conteudo": "§ 1º Considera-se loteamento a subdivisão de gleba com abertura de novas vias. § 2º Considera-se desmembramento a subdivisão com aproveitamento do sistema viário existente.",
+        "citacao_considerando": "o projeto apresentado caracteriza-se como {tipo_parcelamento}, nos termos do __Art. 2º da Lei Federal nº 6.766/1979__, {justificativa_abertura_vias};",
+        "citacao_fundamentacao": "__Art. 2º da Lei nº 6.766/1979:__ O parcelamento do solo urbano poderá ser feito mediante loteamento (com abertura de vias) ou desmembramento (aproveitamento do sistema viário existente, sem abertura de vias)."
+      }
+    },
+    "lc_216_2014": {
+      "_nome": "Lei Complementar nº 216/2014 (Redação dada pela LC 313/2024) — Parcelamento do Solo",
+      "art_6_condominios": {
+        "descricao": "Condomínios de Lotes",
+        "conteudo": "I. áreas destinadas aos sistemas de circulação interna, com largura mínima de 08 (oito) metros; II. lotes com área mínima de 1.000 m² (um mil metros quadrados) e frente mínima de 20 (vinte) metros.",
+        "alerta_gem": "Exija sempre 1.000m² de área e 20m de frente para Condomínio de Lotes.",
+        "citacao_considerando": "o projeto de Condomínio de Lotes atende aos parâmetros mínimos estabelecidos pela __Lei Complementar nº 216/2014 (alterada pela LC 313/2024)__, apresentando lotes com área igual ou superior a 1.000m² e frente igual ou superior a 20 metros;"
+      }
     }
   },
-
   "responsabilidade_tecnica": {
     "_instrucao": "Ao identificar o tipo de RT no processo, registrar o campo 'resp_tecnica_tipo' no JSON conforme a tabela abaixo.",
     "tipos": {
       "ART": {
         "nome_completo": "Anotação de Responsabilidade Técnica",
         "conselho": "CREA — Conselho Regional de Engenharia e Agronomia",
-        "profissionais": ["Engenheiro Civil", "Engenheiro Arquiteto", "Agrônomo", "Geólogo", "Técnico Industrial"],
+        "profissionais": [
+          "Engenheiro Civil",
+          "Engenheiro Arquiteto",
+          "Agrônomo",
+          "Geólogo",
+          "Técnico Industrial"
+        ],
         "sigla_registro": "CREA"
       },
       "RRT": {
         "nome_completo": "Registro de Responsabilidade Técnica",
         "conselho": "CAU — Conselho de Arquitetura e Urbanismo",
-        "profissionais": ["Arquiteto e Urbanista"],
+        "profissionais": [
+          "Arquiteto e Urbanista"
+        ],
         "sigla_registro": "CAU"
       },
       "TRT": {
         "nome_completo": "Termo de Responsabilidade Técnica",
         "conselho": "CFT/CRT — Conselho Federal/Regional de Técnicos Industriais",
-        "profissionais": ["Técnico Industrial"],
+        "profissionais": [
+          "Técnico Industrial"
+        ],
         "sigla_registro": "CFT/CRT"
       }
     }
   },
-
   "checklist_analise_gem": {
     "_instrucao": "Execute esta sequência em TODA análise de processo. Registre cada resultado antes de gerar o JSON final.",
     "passos": [

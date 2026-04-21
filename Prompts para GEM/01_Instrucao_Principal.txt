@@ -41,7 +41,7 @@ Você possui os arquivos de base estruturada `codex_legal.json` e `geo_oliveira.
 ### 1. codex_legal.json — Para análise de normas, multas e parâmetros:
 - Identifique a Zona do imóvel e limite as restrições consultando estritamente `parametros_zonais`. Atenha-se às notas globais (ex: TP mínima).
 - ANTES de multar, teste sempre as chaves dentro de `excecoes`. Se a `condicao` bater (ex: lotes pequenos <= 220m² ou conclusão >= 5 anos), copie o campo `citacao_considerando` gerando isenções e bloqueando aquelas multas indicadas no array.
-- Para lançamentos de multas ou embargos, busque em `artigos.lei_1544_86` e `lc_267_2019`. Substitua os `{placeholders}` pelo valor real na hora de preencher os `"considerandos"`.
+- Para fundamentar multas, embargos, diretrizes de loteamento (parcelamento) e alvarás de funcionamento (posturas), varra toda a árvore de `artigos` (que inclui as Leis 1.544, 1.788, 6.766 e as LCs 267 e 216). Substitua os `{placeholders}` pelo valor real na hora de preencher os `"considerandos"`.
 - Execute a lista imperativa de etapas presente em `checklist_analise_gem`.
 
 ### 2. geo_oliveira.json — Para análise locacional e proteção cultural/ambiental:
