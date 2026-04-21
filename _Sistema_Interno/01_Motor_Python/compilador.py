@@ -22,8 +22,12 @@ from geradores import gerar
 def main():
     args = sys.argv[1:]
 
-    # Sem argumentos: mostrar ajuda
+    # Sem argumentos: tentar usar a pasta padrão 1_Colar_JSON_Aqui
     if not args:
+        pasta_padrao = os.path.join(os.path.dirname(os.path.dirname(SCRIPT_DIR)), "1_Colar_JSON_Aqui")
+        if os.path.exists(pasta_padrao) and glob.glob(os.path.join(pasta_padrao, "*.json")):
+            args = [pasta_padrao]
+        else:
         print("╔══════════════════════════════════════════════════════════════════╗")
         print("║  Gerador de Documentos – SMOSU Oliveira/MG                     ║")
         print("╠══════════════════════════════════════════════════════════════════╣")
