@@ -30,9 +30,9 @@ FONT_DETALHE = "Calibri"     # sans-serif para contato, notas
 # ═══════════════════════════════════════════════════════════
 #  TAMANHOS DE FONTE
 # ═══════════════════════════════════════════════════════════
-SZ_CORPO   = 11
+SZ_CORPO   = 11     # 11pt conforme solicitado
 SZ_TABELA  = 9
-SZ_CITACAO = 8
+SZ_CITACAO = 9
 SZ_NOTA    = 8
 SZ_RODAPE  = 8
 
@@ -50,7 +50,7 @@ COR_CINZA_LEVE   = RGBColor(0x66, 0x66, 0x66)
 #  ESPAÇAMENTO PADRÃO
 # ═══════════════════════════════════════════════════════════
 PAR_AFTER = 120
-LINE_SPC  = 288
+LINE_SPC  = 276   # 1.15 linhas (276 twips)
 
 # ═══════════════════════════════════════════════════════════
 #  ASSINANTE PADRÃO

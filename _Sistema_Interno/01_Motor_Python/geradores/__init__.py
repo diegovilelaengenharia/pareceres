@@ -47,15 +47,16 @@ def _criar_documento_base():
     """Cria documento com margens A4 e estilo padrão configurados."""
     doc = Document()
     section = doc.sections[0]
+    # Margens 1.5cm + cabeçalho rente ao topo + rodapé com altura
     M = Cm(1.5)
-    section.page_height  = Cm(29.7)
-    section.page_width   = Cm(21.0)
-    section.top_margin   = M
-    section.bottom_margin = M
-    section.left_margin  = M
-    section.right_margin = M
-    section.header_distance = Cm(1.0)
-    section.footer_distance = Cm(1.0)
+    section.page_height      = Cm(29.7)
+    section.page_width       = Cm(21.0)
+    section.top_margin       = Cm(3.2)   # corpo começa após o cabeçalho (~2.8cm de altura)
+    section.bottom_margin    = Cm(2.2)   # espaço generoso para o rodapé
+    section.left_margin      = M
+    section.right_margin     = M
+    section.header_distance  = Cm(0.3)   # logo colado na borda superior — sem borda branca
+    section.footer_distance  = Cm(0.5)   # rodapé colado na borda inferior
 
     style = doc.styles['Normal']
     style.font.name = FONT_CORPO

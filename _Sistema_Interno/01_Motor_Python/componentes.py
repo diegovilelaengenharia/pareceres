@@ -64,11 +64,11 @@ def _ensure_list(data):
 def build_titulo(doc, titulo="PARECER SETOR TÉCNICO - SMOSU"):
     """Título centralizado com fonte Cambria bold."""
     pt = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
-                  line=288, before=280, after=80)
+                  line=288, before=200, after=100)
     r_tit = add_run(pt, titulo, bold=True, size=16)
     set_font(r_tit, name=FONT_TITULO, size=16, bold=True)
     r_tit.font.color.rgb = COR_LABEL_FONT
-    add_separator(doc, color='999999')
+    # Sem separador aqui — o cabeçalho já tem linha azul
 
 
 # ═══════════════════════════════════════════════════════════
@@ -110,7 +110,7 @@ def build_identificacao(doc, d):
         set_spacing(p_val, line=280, before=70, after=70)
         rich_segments(p_val, val, size=10)
 
-    add_separator(doc)
+    add_separator(doc, color='D0D0D0')   # único separador após identificação
 
 
 # ═══════════════════════════════════════════════════════════
@@ -327,56 +327,49 @@ def build_fundamentacao(doc, d):
 # ═══════════════════════════════════════════════════════════
 
 def add_doc_item(doc, tipo, obs=None):
-    """Adiciona um item de documento como card com borda lateral azul."""
-    card = doc.add_table(rows=1, cols=1)
-    card.alignment = WD_TABLE_ALIGNMENT.CENTER
+    """Bloco de documento elegante: titulo destacado + observacao em estilo distinto."""
+    from docx.shared import Pt, Cm
 
-    # Bordas do card: borda esquerda grossa azul, restante cinza fina
-    tblPr = card._tbl.tblPr
-    if tblPr is None:
-        tblPr = OxmlElement('w:tblPr')
-        card._tbl.insert(0, tblPr)
-    tblBrd = OxmlElement('w:tblBorders')
-    for side in ('top', 'bottom', 'right'):
-        el = OxmlElement(f'w:{side}')
-        el.set(qn('w:val'), 'single')
-        el.set(qn('w:sz'), '4')
-        el.set(qn('w:color'), 'D6DCE4')
-        el.set(qn('w:space'), '0')
-        tblBrd.append(el)
-    left_b = OxmlElement('w:left')
-    left_b.set(qn('w:val'), 'single')
-    left_b.set(qn('w:sz'), '18')
-    left_b.set(qn('w:color'), COR_INST)
-    left_b.set(qn('w:space'), '0')
-    tblBrd.append(left_b)
-    for old in tblPr.findall(qn('w:tblBorders')):
-        tblPr.remove(old)
-    tblPr.append(tblBrd)
+    # Linha do titulo: fundo azul claríssimo, bullet colorido, nome em negrito
+    p_tipo = doc.add_paragraph()
+    p_tipo.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p_tipo.paragraph_format.left_indent  = Cm(0.3)
+    p_tipo.paragraph_format.space_before = Pt(10)
+    p_tipo.paragraph_format.space_after  = Pt(2)
+    p_tipo.paragraph_format.line_spacing = Pt(14)
 
-    cell = card.rows[0].cells[0]
-    # Fundo levemente cinza
+    # Fundo azul claríssimo via shading XML
+    pPr = p_tipo._p.get_or_add_pPr()
     shd = OxmlElement('w:shd')
-    shd.set(qn('w:fill'), 'F8F9FA')
     shd.set(qn('w:val'), 'clear')
-    cell._tc.get_or_add_tcPr().append(shd)
+    shd.set(qn('w:color'), 'auto')
+    shd.set(qn('w:fill'), 'EBF0FA')
+    pPr.append(shd)
 
-    # Título do documento
-    p_tipo = cell.paragraphs[0]
-    p_tipo.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    set_spacing(p_tipo, line=LINE_SPC, before=40, after=20)
-    add_run(p_tipo, tipo, bold=True, size=11)
+    r_bullet = p_tipo.add_run("\u2713  ")
+    set_font(r_bullet, size=11, bold=True)
+    r_bullet.font.color.rgb = COR_LABEL_FONT
 
-    # Observação
+    r_tipo = p_tipo.add_run(tipo)
+    set_font(r_tipo, size=11, bold=True)
+    r_tipo.font.color.rgb = RGBColor(0x1A, 0x1A, 0x1A)
+
+    # Observacao: prefixo azul + texto italico cinza discreto, recuado
     if obs:
-        p_obs = cell.add_paragraph()
+        p_obs = doc.add_paragraph()
         p_obs.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        set_spacing(p_obs, line=280, before=0, after=40)
-        rich_segments(p_obs, obs, size=10, color=COR_CINZA_TEXTO)
+        p_obs.paragraph_format.left_indent  = Cm(0.8)
+        p_obs.paragraph_format.space_before = Pt(3)
+        p_obs.paragraph_format.space_after  = Pt(10)
+        p_obs.paragraph_format.line_spacing = Pt(13)
 
-    # Espaçamento depois do card
-    p_space = doc.add_paragraph()
-    set_spacing(p_space, line=80, before=0, after=0)
+        r_prefix = p_obs.add_run("Obs.:  ")
+        set_font(r_prefix, size=9, bold=True)
+        r_prefix.font.color.rgb = COR_LABEL_FONT
+
+        r_obs = p_obs.add_run(obs.strip())
+        set_font(r_obs, size=9, italic=True)
+        r_obs.font.color.rgb = COR_CINZA_TEXTO
 
 
 # ═══════════════════════════════════════════════════════════
@@ -385,21 +378,10 @@ def add_doc_item(doc, tipo, obs=None):
 
 def build_conclusao_e_docs(doc, d):
     """Conclusão completa: fundamentação + conclusão + lista de docs + assinatura."""
-    INDENT = 1.25
-
     # 1º Fundamentação Legal
     build_fundamentacao(doc, d)
 
-    # 2º Título "Emissão de Documentos"
-    if d.get("documentos_emitir"):
-        p_doc_tit = add_para(doc, line=LINE_SPC, before=200,
-                             after=40, indent_cm=INDENT)
-        r_dt = add_run(p_doc_tit, "Emissão de Documentos:",
-                       bold=True, size=SZ_CORPO)
-        set_font(r_dt, name=FONT_TITULO, size=12, bold=True)
-        r_dt.font.color.rgb = COR_LABEL_FONT
-
-    # 3º Conclusão ("Diante do exposto...")
+    # 2º Conclusão ("Diante do exposto...")
     conclusao = d.get(
         "conclusao",
         "Diante do exposto, após análise das documentações apresentadas, conclui-se que o "
@@ -407,26 +389,27 @@ def build_conclusao_e_docs(doc, d):
         "ser emitidos os seguintes documentos:"
     )
     
-    p_esp_c1 = doc.add_paragraph()
-    set_spacing(p_esp_c1, line=80, before=0, after=0)
-    
-    card_conc, cell_conc = _box_colorido(doc, 'F4F6F9', '1F3864', '12')
-    p_conc = cell_conc.paragraphs[0]
+    p_conc = doc.add_paragraph()
     p_conc.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    set_spacing(p_conc, line=LINE_SPC, before=40, after=40)
+    set_spacing(p_conc, line=LINE_SPC, before=200, after=80)
     
     r_conc_icon = p_conc.add_run("CONCLUSÃO TÉCNICA:\n")
-    set_font(r_conc_icon, name=FONT_TITULO, size=11, bold=True)
+    set_font(r_conc_icon, name=FONT_TITULO, size=12, bold=True)
     r_conc_icon.font.color.rgb = COR_LABEL_FONT
     
     rich_segments(p_conc, conclusao, size=SZ_CORPO)
-    
-    p_esp_c2 = doc.add_paragraph()
-    set_spacing(p_esp_c2, line=80, before=0, after=0)
 
-    # 4º Lista de documentos (cards estilizados)
-    for item in d.get("documentos_emitir", []):
-        add_doc_item(doc, item.get("tipo", ""), item.get("obs") or None)
+    # 3º Título "Emissão de Documentos"
+    if d.get("documentos_emitir"):
+        p_doc_tit = doc.add_paragraph()
+        set_spacing(p_doc_tit, line=LINE_SPC, before=200, after=80)
+        r_dt = p_doc_tit.add_run("Emissão de Documentos:")
+        set_font(r_dt, name=FONT_TITULO, size=12, bold=True)
+        r_dt.font.color.rgb = COR_LABEL_FONT
+
+        # 4º Lista de documentos
+        for item in d.get("documentos_emitir", []):
+            add_doc_item(doc, item.get("tipo", ""), item.get("obs") or None)
 
     # 5º Assinatura
     build_assinatura(doc, d)
@@ -434,28 +417,25 @@ def build_conclusao_e_docs(doc, d):
 
 def build_conclusao_simples(doc, d):
     """Conclusão simples sem lista de documentos em cards."""
-    INDENT = 1.25
-
     if d.get("conclusao"):
-        p_esp_s1 = doc.add_paragraph()
-        set_spacing(p_esp_s1, line=80, before=0, after=0)
-        
-        card_conc, cell_conc = _box_colorido(doc, 'F4F6F9', '1F3864', '12')
-        p_conc = cell_conc.paragraphs[0]
+        p_conc = doc.add_paragraph()
         p_conc.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        set_spacing(p_conc, line=LINE_SPC, before=40, after=40)
+        set_spacing(p_conc, line=LINE_SPC, before=200, after=80)
         
         r_conc_icon = p_conc.add_run("CONCLUSÃO TÉCNICA:\n")
-        set_font(r_conc_icon, name=FONT_TITULO, size=11, bold=True)
+        set_font(r_conc_icon, name=FONT_TITULO, size=12, bold=True)
         r_conc_icon.font.color.rgb = COR_LABEL_FONT
         
         rich_segments(p_conc, d["conclusao"], size=SZ_CORPO)
-        
-        p_esp_s2 = doc.add_paragraph()
-        set_spacing(p_esp_s2, line=80, before=0, after=0)
 
-    # Se houver documentos, usar cards
+    # Se houver documentos
     if d.get("documentos_emitir"):
+        p_doc_tit = doc.add_paragraph()
+        set_spacing(p_doc_tit, line=LINE_SPC, before=200, after=80)
+        r_dt = p_doc_tit.add_run("Emissão de Documentos:")
+        set_font(r_dt, name=FONT_TITULO, size=12, bold=True)
+        r_dt.font.color.rgb = COR_LABEL_FONT
+
         for item in d.get("documentos_emitir", []):
             add_doc_item(doc, item.get("tipo", ""), item.get("obs") or None)
 

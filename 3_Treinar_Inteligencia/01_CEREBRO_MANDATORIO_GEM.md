@@ -2581,3 +2581,8 @@ linha revelam padrões operacionais. Exemplos de uso inteligente:
 | `REGULARIZACAO_AS_BUILT` | Obra já concluída s/ licença | Verificar decadência + multa Art. 79 |
 
 
+
+**3. Desmembramento com Blindagem Cartorária (LRP / Lei 6.766)**
+- **Situação:** Terreno de 44.000m² desmembrando 15.671m² (Processo 4924/2025). O documento precisava garantir que o loteamento passasse no Cartório sem notas de exigência.
+- **Aplicação:** O modelo incorporou de forma impecável a regra de ouro da 'Caducidade de 180 Dias' do Art. 18 da Lei 6.766/79 nas observações do documento, isentando a prefeitura de qualquer litígio futuro de decurso de prazo.
+- **O que aprendeu:** Sempre que aprovar Desmembramento, Desdobro, Unificação ou Loteamento, a cláusula de VALIDADE CARTORÁRIA DE 180 DIAS é obrigatória no campo de documentos a emitir.
