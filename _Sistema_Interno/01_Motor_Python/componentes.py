@@ -64,10 +64,11 @@ def _ensure_list(data):
 def build_titulo(doc, titulo="PARECER SETOR TÉCNICO - SMOSU"):
     """Título centralizado com fonte Cambria bold."""
     pt = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
-                  line=288, before=280, after=220)
-    r_tit = add_run(pt, titulo, bold=True, size=14)
-    set_font(r_tit, name=FONT_TITULO, size=14, bold=True)
+                  line=288, before=280, after=80)
+    r_tit = add_run(pt, titulo, bold=True, size=16)
+    set_font(r_tit, name=FONT_TITULO, size=16, bold=True)
     r_tit.font.color.rgb = COR_LABEL_FONT
+    add_separator(doc, color='999999')
 
 
 # ═══════════════════════════════════════════════════════════
@@ -99,7 +100,7 @@ def build_identificacao(doc, d):
         p_rot.alignment = WD_ALIGN_PARAGRAPH.LEFT
         set_spacing(p_rot, line=280, before=70, after=70)
         r_rot = p_rot.add_run(rot)
-        set_font(r_rot, size=SZ_TABELA, bold=True)
+        set_font(r_rot, size=10, bold=True)
         r_rot.font.color.rgb = COR_LABEL_FONT
 
         c_val = row.cells[1]
@@ -107,7 +108,7 @@ def build_identificacao(doc, d):
         p_val = c_val.paragraphs[0]
         p_val.alignment = WD_ALIGN_PARAGRAPH.LEFT
         set_spacing(p_val, line=280, before=70, after=70)
-        rich_segments(p_val, val, size=SZ_TABELA)
+        rich_segments(p_val, val, size=10)
 
     add_separator(doc)
 
@@ -316,7 +317,8 @@ def build_fundamentacao(doc, d):
         fund_limpo = fund.lstrip("•- \t") # Limpa marcadores se o GEM tiver colocado
         p_fund = add_para(doc, line=LINE_SPC, before=0,
                           after=PAR_AFTER, indent_cm=INDENT)
-        add_run(p_fund, "• ", size=SZ_CORPO)
+        r_bullet = add_run(p_fund, "▪ ", size=SZ_CORPO, bold=True)
+        r_bullet.font.color.rgb = COR_LABEL_FONT
         rich_segments(p_fund, fund_limpo, size=SZ_CORPO)
 
 
@@ -404,9 +406,23 @@ def build_conclusao_e_docs(doc, d):
         "projeto está apto a ser aprovado quanto às questões técnicas pertinentes, podendo "
         "ser emitidos os seguintes documentos:"
     )
-    p_conc = add_para(doc, line=LINE_SPC, before=0,
-                      after=PAR_AFTER, indent_cm=INDENT)
+    
+    p_esp_c1 = doc.add_paragraph()
+    set_spacing(p_esp_c1, line=80, before=0, after=0)
+    
+    card_conc, cell_conc = _box_colorido(doc, 'F4F6F9', '1F3864', '12')
+    p_conc = cell_conc.paragraphs[0]
+    p_conc.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    set_spacing(p_conc, line=LINE_SPC, before=40, after=40)
+    
+    r_conc_icon = p_conc.add_run("CONCLUSÃO TÉCNICA:\n")
+    set_font(r_conc_icon, name=FONT_TITULO, size=11, bold=True)
+    r_conc_icon.font.color.rgb = COR_LABEL_FONT
+    
     rich_segments(p_conc, conclusao, size=SZ_CORPO)
+    
+    p_esp_c2 = doc.add_paragraph()
+    set_spacing(p_esp_c2, line=80, before=0, after=0)
 
     # 4º Lista de documentos (cards estilizados)
     for item in d.get("documentos_emitir", []):
@@ -421,9 +437,22 @@ def build_conclusao_simples(doc, d):
     INDENT = 1.25
 
     if d.get("conclusao"):
-        p_conc = add_para(doc, line=LINE_SPC, before=200,
-                          after=PAR_AFTER, indent_cm=INDENT)
+        p_esp_s1 = doc.add_paragraph()
+        set_spacing(p_esp_s1, line=80, before=0, after=0)
+        
+        card_conc, cell_conc = _box_colorido(doc, 'F4F6F9', '1F3864', '12')
+        p_conc = cell_conc.paragraphs[0]
+        p_conc.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        set_spacing(p_conc, line=LINE_SPC, before=40, after=40)
+        
+        r_conc_icon = p_conc.add_run("CONCLUSÃO TÉCNICA:\n")
+        set_font(r_conc_icon, name=FONT_TITULO, size=11, bold=True)
+        r_conc_icon.font.color.rgb = COR_LABEL_FONT
+        
         rich_segments(p_conc, d["conclusao"], size=SZ_CORPO)
+        
+        p_esp_s2 = doc.add_paragraph()
+        set_spacing(p_esp_s2, line=80, before=0, after=0)
 
     # Se houver documentos, usar cards
     if d.get("documentos_emitir"):
@@ -541,10 +570,10 @@ def build_comunicado_pendencia(doc, d):
       ⑤ Assinatura
     """
     INDENT = 1.25
-    COR_ALERTA_FILL  = 'FFF3CD'   # amarelo-âmbar claro
-    COR_ALERTA_BORDA = 'C07800'   # âmbar escuro
-    COR_OK_FILL      = 'EBF5EB'   # verde muito claro
-    COR_OK_BORDA     = '2E7D32'   # verde institucional
+    COR_ALERTA_FILL  = 'FFFDF2'   # amarelo-âmbar super claro
+    COR_ALERTA_BORDA = 'F2C94C'   # amarelo/âmbar suave pastel
+    COR_OK_FILL      = 'F5FCF5'   # verde muito clarinho e suave
+    COR_OK_BORDA     = '81C784'   # verde pastel suave
 
     # ── ① Parágrafo de abertura ────────────────────────────────────────────
     if d.get("paragrafo_abertura"):
@@ -564,7 +593,7 @@ def build_comunicado_pendencia(doc, d):
     set_spacing(p_tit, line=260, before=60, after=60)
     r_icon = p_tit.add_run("⚠  DOCUMENTOS PENDENTES — ANÁLISE SUSPENSA")
     set_font(r_icon, name="Cambria", size=11, bold=True)
-    r_icon.font.color.rgb = RGBColor(0x7B, 0x4F, 0x00)
+    r_icon.font.color.rgb = RGBColor(0x99, 0x65, 0x15)
 
     # Subtítulo
     p_sub = cell_alert.add_paragraph()
@@ -576,7 +605,7 @@ def build_comunicado_pendencia(doc, d):
         "para o prosseguimento do processo:"
     )
     set_font(r_sub, size=10, italic=True)
-    r_sub.font.color.rgb = RGBColor(0x5C, 0x3A, 0x00)
+    r_sub.font.color.rgb = RGBColor(0x73, 0x5C, 0x1F)
 
     # Lista de pendências
     considerandos = _ensure_list(d.get("considerandos", []))
@@ -587,7 +616,7 @@ def build_comunicado_pendencia(doc, d):
         # Ícone de marcador
         r_bullet = p_item.add_run("  ✗  ")
         set_font(r_bullet, size=10, bold=True)
-        r_bullet.font.color.rgb = RGBColor(0xCC, 0x44, 0x00)
+        r_bullet.font.color.rgb = RGBColor(0xE6, 0x7E, 0x22)
         # Texto do item (sem "Considerando que" — é uma lista de pendências)
         texto = item.lstrip("0123456789. ")  # remove "1. ", "2. " se houver
         if texto.lower().startswith("considerando que "):
@@ -595,7 +624,7 @@ def build_comunicado_pendencia(doc, d):
         elif texto.lower().startswith("considerando "):
             texto = texto[13:].strip()
             
-        rich_segments(p_item, texto, size=10, color=RGBColor(0x3C, 0x28, 0x00))
+        rich_segments(p_item, texto, size=10, color=RGBColor(0x5C, 0x4A, 0x21))
 
     # Espaço após o box
     p_esp2 = doc.add_paragraph()
@@ -609,7 +638,7 @@ def build_comunicado_pendencia(doc, d):
     set_spacing(p_ok_tit, line=260, before=60, after=40)
     r_ok_icon = p_ok_tit.add_run("✔  COMO REGULARIZAR E RETOMAR O PROCESSO")
     set_font(r_ok_icon, name="Cambria", size=11, bold=True)
-    r_ok_icon.font.color.rgb = RGBColor(0x1B, 0x5E, 0x20)
+    r_ok_icon.font.color.rgb = RGBColor(0x2E, 0x7D, 0x32)
 
     orientacoes = [
         "Reúna todos os documentos listados acima em sua versão original ou digitalizada com legibilidade plena.",
@@ -623,10 +652,10 @@ def build_comunicado_pendencia(doc, d):
         set_spacing(p_or, line=260, before=20, after=20)
         r_num = p_or.add_run(f"  {i}.  ")
         set_font(r_num, size=10, bold=True)
-        r_num.font.color.rgb = RGBColor(0x1B, 0x5E, 0x20)
+        r_num.font.color.rgb = RGBColor(0x2E, 0x7D, 0x32)
         r_or = p_or.add_run(orient)
         set_font(r_or, size=10)
-        r_or.font.color.rgb = RGBColor(0x1A, 0x37, 0x1A)
+        r_or.font.color.rgb = RGBColor(0x26, 0x4D, 0x26)
 
     # Espaço após box verde
     p_esp3 = doc.add_paragraph()
