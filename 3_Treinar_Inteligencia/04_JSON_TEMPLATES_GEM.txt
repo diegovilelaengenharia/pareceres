@@ -1,0 +1,167 @@
+# TEMPLATES JSON — DOCUMENTOS DO MOTOR GEM
+
+Este arquivo define as chaves obrigatórias para cada tipo de documento.
+NUNCA INVENTE CHAVES. O motor Python rejeitará o JSON se uma chave obrigatória estiver ausente ou com nome errado.
+
+---
+
+# PARTE A — PARECERES E COMUNICADOS (gerados pelo GEM após análise do PDF)
+
+## A1. Parecer Técnico Completo
+Usado para: `alvara_aprovacao`, `alvara_regularizacao`, `alvara_ampliacao`, `alvara_reforma_demolicao_ampliacao`, `habitese_multa`, `habitese_inclusao_area`, etc.
+
+```json
+{
+  "tipo_relatorio": "alvara_aprovacao",
+  "numero_processo": "XXX/XXXX",
+  "data_processo": "DD de Mês de AAAA",
+  "assunto": "Descrição resumida do pedido",
+  "requerente": "NOME COMPLETO EM MAIÚSCULAS",
+  "logradouro": "Rua/Av., nº XXX",
+  "bairro": "Bairro",
+  "inscricao_municipal": "XX.XX.XXX.XXXX.XXX",
+  "area_terreno": "0,00m²",
+  "area_total_construida": "0,00m²",
+  "taxa_ocupacao": "0,00%",
+  "coef_aproveitamento": "0,00",
+  "taxa_permeabilidade": "0,00%",
+  "profissional_nome": "NOME DO ENG/ARQ RESPONSÁVEL",
+  "paragrafo_abertura": "Texto de abertura narrativo do processo...",
+  "considerandos": [
+    "primeiro considerando com citação legal __Art. X da Lei Y__;",
+    "segundo considerando com dado numérico em **negrito**;"
+  ],
+  "fundamentacao_legal": [
+    "__Art. X da Lei Y__: Explicação da aplicação ao caso concreto.",
+    "__Art. Z do Decreto W__: Explicação da aplicação ao caso concreto."
+  ],
+  "conclusao": "Texto de conclusão com parecer **FAVORÁVEL** ou **DESFAVORÁVEL**...",
+  "documentos_emitir": [
+    {
+      "tipo": "Nome do documento a emitir (ex: Alvará de Aprovação — 150,00m²)",
+      "obs": "Condições, validade e observações do documento."
+    }
+  ],
+  "extras_extraidos": {
+    "fiscais": "Nome e matrícula dos fiscais",
+    "guias_pagas": "Valor e descrição das guias/DAMs pagos",
+    "observacoes_manuscritas": "Qualquer anotação manuscrita relevante"
+  }
+}
+```
+
+## A2. Comunicado de Pendência
+Usado para: `comunicado_pendencia`
+Emitido quando o processo está **incompleto** (Fase Zero) ou quando há **multas a recolher** antes da análise prosseguir.
+
+```json
+{
+  "tipo_relatorio": "comunicado_pendencia",
+  "numero_processo": "XXX/XXXX",
+  "data_processo": "DD de Mês de AAAA",
+  "assunto": "COMUNICADO DE PENDÊNCIA — [TIPO DO PROCESSO]",
+  "requerente": "NOME COMPLETO EM MAIÚSCULAS",
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos (SMOSU) informa que o processo nº XXX/XXXX encontra-se com as seguintes pendências que impedem o prosseguimento da análise técnica:",
+  "considerandos": [
+    "**Item de Pendência 1:** Descrição clara e acessível ao cidadão, sem jargão excessivo.",
+    "**Item de Pendência 2:** Use **negrito** (duplo asterisco) para destacar o título de cada item."
+  ],
+  "conclusao": "O processo permanecerá suspenso até a regularização das pendências listadas. Após o atendimento de todas as exigências, a análise será retomada."
+}
+```
+
+> **REGRAS DO COMUNICADO:**
+> - Use `**negrito**` (duplo asterisco `**`), NUNCA `__sublinhado__` nos itens de pendência — o engine só processa `**`.
+> - Agrupe multas de mesma natureza (ex: TO + TP da LC 267) em **um único item** chamado "Multas Urbanísticas Acumulativas".
+> - Linguagem acessível: "área livre no terreno" ao invés de "taxa de permeabilidade".
+
+---
+
+# PARTE B — DOCUMENTOS DE EXPEDIÇÃO (SETOR ADMINISTRATIVO / SECRETARIA)
+
+A diagramação final do seu JSON (quando do tipo `alvara_oficial`, `carta_habitese_oficial` ou `certidao_oficial`) exige **estrita obediência aos Nomes das Chaves JSON**.
+
+NUNCA INVENTE CHAVES. Use estritamente as chaves listadas nos exemplos abaixo para o bloco principal de compilação. O motor de geração (Python) rejeitará o JSON se faltar alguma chave obrigatória exata.
+
+## B1. ALVARÁS Oficiais (alvara_oficial, alvara_renovacao, etc)
+Para emissão dos alvarás finais, você DEVE retornar o seu JSON preenchendo as seguintes chaves obrigatórias e literais.
+
+```json
+{
+  "tipo_relatorio": "alvara_oficial",
+  "numero_documento": "XXX/XXXX",
+  "numero_processo": "XXX/XXXX",
+  "data_aprovacao": "DD de Mês de AAAA",
+  "nome_obra": "Nome / Identificação da Obra",
+  "logradouro": "Endereço completo da obra",
+  "bairro": "Bairro",
+  "proprietario_nome": "Nome do Proprietário",
+  "proprietario_cpf_cnpj": "000.000.000-00",
+  "autor_projeto_nome": "Nome do Eng/Arq (Opcional, deixe vazio se ausente)",
+  "autor_projeto_crea": "XX.000/D",
+  "autor_projeto_art": "ART XXXXX",
+  "responsavel_tecnico_nome": "Nome do Eng/Arq Responsável pela Execução",
+  "responsavel_tecnico_crea": "XX.000/D",
+  "responsavel_tecnico_art": "ART XXXXX",
+  "construtora_nome": "(Opcional)",
+  "construtora_cpf_cnpj": "(Opcional)",
+  "area_total_obra": "0,00 m²",
+  "areas_matriz": [
+    {
+      "categoria": "Obra Nova / Área Resultante / Área Liberada",
+      "destinacao": "Residencial / Comercial",
+      "tipo_obra": "Alvenaria",
+      "area_m2": "0,00"
+    }
+  ],
+  "observacoes": "Quaisquer anotações finais ou condições (ex: validade)."
+}
+```
+
+## B2. CARTA DE HABITE-SE Oficial (carta_habitese_oficial)
+Da mesma forma, ao analisar um pedido de habite-se, gere os dados baseados nessas chaves fixas:
+
+```json
+{
+  "tipo_relatorio": "carta_habitese_oficial",
+  "numero_documento": "XXX/XXXX",
+  "numero_processo": "XXX/XXXX",
+  "logradouro": "Endereço",
+  "bairro": "Bairro",
+  "proprietario_nome": "Nome do Dono",
+  "proprietario_cpf_cnpj": "CPF/CNPJ",
+  "responsavel_execucao_nome": "Nome e Titulo",
+  "responsavel_execucao_cpf_cnpj": "Dados de conselho",
+  "texto_despacho_responsavel_tecnico": "Texto narrando a liberação do imóvel segundo vistoria...",
+  "area_total_obra": "0,00",
+  "areas_matriz": [
+    {
+      "categoria": "Área Total / Parcial",
+      "destinacao": "Habite-se",
+      "tipo_obra": "Alvenaria",
+      "area_m2": "0,00"
+    }
+  ]
+}
+```
+
+## B3. CERTIDÕES (certidao_oficial)
+Estrutura para as certidões gerais emitidas do balcão:
+
+```json
+{
+  "tipo_relatorio": "certidao_oficial",
+  "titulo_documento": "CERTIDÃO DE ...",
+  "texto_certidao": "Texto corrido com toda a informação da certidão respondendo ao parecer ou deferimento...",
+  "assinantes": [
+    { "nome": "Nome 1", "titulo": "Cargo" }
+  ],
+  "observacoes_finais": [
+    "Nota final de validade",
+    "Pode ser um array de strings das notas de rodapé"
+  ]
+}
+```
+
+### IMPORTANTE AO RESPONDER
+Não utilize a marcação `"⚠️ VERIFICAR"` se puder evitar cruzando as informações do processo em PDF. Se estiver em dúvida entre o Requerente inicial e o Proprietário real na matrícula, assuma o Proprietário conforme matrícula/certidão e entregue os dados finais e diretos. As chaves devem ter esses nomes EXATOS para o script de compilação em Python do setor ler o seu JSON corretamente na prefeitura.

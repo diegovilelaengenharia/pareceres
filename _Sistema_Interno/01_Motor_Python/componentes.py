@@ -361,20 +361,35 @@ def add_doc_item(doc, tipo, obs=None):
         p_obs.paragraph_format.left_indent  = Cm(0.8)
         p_obs.paragraph_format.space_before = Pt(3)
         p_obs.paragraph_format.space_after  = Pt(10)
-        p_obs.paragraph_format.line_spacing = Pt(13)
+        p_obs.paragraph_format.line_spacing = Pt(14)
 
         r_prefix = p_obs.add_run("Obs.:  ")
-        set_font(r_prefix, size=9, bold=True)
+        set_font(r_prefix, size=SZ_CORPO, bold=True)
         r_prefix.font.color.rgb = COR_LABEL_FONT
 
         r_obs = p_obs.add_run(obs.strip())
-        set_font(r_obs, size=9, italic=True)
+        set_font(r_obs, size=SZ_CORPO, italic=True)
         r_obs.font.color.rgb = COR_CINZA_TEXTO
 
 
 # ═══════════════════════════════════════════════════════════
 #  CONCLUSÃO + DOCUMENTOS + ASSINATURA
 # ═══════════════════════════════════════════════════════════
+
+def _build_conclusao_bloco(doc, conclusao_text):
+    """Título 'CONCLUSÃO TÉCNICA:' separado + parágrafo justificado de conclusão."""
+    p_tit = doc.add_paragraph()
+    p_tit.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    set_spacing(p_tit, line=LINE_SPC, before=200, after=20)
+    r = p_tit.add_run("CONCLUSÃO TÉCNICA:")
+    set_font(r, name=FONT_TITULO, size=SZ_CORPO, bold=True)
+    r.font.color.rgb = COR_LABEL_FONT
+
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    set_spacing(p, line=LINE_SPC, before=0, after=80)
+    rich_segments(p, conclusao_text, size=SZ_CORPO)
+
 
 def build_conclusao_e_docs(doc, d):
     """Conclusão completa: fundamentação + conclusão + lista de docs + assinatura."""
@@ -389,22 +404,15 @@ def build_conclusao_e_docs(doc, d):
         "ser emitidos os seguintes documentos:"
     )
     
-    p_conc = doc.add_paragraph()
-    p_conc.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    set_spacing(p_conc, line=LINE_SPC, before=200, after=80)
-    
-    r_conc_icon = p_conc.add_run("CONCLUSÃO TÉCNICA:\n")
-    set_font(r_conc_icon, name=FONT_TITULO, size=12, bold=True)
-    r_conc_icon.font.color.rgb = COR_LABEL_FONT
-    
-    rich_segments(p_conc, conclusao, size=SZ_CORPO)
+    _build_conclusao_bloco(doc, conclusao)
 
     # 3º Título "Emissão de Documentos"
     if d.get("documentos_emitir"):
         p_doc_tit = doc.add_paragraph()
+        p_doc_tit.paragraph_format.page_break_before = True
         set_spacing(p_doc_tit, line=LINE_SPC, before=200, after=80)
         r_dt = p_doc_tit.add_run("Emissão de Documentos:")
-        set_font(r_dt, name=FONT_TITULO, size=12, bold=True)
+        set_font(r_dt, name=FONT_TITULO, size=SZ_CORPO, bold=True)
         r_dt.font.color.rgb = COR_LABEL_FONT
 
         # 4º Lista de documentos
@@ -418,22 +426,15 @@ def build_conclusao_e_docs(doc, d):
 def build_conclusao_simples(doc, d):
     """Conclusão simples sem lista de documentos em cards."""
     if d.get("conclusao"):
-        p_conc = doc.add_paragraph()
-        p_conc.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        set_spacing(p_conc, line=LINE_SPC, before=200, after=80)
-        
-        r_conc_icon = p_conc.add_run("CONCLUSÃO TÉCNICA:\n")
-        set_font(r_conc_icon, name=FONT_TITULO, size=12, bold=True)
-        r_conc_icon.font.color.rgb = COR_LABEL_FONT
-        
-        rich_segments(p_conc, d["conclusao"], size=SZ_CORPO)
+        _build_conclusao_bloco(doc, d["conclusao"])
 
     # Se houver documentos
     if d.get("documentos_emitir"):
         p_doc_tit = doc.add_paragraph()
+        p_doc_tit.paragraph_format.page_break_before = True
         set_spacing(p_doc_tit, line=LINE_SPC, before=200, after=80)
         r_dt = p_doc_tit.add_run("Emissão de Documentos:")
-        set_font(r_dt, name=FONT_TITULO, size=12, bold=True)
+        set_font(r_dt, name=FONT_TITULO, size=SZ_CORPO, bold=True)
         r_dt.font.color.rgb = COR_LABEL_FONT
 
         for item in d.get("documentos_emitir", []):

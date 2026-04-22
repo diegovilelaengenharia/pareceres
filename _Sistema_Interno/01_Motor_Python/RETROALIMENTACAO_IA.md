@@ -58,3 +58,58 @@ Com esta diretriz, o sistema deixa de ser apenas um "gerador de relatórios" e p
    - `01_Instrucao_Principal.txt`: adicionada diretriz de "Riqueza Textual no JSON (CRÍTICO)".
    - `05_Prompt_Chat_de_Inicializacao.txt`: adicionada regra 4 na Fase Dois exigindo citações e narrativa.
    - `prompt_modelo.md`: diretriz de riqueza textual integrada nas regras de formatação.
+
+### [2026-04-22] Processo 10654/2025 — João Batista da Costa (Comunicado e Parecer)
+
+**Problemas identificados:**
+1. A IA usou `__` (itálico) com a intenção de gerar **negrito** nos itens do Comunicado de Pendência. No engine Python (`componentes.py`), a função `rich_segments` requer explicitamente `**` para renderizar negrito.
+2. O texto do Comunicado de Pendência gerado inicialmente pela IA era muito técnico ("multa por extrapolação de índices urbanísticos").
+3. As infrações de TO e TP (LC 267/2019) foram separadas em dois itens diferentes de pendência.
+4. Diagramação no documento gerado: O título `CONCLUSÃO TÉCNICA:\n` em um parágrafo justificado forçava o Word a esticar a palavra por toda a linha.
+5. A seção "Emissão de Documentos" ficava solta na mesma página da conclusão.
+
+**Correções aplicadas (22/04/2026):**
+
+1. **Engine Python (`componentes.py`):**
+   - **Correção de Justificação:** Títulos `CONCLUSÃO TÉCNICA:` agora possuem um parágrafo isolado com alinhamento à esquerda, impedindo o esticamento bizarro da fonte quando estava no mesmo parágrafo justificado.
+   - **Quebra de Página Automática:** Inserida a propriedade `page_break_before = True` no título "Emissão de Documentos:", garantindo que os cards de documentos sejam sempre plotados em uma folha nova e limpa.
+   - **Padronização Visual:** Fixado tamanho 11pt para todos os textos da conclusão (títulos, bullet points e observações).
+
+2. **Padrão de Geração de JSON (Retroalimentação do Prompt):**
+   - **Comunicados de Pendência (Linguagem):** O GEM deve adotar uma linguagem simplificada e mais acessível ao cidadão/requerente, evitando jargões excessivos ("espaço de terra livre" ao invés de apenas "taxa de permeabilidade"), sendo direto nas instruções.
+   - **Negrito Obrigatório:** Sempre utilizar duplo asterisco `**texto**` (e não sublinhado `__`) para destacar em negrito os itens de pendência dentro do JSON, garantindo que o `rich_segments` leia a formatação corretamente.
+   - **Unificação de Multas:** Multas de mesma natureza legal (Excesso de Ocupação e Déficit de Permeabilidade pela LC 267/2019) devem ser agrupadas no Comunicado como uma única pendência de "Multas Urbanísticas Acumulativas", deixando claro seu caráter simultâneo.
+
+### [2026-04-22] Processo 1065/2026 — Edimirce Eduardo de Oliveira (Parecer e Comunicado)
+
+**Problemas identificados:**
+1. Os documentos (especialmente o parecer e o comunicado inicial gerados pelo GEM) correram o risco de se tornarem demasiadamente simplificados na tentativa de clareza, perdendo a riqueza técnica e a "identidade institucional" característica dos pareceres modelo da prefeitura.
+2. O detalhamento das multas cumulativas não estava claro quanto à origem (diferença entre o apresentado e o alvará aprovado anteriormente, e falta de licença sobre a mesma área).
+
+**Correções aplicadas:**
+1. **Identidade Institucional da Escrita:** Retificou-se a instrução para garantir que o GEM mantenha o tom formal, professoral e detalhado. A simplificação no Comunicado não significa "empobrecimento" textual; os textos devem ser fáceis de entender, mas sem perder o embasamento legal robusto (cite as leis, explique o que cada taxa reprovada significa). 
+2. **Explicação Didática de Multas:** Sempre especificar no Comunicado de Pendência a origem das multas de forma completa. Ex: detalhar que há cobrança simultânea de taxa de aprovação (pela diferença de área) e multa por edificar sem licença, ambas sobre a mesma infração, amparadas pela Lei 267 e somadas cumulativamente. Os valores e porcentuais divergentes (ex: TO em 87,05% e TP em 1,87%) devem figurar explicitamente na comunicação ao cidadão.
+
+---
+
+### [2026-04-22] Reforma Estrutural dos Prompts — Liberdade Analítica + Extração Máxima
+
+**Problema identificado:**
+O GEM gerava pareceres truncados porque os prompts impunham quotas numéricas rígidas (mínimo 5 considerandos, mínimo 3 fundamentações, mínimo 100 palavras na conclusão). Isso forçava textos genéricos em processos simples e cortes indevidos em processos complexos.
+
+**Correções aplicadas:**
+
+1. **Arquivos reformulados:**
+   - `01_Instrucao_Principal.txt`: Reescrito. Quotas removidas. Profundidade nasce do caso, não de regras fixas.
+   - `05_Prompt_Chat_de_Inicializacao.txt`: Reescrito. Simplificado, sem checklists rígidos.
+   - `03_Banco_de_Historico.txt`: Atualizado com 4 processos modelo. Diretriz mudada de "REPLIQUE" para "INSPIRE-SE".
+   - `GEM_INSTRUCOES_COMPLETAS.txt`: Checklist numérico removido. Revisão qualitativa referenciada nos pareceres modelo.
+
+2. **Nova funcionalidade — Chave `extras_extraidos`:**
+   - GEM coleta o MÁXIMO de dados do PDF (fiscais e matrículas funcionais, alvarás anteriores, valores pagos, confrontantes, observações manuscritas, etc.) na chave livre `"extras_extraidos"`.
+   - O engenheiro (Antigravity) faz a triagem ao receber o JSON, decide o que incorporar ao sistema e retroalimenta.
+   - Ciclo: GEM extrai → Antigravity tria → sistema evolui.
+
+**Princípio consolidado:**
+> A qualidade é medida pela fidelidade aos fatos e riqueza narrativa — não por contagem de itens. Processos simples = parecer objetivo. Processos complexos = parecer extenso.
+

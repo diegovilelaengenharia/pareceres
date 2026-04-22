@@ -8,6 +8,7 @@ ofício ou comunicado).
 
 import os
 import json
+import datetime
 
 from docx import Document
 from docx.shared import Pt, Cm
@@ -65,23 +66,49 @@ def _criar_documento_base():
 
 
 def _gerar_nome_saida(dados):
-    """Gera nome de arquivo baseado nos dados do processo."""
-    proc = str(dados.get("numero_processo", "RELATORIO")).replace("/", "-")
-    
-    # Nomenclatura Inteligente: busca nome na ordem de probabilidade das chaves
+    """Gera nome de arquivo e pasta baseados nos dados do processo."""
+    now = datetime.datetime.now()
+
+    numero_raw = str(dados.get("numero_processo", "S-N"))
+    proc_limpo = numero_raw.replace("/", "-").replace("\\", "-")
+
+    # Separa número e ano — barra tem precedência; hífen só se ambas as partes forem dígitos
+    proc_num = numero_raw
+    proc_ano = now.strftime("%Y")
+    if "/" in numero_raw:
+        partes_proc = numero_raw.split("/")
+        proc_num = partes_proc[0]
+        proc_ano = partes_proc[-1]
+    elif "-" in numero_raw:
+        partes_proc = numero_raw.split("-")
+        if len(partes_proc) == 2 and partes_proc[0].isdigit() and partes_proc[1].isdigit():
+            proc_num = partes_proc[0]
+            proc_ano = partes_proc[-1]
+
+    # Primeiro e segundo nome do requerente
     nome_alvo = dados.get("requerente") or dados.get("proprietario_nome") or dados.get("interessado") or "Desconhecido"
-    req_str = str(nome_alvo).split()[0]
-    
-    tipo = dados.get("tipo_relatorio", "PARECER").upper()
-    nome = f"{tipo}_{proc} {req_str}.docx"
-    for ch in ['<', '>', ':', '"', '|', '?', '*']:
-        nome = nome.replace(ch, '')
-        
-    # PROJECT_DIR is now _Sistema_Interno. The root is its parent.
+    partes_nome = str(nome_alvo).strip().split()
+    if len(partes_nome) >= 2:
+        req_str = f"{partes_nome[0]}_{partes_nome[1]}"
+        nome_pasta_req = f"{partes_nome[0]} {partes_nome[1]}"
+    else:
+        req_str = partes_nome[0] if partes_nome else "Desconhecido"
+        nome_pasta_req = req_str
+
+    data_emissao = now.strftime("%d-%m-%Y")
+    tipo = str(dados.get("tipo_relatorio", "PARECER")).upper()
+
+    nome_arquivo = f"{tipo}_{proc_num}_{proc_ano}_{req_str}_{data_emissao}.docx"
+    nome_pasta = f"Processo {proc_limpo} - {nome_pasta_req}"
+
+    for ch in ['<', '>', ':', '"', '|', '?', '*', '\\']:
+        nome_arquivo = nome_arquivo.replace(ch, '')
+        nome_pasta = nome_pasta.replace(ch, '')
+
     root_dir = os.path.dirname(PROJECT_DIR)
-    out_dir = os.path.join(root_dir, "2_Documentos_Prontos")
-    os.makedirs(out_dir, exist_ok=True)
-    return os.path.join(out_dir, nome)
+    final_out_dir = os.path.join(root_dir, "2_Documentos_Prontos", nome_pasta)
+    os.makedirs(final_out_dir, exist_ok=True)
+    return os.path.join(final_out_dir, nome_arquivo)
 
 
 # ═══════════════════════════════════════════════════════════

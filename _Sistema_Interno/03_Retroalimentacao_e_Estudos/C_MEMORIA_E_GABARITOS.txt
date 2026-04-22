@@ -34,3 +34,4 @@ Este arquivo documenta os melhores pareceres produzidos pelo sistema. Eles serve
 ---
 
 *(Atualize este documento sempre que um parecer de excelência for produzido.)*
+
