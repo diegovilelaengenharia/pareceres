@@ -19,16 +19,24 @@
 
 ## 🏆 Casos de Referência (Aprendizados Fundamentais)
 
-### CASO-1 — Regularização As Built com Isenção de Lote Pequeno
-- **Processo:** 6100 | **Tipo:** `alvara_regularizacao`
-- **Zona:** ZUR (central) | **Terreno:** 180,00m² | **Construído:** 154,08m²
-- **Flags:** `ISENCAO_LOTE_PEQUENO` | `MULTA_ART79` | `DECADENCIA_CTN`
-- **Situação:** Terreno de 180m² (< 220m²) com TO de 86,23% e permeabilidade de 5,95% — ambas fora dos parâmetros legais para a zona. Parte da área construída (82,58m²) comprovadamente com mais de 5 anos via aerofotogrametria.
+### CASO-1 — Regularização As Built com Decadência, Multa Art. 79 e Anuência de Lindeiro
+- **Processo:** 6100/2025 | **Tipo:** `alvara_regularizacao`
+- **Zona:** ZUR 3 (conforme LC 267/2019 — Bairro Acácio Ribeiro, Cód. IPM 922) | **Terreno:** 180,00m² | **Construído total:** 154,08m²
+- **Bairro:** Acácio Ribeiro | **Endereço:** Rua Coronel Teodorinho, nº 15 | **Requerente:** Maria Aparecida Silva Vasconcelos
+- **Flags:** `ISENCAO_LOTE_PEQUENO` | `MULTA_ART79` | `MULTA_ART39` | `DECADENCIA_CTN` | `ABERTURA_DIVISA`
+- **Composição de áreas:**
+  - 82,58m² — área com decadência reconhecida (comprovada pelo Habite-se nº 928/2010, Proc. 4620/2010)
+  - 71,50m² — área de acréscimo irregular (< 5 anos) → Multa Art. 79
+  - 54,50m² — área que violou TO (29,21m² excedente) + permeabilidade (25,29m² insuficiente) → Multa Art. 39
 - **Decisão correta:**
-  - Multa do Art. 79 (obra sem licença) aplicada sobre a área nova (< 5 anos).
-  - Decadência do Art. 150 §4º CTN reconhecida para os 82,58m² antigos.
-  - TO e permeabilidade: ISENTAS pela exceção do Art. 15 da LC 267/2019 (lote ≤ 220m²).
-- **Lição-chave:** Terreno ≤ 220m² → ignorar infrações de TO e Permeabilidade. Citar explicitamente: *"Art. 15 da Lei Complementar nº 267/2019 — exceção dos parâmetros de ocupação e permeabilidade para lotes iguais ou inferiores a 220m²"*. NÃO cobrar multa do Art. 39.
+  - Decadência do Art. 150, §4º CTN reconhecida para 82,58m² (Habite-se anterior como prova).
+  - Multa Art. 79 (obra sem licença): R$ 193,77 sobre 71,50m².
+  - Multa Arts. 38 e 39 (quebra de parâmetros): R$ 700,33 sobre 54,50m² — **APLICADA mesmo com lote ≤ 220m²**.
+  - Art. 15 da LC 267/2019 usado como fundamento para PERMITIR a regularização (reconhecimento de edificação com ocupação anterior à publicação da lei), **não como isenção de multa**.
+  - Janela irregular (< 1,50m da divisa): resolvida com Termo de Anuência do confrontante (Art. 43 Lei 1.544/86 c/c Art. 1.301 Código Civil).
+  - Total de regularizações fiscais: **R$ 1.281,32** (Taxa Habite-se R$ 81,20 + Taxa Aprovação R$ 306,02 + Multa Art. 79 R$ 193,77 + Multa Arts. 38/39 R$ 700,33).
+- **Documentos emitidos:** Alvará de Construção nº 313/2025 | Habite-se Total nº 273/2025 (154,08m²) | Certidão de Decadência (82,58m²) | 2ª Via Habite-se nº 928/2010 | Certidão de Averbação (valor: R$ 265.163,44).
+- **⚠️ LIÇÃO-CHAVE — CORRIGE ERRO ANTERIOR:** Terreno ≤ 220m² NÃO isenta da multa do Art. 39 em regularizações As-Built. A exceção do Art. 15 da LC 267/2019 serve para HABILITAR a regularização de edificações existentes, não para perdoar infrações já cometidas. A multa compensatória Art. 38/39 DEVE ser cobrada sobre a área que violou TO ou permeabilidade, independente do tamanho do lote, quando se tratar de regularização (As-Built). A isenção de TO/permeabilidade do Art. 15 aplica-se apenas a **novos projetos de aprovação** em lotes ≤ 220m².
 
 ---
 
@@ -40,6 +48,56 @@
   - O parecer aprovou o processo tecnicamente, MAS condicionou a emissão ao `oficio_meio_ambiente`.
   - Em `documentos_emitir`, adicionado: *"Ofício à Secretaria de Meio Ambiente — análise e chancela do CODEMA (Condicionante ao Alvará)"*.
 - **Lição-chave:** Sempre que houver menção a rio, ribeirão, mata ciliar, APP ou "zona azul" na planta ou anotações do fiscal → emitir `oficio_meio_ambiente` como condicionante paralela obrigatória.
+
+---
+
+---
+
+### CASO-3 — Espólio + Alvará Antigo + Decomposição de Múltiplas Infrações
+- **Processo:** 1205/2026 | **Tipo:** `habitese_multa` / `alvara_regularizacao`
+- **Requerente:** Espólio de José Diniz de Oliveira | **Representante:** Edwar (procurador, por procuração da viúva Margarida)
+- **Flags:** `ESPOLIO` | `BAIXA_ALVARA_ANTIGO` | `DECOMPOSICAO_MULTAS` | `INFRACAO_RECUO` | `DECADENCIA_CTN`
+- **Alvará apenso:** Alvará nº 36/2000 (76,65m²) — existia mas nunca teve Habite-se.
+- **Área final regularizada:** 171,74m²
+- **Decomposição de infrações:**
+  - 95,09m² → Multa Art. 79 (171,74 − 76,65 = área ampliada sem licença, < 5 anos)
+  - [área específica] → Multa Art. 80 (obra diverge do projeto aprovado)
+  - 4,87m² → Multa LC 267/2019 (depósito construído no recuo/afastamento lateral)
+- **Decadência:** Comprovada por Planta Cadastral física do Município, Julho/2002. `meio_comprobatorio_decadencia: "Planta Cadastral do Município datada de julho/2002"`
+- **Decisão correta:**
+  - Processo bloqueado na Triagem por falta de representação legal do espólio — só liberou após juntada da Procuração.
+  - Cada infração calculada e descrita separadamente no Comunicado de Pendência.
+  - Parecer Final ordenou: *"Dar Baixa na CEI: Alvará de Construção nº 36/2000"*.
+  - Avaliação financeira (R$ 165.806,93) gerada pela Comissão de Avaliação para fins de ITBI — **NÃO incluída** nas certidões emitidas (conforme Ofício 01/2026/CA).
+- **⚠️ LIÇÃO-CHAVE 1 — ESPÓLIO:** A análise de mérito (técnica, urbanística) só começa após confirmação da representação legal. Sem Certidão de Óbito + Termo de Inventariante ou Procuração → emitir comunicado de pendência exclusivo para documentação de espólio, antes de qualquer outra avaliação.
+- **⚠️ LIÇÃO-CHAVE 2 — VALOR DO IMÓVEL:** Avaliações financeiras para ITBI são internas e NÃO compõem as certidões de regularização física (Habite-se, Alvará, Certidão de Averbação). Nunca incluir valor do imóvel nesses documentos.
+- **⚠️ LIÇÃO-CHAVE 3 — DECOMPOSIÇÃO:** Cada infração tem lei própria, metragem própria e multa própria. Discriminar sempre — o Comunicado de Pendência deve listar cada parcela individualmente.
+
+---
+
+---
+
+### CASO-4 — Permeabilidade Zero + Divergência Cadastral de Bairro + CNO/CEI
+- **Processo:** 190/2026 | **Tipo:** `habitese_multa` / `alvara_regularizacao`
+- **Bairro físico (prefeitura):** Do Rosário | **Bairro na matrícula (SRI):** Boa Vista ← divergência
+- **Terreno:** 174,70m² | **Alvará apenso:** Alvará nº 4176/2012 (74,98m²)
+- **Área final as-built:** 117,09m² | **Ampliação irregular:** 42,11m²
+- **Flags:** `PERMEABILIDADE_ZERO` | `DIVERGENCIA_CADASTRAL_BAIRRO` | `BAIXA_ALVARA_ANTIGO` | `DECOMPOSICAO_MULTAS` | `MULTA_ART79` | `MULTA_ART80`
+- **Parâmetros críticos:** TO = 75,16% | **Permeabilidade = 0,00%** (impermeabilização total do lote)
+- **Tramitação:** 09/01/2026 a 09/04/2026 (3 meses). Bloqueio inicial na triagem (14/01) por CND faltante + comprovantes; correção de projeto em 20/03; documentos corrigidos e multas pagas ao final de março.
+- **Decomposição de multas (5 cobranças):**
+  - Taxa de Habite-se: R$ 85,00
+  - Taxa de Aprovação (42,11m²): R$ 188,67
+  - Multa Art. 80 (obra em desacordo com projeto): R$ 102,42
+  - Multa Art. 79 (42,11m² sem licença): R$ 42,95
+  - Multa LC 267/2019 (permeabilidade 0%): R$ 591,18 ← **maior parcela (~59% do total)**
+  - **TOTAL: R$ 1.010,22**
+- **Evento especial — Divergência Cadastral:** Matrícula 29.543 (SRI) apontava Bairro Boa Vista, mas o imóvel é fisicamente no Bairro Do Rosário (confirmado in loco e pelo cadastro imobiliário municipal) → emitida **Certidão de Localização** para garantir segurança jurídica da averbação.
+- **Evento especial — CNO/CEI:** Em vez de dar baixa interna no alvará antigo, a prefeitura emitiu comunicado transferindo ao proprietário a responsabilidade pela baixa do CNO/CEI junto à Receita Federal — blindando o município após substituição do alvará.
+- **Documentos emitidos:** Alvará nº 059/2026 | Habite-se nº 061/2026 | Certidão de Localização | Certidão de Averbação
+- **⚠️ LIÇÃO-CHAVE 1 — PERMEABILIDADE ZERO:** Quando TP = 0%, a multa da LC 267/2019 domina o custo total (~60%). Citar expressamente no parecer que a impermeabilização total transfere o ônus da drenagem pluvial ao sistema público, justificando a severidade da penalidade.
+- **⚠️ LIÇÃO-CHAVE 2 — DIVERGÊNCIA CADASTRAL:** Quando a matrícula do cartório indica bairro diferente do cadastro municipal → emitir Certidão de Localização. Nunca corrigir a matrícula diretamente — isso é competência do cartório.
+- **⚠️ LIÇÃO-CHAVE 3 — CNO/CEI:** Quando há substituição de alvará antigo por novo, a prefeitura pode transferir ao proprietário a responsabilidade de dar baixa no CNO/CEI na Receita Federal via comunicado. Isso é mais seguro juridicamente do que a prefeitura fazer a baixa internamente.
 
 ---
 
