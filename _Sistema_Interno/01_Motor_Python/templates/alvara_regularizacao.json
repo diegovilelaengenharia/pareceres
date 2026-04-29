@@ -22,41 +22,104 @@
     ],
     "campos_opcionais": [
         "inscricao_municipal",
+        "matricula_sri",
+        "testada_terreno",
         "proprietario",
         "desenhista",
         "lote",
         "quadra",
         "zoneamento",
+        "area_decadencia",
+        "area_decadencia_habitese_numero",
+        "area_decadencia_habitese_data",
+        "area_decadencia_habitese_processo",
+        "area_acrescimo",
+        "pavimentos_descricao",
+        "agentes_fiscais",
+        "data_vistoria_fiscal",
+        "art_numero",
+        "art_atividade",
+        "profissional_registro",
+        "confrontante_anuente_nome",
+        "confrontante_anuente_cpf",
+        "data_comunicado_pendencia",
+        "data_quitacao_dams",
+        "valor_total_regularizacao",
+        "valor_avaliacao_imovel",
+        "data_avaliacao_imovel",
+        "numero_alvara_emitido",
+        "data_alvara_emitido",
+        "numero_habitese_emitido",
+        "data_habitese_emitido",
         "paragrafos_adicionais"
     ],
+    "descricao_campos_opcionais": {
+        "matricula_sri": "Número da matrícula no Serviço Registral de Imóveis (cartório)",
+        "testada_terreno": "Testada do terreno em metros lineares (ex: 15,00m)",
+        "zoneamento": "Zona urbanística conforme LC 267/2019 (ex: ZUR 3, ZUR 2, ZC1, ZAE3). Consultar bairros_zoneamento_ipm.md pelo nome do bairro para identificar a zona correta.",
+        "area_decadencia": "Área em m² com mais de 5 anos comprovados — isenta de multa Art. 79",
+        "area_decadencia_habitese_numero": "Número do Habite-se anterior que comprova a decadência (ex: 928/2010)",
+        "area_decadencia_habitese_data": "Data do Habite-se anterior (dd/mm/yyyy)",
+        "area_decadencia_habitese_processo": "Número do processo que originou o Habite-se anterior (ex: 4620/2010)",
+        "area_acrescimo": "Área irregular de acréscimo (< 5 anos) sobre a qual incide multa Art. 79",
+        "pavimentos_descricao": "Descrição dos pavimentos e áreas individuais (ex: 'dois pavimentos: inferior 28,01m² e superior 126,07m²')",
+        "agentes_fiscais": "Array com nome e matrícula dos agentes que fizeram a vistoria fiscal [{'nome': '...', 'matricula': '...'}]",
+        "data_vistoria_fiscal": "Data em que os agentes fiscais emitiram o parecer de vistoria (dd/mm/yyyy)",
+        "art_numero": "Número da ART/RRT/TRT emitida pelo responsável técnico",
+        "art_atividade": "Descrição das atividades cobertas pela ART (ex: 'elaboração do Projeto As Built e Laudo Técnico de Estabilidade e Segurança da Edificação')",
+        "profissional_registro": "Registro profissional do responsável técnico (ex: CREA/MG 235.474/D)",
+        "confrontante_anuente_nome": "Nome completo do proprietário lindeiro que assinou o Termo de Anuência",
+        "confrontante_anuente_cpf": "CPF do proprietário lindeiro anuente",
+        "data_comunicado_pendencia": "Data em que foi emitido o Comunicado de Pendências com a cobrança de taxas e multas",
+        "data_quitacao_dams": "Data em que a requerente apresentou os DAMs quitados",
+        "valor_total_regularizacao": "Soma de todas as taxas e multas pagas (ex: R$ 1.281,32)",
+        "valor_avaliacao_imovel": "Valor total do imóvel conforme Laudo da Comissão de Avaliação — usado na Certidão de Averbação",
+        "data_avaliacao_imovel": "Data do Laudo de Avaliação da Comissão",
+        "numero_alvara_emitido": "Número do Alvará de Construção emitido (ex: 313/2025)",
+        "data_alvara_emitido": "Data de emissão do Alvará",
+        "numero_habitese_emitido": "Número do Habite-se emitido (ex: 273/2025)",
+        "data_habitese_emitido": "Data de emissão do Habite-se"
+    },
     "modelo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, no uso de suas atribuições legais, **emite o presente parecer técnico** conforme segue:",
+    "nota_obrigatoria_gem": "Os considerandos abaixo representam a sequência padrão. Os marcados com [OBRIGATÓRIO] devem sempre aparecer no parecer, mesmo que o campo precise de '⚠️ VERIFICAR'. Os marcados com [SE condição] são condicionais. O TRT/ART/RRT deve figurar tanto no paragrafo_abertura (número do documento) quanto em seu próprio considerando.",
     "modelo_considerandos": [
-        "a requerente é proprietária do imóvel registrado sob **Matrícula nº [Número]** do SRI, com área de terreno de **[Área]m²**, situado na [Endereço], Oliveira/MG;",
-        "o parecer fiscal emitido pelos Agentes [Nomes e Matrículas] atesta que a área construída total de **[Área]m²** confere com o Projeto As Built apresentado;",
-        "para o projeto foi emitida a ART/RRT/TRT **nº [Número]** pelo [Profissão] **[Nome]**, CREA/CAU/CFT [Número];"
+        "[OBRIGATÓRIO] a propriedade do imóvel encontra-se devidamente comprovada através da **Matrícula nº [matricula_sri]** do Serviço Registral de Imóveis (SRI), com área de terreno de **[area_terreno]** e testada de **[testada_terreno]**, situado na [logradouro], Bairro [bairro], Oliveira/MG, com Inscrição Cadastral [inscricao_municipal], no qual não constava averbação da totalidade da área construída;",
+        "[SE area_decadencia] a edificação [uso: residencial unifamiliar / comercial / misto] possui **[area_decadencia]** regularizados por **Habite-se nº [area_decadencia_habitese_numero]**, datado de [area_decadencia_habitese_data], expedido pelo Processo nº [area_decadencia_habitese_processo], comprovando a decadência desta área, construída há mais de 05 (cinco) anos, nos termos do __Art. 150, § 4º do Código Tributário Nacional__;",
+        "[OBRIGATÓRIO] o parecer fiscal emitido pelos Agentes **[agentes_fiscais[0].nome]**, Matrícula [agentes_fiscais[0].matricula], e **[agentes_fiscais[1].nome]**, Matrícula [agentes_fiscais[1].matricula], em [data_vistoria_fiscal], atesta que a área construída total de **[area_total_construida]** — [pavimentos_descricao] — confere com o Projeto As Built apresentado, com Coeficiente de Aproveitamento (CA) de **[coef_aproveitamento]**, Taxa de Ocupação (TO) de **[taxa_ocupacao]** e taxa de permeabilidade de **[taxa_permeabilidade]**, declarando a edificação finalizada e habitável;",
+        "[OBRIGATÓRIO] para o projeto as built e Laudo Técnico foi emitida a [ART / RRT / TRT] **nº [art_numero]** para as atividades de [art_atividade], pelo [Engenheiro Civil / Arquiteto e Urbanista / Técnico em Edificações] **[profissional_nome]**, [profissional_registro], cujo laudo técnico atesta condições adequadas de segurança, estabilidade e salubridade da edificação, em conformidade com a ABNT NBR 14.645:2001;",
+        "[OBRIGATÓRIO] para a análise técnica, foram observadas as legislações municipais vigentes, em especial o **Decreto nº 4.149/2019** (Procedimentos para Aprovação de Projetos), o **Código de Obras do Município** (**Lei nº 1.544/86**) e a **Lei de Uso e Ocupação do Solo** (**Lei Complementar nº 267/2019**), sendo aplicado o Art. 15 desta última, que prevê o reconhecimento de edificações com ocupação existente anterior à sua publicação; e que o imóvel está inserido na zona **[zoneamento]**, conforme classificação da referida Lei Complementar;",
+        "[SE confrontante_anuente_nome] consta no projeto a existência de abertura ([tipo: janela / porta / basculante]) posicionada a distância inferior a 1,50m da divisa, em desconformidade com o __Art. 43 da Lei nº 1.544/86__; contudo, foi apresentado e aceito **Termo de Anuência** devidamente assinado pelo proprietário do imóvel confrontante, **[confrontante_anuente_nome]** (CPF: [confrontante_anuente_cpf]), autorizando a permanência da abertura, em conformidade com o __Art. 1.301 do Código Civil__;",
+        "[SE data_quitacao_dams] a requerente comprovou o recolhimento de todas as taxas e multas exigidas no Comunicado emitido em [data_comunicado_pendencia], conforme guias de pagamento DAM apresentadas em [data_quitacao_dams], a saber: [listar cada DAM com descrição e valor], totalizando **[valor_total_regularizacao]** em regularizações fiscais."
     ],
-    "modelo_conclusao": "Diante do exposto, aprovado e verificado o projeto as built, constar:",
+    "modelo_conclusao": "Diante do exposto, visto que a requerente sanou todas as pendências apontadas, apresentou documentação técnica completa e comprovou o recolhimento das taxas e multas devidas, conclui-se que a regularização da edificação atende aos requisitos técnicos e legais aplicáveis, podendo ser emitidos os seguintes documentos:",
     "documentos_tipicos": [
         {
-            "tipo": "Alvará de Regularização de Imóvel de [Área] m²",
-            "obs": "Alvará emitido para regularização de imóvel edificado sem projeto aprovado na prefeitura mediante o cumprimento do Art. 79 da Lei 1544/1986 e Arts. 38/39 da Lei 267/2019"
+            "tipo": "Alvará de Construção nº [numero_alvara_emitido] — regularização de edificação [uso] com área total de [area_total_construida]",
+            "obs": "Alvará emitido para fins de regularização do acréscimo de [area_acrescimo] construído sem licença da Prefeitura, mediante cumprimento do Art. 79 da Lei nº 1.544/86 e Arts. 38 e 39 da Lei nº 267/2019, sendo que [area_decadencia] já se encontravam regularizados pelo Habite-se nº [area_decadencia_habitese_numero]."
         },
         {
-            "tipo": "Carta de Habite-se referente à área total de [Área] m²"
+            "tipo": "Habite-se Total nº [numero_habitese_emitido] — área total construída de [area_total_construida] (existente [area_decadencia] + acréscimo [area_acrescimo])"
         },
         {
-            "tipo": "Certidão de Averbação referente à área total de [Área] m²"
+            "tipo": "Certidão de Decadência — [area_decadencia]",
+            "obs": "Comprovados pelo Habite-se nº [area_decadencia_habitese_numero], datado de [area_decadencia_habitese_data], para fins de comprovação perante a Receita Federal do Brasil, nos termos do Art. 150, § 4º do CTN."
         },
         {
-            "tipo": "Certidão de Decadência — [Área] m²",
-            "obs": "Se aplicável, conforme Art. 150, §4º do CTN"
+            "tipo": "Certidão de Averbação — imóvel com [area_total_construida] construídos",
+            "obs": "Valor total do imóvel de [valor_avaliacao_imovel] por extenso, conforme Laudo de Avaliação da Comissão de Avaliação da Prefeitura Municipal de Oliveira, datado de [data_avaliacao_imovel]; Alvará de Construção: [data_alvara_emitido]; Data do Habite-se: [data_habitese_emitido]."
         }
     ],
     "legislacao_aplicavel": [
-        "Art. 150, §4º do CTN (Decadência)",
-        "Art. 79 da Lei nº 1.544/86 (Construir sem licença)",
-        "Arts. 38 e 39 da Lei nº 267/2019 (Parâmetros urbanísticos)",
-        "Art. 43 da Lei nº 1.544/86 (Abertura na divisa)",
-        "Art. 15 da Lei nº 267/2019 (Exceção terreno < 220m²)"
+        "Decreto nº 4.149/2019 (Procedimentos para concessão de aprovação de projetos — prazo 15 dias, documentos exigidos)",
+        "Art. 150, §4º do CTN (Decadência — área com mais de 5 anos — afasta multa Art. 79 sobre a área decadente)",
+        "Art. 79 da Lei nº 1.544/86 (Construir sem licença — área de acréscimo < 5 anos — SEMPRE citar na fundamentacao_legal, mesmo que dispensado por decadência)",
+        "Arts. 38 e 39 da Lei Complementar nº 267/2019 (Multa compensatória por quebra de TO e/ou permeabilidade — cumulativa)",
+        "Art. 43 da Lei nº 1.544/86 c/c Art. 1.301 do CC (Abertura na divisa < 1,50m — exige Termo de Anuência — citar apenas se houver abertura irregular)",
+        "Art. 15 da Lei Complementar nº 267/2019 (Reconhecimento de edificação com ocupação existente anterior à publicação — habilita regularização, NÃO isenta multa Art. 39)"
+    ],
+    "modelo_fundamentacao_legal": [
+        "__Art. 150, § 4º do Código Tributário Nacional (Lei nº 5.172/1966)__: Se a lei não fixar prazo à homologação, será ele de 5 (cinco) anos, a contar da ocorrência do fato gerador. Transcorrido esse prazo sem que a Fazenda Pública se tenha pronunciado, considera-se homologado o lançamento e definitivamente extinto o crédito. Aplica-se ao caso para fins de reconhecimento da decadência da área de [area_decadencia], consolidada há mais de 5 anos.",
+        "__Art. 79 da Lei nº 1.544/86 e Arts. 38 e 39 da Lei Complementar nº 267/2019__: Fundamentam a aplicação de multas por construção sem licença e por infração de parâmetros urbanísticos (Taxa de Ocupação e/ou Permeabilidade). A multa do Art. 79 incide sobre a área de acréscimo sem comprovação de 5 anos; as multas dos Arts. 38 e 39 são aplicadas cumulativamente por faixa de área em desacordo.",
+        "[SE confrontante_anuente_nome] __Art. 43 da Lei Municipal nº 1.544/86 c/c Art. 1.301 do Código Civil__: Proibição de aberturas a menos de 1,50m da divisa. Regularização condicionada à apresentação de Termo de Anuência do proprietário confrontante, devidamente registrado, cedendo o direito àquela abertura."
     ]
 }

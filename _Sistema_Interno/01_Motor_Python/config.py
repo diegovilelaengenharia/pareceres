@@ -68,6 +68,8 @@ CIDADE = "Oliveira"
 TIPOS_DOCUMENTO = {
     # ── Pareceres Técnicos (completos, com dados do carimbo) ──
     "alvara_aprovacao":                   "parecer_tecnico",
+    "alvara_mcmv":                        "parecer_tecnico",
+    "alvara_construcao_comercial":        "parecer_tecnico",
     "alvara_regularizacao":               "parecer_tecnico",
     "alvara_ampliacao":                   "parecer_tecnico",
     "alvara_galpao_comercial":            "parecer_tecnico",
@@ -94,19 +96,15 @@ TIPOS_DOCUMENTO = {
     "certidao_desmembramento":            "parecer_simples",
     "certidao_retificacao_area":          "parecer_simples",
 
-    # ── Ofícios ──
+    # ── Ofícios e Memorandos ──
     "oficio_meio_ambiente":               "oficio",
     "parecer_juridico":                   "oficio",
     "oficio_juridico_embargo":            "oficio",
     "oficio_interno_materiais":           "oficio",
     "oficio_decreto_utilidade":           "oficio",
+    "memorando":                          "oficio",
 
     # ── Comunicados ──
     "comunicado_indeferimento":           "comunicado",
     "comunicado_pendencia":               "comunicado_pendencia",
-    
-    # ── Documentos de Emissão da Secretaria (Prontos / Balcão) ──
-    "alvara_oficial":                     "documento_pronto",
-    "carta_habitese_oficial":             "documento_pronto",
-    "certidao_oficial":                   "documento_pronto",
 }

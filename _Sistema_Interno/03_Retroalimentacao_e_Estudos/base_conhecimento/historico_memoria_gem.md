@@ -11,9 +11,9 @@
 
 | Indicador | Valor |
 |-----------|-------|
-| Total de casos registrados | 2 |
+| Total de casos registrados | 5 |
 | Tipos mais frequentes | `alvara_regularizacao`, `habitese_multa` |
-| Flags mais comuns | `ISENCAO_LOTE_PEQUENO`, `QUESTAO_AMBIENTAL` |
+| Flags mais comuns | `DECADENCIA_CTN`, `MULTA_ART79`, `BAIXA_ALVARA_ANTIGO`, `QUEBRA_TP` |
 
 ---
 
@@ -98,6 +98,30 @@
 - **⚠️ LIÇÃO-CHAVE 1 — PERMEABILIDADE ZERO:** Quando TP = 0%, a multa da LC 267/2019 domina o custo total (~60%). Citar expressamente no parecer que a impermeabilização total transfere o ônus da drenagem pluvial ao sistema público, justificando a severidade da penalidade.
 - **⚠️ LIÇÃO-CHAVE 2 — DIVERGÊNCIA CADASTRAL:** Quando a matrícula do cartório indica bairro diferente do cadastro municipal → emitir Certidão de Localização. Nunca corrigir a matrícula diretamente — isso é competência do cartório.
 - **⚠️ LIÇÃO-CHAVE 3 — CNO/CEI:** Quando há substituição de alvará antigo por novo, a prefeitura pode transferir ao proprietário a responsabilidade de dar baixa no CNO/CEI na Receita Federal via comunicado. Isso é mais seguro juridicamente do que a prefeitura fazer a baixa internamente.
+
+---
+
+---
+
+### CASO-5 — Regularização com TRT + Alvará Antigo (CEI) + CPF Invertido + Decadência por Espelho BCI
+- **Processo:** 8901/2025 | **Tipo:** `alvara_regularizacao`
+- **Requerente:** LUIS MARCOS DE OLIVEIRA | **Proprietários:** Edna Maria Henrique Oliveira e Luis Marcos de Oliveira
+- **Endereço:** Rua Goiás, nº 725, Bairro Do Rosário | **Zona:** ZUR-3
+- **Terreno:** 234,00m² | **Área regularizada:** 160,12m² | **Matrícula SRI:** 10.748
+- **Responsável Técnico:** Sidney Cesar Caminha — **TRT nº CFT2605691319** (Técnico em Edificações, CFT/CRT)
+- **Fiscais:** Wallace Alencar Martins Silveira (Mat. 306017-9), Silvania F. Santos Pedrosa (Mat. 3083160-1), Marlei Henrique de Oliveira (Mat. 3087661-8) — vistoria em 16/04/2026
+- **Flags:** `TRT_CFT` | `ALVARA_ANTIGO_CEI` | `CPF_INVERTIDO` | `DECADENCIA_BCI` | `QUEBRA_TO` | `QUEBRA_TP`
+- **Parâmetros:** TO = 76,38% (excede 70%), TP = 12,98% (abaixo de 20%), CA = 0,68 (atende)
+- **Decadência:** Comprovada por Espelho Cadastral Municipal (BCI) com data de cadastro em 06/03/2017. Área decadente: **159,30m²**
+- **Alvará anterior:** nº 300/1995 (94,80m²) — deverá ser dado baixa/cancelado junto ao CNO/CEI da Receita Federal
+- **Situação especial — CPF Invertido:** Os CPFs dos proprietários estavam invertidos nas pranchas do projeto e no TRT. Exige retificação formal do TRT e dos carimbos antes da emissão dos documentos.
+- **Situação especial — Taxa de Habite-se:** Balcão havia equivocadamente dispensado a taxa de habite-se alegando decadência. A decadência afasta apenas multas punitivas (Art. 79), nunca taxas de expediente e serviço municipal.
+- **Documentos emitidos (condicionados):** Alvará de Regularização (160,12m²) | Cancelamento/Baixa CEI Alvará 300/1995 | Carta de Habite-se (160,12m²) | Certidão de Averbação (160,12m²) | Certidão de Decadência (159,30m²)
+- **⚠️ LIÇÃO-CHAVE 1 — TRT NO PARECER:** Quando o responsável técnico é Técnico em Edificações (CFT/CRT), o documento é **TRT** (não ART nem RRT). O número do TRT deve aparecer: (a) no `paragrafo_abertura` junto ao nome do profissional; (b) em um considerando específico citando as atividades cobertas. Nunca jogar só em `extras_extraidos`.
+- **⚠️ LIÇÃO-CHAVE 2 — DECRETO 4.149/2019 NO CONSIDERANDO DE LEGISLAÇÃO:** O considerando de legislação observada deve citar o **Decreto 4.149/2019** como primeiro instrumento, antes da Lei 1.544/86 e da LC 267/2019. Modelo: *"para a análise técnica, foram observadas as legislações municipais vigentes, em especial o Decreto nº 4.149/2019 (Procedimentos para Aprovação de Projetos), o Código de Obras do Município (Lei nº 1.544/86) e a Lei de Uso e Ocupação do Solo (Lei Complementar nº 267/2019)..."*
+- **⚠️ LIÇÃO-CHAVE 3 — ART. 79 NA FUNDAMENTAÇÃO LEGAL:** O Art. 79 da Lei 1.544/86 deve SEMPRE aparecer na `fundamentacao_legal`, mesmo quando dispensado por decadência — neste caso, explicar que a penalidade fica afastada pela decadência do Art. 150, §4º CTN.
+- **⚠️ LIÇÃO-CHAVE 4 — ESPELHO BCI COMO PROVA DE DECADÊNCIA:** O cadastro retroativo no Espelho Cadastral Municipal (BCI/IPM) é prova administrativa hábil para comprovar a decadência quando não há Habite-se anterior. Citar a data específica de cadastro no BCI como "prova administrativa inequívoca".
+- **⚠️ LIÇÃO-CHAVE 5 — CEI/CNO COM ALVARÁ ANTIGO:** Quando existe alvará anterior com CEI/CNO vinculado, a prefeitura deve emitir documento de cancelamento/baixa e orientar o proprietário a providenciar a baixa junto à Receita Federal. Mesma situação do CASO-4.
 
 ---
 

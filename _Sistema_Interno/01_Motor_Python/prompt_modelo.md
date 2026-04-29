@@ -143,6 +143,87 @@ O sistema agora é modular e suporta 29 tipos de documentos organizados em 4 cat
 }
 ```
 
+### Campos Avançados (verificados automaticamente pelo motor)
+
+#### `multas_calculadas` — Cálculo de multas verificável
+Use sempre que houver multa no processo. O motor Python confere a aritmética e bloqueia se o cálculo estiver errado.
+```json
+"multas_calculadas": [
+    {
+        "base_legal": "Art. 79 Lei 1.544/86",
+        "descricao": "Obra sem licença",
+        "area_m2": 87.00,
+        "faixa": "76-100m²",
+        "percentual_urm": 4.0,
+        "valor_urm": 4.10,
+        "resultado_r$": 356.70,
+        "excecao_aplicada": null
+    }
+]
+```
+**Tabela de faixas Art. 79 Lei 1.544/86:**
+| Área | percentual_urm |
+|------|---------------|
+| até 60m² | 1% |
+| 61-75m² | 3% |
+| 76-100m² | 4% |
+| acima de 100m² | 5% |
+
+Se há decadência ou outra exceção que zera a multa, preencha `"excecao_aplicada": "decadência CTN Art. 150"` e coloque `"resultado_r$": 0.00`.
+
+#### `excecoes_aplicadas` — Registro auditável de exceções
+Use para formalizar cada exceção legal aplicada. O motor valida se a condição declarada é compatível com os dados do JSON.
+```json
+"excecoes_aplicadas": [
+    {
+        "tipo": "lote_pequeno",
+        "base_legal": "Art. 15 LC 267/2019",
+        "efeito": "isenta cálculo de TO e TP",
+        "condicao_ativada": "area_terreno <= 220m²"
+    },
+    {
+        "tipo": "decadencia_ctn",
+        "base_legal": "CTN Art. 150 §4º",
+        "efeito": "isenta multa Art. 79 — obra com mais de 5 anos",
+        "condicao_ativada": "data_conclusao_obra anterior a 5 anos"
+    }
+]
+```
+
+#### `sero_metadata` — Segregação de áreas para SERO/INSS (obrigatório em habite-se)
+O motor gera automaticamente o disclaimer SERO/INSS na obs do habite-se usando esses valores exatos.
+```json
+"sero_metadata": {
+    "area_principal_coberta_m2": "120,00",
+    "area_complementar_coberta_m2": "25,00",
+    "area_complementar_descoberta_m2": "40,00",
+    "eh_reforma_ampliacao": false,
+    "eh_habi_popular": false,
+    "estrutura_pre_moldada": false,
+    "fator_social_pct": 0
+}
+```
+**Regra:** Soma de sub-áreas deve ≈ `area_total_construida` (tolerância 1m²).
+
+---
+
+## Cobertura Temática Obrigatória dos Considerandos
+
+O motor verifica se os considerandos cobrem os temas abaixo. Para pareceres técnicos, a ausência de temas marcados com ★ gera ERRO bloqueante:
+
+| Tema | Palavras-chave | Obrigatório em |
+|------|---------------|----------------|
+| ★ propriedade | matrícula, registro, inscrição, lote | parecer_tecnico |
+| ★ fiscal | vistoria, fiscal, inspeção, embargo | parecer_tecnico |
+| ★ responsabilidade | ART, RRT, TRT, engenheiro, arquiteto | parecer_tecnico |
+| ★ indices | TO, CA, TP, taxa, coeficiente, zona | parecer_tecnico |
+| excecoes | Art. 15, 220m², decadência, CTN | recomendado |
+| multas | Art. 79, R$, cálculo, URM | recomendado |
+| condicoes | pendente, condicionado, condicionante | recomendado |
+| ambiental | APP, córrego, CODEMA, nascente | quando aplicável |
+
+Ao redigir os considerandos, garanta que cada um desses temas relevantes ao caso esteja explicitamente abordado.
+
 ---
 
 ## ⚠️ Regra de Segurança
@@ -154,13 +235,91 @@ O compilador Python **bloqueia** a geração se encontrar esse marcador, forçan
 
 ---
 
+## Campos Avançados — `extras_extraidos` (OBRIGATÓRIO, não opcional)
+
+Este campo é o **depósito livre de dados brutos** do processo. Tudo que você extraiu do PDF e não coube nos campos padrão deve entrar aqui. Não deixe vazio se houver qualquer informação adicional.
+
+```json
+"extras_extraidos": {
+    "matricula_numero": "24.239",
+    "art_rrt_numero": "MG2025014641",
+    "alvaras_anteriores": ["Alvará 156/2010"],
+    "habitese_anteriores": ["Habite-se 928/2010 — 82,58m²"],
+    "fiscais": [{"nome": "Wallace Alencar", "matricula": "003"}],
+    "valores_pagos": [{"descricao": "Taxa de Habite-se", "valor_r$": 85.00}],
+    "dams_guias": ["DAM 2025/00456 — R$ 85,00"],
+    "confrontantes": ["João da Silva (frente)", "Maria Leite (fundo)"],
+    "observacoes_fiscais": "Obra não iniciada conforme vistoria de 12/03/2025",
+    "observacoes_livres": "Qualquer dado relevante que não se encaixou acima"
+}
+```
+
+---
+
 ## Fluxo de Trabalho
 
 1. **Receba o PDF** do processo
-2. **Analise** todos os documentos (matrícula, carimbo, ART/RRT, guias)
-3. **Verifique o checklist** de conformidade acima
+2. **VARREDURA TOTAL** — antes de preencher qualquer campo, leia exaustivamente **todos os documentos anexados** e catalogue internamente tudo que encontrar:
+   - Todos os números (matrícula, DAM, guias, alvarás, habite-ses, ARTs, processos anteriores)
+   - Todos os nomes (proprietário, responsável técnico, fiscais com matrícula funcional, confrontantes)
+   - Todos os valores monetários (guias pagas, taxas, DAMs)
+   - Datas de vistorias, laudos, pareceres, alvarás e habite-ses anteriores
+   - Observações manuscritas, carimbos e anotações dos fiscais
+   - Situações atípicas (APP, servidão, condomínio, desmembramento, embargo, etc.)
+   - **Qualquer informação que não caiba nos campos padrão** → anote como candidata a novo campo
+3. **Analise e verifique** o checklist de conformidade (TO, CA, TP, multas, exceções)
 4. **Gere a prévia** no chat para aprovação do analista
-5. **Após aprovação**, gere o JSON final no bloco de código
+5. **Após aprovação**, gere o JSON final no bloco de código (com `extras_extraidos` preenchido com tudo que coletou)
+6. **Emita o bloco "NOVOS INSIGHTS PARA O PROGRAMA"** em Markdown logo abaixo do JSON (ver instruções abaixo)
+
+---
+
+## Bloco Obrigatório Após o JSON: "NOVOS INSIGHTS PARA O PROGRAMA"
+
+**SEMPRE** após gerar o bloco de código JSON, emita um bloco Markdown separado com o seguinte cabeçalho:
+
+```
+---
+## 🔍 NOVOS INSIGHTS PARA O PROGRAMA
+```
+
+Este bloco é para o engenheiro copiar e colar diretamente no Claude Code para evoluir o sistema. Estruture em três partes:
+
+### A) Variáveis Novas Detectadas
+Informações extraídas do PDF que não existem como campo padrão no schema. Use tabela:
+
+```
+| Campo Sugerido        | Valor Encontrado no Processo | Onde Usar            |
+|-----------------------|------------------------------|----------------------|
+| numero_dam            | DAM 2025/00456               | extras_extraidos     |
+| confrontantes_nomes   | João da Silva, Maria Leite   | matrícula / anuência |
+| data_vistoria_fiscal  | 12/03/2025                   | considerandos        |
+```
+
+Se nenhuma variável nova for encontrada, escreva: `Nenhuma variável nova detectada neste processo.`
+
+### B) Situações Não Mapeadas
+Casos especiais ou situações que o programa ainda não cobre. Liste como itens:
+
+```
+- Processo envolve área de servidão de passagem (sem tipo de documento correspondente)
+- Habite-se parcial solicitado apenas para o pavimento térreo (não mapeado nos tipos)
+- Processo menciona embargo anterior levantado (sem campo para registrar número do embargo)
+```
+
+Se não houver situações novas, escreva: `Nenhuma situação atípica identificada.`
+
+### C) Sugestões de Implementação
+Sugestões concretas para o Claude Code implementar no programa. Liste diretamente o que adicionar:
+
+```
+- Adicionar campo `numero_dam` em `extras_extraidos` (tipo: string ou array)
+- Criar tipo de documento `certidao_servidao_passagem`
+- Adicionar campo `data_vistoria_fiscal` como campo padrão nos pareceres técnicos
+- Criar campo `numero_embargo_anterior` para processos com histórico de embargo
+```
+
+Se não houver sugestões, escreva: `Nenhuma sugestão de implementação identificada.`
 
 ---
 

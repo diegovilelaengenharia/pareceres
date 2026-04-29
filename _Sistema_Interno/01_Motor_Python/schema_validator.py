@@ -67,8 +67,20 @@ _CHAVES_DOCUMENTO_PRONTO = {
 _DEVE_SER_LISTA = [
     "considerandos", "fundamentacao_legal",
     "documentos_emitir", "areas_matriz", "assinantes",
-    "observacoes_finais",
+    "observacoes_finais", "multas_calculadas", "excecoes_aplicadas",
 ]
+
+# ── Criticidade de dados ausentes (⚠️ VERIFICAR) ────────────────────────────
+# TIER_A — bloqueante: ausência impede análise urbanística
+# TIER_B — condicional: gera aviso, mas permite compilação
+# TIER_C — informacional: não alertado (só em log)
+_TIER_A_CAMPOS = {
+    "inscricao_municipal", "area_terreno",
+}
+_TIER_B_CAMPOS = {
+    "profissional_nome", "profissional_registro",
+    "desenhista", "lote", "quadra",
+}
 
 
 def validar(dados: dict) -> tuple:
@@ -142,7 +154,7 @@ def validar(dados: dict) -> tuple:
         if not dados.get("data_processo"):
             avisos.append("'data_processo' ausente. Inclua a data por extenso (ex: '22 de abril de 2026').")
 
-    # ── 7. Placeholders ⚠️ VERIFICAR ─────────────────────────────────────────
+    # ── 7. Placeholders ⚠️ VERIFICAR — com tiering de criticidade ────────────
     texto_completo = json.dumps(dados, ensure_ascii=False)
     ocorrencias = texto_completo.count("VERIFICAR")
     if ocorrencias:
@@ -151,7 +163,46 @@ def validar(dados: dict) -> tuple:
             f"Confira os campos antes de compilar."
         )
 
-    # ── 8. Negrito em comunicado_pendencia ───────────────────────────────────
+    # Tier A: campos críticos com VERIFICAR → bloqueante
+    for campo in _TIER_A_CAMPOS:
+        val = str(dados.get(campo, ""))
+        if "VERIFICAR" in val:
+            erros.append(
+                f"DADO CRÍTICO ausente (Tier A): '{campo}' contém '⚠️ VERIFICAR'. "
+                "Este campo é essencial para a análise urbanística. "
+                "Localize o dado no processo antes de compilar."
+            )
+
+    # Tier B: campos relevantes com VERIFICAR → aviso
+    for campo in _TIER_B_CAMPOS:
+        val = str(dados.get(campo, ""))
+        if "VERIFICAR" in val:
+            avisos.append(
+                f"Dado relevante (Tier B): '{campo}' contém '⚠️ VERIFICAR'. "
+                "Tente localizar no processo; se genuinamente ausente, mantenha a marcação."
+            )
+
+    # ── 8. Validar estrutura de multas_calculadas ────────────────────────────
+    for i, item in enumerate(dados.get("multas_calculadas", [])):
+        if isinstance(item, dict):
+            for sub in ("base_legal", "area_m2", "resultado_r$"):
+                if sub not in item:
+                    avisos.append(
+                        f"multas_calculadas[{i}] está faltando '{sub}'. "
+                        "O verificador de multas não conseguirá conferir este item."
+                    )
+
+    # ── 9. Validar estrutura de excecoes_aplicadas ───────────────────────────
+    for i, item in enumerate(dados.get("excecoes_aplicadas", [])):
+        if isinstance(item, dict):
+            for sub in ("tipo", "base_legal", "efeito"):
+                if sub not in item:
+                    avisos.append(
+                        f"excecoes_aplicadas[{i}] está faltando '{sub}'. "
+                        "Inclua tipo, base_legal e efeito para auditoria completa."
+                    )
+
+    # ── 10. Negrito em comunicado_pendencia ──────────────────────────────────
     if tipo == "comunicado_pendencia":
         itens = dados.get("considerandos", [])
         for i, item in enumerate(itens):

@@ -13,6 +13,12 @@ import datetime
 from docx import Document
 from docx.shared import Pt, Cm
 
+import sys as _sys
+import os as _os
+_MOTOR_DIR = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+if _MOTOR_DIR not in _sys.path:
+    _sys.path.insert(0, _MOTOR_DIR)
+
 from config import (
     TIPOS_DOCUMENTO, TEMPLATES_DIR, PROJECT_DIR,
     FONT_CORPO, SZ_CORPO,
@@ -20,12 +26,10 @@ from config import (
 from cabecalho import build_header, add_page_number_footer
 from componentes import (
     build_titulo, build_identificacao, build_destinatario,
-    build_dados_carimbo, build_corpo, build_fundamentacao,
+    build_dados_carimbo, build_corpo,
     build_conclusao_e_docs, build_conclusao_simples, build_assinatura,
     build_comunicado_pendencia,
 )
-from alvaras_finais import build_alvara_oficial, build_habitese_oficial, build_certidao_oficial
-
 
 # ═══════════════════════════════════════════════════════════
 #  TEMPLATES
@@ -194,21 +198,6 @@ def gerar_comunicado_pendencia(doc, dados, template):
     build_comunicado_pendencia(doc, dados)
 
 
-def gerar_documento_pronto(doc, dados, template):
-    """
-    DOCUMENTOS DE SECRETARIA (ALVARÁ FINAL / HABITE-SE)
-    Design totalmente único, usando o novo motor em alvaras_finais.py
-    Não usa o Header e identificacao padrão.
-    """
-    tipo = dados.get("tipo_relatorio", "")
-    if "habitese" in tipo:
-        build_habitese_oficial(doc, dados)
-    elif "certidao" in tipo:
-        build_certidao_oficial(doc, dados)
-    else:
-        build_alvara_oficial(doc, dados)
-
-
 # ═══════════════════════════════════════════════════════════
 #  MAPEAMENTO E DESPACHO
 # ═══════════════════════════════════════════════════════════
@@ -219,7 +208,6 @@ GERADORES = {
     "oficio":               gerar_oficio,
     "comunicado":           gerar_comunicado,
     "comunicado_pendencia": gerar_comunicado_pendencia,
-    "documento_pronto":     gerar_documento_pronto,
 }
 
 
@@ -255,6 +243,25 @@ def gerar(dados, caminho_saida=None):
                 lista_corrigida.append(d)
         dados["documentos_emitir"] = lista_corrigida
 
+    # Injetar obs SERO automaticamente em habite-se com sero_metadata
+    _HABITE_SE_TIPOS = {"habitese_comum", "habitese_multa", "habitese_inclusao_area"}
+    if tipo in _HABITE_SE_TIPOS and dados.get("sero_metadata"):
+        try:
+            import gerador_sero
+            obs_sero = gerador_sero.gerar_obs_sero(
+                dados["sero_metadata"],
+                dados.get("area_total_construida", "")
+            )
+            docs = dados.get("documentos_emitir", [])
+            for doc_item in docs:
+                if isinstance(doc_item, dict):
+                    nome_tipo = str(doc_item.get("tipo", "")).lower()
+                    if "habite" in nome_tipo or not doc_item.get("obs"):
+                        doc_item["obs"] = obs_sero
+                        break
+        except Exception as _e:
+            print(f"[!] Injeção de obs SERO falhou: {_e}")
+
     categoria = TIPOS_DOCUMENTO.get(tipo)
 
     if not categoria:
@@ -273,20 +280,23 @@ def gerar(dados, caminho_saida=None):
     
     if campos_faltantes:
         print("\n" + "="*70)
-        print("  [ERRO ESTRUTURAL] VALIDAÇÃO DE CHAVES JSON FALHOU")
+        print("  [AVISO ESTRUTURAL] VALIDAÇÃO DE CHAVES JSON - PREENCHIMENTO AUTOMÁTICO")
         print("="*70)
-        print("  Parece que o Assistente GEM esqueceu de incluir algumas chaves obrigatórias!")
+        print("  O Assistente GEM não incluiu algumas chaves obrigatórias.")
         print(f"  Tipo do Documento: {tipo}")
         print(f"  Chaves Faltantes : {', '.join(campos_faltantes)}")
         print("-" * 70)
-        print("  [Ação de Correção] Copie e cole a mensagem abaixo de volta pro GEM:\n")
-        print(f"  Gem, o JSON que você gerou falhou na validação estrutural do sistema.")
-        print(f"  O template oficial para '{tipo}' exige o uso EXATO destas CHAVES JSON:")
-        print(f"  >>> {', '.join(campos_faltantes)}")
-        print(f"  Por favor, revise o PDF do processo, certifique-se de usar estes nomes exatos de chaves")
-        print(f"  e gere o bloco de JSON corrigido e completo para eu compilar.")
+        print("  [Ação] O sistema irá preencher esses campos com marcadores [PREENCHER].")
+        print("         Você poderá editar o documento Word gerado e preencher manualmente.")
         print("="*70 + "\n")
-        raise ValueError(f"Faltam {len(campos_faltantes)} chaves obrigatórias: {','.join(campos_faltantes)}")
+        
+        for c in campos_faltantes:
+            if c == "documentos_emitir":
+                dados[c] = [{"tipo": "[PREENCHER: documento a emitir]"}]
+            elif c in ["considerandos", "fundamentacao_legal", "paragrafos_adicionais"]:
+                dados[c] = [f"[PREENCHER: {c}]"]
+            else:
+                dados[c] = f"[PREENCHER: {c}]"
 
 
     # Criar documento base
@@ -313,22 +323,51 @@ def gerar(dados, caminho_saida=None):
 #  GERAÇÃO DE PDF
 # ═══════════════════════════════════════════════════════════
 
-def _gerar_pdf(caminho_docx):
-    """Tenta gerar PDF a partir do DOCX (docx2pdf ou comtypes)."""
-    caminho_pdf = caminho_docx.replace('.docx', '.pdf')
+def _gerar_pdf(caminho_docx: str) -> str | None:
+    """
+    Tenta converter o DOCX em PDF usando docx2pdf (preferencial) ou
+    comtypes/Word COM (fallback Windows).
+
+    Retorna o caminho do PDF gerado, ou None em caso de falha.
+    """
+    base, _ = os.path.splitext(caminho_docx)
+    caminho_pdf = base + ".pdf"
+    abs_docx    = os.path.abspath(caminho_docx)
+    abs_pdf     = os.path.abspath(caminho_pdf)
+
+    # ── Tentativa 1: docx2pdf (instale com: pip install docx2pdf) ────────────
     try:
         from docx2pdf import convert
-        convert(caminho_docx, caminho_pdf)
+        convert(abs_docx, abs_pdf)
         print(f"[+] Documento PDF  gerado: {caminho_pdf}")
+        return caminho_pdf
     except ImportError:
+        pass  # não instalado — tentar fallback
+    except Exception as e:
+        print(f"[!] docx2pdf falhou: {e}. Tentando Word COM...")
+
+    # ── Tentativa 2: Word COM via comtypes (Windows + Word instalado) ────────
+    try:
+        import comtypes.client
+        word = comtypes.client.CreateObject("Word.Application")
+        word.Visible = False
         try:
-            import comtypes.client
-            word = comtypes.client.CreateObject('Word.Application')
-            word.Visible = False
-            doc_w = word.Documents.Open(os.path.abspath(caminho_docx))
-            doc_w.SaveAs(os.path.abspath(caminho_pdf), FileFormat=17)
+            doc_w = word.Documents.Open(abs_docx)
+            doc_w.SaveAs(abs_pdf, FileFormat=17)  # 17 = wdFormatPDF
             doc_w.Close()
+        finally:
             word.Quit()
-            print(f"[+] Documento PDF  gerado: {caminho_pdf}")
-        except Exception as e:
-            print(f"[!] PDF não gerado (instale docx2pdf ou comtypes): {e}")
+        print(f"[+] Documento PDF  gerado: {caminho_pdf}")
+        return caminho_pdf
+    except ImportError:
+        pass  # comtypes não instalado
+    except Exception as e:
+        print(f"[!] Word COM falhou: {e}")
+
+    # ── Nenhuma opção disponível ─────────────────────────────────────────────
+    print(
+        "[!] PDF NÃO GERADO. Para ativar a conversão automática, instale:\n"
+        "      pip install docx2pdf\n"
+        "    (requer Microsoft Word instalado no Windows)"
+    )
+    return None
