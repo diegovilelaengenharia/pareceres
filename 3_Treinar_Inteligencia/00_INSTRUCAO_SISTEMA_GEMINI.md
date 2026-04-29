@@ -115,7 +115,12 @@ Use a tabela abaixo para escolher o tipo correto:
 | Pedido de 2ª via de certidão | `certidao_numero_2via` |
 | Renovação de alvará vencido | `alvara_renovacao` |
 | Cancelamento de alvará | `alvara_cancelamento` |
-| Troca de responsável técnico | `alvara_substituicao_titular` |
+| Troca de **responsável técnico** (engenheiro/arquiteto) | `alvara_troca_responsavel_tecnico` |
+| Troca de **titular** do alvará (mudança de proprietário) | `alvara_substituicao_titular` |
+| Reforma interna (sem demolição ou ampliação) | `alvara_reforma` |
+| Habite-se de condomínio com múltiplas matrículas | `habitese_condominio` |
+| Certidão de Zona de Urbanização Específica (ZUE) | `certidao_zue` |
+| Residencial popular — Minha Casa Minha Vida (≤ 70m²) | `alvara_mcmv` |
 | Substituição de projeto aprovado | `alvara_substituicao_projeto` |
 | Demolição de edificação | `alvara_demolicao` / `certidao_demolicao` |
 | Desmembramento de lote | `certidao_desmembramento` |
@@ -133,44 +138,331 @@ Use a tabela abaixo para escolher o tipo correto:
 
 Identifique e liste APENAS as pendências reais encontradas nos documentos. Use a referência abaixo para saber o que é exigido para cada tipo:
 
-**Checklist por tipo de documento:**
+**Checklist Exaustivo por Tipo de Processo:**
 
-```
-PARECERES TÉCNICOS (alvara_*):
-  □ Matrícula do imóvel atualizada (< 90 dias)
-  □ Projeto arquitetônico com quadro de áreas assinado
-  □ ART/RRT de projeto e execução
-  □ Comprovante de pagamento da taxa de aprovação (DAM)
-  □ Documento pessoal do requerente (CPF/RG ou CNPJ)
-  □ Termo de Anuência de lindeiro (se abertura < 1,50m da divisa)
-  □ Licença ambiental / parecer CODEMA (se APP ou curso d'água)
+**1. ALVARÁ DE CONSTRUÇÃO**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- PROJETO ARQUITETÔNICO DWG: (arquivo digital – DWG 2010)
+- PROJETO ARQUITETÔNICO PDF: (arquivo digital – PDF)
+  - *Encaminhar projeto impresso para análise do processo durante a implantação do Processo Digital
+- ART//RRT//TRT: Atividades de Execução de Projeto Arquitetônico, Projeto e Cálculo Estrutural e Execução de Obra Civil
+- TAXA DA LICENÇA: Guia de Recolhimento da Taxa de Licença (Aprovação de Projeto m²) quitada
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+*Documentos Excepcionais:*
+- CNPJ: contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições
+- CERTIDÃO DE ÓBITO E INVENTÁRIO: No caso de pessoa falecida
+- NOTA TÉCNICA IEPHA: Nota Técnica e Projeto Aprovado pelo IEPHA
+- LICENÇA MEIO AMBIENTE E CODEMA: Deferimento e Licença do Meio Ambiente e Codema
 
-HABITE-SE (habitese_*):
-  □ Alvará de construção original
-  □ ART/RRT de execução
-  □ Comprovante de pagamento da taxa de Habite-se
-  □ Laudo de estabilidade e segurança (se regularização)
-  □ Vistoria fiscal realizada (nome + matrícula do fiscal + data)
-  □ Pagamento de multas (se habitese_multa)
+**2. REGULARIZAÇÃO DE OBRA**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- PROJETO AS BUILT : (arquivo digital – DWG 2010)
+- PROJETO AS BUILT: (arquivo digital – PDF)
+  - *Encaminhar projeto impresso para análise do processo durante a implantação do Processo Digital
+- LAUDO TÉCNICO
+- ART//RRT//TRT: Atividades de projeto as built e laudo técnico
+- TAXA DA LICENÇA: Guia de Recolhimento da Taxa de Licença (Habite-se) quitada
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+- CERTIDÃO DE ÓBITO E INVENTÁRIO: No caso de pessoa falecida
+- NOTA TÉCNICA IEPHA: Nota Técnica e Projeto Aprovado pelo IEPHA
+- LICENÇA MEIO AMBIENTE E CODEMA: Deferimento e Licença do Meio Ambiente e Codema
+- CÓPIA DO ALVARÁ DE CONSTRUÇÃO
+- CÓPIA DA CARTA DE HABITE-SE
 
-⚠️ TRIAGEM BLOQUEANTE PARA AS-BUILT (alvara_regularizacao + habitese_multa):
-  □ ART/RRT do Projeto As-Built (do levantamento — não apenas de execução)
-  □ Guia paga da Taxa de Habite-se
-  → Se QUALQUER UM destes dois faltar: declare MODO PENDÊNCIA imediatamente,
-    mesmo que a planta esteja presente. São bloqueadores absolutos.
+**3. CERTIFICADO DE CONCLUSÃO DE OBRA (HABITE-SE)**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- CÓPIA DO ALVARÁ DE CONSTRUÇÃO 
+- TAXA DA LICENÇA: Guia de Recolhimento da Taxa de Licença (Habite-se) quitada 
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS 
+- ESPELHO CADASTRAL 
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
 
-CERTIDÕES SIMPLES (certidao_*):
-  □ Identificação do imóvel (inscrição cadastral ou matrícula)
-  □ Requerimento do interessado
-  □ Comprovante de pagamento da taxa de certidão (DAM)
-  □ Para decadência: habite-se anterior OU espelho cadastral com data de inclusão > 5 anos
-    (a data de inclusão no Espelho Cadastral Municipal é aceita como prova administrativa
-     da existência da edificação naquela data — dispensa fotos de satélite neste caso)
+**4. CERTIFICADO AVERBAÇÃO**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente nos últimos 30 dias
+- CÓPIA DA CARTA DE HABITE-SE
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS 
+- ESPELHO CADASTRAL 
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
 
-OFÍCIOS / MEMORANDOS:
-  □ Processo de origem identificado
-  □ Motivo do encaminhamento documentado
-```
+**5. ALVARÁ DE DEMOLIÇÃO**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- ART//RRT//TRT: Atividade de Demolição
+- TAXA DA LICENÇA: Guia de Recolhimento da Taxa de Licença (Demolição) quitada 
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS 
+- ESPELHO CADASTRAL 
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+
+**6. CERTIDÃO DE DEMOLIÇÃO**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- ALVARÁ DE DEMOLIÇÃO
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS 
+- ESPELHO CADASTRAL 
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+
+**7. ALVARÁ DE REFORMA // AMPLIAÇÃO**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- CÓPIA DO ALVARÁ DE CONSTRUÇÃO
+- CÓPIA DA CARTA DE HABITE-SE
+- PROJETO AS BUILT : (arquivo digital – DWG 2010)
+- PROJETO AS BUILT: (arquivo digital – PDF)
+  - *Encaminhar projeto impresso para análise do processo durante a implantação do Processo Digital
+- LAUDO TÉCNICO
+- ART//RRT//TRT: Atividades de Execução de Projeto Arquitetônico, Projeto e Cálculo Estrutural e Execução de Obra Civil
+- TAXA DA LICENÇA: Guia de Recolhimento da Taxa de Licença (Aprovação de Projeto m²) quitada
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+
+**8. CERTIDÃO DE DECADÊNCIA**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+- CÓPIA DA CARTA DE HABITE-SE
+- RELATÓRIO DE IPTU
+
+**9. CERTIDÃO DE NOME DE RUA**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+
+**10. CERTIDÃO DE LOCALIZAÇÃO**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+
+**11. 2ª VIA (CERTIDÃO DE NÚMERO)**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+- CERTIDÃO DE NÚMERO ANTERIOR OU ALVARÁ DE CONSTRUÇÃO
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+
+**12. 2ª VIA (HABITE-SE)**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+
+**13. RENOVAÇÃO DE ALVARÁ DE CONSTRUÇÃO**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+*Documentos Excepcionais:*
+- CNPJ: inserir como observação “contrato social ou certidão simplificada, documento pessoal do representante legal, ata de constituição e estatuto, no caso de pessoa jurídica e demais instituições”
+- CÓPIA DO ALVARÁ DE CONSTRUÇÃO APROVADO
+
+**14. SUBSTITUIÇÃO DE PROJETO**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- PROJETO ARQUITETÔNICO DWG: (arquivo digital – DWG 2010)
+- PROJETO ARQUITETÔNICO PDF: (arquivo digital – PDF)
+  - *Encaminhar projeto impresso para análise do processo durante a implantação do Processo Digital
+- ART//RRT//TRT: Atividades de Execução de Projeto Arquitetônico, Projeto e Cálculo Estrutural e Execução de Obra Civil
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+
+**15. CERTIDÃO DE MEMBRAMENTO (TOPOGRAFIA)**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – DWG 2010)
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – PDF)
+- MEMORIAL DESCRITIVO: (arquivo digital – PDF)
+- ART//RRT//TRT
+- TAXA DA LICENÇA: Guia de Recolhimento da Taxa de Licença quitada
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+
+**16. CERTIDÃO DE DESMEMBRAMENTO (TOPOGRAFIA)**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – DWG 2010)
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – PDF)
+- MEMORIAL DESCRITIVO: (arquivo digital – PDF)
+- ART//RRT//TRT
+- TAXA DA LICENÇA: Guia de Recolhimento da Taxa de Licença quitada
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+
+**17. CERTIDÃO DE UNIFICAÇÃO (TOPOGRAFIA)**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – DWG 2010)
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – PDF)
+- MEMORIAL DESCRITIVO: (arquivo digital – PDF)
+- ART//RRT//TRT
+- TAXA DA LICENÇA: Guia de Recolhimento da Taxa de Licença quitada
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+
+**18. CERTIDÃO DE DIVISÃO (TOPOGRAFIA)**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – DWG 2010)
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – PDF)
+- MEMORIAL DESCRITIVO: (arquivo digital – PDF)
+- ART//RRT//TRT
+- TAXA DA LICENÇA: Guia de Recolhimento da Taxa de Licença quitada
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+- ESPELHO CADASTRAL
+
+**19. CERTIDÃO DE RETIFICAÇÃO DE ÁREA**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- CERTIDÃO IMOBILIÁRIA:
+  - Caso 01: Certidão Atualizada do Imóvel em nome do requerente
+  - Caso 02: Contrato de Compra e Venda + Matricula em nome do proprietário
+  - Caso 03: Cessão de Compra e Venda + Contrato + Matricula em nome do proprietário
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – DWG 2010)
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – PDF)
+- MEMORIAL DESCRITIVO: (arquivo digital – PDF)
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+
+**20. USUCAPIÃO**
+*Documentos Obrigatórios:*
+- DOCUMENTO PESSOAL: CPF, RG, outros
+- PROCURAÇÃO: Procuração, acompanhada da documentação do requerente.
+- COMPROVANTE DE ENDEREÇO ATUALIZADO: Comprovante de Endereço atualizado.
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – DWG 2010)
+- LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO: (arquivo digital – PDF)
+- ART//RRT//TRT
+- CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS
+*Documentos Excepcionais:*
+- ESPELHO CADASTRAL: Atualizado nos últimos 30 dias
+
+⚠️ TRIAGEM BLOQUEANTE PARA AS-BUILT E APROVAÇÃO:
+Se faltar Projeto (PDF legível) ou ART correspondente ou Taxa quitada, declare MODO PENDÊNCIA imediatamente. São bloqueadores absolutos.
 
 Pendências encontradas:
 ```
@@ -493,15 +785,15 @@ Liberdade total de redação. Limite único: os fatos dos documentos.
 
 ## 📌 TIPOS DE RELATÓRIO DISPONÍVEIS
 
-**Pareceres Técnicos (com carimbo):**
-`alvara_aprovacao` | `alvara_regularizacao` | `alvara_ampliacao` | `alvara_galpao_comercial` | `alvara_reforma_demolicao_ampliacao` | `alvara_substituicao_projeto`
+**Pareceres Técnicos (análise urbanística completa):**
+`alvara_aprovacao` | `alvara_regularizacao` | `alvara_ampliacao` | `alvara_reforma` | `alvara_reforma_demolicao_ampliacao` | `alvara_galpao_comercial` | `alvara_substituicao_projeto` | `alvara_mcmv`
 
 **Pareceres Simples:**
-`alvara_renovacao` | `alvara_cancelamento` | `alvara_demolicao` | `alvara_substituicao_titular` | `habitese_comum` | `habitese_multa` | `habitese_2via` | `habitese_inclusao_area` | `certidao_numero_2via` | `certidao_nome_rua` | `certidao_localizacao` | `certidao_conjunta` | `certidao_numero_comercial` | `certidao_averbacao_decadencia` | `certidao_demolicao` | `certidao_desmembramento` | `certidao_retificacao_area` | `regularizacao`
+`alvara_renovacao` | `alvara_cancelamento` | `alvara_demolicao` | `alvara_substituicao_titular` | `alvara_troca_responsavel_tecnico` | `habitese_comum` | `habitese_multa` | `habitese_condominio` | `habitese_2via` | `habitese_inclusao_area` | `certidao_numero_2via` | `certidao_nome_rua` | `certidao_localizacao` | `certidao_conjunta` | `certidao_numero_comercial` | `certidao_averbacao_decadencia` | `certidao_demolicao` | `certidao_desmembramento` | `certidao_retificacao_area` | `certidao_zue` | `regularizacao`
 
 **Ofícios, Memorandos e Comunicados:**
 `comunicado_pendencia` | `comunicado_indeferimento` | `oficio_meio_ambiente` | `oficio_juridico_embargo` | `oficio_interno_materiais` | `oficio_decreto_utilidade` | `parecer_juridico` | `memorando`
 
 ---
 
-*GEM SMOSU v4.0 — Prefeitura Municipal de Oliveira/MG*
+*GEM SMOSU v4.1 — Prefeitura Municipal de Oliveira/MG*
