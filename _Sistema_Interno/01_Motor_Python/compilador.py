@@ -27,6 +27,24 @@ import verificador_multas     as verif_multas
 import cobertura_considerandos as cob_cons
 import gerador_sero           as gen_sero
 
+# ── Cores do terminal (colorama) ──────────────────────────────────────────────
+try:
+    from colorama import init as _colorama_init, Fore, Style
+    _colorama_init(autoreset=True)
+    _OK    = Fore.GREEN  + Style.BRIGHT
+    _WARN  = Fore.YELLOW + Style.BRIGHT
+    _ERR   = Fore.RED    + Style.BRIGHT
+    _INFO  = Fore.CYAN   + Style.BRIGHT
+    _RESET = Style.RESET_ALL
+    _BLUE  = Fore.BLUE   + Style.BRIGHT
+except ImportError:
+    _OK = _WARN = _ERR = _INFO = _RESET = _BLUE = ""
+
+def _ok(msg):   return f"{_OK}✓{_RESET} {msg}"
+def _warn(msg): return f"{_WARN}⚠{_RESET} {msg}"
+def _err(msg):  return f"{_ERR}✗{_RESET} {msg}"
+def _info(msg): return f"{_INFO}›{_RESET} {msg}"
+
 
 # ── Relatório pré-voo unificado ───────────────────────────────────────────────
 
@@ -39,46 +57,53 @@ def _relatorio_prevoo(dados: dict) -> tuple[bool, dict]:
     processo  = dados.get("numero_processo", "?")
     requerente = dados.get("requerente", dados.get("proprietario_nome", "?"))
 
-    print("\n" + "=" * 62)
-    print(f"  PRÉ-VOO — Processo {processo}  |  {requerente}")
-    print(f"  Tipo: {tipo}")
-    print("=" * 62)
+    print()
+    print(f"{_BLUE}{'=' * 62}{_RESET}")
+    print(f"{_BLUE}  PRÉ-VOO — Processo {processo}  |  {requerente}{_RESET}")
+    print(f"{_BLUE}  Tipo: {tipo}{_RESET}")
+    print(f"{_BLUE}{'=' * 62}{_RESET}")
 
     tem_erro_bloqueante = False
+    alertas_prevoo: list = []  # coletados para o preview HTML
 
     # ── 1. Calculadora de índices urbanísticos ────────────────────────────────
     try:
         res_idx = calc_idx.calcular(dados)
         calc_idx.imprimir_relatorio(res_idx)
-        if res_idx.get("erros"):
-            tem_erro_bloqueante = False  # índices fora do limite não bloqueiam — podem ser multas
+        for e in res_idx.get("erros", []):
+            alertas_prevoo.append({"nivel": "erro", "msg": e})
+            print(f"  {_err(e)}")
+        for a in res_idx.get("avisos", []):
+            alertas_prevoo.append({"nivel": "aviso", "msg": a})
     except Exception as e:
-        print(f"\n  [!] Calculadora de índices indisponível: {e}")
+        print(f"  {_warn(f'Calculadora de índices indisponível: {e}')}")
 
     # ── 2. Alerta de decadência ───────────────────────────────────────────────
     try:
         res_dec = alerta_dec.verificar(dados)
         alerta_dec.imprimir_relatorio(res_dec)
+        for a in res_dec.get("avisos", []):
+            alertas_prevoo.append({"nivel": "aviso", "msg": a})
     except Exception as e:
-        print(f"\n  [!] Módulo de decadência indisponível: {e}")
+        print(f"  {_warn(f'Módulo de decadência indisponível: {e}')}")
 
     # ── 3. Consistência semântica ─────────────────────────────────────────────
     try:
         erros_sem, avisos_sem = consist.verificar(dados)
         consist.imprimir_relatorio(erros_sem, avisos_sem, tipo)
-        if erros_sem:
-            pass # tem_erro_bloqueante = True  -- desativado para permitir geração com placeholders
+        for e in erros_sem:
+            alertas_prevoo.append({"nivel": "erro", "msg": e})
     except Exception as e:
-        print(f"\n  [!] Módulo de consistência indisponível: {e}")
+        print(f"  {_warn(f'Módulo de consistência indisponível: {e}')}")
 
     # ── 4. Verificação de cálculo de multas ───────────────────────────────────
     try:
         erros_multas, avisos_multas, resumo_multas = verif_multas.verificar(dados)
         verif_multas.imprimir_relatorio(erros_multas, avisos_multas, resumo_multas)
-        if erros_multas:
-            pass # tem_erro_bloqueante = True  -- desativado para permitir geração parcial
+        for e in erros_multas:
+            alertas_prevoo.append({"nivel": "erro", "msg": e})
     except Exception as e:
-        print(f"\n  [!] Módulo de multas indisponível: {e}")
+        print(f"  {_warn(f'Módulo de multas indisponível: {e}')}")
 
     # ── 5. Cobertura temática dos considerandos ───────────────────────────────
     cobertos: set = set()
@@ -86,15 +111,15 @@ def _relatorio_prevoo(dados: dict) -> tuple[bool, dict]:
     try:
         erros_cob, avisos_cob, cobertos, faltando = cob_cons.verificar(dados)
         cob_cons.imprimir_relatorio(erros_cob, avisos_cob, cobertos, faltando)
-        if erros_cob:
-            pass # tem_erro_bloqueante = True  -- desativado para permitir geração com placeholders
         resumo_cob = {
             "cobertos": sorted(cobertos),
             "faltando": sorted(faltando - cobertos),
             "n_total":  len(cob_cons._TEMAS),
         }
+        for e in erros_cob:
+            alertas_prevoo.append({"nivel": "aviso", "msg": e})
     except Exception as e:
-        print(f"\n  [!] Módulo de cobertura temática indisponível: {e}")
+        print(f"  {_warn(f'Módulo de cobertura temática indisponível: {e}')}")
 
     # ── 6. SERO/INSS metadata ─────────────────────────────────────────────────
     tem_sero = bool(dados.get("sero_metadata"))
@@ -102,11 +127,12 @@ def _relatorio_prevoo(dados: dict) -> tuple[bool, dict]:
         erros_sero, avisos_sero = gen_sero.validar(dados)
         gen_sero.imprimir_relatorio(erros_sero, avisos_sero)
     except Exception as e:
-        print(f"\n  [!] Módulo SERO indisponível: {e}")
+        print(f"  {_warn(f'Módulo SERO indisponível: {e}')}")
 
-    resumo_cob["tem_sero"] = tem_sero
-    resumo_cob["tem_multas"] = bool(dados.get("multas_calculadas"))
-    resumo_cob["tem_excecoes"] = bool(dados.get("excecoes_aplicadas"))
+    resumo_cob["tem_sero"]    = tem_sero
+    resumo_cob["tem_multas"]  = bool(dados.get("multas_calculadas"))
+    resumo_cob["tem_excecoes"]= bool(dados.get("excecoes_aplicadas"))
+    resumo_cob["alertas"]     = alertas_prevoo
 
     return not tem_erro_bloqueante, resumo_cob
 
@@ -116,36 +142,43 @@ def _relatorio_pos(dados: dict, caminho_docx: str, resumo_cob: dict) -> None:
     try:
         prec.imprimir_relatorio(dados)
     except Exception as e:
-        print(f"\n  [!] Módulo de precedentes indisponível: {e}")
+        print(f"  {_warn(f'Módulo de precedentes indisponível: {e}')}")
 
-    # Resumo de qualidade do documento gerado
     nome_doc = os.path.basename(caminho_docx) if caminho_docx else "documento"
     cobertos = resumo_cob.get("cobertos", [])
     faltando = resumo_cob.get("faltando", [])
     n_total  = resumo_cob.get("n_total", 8)
     n_cob    = len(cobertos)
 
-    print(f"\n{'=' * 62}")
-    print(f"  RESUMO DE QUALIDADE — {nome_doc}")
-    print(f"  Temas cobertos: {n_cob}/{n_total}", end="")
-    if faltando:
-        print(f"  (faltam: {', '.join(faltando)})")
-    else:
-        print()
+    print(f"\n{_BLUE}{'=' * 62}{_RESET}")
+    print(f"{_BLUE}  RESUMO DE QUALIDADE — {nome_doc}{_RESET}")
 
-    flag_multas  = "[OK]" if resumo_cob.get("tem_multas") else "[ - ] ausente"
-    flag_excecoes = "[OK]" if resumo_cob.get("tem_excecoes") else "[ - ] ausente"
-    flag_sero    = "[OK]" if resumo_cob.get("tem_sero") else "[ - ] ausente"
-    print(f"  multas_calculadas: {flag_multas}")
-    print(f"  excecoes_aplicadas: {flag_excecoes}")
-    print(f"  sero_metadata: {flag_sero}")
-    print('=' * 62)
+    cobertura_str = f"{n_cob}/{n_total}"
+    if n_cob == n_total:
+        print(f"  {_ok(f'Temas cobertos: {cobertura_str} — completo!')}")
+    elif n_cob >= n_total * 0.7:
+        falt_str = ', '.join(faltando) if faltando else ""
+        print(f"  {_warn(f'Temas cobertos: {cobertura_str}  (faltam: {falt_str})')}")
+    else:
+        falt_str = ', '.join(faltando) if faltando else ""
+        print(f"  {_err(f'Temas cobertos: {cobertura_str}  (faltam: {falt_str})')}")
+
+    def _flag(val, label):
+        if val:
+            print(f"  {_ok(label)}")
+        else:
+            print(f"  {_warn(label + ' — ausente')}")
+
+    _flag(resumo_cob.get("tem_multas"),   "multas_calculadas")
+    _flag(resumo_cob.get("tem_excecoes"), "excecoes_aplicadas")
+    _flag(resumo_cob.get("tem_sero"),     "sero_metadata")
+    print(f"{_BLUE}{'=' * 62}{_RESET}")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    args = sys.argv[1:]
+    args = [a for a in sys.argv[1:] if a != "--sem-preview"]
 
     # Sem argumentos: tentar usar a pasta padrão 1_Colar_JSON_Aqui
     if not args:
@@ -221,36 +254,62 @@ def main():
         # Verificar marcadores de segurança
         json_str = json.dumps(dados, ensure_ascii=False)
         if "⚠️ VERIFICAR" in json_str:
-            print("  - [AVISO TÉCNICO]: O JSON contém marcações incompletas (VERIFICAR).")
-            print("  - Dica para o GEM:")
-            print("    'Gem, você marcou dados como 'VERIFICAR'. Releia os anexos")
-            print("    com mais atenção e tente cruzar os dados pra ter a certeza.'\n")
+            print(f"  {_warn('JSON contém marcações incompletas (VERIFICAR).')}")
+            print(f"  {_info('Dica: peça ao GEM para reler os anexos e preencher os dados.')}")
+            print()
 
         # ── Relatório pré-voo ─────────────────────────────────────────────────
         pode_prosseguir, resumo_cob = _relatorio_prevoo(dados)
 
         if not pode_prosseguir:
-            print("\n[X] Geração BLOQUEADA por erro de consistência semântica.")
-            print("    Corrija o JSON antes de compilar.")
+            print(f"\n  {_err('Geração BLOQUEADA por erro de consistência semântica.')}")
+            print(f"  {_info('Corrija o JSON antes de compilar.')}")
             erros += 1
             continue
+
+        # ── Preview HTML (se não estiver em modo silencioso) ──────────────────
+        modo_sem_preview = "--sem-preview" in sys.argv
+        if not modo_sem_preview:
+            try:
+                from preview_html import gerar_preview
+                alertas_html = resumo_cob.get("alertas", [])
+                print(f"\n  {_info('Abrindo preview HTML no navegador...')}")
+                gerar_preview(dados, alertas=alertas_html)
+
+                print()
+                print("  ─────────────────────────────────────────────────────")
+                print("  Revise o preview no navegador e responda:")
+                print("  [ENTER]  → Confirmar e gerar o DOCX")
+                print("  [N]      → Cancelar este documento")
+                print("  ─────────────────────────────────────────────────────")
+                resp = input("  Sua escolha: ").strip().upper()
+                if resp == "N":
+                    print(f"  {_warn('Documento cancelado pelo usuário.')}")
+                    continue
+            except Exception as e:
+                print(f"  {_warn(f'Preview indisponível: {e}')}")
 
         # ── Gerar documento ───────────────────────────────────────────────────
         caminho_gerado = caminho_saida_fornecido
         try:
             caminho_gerado = gerar(dados, caminho_saida_fornecido)
+            print(f"  {_ok(f'DOCX gerado: {os.path.basename(caminho_gerado or arquivo)}')}")
             sucessos += 1
         except Exception as e:
-            print(f"  [ALERTA DE SISTEMA] Falha ao compilar {os.path.basename(arquivo)}: {e}")
+            print(f"  {_err(f'Falha ao compilar {os.path.basename(arquivo)}: {e}')}")
             erros += 1
             continue
 
         # ── Precedentes + resumo de qualidade (pós-geração) ──────────────────
         _relatorio_pos(dados, caminho_gerado or "", resumo_cob)
 
-    print("\n" + "=" * 70)
-    print(f" [V] COMPILAÇÃO ENCERRADA. Sucessos: {sucessos} | Falhas de Dados: {erros}")
-    print("=" * 70)
+    print()
+    print(f"{_BLUE}{'=' * 62}{_RESET}")
+    if erros == 0:
+        print(f"  {_ok(f'COMPILAÇÃO ENCERRADA — {sucessos} documento(s) gerado(s).')}")
+    else:
+        print(f"  {_warn(f'COMPILAÇÃO ENCERRADA — Sucessos: {sucessos} | Falhas: {erros}')}")
+    print(f"{_BLUE}{'=' * 62}{_RESET}")
 
 
 if __name__ == "__main__":

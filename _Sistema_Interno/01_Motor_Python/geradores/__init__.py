@@ -89,21 +89,13 @@ def _gerar_nome_saida(dados):
             proc_num = partes_proc[0]
             proc_ano = partes_proc[-1]
 
-    # Primeiro e segundo nome do requerente
     nome_alvo = dados.get("requerente") or dados.get("proprietario_nome") or dados.get("interessado") or "Desconhecido"
-    partes_nome = str(nome_alvo).strip().split()
-    if len(partes_nome) >= 2:
-        req_str = f"{partes_nome[0]}_{partes_nome[1]}"
-        nome_pasta_req = f"{partes_nome[0]} {partes_nome[1]}"
-    else:
-        req_str = partes_nome[0] if partes_nome else "Desconhecido"
-        nome_pasta_req = req_str
+    nome_completo_title = str(nome_alvo).strip().title()
 
-    data_emissao = now.strftime("%d-%m-%Y")
-    tipo = str(dados.get("tipo_relatorio", "PARECER")).upper()
+    tipo = str(dados.get("tipo_relatorio", "Parecer")).replace("_", " ").title()
 
-    nome_arquivo = f"{tipo}_{proc_num}_{proc_ano}_{req_str}_{data_emissao}.docx"
-    nome_pasta = f"Processo {proc_limpo} - {nome_pasta_req}"
+    nome_arquivo = f"{tipo} - {proc_num}-{proc_ano} - {nome_completo_title}.docx"
+    nome_pasta = f"Processo {proc_num}-{proc_ano} - {nome_completo_title}"
 
     for ch in ['<', '>', ':', '"', '|', '?', '*', '\\']:
         nome_arquivo = nome_arquivo.replace(ch, '')

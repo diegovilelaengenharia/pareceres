@@ -52,19 +52,34 @@ from config        import (
 
 # ── PASTA DE SAÍDA ─────────────────────────────────────────────────────────────
 
-def _pasta_saida():
-    """Retorna a pasta 2_Documentos_Prontos relativa ao compilador."""
-    base = Path(SCRIPT_DIR).parent.parent
-    pasta = base / "2_Documentos_Prontos"
-    pasta.mkdir(exist_ok=True)
-    return pasta
+def _caminho_saida_completo(dados: dict, sufixo="") -> str:
+    now = __import__("datetime").datetime.now()
+    numero_raw = str(dados.get("numero_processo", "S-N"))
+    proc_num = numero_raw
+    proc_ano = now.strftime("%Y")
+    if "/" in numero_raw:
+        partes = numero_raw.split("/")
+        proc_num, proc_ano = partes[0], partes[-1]
+    elif "-" in numero_raw:
+        partes = numero_raw.split("-")
+        if len(partes) == 2 and partes[0].isdigit() and partes[1].isdigit():
+            proc_num, proc_ano = partes[0], partes[-1]
 
+    req = str(dados.get("requerente", "Sem Requerente")).strip().title()
+    s = f" - Livre" if not sufixo else f" - {sufixo}"
+    
+    tipo = str(dados.get("tipo_relatorio", "Parecer")).replace("_", " ").title()
+    nome_arquivo = f"{tipo} - {proc_num}-{proc_ano} - {req}{s}.docx"
+    nome_pasta = f"Processo {proc_num}-{proc_ano} - {req}"
 
-def _nome_saida(dados: dict, sufixo="") -> str:
-    proc = dados.get("numero_processo", "sem_numero").replace("/", "_")
-    req  = dados.get("requerente", "sem_requerente").split()[0].title()
-    s    = f"_Livre" if not sufixo else sufixo
-    return f"Parecer_{proc}_{req}{s}.docx"
+    for ch in ['<', '>', ':', '"', '|', '?', '*', '\\']:
+        nome_arquivo = nome_arquivo.replace(ch, '')
+        nome_pasta = nome_pasta.replace(ch, '')
+
+    base = Path(SCRIPT_DIR).parent.parent / "2_Documentos_Prontos" / nome_pasta
+    base.mkdir(parents=True, exist_ok=True)
+    
+    return str(base / nome_arquivo)
 
 
 # ── CONSTRUTOR DO CORPO LIVRE ──────────────────────────────────────────────────
@@ -156,7 +171,7 @@ def gerar_livre(dados: dict, caminho_saida: str = None) -> str:
 
     # ── Salvar ─────────────────────────────────────────────────────
     if not caminho_saida:
-        caminho_saida = str(_pasta_saida() / _nome_saida(dados))
+        caminho_saida = _caminho_saida_completo(dados)
 
     doc.save(caminho_saida)
     print(f"[+] Documento DOCX (modo livre) gerado: {caminho_saida}")
@@ -183,7 +198,7 @@ def gerar_livre(dados: dict, caminho_saida: str = None) -> str:
 def main():
     import glob
 
-    args = sys.argv[1:]
+    args = [a for a in sys.argv[1:] if a != "--sem-preview"]
 
     if not args:
         # Tenta pasta padrão

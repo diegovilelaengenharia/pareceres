@@ -5,21 +5,21 @@ Blocos de conteúdo: identificação, dados técnicos, corpo, conclusão, assina
 
 import re
 from datetime import datetime
-from docx.shared import Pt, Twips, RGBColor
+from docx.shared import Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
+from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 from config import (
-    FONT_TITULO, FONT_CORPO, SZ_CORPO, SZ_TABELA,
-    COR_INST, COR_LABEL_FONT, COR_CINZA_TEXTO,
+    FONT_TITULO, SZ_CORPO, SZ_TABELA,
+    COR_LABEL_FONT, COR_CINZA_TEXTO,
     PAR_AFTER, LINE_SPC, ASSINANTE, CIDADE,
 )
 from formatacao import (
     set_spacing, set_font, add_run, add_para, rich_segments,
     apply_table_borders, apply_label_cell, apply_value_cell,
-    set_cell_margins, add_separator,
+    set_cell_margins, add_separator, add_section_heading,
 )
 
 
@@ -277,6 +277,7 @@ def build_corpo(doc, d):
         rich_segments(p_ab, d["paragrafo_abertura"], size=SZ_CORPO)
 
     if d.get("considerandos"):
+        add_section_heading(doc, "Considerandos")
         for cons in _ensure_list(d["considerandos"]):
             cons_limpo = cons
             # Remove o "Considerando que" se o GEM já tiver escrito na string
@@ -307,11 +308,7 @@ def build_fundamentacao(doc, d):
         return
 
     INDENT = 1.25
-    p_fund_tit = add_para(doc, line=LINE_SPC, before=200,
-                          after=80, indent_cm=INDENT)
-    r_tit = add_run(p_fund_tit, "Da Análise Legal e Técnica:",
-                    bold=True, size=SZ_CORPO)
-    r_tit.font.color.rgb = COR_LABEL_FONT
+    add_section_heading(doc, "Da Análise Legal e Técnica")
 
     for fund in _ensure_list(d["fundamentacao_legal"]):
         fund_limpo = fund.lstrip("•- \t") # Limpa marcadores se o GEM tiver colocado
@@ -367,9 +364,7 @@ def add_doc_item(doc, tipo, obs=None):
         set_font(r_prefix, size=SZ_CORPO, bold=True)
         r_prefix.font.color.rgb = COR_LABEL_FONT
 
-        r_obs = p_obs.add_run(obs.strip())
-        set_font(r_obs, size=SZ_CORPO, italic=True)
-        r_obs.font.color.rgb = COR_CINZA_TEXTO
+        rich_segments(p_obs, obs.strip(), size=SZ_CORPO, color=COR_CINZA_TEXTO, base_italic=True)
 
 
 # ═══════════════════════════════════════════════════════════
@@ -377,17 +372,12 @@ def add_doc_item(doc, tipo, obs=None):
 # ═══════════════════════════════════════════════════════════
 
 def _build_conclusao_bloco(doc, conclusao_text):
-    """Título 'CONCLUSÃO TÉCNICA:' separado + parágrafo justificado de conclusão."""
-    p_tit = doc.add_paragraph()
-    p_tit.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    set_spacing(p_tit, line=LINE_SPC, before=200, after=20)
-    r = p_tit.add_run("CONCLUSÃO TÉCNICA:")
-    set_font(r, name=FONT_TITULO, size=SZ_CORPO, bold=True)
-    r.font.color.rgb = COR_LABEL_FONT
-
+    """Heading 'CONCLUSÃO TÉCNICA' + parágrafo justificado de conclusão."""
+    add_section_heading(doc, "Conclusão Técnica")
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    set_spacing(p, line=LINE_SPC, before=0, after=80)
+    set_spacing(p, line=LINE_SPC, before=100, after=80)
+    p.paragraph_format.left_indent = Pt(18)
     rich_segments(p, conclusao_text, size=SZ_CORPO)
 
 
@@ -448,42 +438,62 @@ def build_conclusao_simples(doc, d):
 # ═══════════════════════════════════════════════════════════
 
 def build_assinatura(doc, d):
-    """Bloco de assinatura: data + linha + nome/título/registro."""
+    """Bloco de assinatura: data + linha tracejada + nome/título/registro."""
     assinante = d.get("assinante", ASSINANTE)
-    cidade = d.get("cidade", CIDADE)
+    cidade    = d.get("cidade", CIDADE)
 
-    # Local e data (centralizado, negrito)
+    # Local e data
     p_local = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
-                       line=LINE_SPC, before=200, after=0)
-    add_run(p_local, f"{cidade}, {_data_hoje_extenso()}.", bold=True, size=SZ_CORPO)
+                       line=LINE_SPC, before=280, after=0)
+    add_run(p_local, f"{cidade}, {_data_hoje_extenso()}.", bold=False, size=SZ_CORPO)
     p_local.paragraph_format.keep_with_next = True
 
-    # Espaço
-    for _ in range(2):
+    # Espaço para assinar
+    for _ in range(3):
         pb = doc.add_paragraph()
-        set_spacing(pb, line=LINE_SPC, before=0, after=0)
+        set_spacing(pb, line=240, before=0, after=0)
         pb.paragraph_format.keep_with_next = True
 
-    # Linha de assinatura
+    # Linha de assinatura via borda inferior do parágrafo (mais elegante que underscores)
     p_line = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
-                      line=240, before=0, after=40)
-    r_line = p_line.add_run('_' * 45)
-    set_font(r_line, size=10)
-    r_line.font.color.rgb = RGBColor(0x99, 0x99, 0x99)
+                      line=60, before=0, after=60)
+    # Largura limitada via indentação
+    p_line.paragraph_format.left_indent  = Pt(100)
+    p_line.paragraph_format.right_indent = Pt(100)
+    pPr = p_line._p.get_or_add_pPr()
+    pBdr = OxmlElement('w:pBdr')
+    bot = OxmlElement('w:bottom')
+    bot.set(qn('w:val'),   'single')
+    bot.set(qn('w:sz'),    '6')
+    bot.set(qn('w:color'), '1F3864')
+    bot.set(qn('w:space'), '1')
+    pBdr.append(bot)
+    pPr.append(pBdr)
     p_line.paragraph_format.keep_with_next = True
 
-    # Dados do assinante
-    assinatura_items = [
-        (assinante.get("nome",     ASSINANTE["nome"]),     True),
-        (assinante.get("titulo",   ASSINANTE["titulo"]),   False),
-        (assinante.get("registro", ASSINANTE["registro"]), False),
-    ]
-    for i, (texto, bold) in enumerate(assinatura_items):
+    # Nome em negrito (destaque)
+    nome = assinante.get("nome", ASSINANTE["nome"])
+    p_nome = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
+                      line=LINE_SPC, before=40, after=0)
+    r_nome = add_run(p_nome, nome, bold=True, size=SZ_CORPO)
+    r_nome.font.color.rgb = RGBColor(0x1F, 0x38, 0x64)
+    p_nome.paragraph_format.keep_with_next = True
+
+    # Título e Registro em tamanho menor
+    titulo   = assinante.get("titulo",   ASSINANTE["titulo"])
+    registro = assinante.get("registro", ASSINANTE["registro"])
+    for texto in [titulo, registro]:
         p = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
-                     line=LINE_SPC, before=0, after=0)
-        add_run(p, texto, bold=bold, size=SZ_CORPO)
-        if i < len(assinatura_items) - 1:
-            p.paragraph_format.keep_with_next = True
+                     line=240, before=0, after=0)
+        r = add_run(p, texto, bold=False, size=9)
+        r.font.color.rgb = RGBColor(0x44, 0x44, 0x44)
+        p.paragraph_format.keep_with_next = True
+
+    # Secretaria
+    p_sec = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
+                     line=240, before=0, after=120)
+    r_sec = add_run(p_sec, "Secretaria Municipal de Obras e Serviços Urbanos", bold=False, size=9)
+    r_sec.font.color.rgb = RGBColor(0x44, 0x44, 0x44)
 
 
 # ═══════════════════════════════════════════════════════════

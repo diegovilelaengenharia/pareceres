@@ -1,0 +1,32 @@
+MODELOS PRONTOS — SMOSU OLIVEIRA/MG
+=====================================
+
+COMO USAR
+---------
+1. Copie o arquivo MODELO_XX_*.json desejado para a pasta:
+   1_Colar_JSON_Aqui\
+
+2. Renomeie para identificar o processo:
+   processo_XXXX_2026_NomeRequerente.json
+
+3. Abra no Bloco de Notas ou VS Code e substitua TODOS os campos
+   "⚠️ VERIFICAR — ..." pelos dados reais do processo.
+
+4. Confirme que NÃO há nenhum "⚠️ VERIFICAR" restante.
+
+5. Dê um duplo clique em GERAR_DOCUMENTOS.bat.
+   O sistema irá alertar se ainda houver campos incompletos.
+
+MODELOS DISPONÍVEIS
+-------------------
+01  Alvará de Aprovação         (parecer_tecnico)
+02  Habite-se Comum             (parecer_simples)
+03  Certidão de Localização     (parecer_simples)
+04  Certidão de Decadência      (parecer_simples — Art. 150 §4º CTN)
+05  Comunicado de Pendência     (comunicado_pendencia)
+06  Ofício Meio Ambiente        (oficio — encaminhamento para CODEMA)
+07  Memorando Interno           (memorando — comunicação entre setores)
+
+DICA: Para mais tipos (Alvará de Regularização, Habite-se com Multa,
+Certidões Diversas, etc.), use o Gem do Gemini — ele gera o JSON
+automaticamente a partir dos PDFs do processo.

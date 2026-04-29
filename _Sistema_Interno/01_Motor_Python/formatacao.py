@@ -12,7 +12,7 @@ from docx.oxml import OxmlElement
 
 from config import (
     FONT_CORPO, SZ_CORPO, COR_INST, COR_LABEL_BG,
-    COR_BORDA_TABELA, COR_LABEL_FONT, PAR_AFTER, LINE_SPC,
+    COR_BORDA_TABELA, PAR_AFTER, LINE_SPC,
 )
 
 
@@ -89,7 +89,7 @@ def bold_segments(p, text, size=None, color=None):
                 r.font.color.rgb = color
 
 
-def rich_segments(p, text, size=None, color=None):
+def rich_segments(p, text, size=None, color=None, base_italic=False):
     """Processa **negrito** e __itálico__ inline em um parágrafo."""
     bold_parts = text.split('**')
     for bi, bpart in enumerate(bold_parts):
@@ -97,7 +97,7 @@ def rich_segments(p, text, size=None, color=None):
         italic_parts = bpart.split('__')
         for ii, ipart in enumerate(italic_parts):
             if ipart:
-                is_italic = (ii % 2 == 1)
+                is_italic = base_italic ^ (ii % 2 == 1)
                 r = add_run(p, ipart, bold=is_bold, italic=is_italic, size=size)
                 if color is not None:
                     r.font.color.rgb = color
@@ -188,6 +188,36 @@ def add_separator(doc, color=COR_INST):
     bot_sep.set(qn('w:color'), color)
     pb_sep.append(bot_sep)
     pPr_sep.append(pb_sep)
+
+
+def add_section_heading(doc, titulo: str):
+    """
+    Título de seção com fundo azul escuro e texto branco.
+    Usado em CONSIDERANDOS, FUNDAMENTAÇÃO LEGAL e CONCLUSÃO TÉCNICA.
+    """
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    set_spacing(p, line=240, before=200, after=60)
+
+    # Fundo azul institucional via shading
+    pPr = p._p.get_or_add_pPr()
+    shd = OxmlElement('w:shd')
+    shd.set(qn('w:val'), 'clear')
+    shd.set(qn('w:color'), 'auto')
+    shd.set(qn('w:fill'), COR_INST)
+    pPr.append(shd)
+
+    # Indentação para parecer com margem lateral
+    ind = OxmlElement('w:ind')
+    ind.set(qn('w:left'), '0')
+    pPr.append(ind)
+
+    from docx.shared import RGBColor as _RGB
+    r = p.add_run(f"  {titulo.upper()}")
+    from config import FONT_TITULO as _FT
+    set_font(r, name=_FT, size=9, bold=True)
+    r.font.color.rgb = _RGB(0xFF, 0xFF, 0xFF)
+    return p
 
 
 def add_field(r, instr_text):

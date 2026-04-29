@@ -1,0 +1,23 @@
+{
+  "memoria_de_calculo": "PREENCHER: identificar a área de interesse público (sistema viário, equipamento urbano, etc.). Verificar se há matrícula do imóvel ou se é área pública não registrada. Indicar Lei Municipal nº 216/2014 e demais fundamentos.",
+
+  "tipo_relatorio": "oficio_decreto_utilidade",
+  "numero_processo": "⚠️ VERIFICAR — ex: 1234/2026",
+  "data_processo": "⚠️ VERIFICAR — ex: 23 de abril de 2026",
+  "assunto": "Solicitação de Decreto de Utilidade Pública — ⚠️ VERIFICAR (área / bairro / logradouro)",
+
+  "destinatario_titulo": "À PROCURADORIA DO MUNICÍPIO",
+  "destinatario_para": "⚠️ VERIFICAR — Nome do Procurador Municipal",
+  "destinatario_de": "Diego Tarcísio Nunes Vilela — Engenheiro Civil, CREA 235.474/D — SMOSU",
+
+  "considerandos": [
+    "⚠️ VERIFICAR — identificar a área: localização, dimensões, confrontantes e matrícula (se houver);",
+    "⚠️ VERIFICAR — descrever a finalidade pública da área: abertura/alargamento de via, implantação de equipamento urbano, etc.;",
+    "⚠️ VERIFICAR — indicar o instrumento legal de suporte: Lei Municipal nº 216/2014, Plano Diretor, etc.;",
+    "⚠️ VERIFICAR — mencionar a necessidade de providências para registro e formalização do domínio público."
+  ],
+
+  "conclusao": "Diante do exposto, solicita-se à **Procuradoria do Município** a elaboração de **Decreto de Utilidade Pública** sobre a área descrita, para fins de **⚠️ VERIFICAR (desapropriação / regularização fundiária / abertura de via)**, conforme Lei Municipal nº 216/2014.",
+
+  "documentos_emitir": []
+}

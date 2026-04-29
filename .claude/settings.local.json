@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python run_tests.py)",
+      "Bash(git commit -m ' *)",
+      "Bash(ls -la *.md)",
+      "Bash(ls -la MEMORY*)",
+      "Bash(ls -la CLAUDE*)",
+      "Read(//c/Users/diego/.claude/projects/c--Users-diego-Meu-Drive-02--Trabalho--Engenheiro-Civil--02--Prefeitura--PMO--1--Gemini-02--Pareceres/memory/**)"
+    ]
+  }
+}

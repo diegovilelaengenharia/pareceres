@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel GEM — SMOSU Oliveira/MG</title>
+<link rel="stylesheet" href="/painel_gem.css">
+</head><body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">🏛</div>
+    <div><h1>Painel GEM — Motor SMOSU</h1><div class="sub">Prefeitura Municipal de Oliveira/MG</div></div>
+  </div>
+  <div class="header-right">
+    <div class="pulse"></div>
+    <button class="btn btn-s" onclick="abrirPasta('saida')">📁 Saída</button>
+    <button class="btn btn-s" onclick="abrirPasta('entrada')">📂 Entrada</button>
+  </div>
+</div>
+
+<div class="wizard-bar">
+  <div class="wz-step active" onclick="goStep(1)" id="ws1"><div class="wz-num">1</div><div class="wz-label">Entrada</div></div>
+  <div class="wz-line" id="wl1"></div>
+  <div class="wz-step" onclick="goStep(2)" id="ws2"><div class="wz-num">2</div><div class="wz-label">Revisão</div></div>
+  <div class="wz-line" id="wl2"></div>
+  <div class="wz-step" onclick="goStep(3)" id="ws3"><div class="wz-num">3</div><div class="wz-label">Geração</div></div>
+  <div class="wz-line" id="wl3"></div>
+  <div class="wz-step" onclick="goStep(4)" id="ws4"><div class="wz-num">4</div><div class="wz-label">Resultado</div></div>
+</div>
+
+<div class="main">
+
+<!-- ═══ PASSO 1: ENTRADA ═══ -->
+<div class="step-panel active" id="step1">
+<div class="grid">
+<div class="card">
+  <div class="card-h">⚡ Entrada de Dados</div>
+  <div class="card-b">
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('json',this)">📋 Colar JSON</div>
+      <div class="tab" onclick="switchTab('gemini',this)">🌐 Guia Gemini</div>
+      <div class="tab" onclick="switchTab('modelo',this)">📑 Modelo</div>
+    </div>
+    <div class="tab-p active" id="tab-json">
+      <textarea id="json-input" oninput="validateJSON()" placeholder='Cole aqui o JSON gerado pelo Gemini...'></textarea>
+      <div class="json-info" id="json-info"></div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
+        <input type="text" id="json-nome" placeholder="Nome (ex: 1270-2026)" style="flex:1">
+        <button class="btn btn-p" onclick="salvarEAvancar()">💾 Salvar e Avançar →</button>
+      </div>
+      <div id="json-status" class="status"></div>
+    </div>
+    <div class="tab-p" id="tab-gemini">
+      <div class="guide">
+        <h3>🌐 Como analisar o PDF com o Gemini</h3>
+        <ol>
+          <li>Acesse <b><a href="https://gemini.google.com" target="_blank">gemini.google.com</a></b></li>
+          <li>Clique em <b>"Copiar Instruções"</b> abaixo e cole no chat do Gemini</li>
+          <li><b>Anexe todos os PDFs</b> do processo (matrícula, planta, ART)</li>
+          <li>O Gemini analisa com <b>OCR</b> (lê imagens) e gera o JSON</li>
+          <li>Copie o bloco JSON da resposta do Gemini</li>
+          <li>Volte à aba <b>"Colar JSON"</b> e cole</li>
+        </ol>
+      </div>
+      <div class="btns">
+        <button class="btn btn-v" onclick="copiarInstrucoes()">📋 Copiar Instruções GEM</button>
+        <button class="btn btn-p" onclick="window.open('https://gemini.google.com','_blank')">🌐 Abrir Gemini</button>
+      </div>
+      <div id="gemini-status" class="status"></div>
+    </div>
+    <div class="tab-p" id="tab-modelo">
+      <select id="modelo-sel" onchange="carregarModelo()"><option value="">Selecione um modelo...</option></select>
+      <textarea id="modelo-json" style="margin-top:10px" placeholder="Selecione um modelo acima..."></textarea>
+      <div class="btns"><button class="btn btn-p" onclick="salvarModelo()">💾 Salvar e Avançar →</button></div>
+      <div id="modelo-status" class="status"></div>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-h">📂 Arquivos na Pasta</div>
+    <div class="card-b"><ul class="file-list" id="file-list"></ul></div>
+  </div>
+  <div class="card">
+    <div class="card-h">📄 Docs Gerados</div>
+    <div class="card-b"><div id="docs-recentes"></div></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ═══ PASSO 2: REVISÃO ═══ -->
+<div class="step-panel" id="step2">
+<div class="card">
+  <div class="card-h">👁️ Preview do Documento</div>
+  <div class="card-b">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+      <select id="preview-sel" style="flex:1"><option value="">Selecione um JSON...</option></select>
+      <button class="btn btn-o" onclick="carregarPreview()">👁️ Carregar</button>
+    </div>
+    <iframe id="preview-iframe" class="preview-frame" srcdoc="<div style='display:flex;align-items:center;justify-content:center;height:100%;color:#999;font-family:sans-serif'>Selecione um JSON e clique em Carregar</div>"></iframe>
+    <div id="preview-status" class="status"></div>
+    <div class="btns" style="justify-content:space-between;margin-top:14px">
+      <button class="btn btn-s" onclick="goStep(1)">← Voltar e Editar</button>
+      <button class="btn btn-g btn-lg" onclick="goStep(3)">✅ Aprovar e Compilar →</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ PASSO 3: GERAÇÃO ═══ -->
+<div class="step-panel" id="step3">
+<div class="card">
+  <div class="card-h">🚀 Escolha o Modo de Compilação</div>
+  <div class="card-b">
+    <div class="mode-cards">
+      <div class="mode-card selected" id="mc-motor" onclick="selMode('motor')">
+        <div class="icon">⚙️</div>
+        <h3>Modo Motor</h3>
+        <p>JSON estruturado com considerandos, fundamentação e conclusão</p>
+      </div>
+      <div class="mode-card" id="mc-livre" onclick="selMode('livre')">
+        <div class="icon">✍️</div>
+        <h3>Modo Livre</h3>
+        <p>Texto narrativo corrido usando o campo texto_livre</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin:16px 0">
+      <button class="btn btn-g btn-lg" onclick="compilar()" id="btn-compilar">🚀 Compilar DOCX Agora</button>
+    </div>
+    <div class="log" id="compilar-log" style="display:none"></div>
+    <div id="compilar-status" class="status"></div>
+    <div class="btns"><button class="btn btn-s" onclick="goStep(2)">← Voltar ao Preview</button></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ PASSO 4: RESULTADO ═══ -->
+<div class="step-panel" id="step4">
+<div class="card">
+  <div class="card-b">
+    <div class="result-ok" id="result-area">
+      <div class="big-icon">✅</div>
+      <h2>Documentos Gerados com Sucesso!</h2>
+      <p>Os arquivos foram salvos na pasta 2_Documentos_Prontos</p>
+      <div id="result-docs" style="max-width:500px;margin:16px auto;text-align:left"></div>
+      <div class="btns" style="justify-content:center">
+        <button class="btn btn-p btn-lg" onclick="abrirPasta('saida')">📁 Abrir Pasta de Saída</button>
+        <button class="btn btn-s btn-lg" onclick="novoProcesso()">🔄 Novo Processo</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+let curStep=1, curMode='motor', savedJsonName='';
+
+// ── Wizard Navigation ──
+function goStep(n){
+  curStep=n;
+  for(let i=1;i<=4;i++){
+    document.getElementById('step'+i).classList.toggle('active',i===n);
+    const ws=document.getElementById('ws'+i);
+    ws.classList.remove('active','done');
+    if(i<n) ws.classList.add('done');
+    else if(i===n) ws.classList.add('active');
+    if(i<4){
+      const wl=document.getElementById('wl'+i);
+      wl.classList.remove('done','active');
+      if(i<n) wl.classList.add('done');
+      else if(i===n) wl.classList.add('active');
+    }
+  }
+  if(n===2) refreshPreviewSel();
+  if(n===1||n===2) refresh();
+}
+
+// ── Tabs ──
+function switchTab(id,el){
+  el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  el.closest('.card-b').querySelectorAll('.tab-p').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+// ── API helpers ──
+async function api(p,o){return(await fetch(p,o)).json()}
+function showSt(id,m,t){const e=document.getElementById(id);e.className='status '+t;e.textContent=m}
+
+// ── Refresh ──
+async function refresh(){
+  const d=await api('/api/status');
+  // File list
+  const fl=document.getElementById('file-list');
+  let h='';
+  d.jsons.forEach(j=>{
+    h+=`<li class="file-item"><span>📋 ${j.nome}</span><div class="file-actions">
+      <button title="Preview" onclick="quickPreview('${j.nome}')">👁</button>
+      <button title="Editar" onclick="editarJSON('${j.nome}')">✏️</button>
+      <button title="Remover" onclick="removerJSON('${j.nome}')">🗑</button></div></li>`;
+  });
+  d.pdfs.forEach(p=>{h+=`<li class="file-item"><span>📄 ${p.nome} (${p.kb}KB)</span></li>`;});
+  fl.innerHTML=h||'<li class="file-item" style="color:var(--muted)">Pasta vazia</li>';
+  // Docs recentes
+  const dr=document.getElementById('docs-recentes');
+  dr.innerHTML=d.docs.length?d.docs.slice(0,3).map(dc=>dc.arquivos.map(a=>`<div class="doc-item">📄 ${a} <span class="badge badge-g">${dc.pasta}</span></div>`).join('')).join(''):'<p style="color:var(--muted);font-size:12px">Nenhum</p>';
+  // Modelos
+  const ms=document.getElementById('modelo-sel');
+  if(ms.children.length<=1) ms.innerHTML='<option value="">Selecione...</option>'+d.modelos.map(m=>`<option value="${m}">${m.replace('MODELO_','').replace('.json','')}</option>`).join('');
+}
+
+function refreshPreviewSel(){
+  api('/api/status').then(d=>{
+    const ps=document.getElementById('preview-sel');
+    ps.innerHTML='<option value="">Selecione...</option>'+d.jsons.map(j=>`<option value="${j.nome}">${j.nome}</option>`).join('');
+    if(savedJsonName) ps.value=savedJsonName;
+  });
+}
+
+// ── JSON Validation ──
+function validateJSON(){
+  const ta=document.getElementById('json-input'), info=document.getElementById('json-info');
+  const v=ta.value.trim();
+  if(!v){ta.classList.remove('valid','invalid');info.innerHTML='';return}
+  try{
+    const d=JSON.parse(v);
+    ta.classList.add('valid');ta.classList.remove('invalid');
+    let badges='<span class="badge badge-g">✓ JSON válido</span>';
+    if(d.tipo_relatorio) badges+=`<span class="badge badge-b">${d.tipo_relatorio}</span>`;
+    if(d.numero_processo){
+      badges+=`<span class="badge badge-j">Proc. ${d.numero_processo}</span>`;
+      document.getElementById('json-nome').value=d.numero_processo.replace('/','-');
+    }
+    if(d.requerente) badges+=`<span class="badge badge-b">${d.requerente}</span>`;
+    info.innerHTML=badges;
+  }catch(e){
+    ta.classList.add('invalid');ta.classList.remove('valid');
+    info.innerHTML=`<span class="badge" style="background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.2)">✗ ${e.message.substring(0,60)}</span>`;
+  }
+}
+
+// ── Save JSON ──
+async function salvarEAvancar(){
+  const t=document.getElementById('json-input').value.trim();
+  const n=document.getElementById('json-nome').value.trim()||'processo';
+  if(!t){showSt('json-status','Cole o JSON antes.','err');return}
+  const r=await api('/api/salvar-json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:n,conteudo:t})});
+  if(r.ok){savedJsonName=r.nome;showSt('json-status','✓ '+r.nome+' salvo!','ok');setTimeout(()=>goStep(2),600)}
+  else showSt('json-status','✗ '+r.erro,'err');
+}
+
+// ── Modelo ──
+async function carregarModelo(){
+  const s=document.getElementById('modelo-sel').value;if(!s)return;
+  const r=await api('/api/modelo/'+encodeURIComponent(s));
+  if(r.ok) document.getElementById('modelo-json').value=r.conteudo;
+}
+async function salvarModelo(){
+  const t=document.getElementById('modelo-json').value.trim();
+  if(!t){showSt('modelo-status','Edite antes.','err');return}
+  const n=prompt('Nome do arquivo:','processo');if(!n)return;
+  const r=await api('/api/salvar-json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:n,conteudo:t})});
+  if(r.ok){savedJsonName=r.nome;showSt('modelo-status','✓ '+r.nome,'ok');setTimeout(()=>goStep(2),600)}
+  else showSt('modelo-status','✗ '+r.erro,'err');
+}
+
+// ── Gemini Instructions ──
+async function copiarInstrucoes(){
+  const r=await api('/api/instrucoes');
+  if(r.ok){await navigator.clipboard.writeText(r.conteudo);showSt('gemini-status','✓ Instruções copiadas! Cole no chat do Gemini.','ok')}
+  else showSt('gemini-status','✗ '+r.erro,'err');
+}
+
+// ── File actions ──
+async function quickPreview(nome){savedJsonName=nome;goStep(2);setTimeout(()=>{document.getElementById('preview-sel').value=nome;carregarPreview()},300)}
+async function editarJSON(nome){
+  const r=await api('/api/ler-json/'+encodeURIComponent(nome));
+  if(r.ok){document.getElementById('json-input').value=r.conteudo;document.getElementById('json-nome').value=nome.replace('.json','');validateJSON();switchTab('json',document.querySelector('.tab'))}
+}
+async function removerJSON(nome){
+  if(!confirm('Remover '+nome+'?'))return;
+  await fetch('/api/remover-json/'+encodeURIComponent(nome),{method:'DELETE'});refresh();
+}
+
+// ── Preview ──
+async function carregarPreview(){
+  const s=document.getElementById('preview-sel').value;
+  if(!s){showSt('preview-status','Selecione um JSON.','err');return}
+  showSt('preview-status','Gerando preview...','info');
+  const r=await api('/api/preview/'+encodeURIComponent(s));
+  if(r.ok){document.getElementById('preview-iframe').srcdoc=r.html;showSt('preview-status','✓ Preview carregado.','ok')}
+  else showSt('preview-status','✗ '+r.erro,'err');
+}
+
+// ── Compile ──
+function selMode(m){
+  curMode=m;
+  document.getElementById('mc-motor').classList.toggle('selected',m==='motor');
+  document.getElementById('mc-livre').classList.toggle('selected',m==='livre');
+}
+async function compilar(){
+  const b=document.getElementById('btn-compilar'),l=document.getElementById('compilar-log');
+  b.disabled=true;b.textContent='⏳ Compilando...';l.style.display='block';l.textContent='Aguarde...\n';
+  showSt('compilar-status','Compilando...','info');
+  const ep=curMode==='livre'?'/api/compilar-livre':'/api/compilar';
+  const r=await api(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+  l.textContent=r.saida||'(sem saída)';
+  b.disabled=false;b.textContent='🚀 Compilar DOCX Agora';
+  if(r.ok){showSt('compilar-status','✓ Sucesso!','ok');
+    const d=await api('/api/status');
+    const rd=document.getElementById('result-docs');
+    rd.innerHTML=d.docs.length?d.docs[0].arquivos.map(a=>`<div class="doc-item">📄 ${a}</div>`).join(''):'';
+    setTimeout(()=>goStep(4),800);
+  }else showSt('compilar-status','✗ Verifique o log acima.','err');
+}
+
+// ── New Process ──
+function novoProcesso(){
+  document.getElementById('json-input').value='';
+  document.getElementById('json-nome').value='';
+  document.getElementById('json-info').innerHTML='';
+  document.getElementById('json-input').classList.remove('valid','invalid');
+  savedJsonName='';goStep(1);refresh();
+}
+
+async function abrirPasta(q){await api('/api/abrir/'+q)}
+
+refresh();setInterval(refresh,10000);
+</script>
+</body></html>
