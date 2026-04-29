@@ -94,6 +94,7 @@
     <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
       <select id="preview-sel" style="flex:1"><option value="">Selecione um JSON...</option></select>
       <button class="btn btn-o" onclick="carregarPreview()">👁️ Carregar</button>
+      <button class="btn btn-v" onclick="abrirPreviewNovaAba()" id="btn-nova-aba" style="display:none" title="Abrir preview em uma nova guia">🔗 Nova Aba</button>
     </div>
     <iframe id="preview-iframe" class="preview-frame" srcdoc="<div style='display:flex;align-items:center;justify-content:center;height:100%;color:#999;font-family:sans-serif'>Selecione um JSON e clique em Carregar</div>"></iframe>
     <div id="preview-status" class="status"></div>
@@ -288,8 +289,20 @@ async function carregarPreview(){
   if(!s){showSt('preview-status','Selecione um JSON.','err');return}
   showSt('preview-status','Gerando preview...','info');
   const r=await api('/api/preview/'+encodeURIComponent(s));
-  if(r.ok){document.getElementById('preview-iframe').srcdoc=r.html;showSt('preview-status','✓ Preview carregado.','ok')}
+  if(r.ok){
+      document.getElementById('preview-iframe').srcdoc=r.html;
+      document.getElementById('btn-nova-aba').style.display='inline-block';
+      showSt('preview-status','✓ Preview carregado.','ok')
+  }
   else showSt('preview-status','✗ '+r.erro,'err');
+}
+
+function abrirPreviewNovaAba(){
+  const html = document.getElementById('preview-iframe').srcdoc;
+  if(!html || html.includes('Selecione um JSON')) return;
+  const w = window.open();
+  w.document.write(html);
+  w.document.close();
 }
 
 // ── Compile ──
