@@ -14,6 +14,8 @@ PASTA_ENTRADA = os.path.join(PROJECT_ROOT, "1_Colar_JSON_Aqui")
 PASTA_SAIDA   = os.path.join(PROJECT_ROOT, "2_Documentos_Prontos")
 PASTA_MODELOS = os.path.join(PROJECT_ROOT, "0_Modelos_Prontos")
 PASTA_TREINO  = os.path.join(PROJECT_ROOT, "3_Treinar_Inteligencia")
+PASTA_RETRO   = os.path.join(os.path.dirname(SCRIPT_DIR), "03_Retroalimentacao_e_Estudos")
+PASTA_HIST    = os.path.join(PASTA_RETRO, "historico")
 HTML_FILE     = os.path.join(SCRIPT_DIR, "painel_gem.html")
 PORT          = 8765
 
@@ -44,6 +46,39 @@ def api_salvar_json(nome, conteudo):
     caminho = os.path.join(PASTA_ENTRADA, nome)
     try:
         dados = json.loads(conteudo)
+
+        # --- EXTRAÇÃO DE NOVAS VARIÁVEIS ---
+        chaves_conhecidas = {
+            "numero_processo", "requerente", "paragrafo_abertura", "considerandos", 
+            "conclusao", "numero_documento", "data_aprovacao", "nome_obra", "logradouro", 
+            "bairro", "proprietario_nome", "proprietario_cpf_cnpj", "area_total_obra", 
+            "areas_matriz", "responsavel_execucao_nome", "responsavel_execucao_cpf_cnpj", 
+            "texto_despacho_responsavel_tecnico", "titulo_documento", "texto_certidao", 
+            "assinantes", "fundamentacao_legal", "documentos_emitir", "observacoes_finais", 
+            "multas_calculadas", "excecoes_aplicadas", "tipo_relatorio", "data_processo", 
+            "assunto", "ano_construcao", "taxa_permeabilidade", "profissional_nome", 
+            "profissional_registro", "desenhista", "lote", "quadra", "inscricao_municipal", 
+            "area_terreno", "texto_livre", "taxa_ocupacao"
+        }
+        
+        novas_variaveis = {k: v for k, v in dados.items() if k not in chaves_conhecidas}
+        
+        if novas_variaveis:
+            from datetime import datetime
+            arq_treino = os.path.join(PASTA_TREINO, "03_NOVAS_VARIAVEIS_PROPOSTAS.md")
+            
+            # Adiciona cabeçalho se o arquivo não existir
+            if not os.path.exists(arq_treino):
+                with open(arq_treino, "w", encoding="utf-8") as f:
+                    f.write("# Novas Variáveis Propostas pelo Gemini\n\nEste arquivo coleta automaticamente chaves extras geradas pela IA que não fazem parte do schema padrão. Use-as para retroalimentar o sistema (1 vez por semana).\n")
+            
+            with open(arq_treino, "a", encoding="utf-8") as f:
+                f.write(f"\n## Extraído do arquivo `{nome}` em {datetime.now().strftime('%d/%m/%Y %H:%M')}\n")
+                f.write("```json\n")
+                json.dump(novas_variaveis, f, ensure_ascii=False, indent=2)
+                f.write("\n```\n")
+        # -----------------------------------
+
         with open(caminho, "w", encoding="utf-8") as f:
             json.dump(dados, f, ensure_ascii=False, indent=2)
         return {"ok": True, "nome": nome}
@@ -52,12 +87,15 @@ def api_salvar_json(nome, conteudo):
     except Exception as e:
         return {"ok": False, "erro": str(e)}
 
-def _compilar_script(script_name):
+def _compilar_script(script_name, script_args=None):
     try:
         env = os.environ.copy()
         env["PYTHONIOENCODING"] = "utf-8"
+        cmd = [sys.executable, os.path.join(SCRIPT_DIR, script_name), "--sem-preview"]
+        if script_args:
+            cmd.extend(script_args)
         result = subprocess.run(
-            [sys.executable, os.path.join(SCRIPT_DIR, script_name), "--sem-preview"],
+            cmd,
             capture_output=True, text=True, encoding="utf-8",
             errors="replace", cwd=PROJECT_ROOT, timeout=120, env=env)
         saida = (result.stdout + result.stderr).strip()
@@ -67,7 +105,11 @@ def _compilar_script(script_name):
     except Exception as e:
         return {"ok": False, "saida": str(e)}
 
-def api_compilar():
+def api_compilar(arquivos=None):
+    if arquivos:
+        # Se veio lista de arquivos, passamos caminhos completos
+        caminhos = [os.path.join(PASTA_ENTRADA, f) for f in arquivos]
+        return _compilar_script("compilador.py", caminhos)
     return _compilar_script("compilador.py")
 
 def api_compilar_livre():
@@ -124,11 +166,77 @@ def api_ler_json(nome):
         return {"ok": True, "conteudo": f.read()}
 
 def api_abrir_pasta(qual):
-    pastas = {"entrada": PASTA_ENTRADA, "saida": PASTA_SAIDA, "modelos": PASTA_MODELOS, "treino": PASTA_TREINO}
+    pastas = {
+        "entrada": PASTA_ENTRADA, 
+        "saida": PASTA_SAIDA, 
+        "modelos": PASTA_MODELOS, 
+        "treino": PASTA_TREINO,
+        "retro": os.path.join(os.path.dirname(SCRIPT_DIR), "03_Retroalimentacao_e_Estudos")
+    }
     pasta = pastas.get(qual, PASTA_SAIDA)
     try:
         os.startfile(pasta)
         return {"ok": True}
+    except Exception as e:
+        return {"ok": False, "erro": str(e)}
+
+def api_inspecionar(conteudo):
+    """Inspeciona um JSON e retorna relatório de saúde + roteamento."""
+    try:
+        dados = json.loads(conteudo) if isinstance(conteudo, str) else conteudo
+        from inspetor_documental import inspecionar
+        from roteador_pecas import rotear
+        resultado_inspecao = inspecionar(dados)
+        resultado_roteamento = rotear(dados, resultado_inspecao)
+        
+        # 6B.4: Detecção de Anomalia
+        try:
+            import metricas_triagem
+            mets = metricas_triagem.calcular_metricas()
+            media = mets.get("score_medio", 0)
+            if media > 0 and resultado_inspecao["score"] < media - 30:
+                resultado_inspecao["anomalia"] = f"Atenção: Score ({resultado_inspecao['score']}%) muito abaixo da média histórica ({media}%)."
+        except Exception:
+            pass
+            
+        return {
+            "ok": True,
+            "inspecao": resultado_inspecao,
+            "roteamento": resultado_roteamento,
+        }
+    except Exception as e:
+        return {"ok": False, "erro": str(e)}
+
+def api_aprender(data):
+    """Registra decisão do engenheiro para retroalimentação."""
+    from datetime import datetime
+    try:
+        tipo = data.get("tipo", "feedback_geral")
+        feedback = data.get("feedback", "")
+        
+        os.makedirs(PASTA_HIST, exist_ok=True)
+        
+        if tipo == "decisao_triagem":
+            # Decisão estruturada de triagem — salvar em JSONL
+            arquivo = os.path.join(PASTA_HIST, "decisoes_triagem.jsonl")
+            try:
+                decisao = json.loads(feedback) if isinstance(feedback, str) else feedback
+            except json.JSONDecodeError:
+                decisao = {"texto": feedback}
+            
+            decisao["timestamp"] = datetime.now().isoformat()
+            
+            with open(arquivo, "a", encoding="utf-8") as f:
+                f.write(json.dumps(decisao, ensure_ascii=False) + "\n")
+            
+            return {"ok": True, "msg": f"Decisão de triagem registrada ({decisao.get('processo', '?')})"}
+        else:
+            # Feedback textual livre — salvar no RETROALIMENTACAO_IA.md
+            arquivo = os.path.join(SCRIPT_DIR, "RETROALIMENTACAO_IA.md")
+            with open(arquivo, "a", encoding="utf-8") as f:
+                f.write(f"\n## Feedback Manual — {datetime.now().strftime('%d/%m/%Y %H:%M')}\n")
+                f.write(f"{feedback}\n")
+            return {"ok": True, "msg": "Feedback registrado no RETROALIMENTACAO_IA.md"}
     except Exception as e:
         return {"ok": False, "erro": str(e)}
 
@@ -185,7 +293,36 @@ class Handler(BaseHTTPRequestHandler):
         path = urllib.parse.urlparse(self.path).path
         if path == "/api/salvar-json": self._json(api_salvar_json(data.get("nome","processo"), data.get("conteudo","")))
         elif path == "/api/compilar": self._json(api_compilar())
+        elif path == "/api/compilar-lote": self._json(api_compilar(data.get("arquivos", [])))
         elif path == "/api/compilar-livre": self._json(api_compilar_livre())
+        elif path == "/api/extrair-pdf":
+            import time
+            time.sleep(1.5)
+            mock_json = json.dumps({
+                "numero_processo": "IA-Mock/2026",
+                "requerente": "Dados Extraídos Via PDF",
+                "tipo_relatorio": "Regularização de Obra",
+                "assunto": "Regularização com As-Built",
+                "ano_construcao": "2015",
+                "taxa_permeabilidade": "5"
+            }, ensure_ascii=False, indent=2)
+            self._json({"ok": True, "json_gerado": mock_json})
+        elif path == "/api/aprender":
+            self._json(api_aprender(data))
+        elif path == "/api/metricas":
+            try:
+                import metricas_triagem
+                self._json({"ok": True, "metricas": metricas_triagem.calcular_metricas()})
+            except Exception as e:
+                self._json({"ok": False, "erro": str(e)})
+        elif path == "/api/exportar-relatorio":
+            try:
+                import metricas_triagem
+                self._json(metricas_triagem.exportar_relatorio())
+            except Exception as e:
+                self._json({"ok": False, "erro": str(e)})
+        elif path == "/api/inspecionar":
+            self._json(api_inspecionar(data.get("conteudo", "{}")))
         else: self._send(404, "text/plain", b"Not found")
 
     def do_DELETE(self):

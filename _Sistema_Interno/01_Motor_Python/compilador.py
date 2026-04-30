@@ -26,6 +26,7 @@ import precedentes            as prec
 import verificador_multas     as verif_multas
 import cobertura_considerandos as cob_cons
 import gerador_sero           as gen_sero
+import inspetor_documental    as insp_doc
 
 # ── Cores do terminal (colorama) ──────────────────────────────────────────────
 try:
@@ -40,10 +41,10 @@ try:
 except ImportError:
     _OK = _WARN = _ERR = _INFO = _RESET = _BLUE = ""
 
-def _ok(msg):   return f"{_OK}✓{_RESET} {msg}"
-def _warn(msg): return f"{_WARN}⚠{_RESET} {msg}"
-def _err(msg):  return f"{_ERR}✗{_RESET} {msg}"
-def _info(msg): return f"{_INFO}›{_RESET} {msg}"
+def _ok(msg):   return f"{_OK}[OK]{_RESET} {msg}"
+def _warn(msg): return f"{_WARN}[WARN]{_RESET} {msg}"
+def _err(msg):  return f"{_ERR}[ERR]{_RESET} {msg}"
+def _info(msg): return f"{_INFO}[INFO]{_RESET} {msg}"
 
 
 # ── Relatório pré-voo unificado ───────────────────────────────────────────────
@@ -96,6 +97,20 @@ def _relatorio_prevoo(dados: dict) -> tuple[bool, dict]:
     except Exception as e:
         print(f"  {_warn(f'Módulo de consistência indisponível: {e}')}")
 
+    # ── 3b. Inspeção Documental (Triagem Inteligente) ─────────────────────────
+    try:
+        if "analise_documental" in dados:
+            res_insp = insp_doc.inspecionar(dados)
+            insp_doc.imprimir_relatorio(res_insp, tipo)
+            
+            if res_insp.get("bloqueantes_faltando", 0) > 0:
+                tem_erro_bloqueante = True
+                for p in res_insp.get("pendencias", []):
+                    if p.get("bloqueante"):
+                        alertas_prevoo.append({"nivel": "erro", "msg": f"FALTA BLOQUEANTE: {p['documento']}"})
+    except Exception as e:
+        print(f"  {_warn(f'Módulo de inspeção documental indisponível: {e}')}")
+
     # ── 4. Verificação de cálculo de multas ───────────────────────────────────
     try:
         erros_multas, avisos_multas, resumo_multas = verif_multas.verificar(dados)
@@ -129,10 +144,12 @@ def _relatorio_prevoo(dados: dict) -> tuple[bool, dict]:
     except Exception as e:
         print(f"  {_warn(f'Módulo SERO indisponível: {e}')}")
 
-    resumo_cob["tem_sero"]    = tem_sero
-    resumo_cob["tem_multas"]  = bool(dados.get("multas_calculadas"))
-    resumo_cob["tem_excecoes"]= bool(dados.get("excecoes_aplicadas"))
-    resumo_cob["alertas"]     = alertas_prevoo
+    resumo_cob["tem_sero"]        = tem_sero
+    resumo_cob["tem_multas"]      = bool(dados.get("multas_calculadas"))
+    resumo_cob["tem_excecoes"]    = bool(dados.get("excecoes_aplicadas"))
+    resumo_cob["tem_historico"]   = bool(dados.get("historico_cronologico"))
+    resumo_cob["tem_partes"]      = bool(dados.get("partes_envolvidas"))
+    resumo_cob["alertas"]         = alertas_prevoo
 
     return not tem_erro_bloqueante, resumo_cob
 
@@ -169,9 +186,11 @@ def _relatorio_pos(dados: dict, caminho_docx: str, resumo_cob: dict) -> None:
         else:
             print(f"  {_warn(label + ' — ausente')}")
 
-    _flag(resumo_cob.get("tem_multas"),   "multas_calculadas")
+    _flag(resumo_cob.get("tem_multas"),    "multas_calculadas")
     _flag(resumo_cob.get("tem_excecoes"), "excecoes_aplicadas")
     _flag(resumo_cob.get("tem_sero"),     "sero_metadata")
+    _flag(resumo_cob.get("tem_historico"),"historico_cronologico")
+    _flag(resumo_cob.get("tem_partes"),   "partes_envolvidas")
     print(f"{_BLUE}{'=' * 62}{_RESET}")
 
 
@@ -214,22 +233,21 @@ def main():
             print("╚══════════════════════════════════════════════════════════════════╝")
             sys.exit(0)
 
-    alvo = args[0]
     arquivos_para_processar = []
+    caminho_saida_fornecido = None
 
-    if os.path.isdir(alvo):
-        print(f"\n[>] MODO EM LOTE: Escaneando pasta '{alvo}'")
-        arquivos_para_processar = glob.glob(os.path.join(alvo, "*.json"))
-        if not arquivos_para_processar:
-            print(f"[!] Nenhum arquivo .json encontrado na pasta de origem.")
-            sys.exit(0)
-    elif os.path.isfile(alvo) and alvo.endswith(".json"):
-        arquivos_para_processar = [alvo]
+    if os.path.isdir(args[0]):
+        print(f"\n[>] MODO EM LOTE: Escaneando pasta '{args[0]}'")
+        arquivos_para_processar = glob.glob(os.path.join(args[0], "*.json"))
     else:
-        print(f"[!] Erro: O caminho não é um JSON válido ou não existe -> {alvo}")
-        sys.exit(1)
+        arquivos_para_processar = [a for a in args if a.endswith(".json") and os.path.isfile(a)]
+        nao_jsons = [a for a in args if not a.endswith(".json")]
+        if len(arquivos_para_processar) == 1 and nao_jsons:
+            caminho_saida_fornecido = nao_jsons[0]
 
-    caminho_saida_fornecido = args[1] if len(args) > 1 else None
+    if not arquivos_para_processar:
+        print(f"[!] Nenhum arquivo .json encontrado para processar.")
+        sys.exit(0)
 
     if len(arquivos_para_processar) > 1 and caminho_saida_fornecido:
         print("[!] Aviso: Parâmetro de saída único ignorado devido ao processamento em lote.")
@@ -292,9 +310,39 @@ def main():
         # ── Gerar documento ───────────────────────────────────────────────────
         caminho_gerado = caminho_saida_fornecido
         try:
-            caminho_gerado = gerar(dados, caminho_saida_fornecido)
-            print(f"  {_ok(f'DOCX gerado: {os.path.basename(caminho_gerado or arquivo)}')}")
-            sucessos += 1
+            pecas_selecionadas = dados.get("documentos_emitir", [])
+            if pecas_selecionadas and isinstance(pecas_selecionadas, list):
+                print(f"  {_info(f'Gerando MÚLTIPLAS PEÇAS ({len(pecas_selecionadas)})')}")
+                for item in pecas_selecionadas:
+                    # Suporte para string (novo padrão do painel) ou dict (padrão antigo do Gemini)
+                    peca = item if isinstance(item, str) else item.get("tipo", "")
+                    # Sanitizar nome da peça caso venha "Alvará de Regularização..." do Gemini
+                    if not peca: continue
+                    
+                    dados_temp = dados.copy()
+                    
+                    # O motor espera IDs técnicos (ex: parecer_tecnico). 
+                    # Se vier descritivo ("Alvará de Regularização"), tentamos deduzir pelo tipo do processo principal.
+                    # Mas o ideal é que seja o ID técnico (que o roteador já usa).
+                    if " " in peca or "—" in peca:
+                        print(f"  {_warn(f'Ignorando tipo descritivo legado: {peca}')}")
+                        continue
+                        
+                    dados_temp["tipo_relatorio"] = peca
+                    
+                    try:
+                        cam = gerar(dados_temp, caminho_saida_fornecido)
+                        if cam:
+                            caminho_gerado = cam
+                        print(f"  {_ok(f'DOCX gerado ({peca}): {os.path.basename(cam or arquivo)}')}")
+                        sucessos += 1
+                    except Exception as e:
+                        print(f"  {_err(f'Falha ao gerar {peca}: {e}')}")
+                        erros += 1
+            else:
+                caminho_gerado = gerar(dados, caminho_saida_fornecido)
+                print(f"  {_ok(f'DOCX gerado: {os.path.basename(caminho_gerado or arquivo)}')}")
+                sucessos += 1
         except Exception as e:
             print(f"  {_err(f'Falha ao compilar {os.path.basename(arquivo)}: {e}')}")
             erros += 1

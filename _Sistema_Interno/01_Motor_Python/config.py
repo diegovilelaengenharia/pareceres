@@ -72,10 +72,13 @@ TIPOS_DOCUMENTO = {
     "alvara_construcao_comercial":        "parecer_tecnico",
     "alvara_regularizacao":               "parecer_tecnico",
     "alvara_ampliacao":                   "parecer_tecnico",
+    "alvara_reforma":                     "parecer_tecnico",
     "alvara_galpao_comercial":            "parecer_tecnico",
     "alvara_reforma_demolicao_ampliacao": "parecer_tecnico",
     "alvara_substituicao_projeto":        "parecer_tecnico",
+    "alvara_troca_responsavel_tecnico":   "parecer_simples",
     "regularizacao":                      "parecer_tecnico",  # compatibilidade
+    "regularizacao_complexa_multipla":    "parecer_tecnico",
 
     # ── Pareceres Simples (sem dados do carimbo) ──
     "certidao_numero_2via":               "parecer_simples",
@@ -84,6 +87,7 @@ TIPOS_DOCUMENTO = {
     "certidao_conjunta":                  "parecer_simples",
     "certidao_numero_comercial":          "parecer_simples",
     "habitese_comum":                     "parecer_simples",
+    "habitese_condominio":                "parecer_simples",
     "habitese_multa":                     "parecer_simples",
     "certidao_averbacao_decadencia":      "parecer_simples",
     "habitese_2via":                      "parecer_simples",
@@ -95,6 +99,7 @@ TIPOS_DOCUMENTO = {
     "certidao_demolicao":                 "parecer_simples",
     "certidao_desmembramento":            "parecer_simples",
     "certidao_retificacao_area":          "parecer_simples",
+    "certidao_zue":                       "parecer_simples",
 
     # ── Ofícios e Memorandos ──
     "oficio_meio_ambiente":               "oficio",

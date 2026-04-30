@@ -29,6 +29,7 @@ from componentes import (
     build_dados_carimbo, build_corpo,
     build_conclusao_e_docs, build_conclusao_simples, build_assinatura,
     build_comunicado_pendencia,
+    build_partes_envolvidas, build_historico_cronologico,
 )
 
 # ═══════════════════════════════════════════════════════════
@@ -114,7 +115,7 @@ def _gerar_nome_saida(dados):
 def gerar_parecer_tecnico(doc, dados, template):
     """
     Parecer técnico COMPLETO:
-    Header → Título → Identificação → Dados Carimbo → Corpo → Conclusão+Docs
+    Header → Título → Identificação → Dados Carimbo → [Partes] → [Histórico] → Corpo → Conclusão+Docs
     """
     titulo = template.get("titulo_documento", "PARECER SETOR TÉCNICO - SMOSU")
 
@@ -123,6 +124,10 @@ def gerar_parecer_tecnico(doc, dados, template):
     build_titulo(doc, titulo)
     build_identificacao(doc, dados)
     build_dados_carimbo(doc, dados)
+    if dados.get("partes_envolvidas"):
+        build_partes_envolvidas(doc, dados["partes_envolvidas"])
+    if dados.get("historico_cronologico"):
+        build_historico_cronologico(doc, dados["historico_cronologico"])
     build_corpo(doc, dados)
     build_conclusao_e_docs(doc, dados)
 
@@ -317,49 +322,50 @@ def gerar(dados, caminho_saida=None):
 
 def _gerar_pdf(caminho_docx: str) -> str | None:
     """
-    Tenta converter o DOCX em PDF usando docx2pdf (preferencial) ou
-    comtypes/Word COM (fallback Windows).
-
-    Retorna o caminho do PDF gerado, ou None em caso de falha.
+    Tenta converter o DOCX em PDF usando comtypes/Word COM.
+    Ajustado para NUNCA travar exibindo pop-ups (DisplayAlerts = 0).
     """
+    import os
     base, _ = os.path.splitext(caminho_docx)
     caminho_pdf = base + ".pdf"
     abs_docx    = os.path.abspath(caminho_docx)
     abs_pdf     = os.path.abspath(caminho_pdf)
 
-    # ── Tentativa 1: docx2pdf (instale com: pip install docx2pdf) ────────────
-    try:
-        from docx2pdf import convert
-        convert(abs_docx, abs_pdf)
-        print(f"[+] Documento PDF  gerado: {caminho_pdf}")
-        return caminho_pdf
-    except ImportError:
-        pass  # não instalado — tentar fallback
-    except Exception as e:
-        print(f"[!] docx2pdf falhou: {e}. Tentando Word COM...")
-
-    # ── Tentativa 2: Word COM via comtypes (Windows + Word instalado) ────────
+    print(f"  [.] Convertendo DOCX para PDF (via Word)...")
+    
     try:
         import comtypes.client
+        # Cria a instância do Word
         word = comtypes.client.CreateObject("Word.Application")
         word.Visible = False
+        word.DisplayAlerts = 0  # 0 = wdAlertsNone (Evita qualquer pop-up que trava o código)
+        
         try:
-            doc_w = word.Documents.Open(abs_docx)
+            # Abre de forma silenciosa, read-only
+            doc_w = word.Documents.Open(abs_docx, ConfirmConversions=False, ReadOnly=True, AddToRecentFiles=False)
             doc_w.SaveAs(abs_pdf, FileFormat=17)  # 17 = wdFormatPDF
-            doc_w.Close()
+            doc_w.Close(0)  # 0 = wdDoNotSaveChanges
         finally:
-            word.Quit()
-        print(f"[+] Documento PDF  gerado: {caminho_pdf}")
+            word.Quit(0)
+            
+        print(f"  [+] Documento PDF gerado: {caminho_pdf}")
         return caminho_pdf
     except ImportError:
-        pass  # comtypes não instalado
+        print("[!] Biblioteca 'comtypes' não instalada. Execute: pip install comtypes")
+        return None
     except Exception as e:
-        print(f"[!] Word COM falhou: {e}")
+        print(f"[!] Erro ao gerar PDF pelo Word COM: {e}")
+        
+        # Fallback para docx2pdf caso o comtypes falhe por alguma peculiaridade
+        try:
+            from docx2pdf import convert
+            convert(abs_docx, abs_pdf)
+            print(f"  [+] Documento PDF gerado via docx2pdf: {caminho_pdf}")
+            return caminho_pdf
+        except ImportError:
+            print("[!] docx2pdf não instalado.")
+        except Exception as e2:
+            print(f"[!] docx2pdf também falhou: {e2}")
 
-    # ── Nenhuma opção disponível ─────────────────────────────────────────────
-    print(
-        "[!] PDF NÃO GERADO. Para ativar a conversão automática, instale:\n"
-        "      pip install docx2pdf\n"
-        "    (requer Microsoft Word instalado no Windows)"
-    )
+    print("[!] PDF NÃO GERADO. O Word pode estar bloqueando a automação no fundo.")
     return None

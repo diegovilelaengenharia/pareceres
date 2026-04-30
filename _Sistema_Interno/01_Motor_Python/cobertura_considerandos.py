@@ -71,6 +71,13 @@ _TEMAS: dict[str, list[str]] = {
         "codema", "meio ambiente", "nascente", "faixa de proteção",
         "faixa de protecao", "lei 6.766", "lei federal",
     ],
+    "cronologia": [
+        "em ", "/20", "/19", "data de", "datado", "datada",
+        "emitido em", "emitida em", "expedido em", "expedida em",
+        "protocolo", "protocolado", "habite-se nº", "alvará nº",
+        "processo nº", "planta cadastral", "histórico", "historico",
+        "anteriormente", "anteriores", "apensado",
+    ],
 }
 
 # ── Limiares de cobertura por grupo de tipo de documento ─────────────────────
@@ -91,7 +98,7 @@ _TEMAS_OBRIGATORIOS: dict[str, set[str]] = {
 }
 
 # Temas cuja ausência gera WARNING (não erro) nos tipos técnicos
-_TEMAS_RECOMENDADOS_TECNICO = {"excecoes", "multas", "condicoes"}
+_TEMAS_RECOMENDADOS_TECNICO = {"excecoes", "multas", "condicoes", "cronologia"}
 
 
 def _texto_considerandos(dados: dict) -> str:

@@ -57,10 +57,12 @@ Execute tudo isso silenciosamente antes de escrever qualquer coisa.
 - Todos os números: matrícula, DAM, guias, alvarás, habite-ses, ARTs/RRTs, processos anteriores, embargos
 - Todos os nomes: proprietário, responsável técnico, fiscais (com matrícula funcional), confrontantes
 - Todos os valores monetários: guias pagas, taxas, DAMs (com descrição e R$)
-- Datas: vistorias, laudos, pareceres, alvarás e habite-ses anteriores
+- **Todas as datas:** abertura do processo, vistorias fiscais, laudos, pareceres, alvarás e habite-ses anteriores, quitação de DAMs, averbações antigas, datas de documentos de prova de decadência
 - Observações manuscritas, carimbos e anotações dos fiscais
 - Situações atípicas: APP, servidão, condomínio, desmembramento, embargo, lote irregular, etc.
 - **Qualquer informação que não caiba nos campos padrão** → anote como candidata a "novo campo"
+
+**⏱️ Monte mentalmente a linha do tempo do processo antes de qualquer análise:** do evento mais antigo (matrícula original, habite-se histórico, planta cadastral antiga) ao mais recente (vistoria fiscal, quitação de DAMs). Esta ordem cronológica deve guiar toda a narrativa dos considerandos.
 
 Depois, monte a tabela de documentos recebidos:
 
@@ -661,6 +663,41 @@ Incorpore TODAS as decisões do chat e gere um único bloco JSON completo.
     "observacoes_fiscais": "...",
     "confrontantes": "...",
     "outros": "..."
+  },
+
+  "historico_cronologico": [
+    {
+      "data": "DD/MM/AAAA",
+      "evento": "Descrição completa do evento em ordem cronológica",
+      "tipo": "abertura_processo | vistoria_fiscal | habite_se | alvara | comunicado_pendencia | quitacao_dam | documento_municipal | embargo | certidao | averbacao | apensamento",
+      "referencia": "Documento de origem (ex: AV-2 da Matrícula nº XXXX)",
+      "agentes": ["Nome Fiscal (Mat. XXXXXX)"]
+    }
+  ],
+
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "NOME COMPLETO",
+      "qualidade": "proprietário | procurador | comprador (contrato de compra e venda)"
+    },
+    "proprietario": {
+      "nome": "NOME (só se diferente do requerente)",
+      "matricula_imovel": "XXXX"
+    },
+    "responsavel_tecnico": {
+      "nome": "NOME DO PROFISSIONAL",
+      "conselho": "CREA/MG XXXXXX ou CAU/MG XXXXXX",
+      "tipo_rt": "ART | RRT | TRT",
+      "numero_rt": "NÚMERO SIMPLIFICADO"
+    },
+    "agentes_fiscais": [
+      {"nome": "NOME DO FISCAL", "matricula_funcional": "XXXXXXX"}
+    ],
+    "assinante_parecer": {
+      "nome": "Diego Tarcísio Nunes Vilela",
+      "titulo": "Engenheiro Civil",
+      "registro": "CREA 235.474/D"
+    }
   }
 }
 ```
@@ -704,6 +741,8 @@ Incorpore TODAS as decisões do chat e gere um único bloco JSON completo.
 - [ ] As decisões do engenheiro do chat estão incorporadas?
 - [ ] **[PARECERES TÉCNICOS]** `fundamentacao_legal` começa com o Decreto 4.149/2019? (deve ser o primeiro item, antes da Lei 1.544/86 e da LC 267/2019)
 - [ ] **[RT = CFT/CRT]** Se o responsável técnico é Técnico em Edificações (CFT/CRT), o número do **TRT** aparece: (a) no `paragrafo_abertura` junto ao nome; (b) em um `considerandos` específico com as atividades cobertas?
+- [ ] **[PARECERES TÉCNICOS]** `historico_cronologico` preenchido com TODOS os eventos datados encontrados nos PDFs, em ordem cronológica (do mais antigo ao mais recente)?
+- [ ] **[PARECERES TÉCNICOS]** `partes_envolvidas` preenchido com requerente (qualidade), responsável técnico (conselho + número RT simplificado) e todos os fiscais (nome + matrícula funcional)?
 
 ### Regra sobre Decreto 4.149/2019 (OBRIGATÓRIA em pareceres técnicos)
 

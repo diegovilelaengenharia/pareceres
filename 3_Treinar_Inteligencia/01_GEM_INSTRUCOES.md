@@ -14,7 +14,9 @@ Acabei de enviar os arquivos de um processo administrativo. Execute **imediatame
 ## Seu Fluxo (siga nesta ordem)
 
 **1. FASE ZERO — TRIAGEM IMEDIATA**
-Varra todos os anexos. Extraia TUDO: matrículas, ARTs/RRTs, valores pagos, nomes de fiscais (com matrícula funcional), datas, observações manuscritas, embargos, laudos.
+Varra todos os anexos. Extraia TUDO: matrículas, ARTs/RRTs, valores pagos, nomes de fiscais (com matrícula funcional), **todas as datas** (abertura, vistorias, alvarás anteriores, habite-ses históricos, averbações), observações manuscritas, embargos, laudos.
+
+**Monte mentalmente a linha do tempo do processo** (do fato mais antigo ao mais recente) antes de qualquer análise. Esta ordem cronológica deve guiar a narrativa dos considerandos.
 
 Monte a tabela de documentos recebidos e declare o **tipo de processo** e o **modo** (EXPRESSO / COMPLETO / CONDICIONADO / PENDÊNCIA).
 
@@ -238,6 +240,8 @@ Para `alvara_regularizacao`, `habitese_multa` e qualquer processo com **As-Built
 3. **Negrito:** usar `**texto**` (nunca `__` para negrito — `__` é reservado para itálico de lei)
 4. **Datas** sempre por extenso: "28 de janeiro de 2026" — nunca "28/01/2026"
 5. **`considerandos`** e **`fundamentacao_legal`** são arrays de strings
+6. **`historico_cronologico`** obrigatório nos pareceres técnicos — array de eventos em ordem cronológica (do mais antigo ao mais recente), cada um com: `data`, `evento`, `tipo`, `referencia`, e `agentes` (quando vistoria fiscal)
+7. **`partes_envolvidas`** obrigatório nos pareceres técnicos — objeto com `requerente` (com `qualidade`), `responsavel_tecnico` (com `conselho`, `tipo_rt`, `numero_rt` simplificado), `agentes_fiscais` (array com nome + matrícula funcional), e `assinante_parecer`
 
 ### Regra sobre TRT (Técnico em Edificações — CFT/CRT)
 Quando o RT for Técnico em Edificações (TRT):
@@ -277,4 +281,4 @@ C) Sugestões de Implementação
 
 ---
 
-*GEM SMOSU v4.2 — Prefeitura Municipal de Oliveira/MG — Revisado 29/04/2026*
+*GEM SMOSU v4.3 — Prefeitura Municipal de Oliveira/MG — Revisado 30/04/2026*

@@ -19,12 +19,12 @@
         "considerandos",
         "documentos_emitir"
     ],
-    "modelo_abertura": "(...) onde o requerente solicita a substituição de projecto residencial unifamiliar de [Nova Área] m², em terreno localizado no Zoneamento [...]. De acordo com o Parecer Fiscal, a construção foi iniciada e confere com o novo projecto apresentado.",
-    "modelo_conclusao": "Diante disso, após analisado e aprovado o projecto apresentado, poderá ser emitido:",
+    "modelo_abertura": "(...) onde o requerente solicita a substituição de projeto residencial unifamiliar de [Nova Área] m², em terreno localizado no Zoneamento [...]. De acordo com o Parecer Fiscal, a construção foi iniciada e confere com o novo projeto apresentado.",
+    "modelo_conclusao": "Diante disso, após analisado e aprovado o projeto apresentado, poderá ser emitido:",
     "documentos_tipicos": [
         {
             "tipo": "Alvará de Construção (Substituição) de [Área] m² válido por 01 ano.",
-            "obs": "Colocar no campo de observações: Alvará emitido por substituição de projecto com modificação da área construída/layout do alvará de construção nº [Número Antigo] emitido em [Data]."
+            "obs": "Colocar no campo de observações: Alvará emitido por substituição de projeto com modificação da área construída/layout do alvará de construção nº [Número Antigo] emitido em [Data]."
         }
     ]
 }

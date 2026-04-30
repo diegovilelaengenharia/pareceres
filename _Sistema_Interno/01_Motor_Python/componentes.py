@@ -181,7 +181,7 @@ def build_dados_carimbo(doc, d):
         ("Endereço:",       end_completo,
          "Inscrição Mun.:", d.get("inscricao_municipal", "")),
         ("Proprietário:",   d.get("proprietario", d.get("requerente", "")),
-         "Desenhista:",     d.get("desenhista", "")),
+         "Resp. Técnico:",  d.get("profissional_nome", "")),
         ("Lote:",           d.get("lote", ""),
          "Quadra:",         d.get("quadra", "")),
         ("Área Terreno:",   d.get("area_terreno", ""),
@@ -189,7 +189,7 @@ def build_dados_carimbo(doc, d):
         ("Taxa Ocupação:",  d.get("taxa_ocupacao", ""),
          "Coef. Aprov.:",   d.get("coef_aproveitamento", "")),
         ("Permeabilidade:", d.get("taxa_permeabilidade", ""),
-         "Resp. Técnico:",  d.get("profissional_nome", "")),
+         "",  ""),
     ]
 
     W_L1 = 2000
@@ -309,6 +309,13 @@ def build_fundamentacao(doc, d):
 
     INDENT = 1.25
     add_section_heading(doc, "Da Análise Legal e Técnica")
+
+    # Base legal padrão e simplificada exigida em todos os pareceres
+    p_padrao = add_para(doc, line=LINE_SPC, before=0, after=PAR_AFTER, indent_cm=INDENT)
+    r_bullet_padrao = add_run(p_padrao, "▪ ", size=SZ_CORPO, bold=True)
+    r_bullet_padrao.font.color.rgb = COR_LABEL_FONT
+    texto_padrao = "A análise técnica pautou-se no **Código de Obras** (Lei nº 1.544/86), na **LUOS** (Lei Complementar nº 267/19) e no **Decreto nº 4.149/19**."
+    rich_segments(p_padrao, texto_padrao, size=SZ_CORPO)
 
     for fund in _ensure_list(d["fundamentacao_legal"]):
         fund_limpo = fund.lstrip("•- \t") # Limpa marcadores se o GEM tiver colocado
@@ -494,6 +501,238 @@ def build_assinatura(doc, d):
                      line=240, before=0, after=120)
     r_sec = add_run(p_sec, "Secretaria Municipal de Obras e Serviços Urbanos", bold=False, size=9)
     r_sec.font.color.rgb = RGBColor(0x44, 0x44, 0x44)
+
+
+# ═══════════════════════════════════════════════════════════
+#  UTILITÁRIOS INTERNOS DE CÉLULA
+# ═══════════════════════════════════════════════════════════
+
+def _apply_cell_fill(cell, fill_hex: str):
+    """Aplica cor de fundo a uma célula de tabela via XML."""
+    shd = OxmlElement('w:shd')
+    shd.set(qn('w:val'), 'clear')
+    shd.set(qn('w:color'), 'auto')
+    shd.set(qn('w:fill'), fill_hex)
+    cell._tc.get_or_add_tcPr().append(shd)
+
+
+def _set_cell_width(cell, width_twips: int):
+    """Define largura de célula em twips via XML."""
+    tcPr = cell._tc.get_or_add_tcPr()
+    for old in tcPr.findall(qn('w:tcW')):
+        tcPr.remove(old)
+    tcW = OxmlElement('w:tcW')
+    tcW.set(qn('w:w'), str(width_twips))
+    tcW.set(qn('w:type'), 'dxa')
+    tcPr.append(tcW)
+
+
+# ═══════════════════════════════════════════════════════════
+#  PARTES E RESPONSÁVEIS DO PROCESSO
+# ═══════════════════════════════════════════════════════════
+
+def build_partes_envolvidas(doc, partes: dict):
+    """
+    Tabela 'PARTES E RESPONSÁVEIS' (2 colunas: PAPEL | IDENTIFICAÇÃO).
+    Gerada quando o JSON contém o campo 'partes_envolvidas'.
+    """
+    if not partes:
+        return
+
+    p_tit = doc.add_paragraph()
+    p_tit.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    set_spacing(p_tit, line=240, before=240, after=60)
+    r_tit = add_run(p_tit, "PARTES E RESPONSÁVEIS DO PROCESSO", bold=True, size=SZ_TABELA)
+    r_tit.font.color.rgb = COR_LABEL_FONT
+
+    linhas = []
+
+    req = partes.get("requerente") or {}
+    if isinstance(req, str):
+        req = {"nome": req}
+    nome_req = req.get("nome", "")
+    qualidade_req = req.get("qualidade", "")
+    if nome_req:
+        val = f"{nome_req} ({qualidade_req})" if qualidade_req else nome_req
+        linhas.append(("Requerente", val))
+
+    prop = partes.get("proprietario") or {}
+    if isinstance(prop, str):
+        prop = {"nome": prop}
+    nome_prop = prop.get("nome", "")
+    mat_prop = prop.get("matricula_imovel", "")
+    if nome_prop and nome_prop != nome_req:
+        val = nome_prop + (f" — Matrícula nº {mat_prop}" if mat_prop else "")
+        linhas.append(("Proprietário", val))
+
+    rt = partes.get("responsavel_tecnico") or {}
+    if isinstance(rt, str):
+        rt = {"nome": rt}
+    nome_rt = rt.get("nome", "")
+    if nome_rt:
+        conselho = rt.get("conselho", "")
+        tipo_rt = rt.get("tipo_rt", "")
+        num_rt = rt.get("numero_rt", "")
+        val = nome_rt
+        if conselho:
+            val += f" — {conselho}"
+        if tipo_rt and num_rt:
+            val += f" — {tipo_rt} nº {num_rt}"
+        linhas.append(("Resp. Técnico", val))
+
+    for fiscal in partes.get("agentes_fiscais") or []:
+        if isinstance(fiscal, str):
+            linhas.append(("Fiscal Vistoriador", fiscal))
+        else:
+            nome_f = fiscal.get("nome", "")
+            mat_f = fiscal.get("matricula_funcional", "")
+            val = nome_f + (f" (Mat. {mat_f})" if mat_f else "")
+            if nome_f:
+                linhas.append(("Fiscal Vistoriador", val))
+
+    ass = partes.get("assinante_parecer") or {}
+    if isinstance(ass, str):
+        ass = {"nome": ass}
+    nome_ass = ass.get("nome", "")
+    if nome_ass:
+        titulo_ass = ass.get("titulo", "")
+        reg_ass = ass.get("registro", "")
+        val = nome_ass
+        if titulo_ass:
+            val += f" — {titulo_ass}"
+        if reg_ass:
+            val += f" — {reg_ass}"
+        linhas.append(("Signatário", val))
+
+    if not linhas:
+        return
+
+    W_LABEL = 2800
+    W_VALUE = 7400
+
+    tbl = doc.add_table(rows=len(linhas), cols=2)
+    tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
+    apply_table_borders(tbl)
+
+    for i, (papel, identificacao) in enumerate(linhas):
+        fill_hex = 'EEF2FB' if i % 2 == 0 else 'FFFFFF'
+        row = tbl.rows[i]
+
+        c_papel = row.cells[0]
+        _set_cell_width(c_papel, W_LABEL)
+        _apply_cell_fill(c_papel, fill_hex)
+        set_cell_margins(c_papel, top=40, bottom=40, left=80, right=40)
+        p_papel = c_papel.paragraphs[0]
+        p_papel.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        set_spacing(p_papel, line=220, before=20, after=20)
+        r_p = p_papel.add_run(papel)
+        set_font(r_p, size=SZ_TABELA, bold=True)
+        r_p.font.color.rgb = COR_LABEL_FONT
+
+        c_id = row.cells[1]
+        _set_cell_width(c_id, W_VALUE)
+        _apply_cell_fill(c_id, fill_hex)
+        set_cell_margins(c_id, top=40, bottom=40, left=80, right=40)
+        p_id = c_id.paragraphs[0]
+        p_id.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        set_spacing(p_id, line=220, before=20, after=20)
+        rich_segments(p_id, identificacao, size=SZ_TABELA)
+
+    add_separator(doc, color='D0D0D0')
+
+
+# ═══════════════════════════════════════════════════════════
+#  HISTÓRICO CRONOLÓGICO DO PROCESSO
+# ═══════════════════════════════════════════════════════════
+
+def build_historico_cronologico(doc, historico: list):
+    """
+    Tabela 'HISTÓRICO CRONOLÓGICO' (3 colunas: DATA | EVENTO | REFERÊNCIA/AGENTES).
+    Gerada quando o JSON contém o campo 'historico_cronologico'.
+    Os eventos devem estar em ordem cronológica (do mais antigo ao mais recente).
+    """
+    if not historico:
+        return
+
+    p_tit = doc.add_paragraph()
+    p_tit.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    set_spacing(p_tit, line=240, before=240, after=60)
+    r_tit = add_run(p_tit, "HISTÓRICO CRONOLÓGICO DO PROCESSO", bold=True, size=SZ_TABELA)
+    r_tit.font.color.rgb = COR_LABEL_FONT
+
+    W_DATA  = 1400
+    W_EVENT = 6200
+    W_REF   = 2600
+    CABECALHO_FILL = '1F3864'
+
+    tbl = doc.add_table(rows=len(historico) + 1, cols=3)
+    tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
+    apply_table_borders(tbl)
+
+    # Cabeçalho
+    headers = [("DATA", W_DATA, WD_ALIGN_PARAGRAPH.CENTER),
+               ("EVENTO / DESCRIÇÃO", W_EVENT, WD_ALIGN_PARAGRAPH.LEFT),
+               ("REFERÊNCIA / AGENTES", W_REF, WD_ALIGN_PARAGRAPH.LEFT)]
+    hrow = tbl.rows[0]
+    for j, (hdr, w, align) in enumerate(headers):
+        cell = hrow.cells[j]
+        _set_cell_width(cell, w)
+        _apply_cell_fill(cell, CABECALHO_FILL)
+        set_cell_margins(cell, top=50, bottom=50, left=80, right=40)
+        p = cell.paragraphs[0]
+        p.alignment = align
+        set_spacing(p, line=200, before=20, after=20)
+        r = p.add_run(hdr)
+        set_font(r, size=SZ_TABELA, bold=True)
+        r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+
+    # Linhas de dados
+    for i, ev in enumerate(historico):
+        fill_hex = 'F0F4FD' if i % 2 == 0 else 'FFFFFF'
+        row = tbl.rows[i + 1]
+
+        # DATA
+        c_data = row.cells[0]
+        _set_cell_width(c_data, W_DATA)
+        _apply_cell_fill(c_data, fill_hex)
+        set_cell_margins(c_data, top=40, bottom=40, left=80, right=40)
+        p_d = c_data.paragraphs[0]
+        p_d.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        set_spacing(p_d, line=220, before=20, after=20)
+        r_d = p_d.add_run(str(ev.get("data", "")))
+        set_font(r_d, size=SZ_TABELA, bold=True)
+        r_d.font.color.rgb = COR_LABEL_FONT
+
+        # EVENTO
+        c_ev = row.cells[1]
+        _set_cell_width(c_ev, W_EVENT)
+        _apply_cell_fill(c_ev, fill_hex)
+        set_cell_margins(c_ev, top=40, bottom=40, left=80, right=40)
+        p_ev = c_ev.paragraphs[0]
+        p_ev.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        set_spacing(p_ev, line=220, before=20, after=20)
+        rich_segments(p_ev, str(ev.get("evento", "")), size=SZ_TABELA)
+
+        # REFERÊNCIA / AGENTES
+        c_ref = row.cells[2]
+        _set_cell_width(c_ref, W_REF)
+        _apply_cell_fill(c_ref, fill_hex)
+        set_cell_margins(c_ref, top=40, bottom=40, left=80, right=40)
+        p_ref = c_ref.paragraphs[0]
+        p_ref.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        set_spacing(p_ref, line=220, before=20, after=20)
+
+        agentes = ev.get("agentes", [])
+        ref_text = ev.get("referencia", "")
+        if agentes:
+            if isinstance(agentes, list):
+                ref_text = "; ".join(str(a) for a in agentes)
+            else:
+                ref_text = str(agentes)
+
+        rich_segments(p_ref, ref_text, size=SZ_TABELA)
+
+    add_separator(doc, color='D0D0D0')
 
 
 # ═══════════════════════════════════════════════════════════

@@ -2,19 +2,32 @@
     "tipo_relatorio": "oficio_decreto_utilidade",
     "titulo_documento": "OFÍCIO À PROCURADORIA DO MUNICÍPIO",
     "categoria": "oficio",
-    "descricao": "Solicitação de Decreto de Utilidade Pública (Sistema Viário)",
+    "descricao": "Ofício solicitando elaboração de Decreto de Reconhecimento de Domínio Público / Utilidade Pública de área para fins de sistema viário",
     "campos_obrigatorios": [
-        "destinatario_para",
-        "assunto",
+        "numero_processo",
+        "data_processo",
+        "logradouro",
+        "bairro",
         "considerandos"
     ],
-    "modelo_destinatario": {
-        "destinatario_titulo": "À PROCURADORIA DO MUNICÍPIO",
-        "destinatario_para": "Procuradoria do Município",
-        "destinatario_de": "Setor Técnico - SMOSU"
+    "campos_opcionais": [
+        "requerente",
+        "artigos_lei_aplicavel",
+        "finalidade_decreto"
+    ],
+    "descricao_campos_opcionais": {
+        "finalidade_decreto": "Motivo da solicitação (ex: implementação de melhorias urbanas e articulação do sistema viário existente)",
+        "artigos_lei_aplicavel": "Artigos da legislação municipal que fundamentam o pedido (padrão: Lei Municipal nº 216/2014, Art. 8º §11 e Art. 10)"
     },
-    "modelo_abertura": "Cumprimentando-os cordialmente, venho solicitar a análise técnica e a adoção das providências necessárias para a elaboração de um decreto que reconheça como de domínio e utilidade pública a área localizada em [Bairro/Endereço].",
-    "modelo_considerandos": [
-        "A solicitação fundamenta-se na necessidade de implementação de melhorias urbanas na referida localidade e na adequada articulação do sistema viário municipal existente, conforme a Lei Municipal nº 216/2014."
+    "destinatario_fixo": "À Procuradoria",
+    "assunto_padrao": "Solicitação de decreto para reconhecimento de domínio público / área de utilidade pública",
+    "remetente_fixo": "Carlos Rivetti — Chefe de Gabinete",
+    "nota_obrigatoria_gem": "Este documento NÃO é assinado pelo técnico da SMOSU. É assinado pelo Chefe de Gabinete (Carlos Rivetti). O texto deve ser formal, em primeira pessoa do plural, dirigido à Procuradoria.",
+    "modelo_abertura": "Cumprimentando-o(a) cordialmente, venho por meio deste solicitar análise técnica e adoção das providências necessárias para a elaboração e publicação de decreto que reconheça como de domínio público e de utilidade pública a área localizada no bairro [bairro], mais precisamente na [logradouro].",
+    "modelo_corpo": "A presente solicitação fundamenta-se na necessidade de implementação de melhorias urbanas na referida localidade, bem como na adequada articulação do sistema viário existente, em conformidade com a legislação municipal vigente.\n\nNesse sentido, destaca-se o disposto na Lei Municipal nº 216/2014, especialmente:\n\n**Art. 8º, § 11º** – Para efeito do disposto no § 2º do art. 4º, entende-se como sistema viário existente o conjunto de vias públicas registradas em nome do Município, resultantes dos parcelamentos aprovados e implantados, bem como da planta cadastral da cidade e das plantas das demais ocupações urbanas ou com características urbanas existentes no território municipal.\n\n**Art. 10** – Estar articulada com as vias oficiais existentes ou projetadas, de forma a dar continuidade às mesmas, articulando a malha viária urbana.",
+    "modelo_conclusao": "Diante do exposto, considerando a necessidade de garantir a continuidade e articulação do sistema viário municipal, bem como o interesse público envolvido, solicita-se a edição e publicação de decreto reconhecendo a área mencionada como de domínio público e de utilidade pública, para os fins legais e administrativos cabíveis.\n\nColocamo-nos à disposição para prestar quaisquer esclarecimentos adicionais ou encaminhar documentação complementar que se fizer necessária.",
+    "legislacao_aplicavel": [
+        "Lei Municipal nº 216/2014, Art. 8º §11 (sistema viário existente — vias registradas em nome do Município e planta cadastral da cidade)",
+        "Lei Municipal nº 216/2014, Art. 10 (articulação com vias oficiais existentes ou projetadas)"
     ]
 }

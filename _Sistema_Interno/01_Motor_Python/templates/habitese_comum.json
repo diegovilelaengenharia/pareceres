@@ -7,21 +7,43 @@
         "numero_processo",
         "data_processo",
         "requerente",
+        "logradouro",
+        "area_total_construida",
+        "numero_alvara",
+        "matricula_sri",
+        "inscricao_municipal",
+        "agentes_fiscais",
+        "data_parecer_fiscal",
         "considerandos"
     ],
-    "assunto_padrao": "Carta de Habite-se e Certidão de Averbação",
-    "modelo_considerandos": [
-        "a solicitação do requerente.",
-        "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº [Número do Alvará]/[Ano], com área liberada de [Área] m², válido até [Data], referente ao projeto aprovado no processo [Número]/[Ano], localizada na [Endereço Completo], Bairro [Bairro], em Oliveira/MG, foi concluída e está Habitável.",
-        "o requerente apresentou título de propriedade do terreno, sendo uma Certidão de Matrícula SRI de Inteiro Teor de imóvel em seu nome, registrado sob n° [Número da Matrícula], inscrição cadastral [Número]."
+    "campos_opcionais": [
+        "bairro",
+        "numero_porta",
+        "data_complemento",
+        "observacao_fiscal",
+        "documentos_emitir",
+        "historico_cronologico",
+        "partes_envolvidas"
     ],
-    "modelo_conclusao": "Diante disso, poderá ser emitida Carta de Habite-se referente à área total do alvará, contendo [Área] m², e a respectiva Certidão de Averbação.",
+    "descricao_campos_opcionais": {
+        "data_complemento": "Data do complemento/documento anexado que motivou a análise (ex: 9/4/2026)",
+        "observacao_fiscal": "Observação específica do fiscal sobre elementos encontrados na vistoria que não configuram acréscimo (ex: escada e rampa de acesso nos recuos que não interferem na permeabilidade)"
+    },
+    "assunto_padrao": "Habite-se e Averbação",
+    "modelo_considerandos": [
+        "[SE data_complemento] conforme complemento anexado aos autos, datado de [data_complemento], e de acordo com o último parecer fiscal, emitido por [agentes_fiscais], datado de [data_parecer_fiscal], a construção confere com o projeto aprovado cuja área construída é [area_total_construida], e encontra-se concluída. [SE observacao_fiscal] [observacao_fiscal].",
+        "[OBRIGATÓRIO] o imóvel possui Alvará de Construção nº [numero_alvara] em nome do requerente, [requerente], referente ao projeto aprovado neste processo, na [logradouro], nº [numero_porta];",
+        "[OBRIGATÓRIO] o requerente apresentou como título de propriedade a certidão de matrícula do Serviço Registral de Imóveis (SRI), em seu nome, como proprietário, registrada sob Matrícula [matricula_sri], com Inscrição Cadastral [inscricao_municipal]."
+    ],
+    "modelo_conclusao": "Diante do exposto, poderá ser emitido o Habite-se referente à área total do imóvel de [area_total_construida] e a Certidão de Averbação.",
     "documentos_tipicos": [
         {
-            "tipo": "Carta de Habite-se referente à área total de [Área] m²"
+            "tipo": "Carta de Habite-se — área total de [area_total_construida]",
+            "obs": "Averbação Cartorária: Este Habite-se não exime a aferição da obra no sistema SERO da RFB para emissão da CND, documento obrigatório para averbação no Cartório de Registro de Imóveis (Lei 14.382/2022)."
         },
         {
-            "tipo": "Certidão de Averbação"
+            "tipo": "Certidão de Averbação",
+            "obs": "Valor total do imóvel conforme Laudo de Avaliação da Comissão de Avaliação da Prefeitura Municipal de Oliveira."
         }
     ]
 }

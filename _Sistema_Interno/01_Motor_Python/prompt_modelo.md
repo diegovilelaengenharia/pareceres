@@ -38,7 +38,7 @@ Antes de gerar o JSON, verifique os seguintes parâmetros e registre alertas:
 
 ### Exceções Automáticas
 - **Terreno < 220m²**: Art. 15 da Lei 267/2019 — exceção dos parâmetros urbanísticos (taxa de ocupação e permeabilidade)
-- **Construção > 5 anos**: Art. 150, §4º do CTN — decadência administrativa aplicável
+- **Construção > 5 anos**: Art. 150, §4º do CTN — decadência administrativa aplicável. **ATENÇÃO:** Priorize sempre as metragens da aba "Planta Cadastral Antiga" (ex: Julho de 2002) anexadas pelo Setor de Triagem como evidência incontestável da área decadente e da data.
 
 ### Responsabilidade Técnica
 | Tipo | Conselho | Profissional |
@@ -48,6 +48,13 @@ Antes de gerar o JSON, verifique os seguintes parâmetros e registre alertas:
 | **TRT** (Termo de Responsabilidade Técnica) | CFT/CRT | Técnicos Industriais |
 
 O campo `resp_tecnica_tipo` deve ser `"ART"`, `"RRT"` ou `"TRT"` conforme o profissional responsável.
+
+### Regra de Fonte para Lote e Quadra
+
+**Os campos `lote` e `quadra` devem ser preenchidos EXCLUSIVAMENTE com os valores constantes na Matrícula do Imóvel ou na Escritura apresentada no processo.**
+
+- **Nunca** extrair do carimbo do projeto arquitetônico, da planta baixa, da inscrição municipal ou de qualquer outro documento.
+- Se a Matrícula/Escritura não informar lote e quadra, preencha com `"-"`.
 
 ### Multas Aplicáveis — Lei 1.544/86 e Lei 267/2019
 
@@ -79,7 +86,7 @@ Ao identificar multas, descreva no seguinte formato:
 O sistema agora é modular e suporta 29 tipos de documentos organizados em 4 categorias (`parecer_tecnico`, `parecer_simples`, `oficio`, `comunicado`). O campo `"tipo_relatorio"` no JSON **deve obrigatoriamente** ser preenchido com um dos valores abaixo:
 
 ### Pareceres Técnicos (Com cabeçalho de aprovação)
-- `alvara_aprovacao`, `alvara_regularizacao`, `alvara_ampliacao`, `alvara_galpao_comercial`, `alvara_reforma_demolicao_ampliacao`, `alvara_substituicao_projeto`
+- `alvara_aprovacao`, `alvara_regularizacao`, `alvara_ampliacao`, `alvara_galpao_comercial`, `alvara_reforma_demolicao_ampliacao`, `alvara_substituicao_projeto`, `regularizacao_complexa_multipla`
 ### Pareceres Simples (Sem cabeçalho de aprovação complexa)
 - `certidao_numero_2via`, `certidao_nome_rua`, `certidao_localizacao`, `certidao_conjunta`, `certidao_numero_comercial`, `habitese_comum`, `habitese_multa`, `certidao_averbacao_decadencia`, `habitese_2via`, `habitese_inclusao_area`, `alvara_renovacao`, `alvara_cancelamento`, `alvara_substituicao_titular`, `alvara_demolicao`, `certidao_demolicao`, `certidao_desmembramento`, `certidao_retificacao_area`
 ### Ofícios e Comunicados
@@ -102,15 +109,16 @@ O sistema agora é modular e suporta 29 tipos de documentos organizados em 4 cat
     "bairro": "Acácio Ribeiro",
     "inscricao_municipal": "01.01.048.0038.001",
     "proprietario": "Maria Aparecida Silva Vasconcelos",
-    "desenhista": "Diego Tarcísio Nunes Vilela",
-    "lote": "-",
-    "quadra": "-",
+    "profissional_nome": "Diego Tarcísio Nunes Vilela",
+    "art_rrt": "MG2025014641",
+    "zona_uso": "ZUR 2",
+    "lote": "-",    ← preencher SOMENTE com o valor da Matrícula ou Escritura apresentada. Se não constar nesses documentos, use "-".
+    "quadra": "-",  ← idem: SOMENTE da Matrícula ou Escritura. Nunca extrair do carimbo do projeto ou planta.
     "area_terreno": "180,00m²",
     "area_total_construida": "154,08m²",
     "taxa_ocupacao": "86,23%",
     "coef_aproveitamento": "0,85",
     "taxa_permeabilidade": "5,95%",
-    "profissional_nome": "Diego Tarcísio Nunes Vilela",
 
     "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, no uso de suas atribuições legais, **emite o presente parecer técnico** conforme segue:",
 
@@ -136,9 +144,6 @@ O sistema agora é modular e suporta 29 tipos de documentos organizados em 4 cat
 ### Campos Opcionais
 ```json
 {
-    "resp_tecnica_tipo": "ART",
-    "resp_tecnica_numero": "MG2025014641",
-    "zoneamento": "OC/RE",
     "paragrafos_adicionais": ["Texto extra após os considerandos..."]
 }
 ```
@@ -239,10 +244,13 @@ O compilador Python **bloqueia** a geração se encontrar esse marcador, forçan
 
 Este campo é o **depósito livre de dados brutos** do processo. Tudo que você extraiu do PDF e não coube nos campos padrão deve entrar aqui. Não deixe vazio se houver qualquer informação adicional.
 
+> **Regra de simplificação de `matricula_numero`:** A matrícula no cartório aparece no formato longo `057166.2.0007697-57`. Extraia apenas o número central sem zeros à esquerda, ignorando o prefixo e o sufixo após o traço. Exemplo: `057166.2.0007697-57` → `"7697"`. Use sempre o número simplificado, tanto em `matricula_numero` quanto nas referências dentro de `paragrafo_abertura` e `considerandos`.
+
 ```json
 "extras_extraidos": {
     "matricula_numero": "24.239",
-    "art_rrt_numero": "MG2025014641",
+    "processos_apensados": ["Processo físico 715/1997 apensado"],
+    "nome_logradouro_antigo": "Rua Ormenzinda Silvino Lobato",
     "alvaras_anteriores": ["Alvará 156/2010"],
     "habitese_anteriores": ["Habite-se 928/2010 — 82,58m²"],
     "fiscais": [{"nome": "Wallace Alencar", "matricula": "003"}],
@@ -271,6 +279,97 @@ Este campo é o **depósito livre de dados brutos** do processo. Tudo que você 
 4. **Gere a prévia** no chat para aprovação do analista
 5. **Após aprovação**, gere o JSON final no bloco de código (com `extras_extraidos` preenchido com tudo que coletou)
 6. **Emita o bloco "NOVOS INSIGHTS PARA O PROGRAMA"** em Markdown logo abaixo do JSON (ver instruções abaixo)
+
+---
+
+## Análise Temporal Obrigatória (SEMPRE)
+
+Você DEVE analisar o processo **como um engenheiro civil lendo o processo de capa a capa, em ordem cronológica dos fatos**. Antes de redigir qualquer considerando, construa internamente a linha do tempo completa do processo — do fato mais antigo (matrícula original, habite-se anterior, planta cadastral) ao mais recente (vistoria fiscal, quitação de DAMs, data do parecer).
+
+Este comportamento é **padrão e obrigatório** — não depende de instrução do usuário.
+
+### Campo obrigatório para pareceres técnicos: `historico_cronologico`
+
+Array de eventos em **ordem cronológica** (do mais antigo ao mais recente). O compilador Python gera automaticamente uma tabela visual no documento Word com este campo.
+
+```json
+"historico_cronologico": [
+  {
+    "data": "25/01/1983",
+    "evento": "Emissão do Habite-se nº 928/1983 — área original de 48,00m² averbada sob AV-2",
+    "tipo": "habite_se",
+    "referencia": "AV-2 da Matrícula nº 7697 — Cartório de Registro de Imóveis"
+  },
+  {
+    "data": "Jul/2002",
+    "evento": "Planta Cadastral Municipal comprova 119,37m² edificados no lote — base para decadência",
+    "tipo": "documento_municipal",
+    "referencia": "Planta Cadastral de Julho/2002 — Setor de Triagem SMOSU"
+  },
+  {
+    "data": "03/02/2026",
+    "evento": "Abertura do processo administrativo nº 1270/2026 — requerente Beatriz Alves Pinto Resende",
+    "tipo": "abertura_processo",
+    "referencia": "Protocolo SMOSU"
+  },
+  {
+    "data": "26/03/2026",
+    "evento": "Vistoria fiscal in loco — edificação habitável, área de 139,76m² confere com projeto As-Built",
+    "tipo": "vistoria_fiscal",
+    "referencia": "Parecer Fiscal SMOSU",
+    "agentes": ["Wallace Alencar Martins Silveira (Mat. 306017-9)", "Ryan Abílio A. de Morais (Mat. 30880603-1)"]
+  }
+]
+```
+
+**Tipos válidos para o campo `tipo`:**
+`abertura_processo` | `vistoria_fiscal` | `habite_se` | `alvara` | `comunicado_pendencia` | `quitacao_dam` | `documento_municipal` | `documento_judicial` | `embargo` | `embargo_levantado` | `certidao` | `averbacao` | `apensamento`
+
+**Regras de preenchimento:**
+- O campo `agentes` (array de strings) é usado especificamente para vistorias fiscais — liste nome + matrícula funcional de cada fiscal
+- O campo `referencia` deve citar o documento de origem (número de matrícula, número de alvará, nome da planta, etc.)
+- Se a data for apenas parcial (ex: mês/ano), use o formato "Jul/2002" ou "jan/1997"
+- Inclua **todos** os eventos relevantes encontrados nos PDFs, inclusive os pré-existentes (habite-ses anteriores, averbações antigas, processos apensados)
+
+---
+
+### Campo obrigatório para pareceres técnicos: `partes_envolvidas`
+
+Objeto estruturado com **todas as partes nomeadas no processo**. O compilador gera automaticamente uma tabela "PARTES E RESPONSÁVEIS" no documento Word.
+
+```json
+"partes_envolvidas": {
+  "requerente": {
+    "nome": "Beatriz Alves Pinto Resende",
+    "qualidade": "proprietária e requerente"
+  },
+  "proprietario": {
+    "nome": "Beatriz Alves Pinto Resende e outros",
+    "matricula_imovel": "7697"
+  },
+  "responsavel_tecnico": {
+    "nome": "Pedro Henrique Silva Barros",
+    "conselho": "CREA/MG 224.769/D",
+    "tipo_rt": "ART",
+    "numero_rt": "MG20261415546"
+  },
+  "agentes_fiscais": [
+    {"nome": "Wallace Alencar Martins Silveira", "matricula_funcional": "306017-9"},
+    {"nome": "Ryan Abílio A. de Morais", "matricula_funcional": "30880603-1"}
+  ],
+  "assinante_parecer": {
+    "nome": "Diego Tarcísio Nunes Vilela",
+    "titulo": "Engenheiro Civil",
+    "registro": "CREA 235.474/D"
+  }
+}
+```
+
+**Regras:**
+- O campo `proprietario` só é necessário quando diferente do `requerente`
+- O campo `qualidade` do requerente deve descrever seu papel: "proprietário", "procurador do proprietário", "comprador (contrato de compra e venda)", etc.
+- Liste **todos** os fiscais que assinaram o parecer fiscal, com matrícula funcional
+- O `assinante_parecer` é sempre Diego Tarcísio Nunes Vilela / CREA 235.474/D (salvo instrução contrária)
 
 ---
 

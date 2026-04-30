@@ -2,18 +2,41 @@
     "tipo_relatorio": "alvara_demolicao",
     "titulo_documento": "PARECER SETOR TÉCNICO - SMOSU",
     "categoria": "parecer_simples",
-    "descricao": "Alvará de demolição",
+    "descricao": "Alvará de Obra de Demolição",
     "campos_obrigatorios": [
         "numero_processo",
         "data_processo",
         "requerente",
+        "area_demolicao",
+        "art_rrt",
+        "profissional_nome",
+        "profissional_registro",
+        "inscricao_municipal",
         "considerandos"
     ],
+    "campos_opcionais": [
+        "matricula_sri",
+        "titulo_propriedade_tipo",
+        "art_atividade",
+        "pendencias_triagem",
+        "documentos_emitir"
+    ],
+    "descricao_campos_opcionais": {
+        "titulo_propriedade_tipo": "Tipo do título de propriedade (ex: contrato de compra e venda, matrícula de inteiro teor)",
+        "art_atividade": "Atividade coberta pela ART/RRT (padrão: execução de obra de demolição)",
+        "pendencias_triagem": "true — quando há pendências a serem cumpridas antes da emissão do alvará (condiciona a emissão)"
+    },
     "assunto_padrao": "Alvará de Demolição",
     "modelo_considerandos": [
-        "a solicitação de alvará de demolição.",
-        "não há óbice à autorização da demolição pretendida e que a mesma ainda não foi iniciada, de acordo com o parecer fiscal.",
-        "o título de propriedade (Matrícula nº [Número]) e a apresentação da ART/RRT nº [Número] referente à atividade de execução de demolição para a área de [Área] m², sob a responsabilidade de [Nome do Profissional]."
+        "[OBRIGATÓRIO] não há óbice à autorização da demolição pretendida e que a demolição não foi iniciada, de acordo com o parecer fiscal;",
+        "[OBRIGATÓRIO] o requerente apresentou título de propriedade em seu nome sendo [SE titulo_propriedade_tipo][titulo_propriedade_tipo][ELSE]Matrícula de Inteiro Teor[/SE], Inscrição Cadastral [inscricao_municipal];",
+        "[OBRIGATÓRIO] o requerente apresentou [ART/RRT] nº [art_rrt] referente à atividade de execução de obra de demolição, referente à área de [area_demolicao], sob responsabilidade técnica do [Engenheiro Civil / Arquiteto / Técnico em Edificações] [profissional_nome], [profissional_registro]."
     ],
-    "modelo_conclusao": "Diante disto, poderá ser concedido o Alvará de Obra de Demolição referente à área de [Área] m², condicionado à apresentação do comprovante de pagamento da respectiva taxa."
+    "modelo_conclusao": "Diante disto, poderá ser concedido o Alvará de Obra de Demolição em nome do requerente, referente à área de [area_demolicao][SE pendencias_triagem], após apresentação das pendências solicitadas na triagem[/SE].",
+    "documentos_tipicos": [
+        {
+            "tipo": "Alvará de Obra de Demolição — [area_demolicao]",
+            "obs": "Condicionado à apresentação das pendências solicitadas na triagem, quando houver."
+        }
+    ]
 }
