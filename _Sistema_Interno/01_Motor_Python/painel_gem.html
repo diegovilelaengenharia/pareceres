@@ -18,6 +18,7 @@
   </div>
   <div class="header-right">
     <button class="btn btn-s" onclick="abrirPasta('entrada')" title="Abrir pasta de PDFs e JSONs">📂 Entrada</button>
+    <button class="btn btn-s" onclick="abrirPasta('treino')" title="Abrir pasta de treinamento IA">📚 Treino</button>
     <button class="btn btn-s" onclick="abrirPasta('saida')" title="Abrir pasta de resultados">📁 Saída</button>
   </div>
 </div>
@@ -62,8 +63,11 @@
           <button class="nav-btn" id="btn-nav-lote" onclick="switchDashView('lote')">
             <span class="icon">📦</span> Modo Lote
           </button>
-          <button class="nav-btn" onclick="goStep(2)">
+          <button class="nav-btn" id="btn-nav-auditoria" onclick="goStep(2)">
             <span class="icon">📝</span> Auditoria e Edição
+          </button>
+          <button class="nav-btn" id="btn-nav-registro" onclick="switchDashView('registro')">
+            <span class="icon">📋</span> Registro do Sistema
           </button>
         </div>
       </div>
@@ -178,6 +182,25 @@
             <div class="card-h">📂 Histórico de Processos Analisados <button class="btn-s" style="padding:4px 10px;border-radius:6px;font-size:12px" onclick="refresh()">🔄 Atualizar</button></div>
             <div class="card-b">
               <ul class="file-list history-list" id="file-list"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visão: Registro do Sistema -->
+        <div id="view-registro" style="display:none">
+          <div class="card">
+            <div class="card-h" style="display:flex;align-items:center;justify-content:space-between">
+              <span>📋 Registro Completo do Sistema</span>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-s" onclick="exportarRegistro()" style="font-size:12px;padding:6px 14px" title="Copiar inventário em markdown">📤 Exportar MD</button>
+                <button class="btn btn-s" onclick="loadRegistro()" style="font-size:12px;padding:6px 14px">🔄 Atualizar</button>
+              </div>
+            </div>
+            <div class="card-b" id="registro-container">
+              <div style="text-align:center;padding:40px;color:var(--muted)">
+                <div style="font-size:40px;margin-bottom:12px">📋</div>
+                <div style="font-size:14px">Carregando inventário do sistema...</div>
+              </div>
             </div>
           </div>
         </div>
@@ -380,14 +403,17 @@ function switchDashView(view) {
   document.getElementById('view-hist').style.display    = view === 'hist'     ? 'block' : 'none';
   document.getElementById('view-metricas').style.display = view === 'metricas' ? 'block' : 'none';
   document.getElementById('view-lote').style.display    = view === 'lote'     ? 'block' : 'none';
+  document.getElementById('view-registro').style.display = view === 'registro' ? 'block' : 'none';
 
   document.getElementById('btn-nav-novo').classList.toggle('active',     view === 'novo');
   document.getElementById('btn-nav-hist').classList.toggle('active',     view === 'hist');
   document.getElementById('btn-nav-metricas').classList.toggle('active', view === 'metricas');
   document.getElementById('btn-nav-lote').classList.toggle('active',     view === 'lote');
+  document.getElementById('btn-nav-registro').classList.toggle('active', view === 'registro');
 
   if (view === 'metricas') loadMetricas();
   if (view === 'lote') carregarLote();
+  if (view === 'registro') loadRegistro();
 }
 
 function goStep(n){
@@ -1249,6 +1275,140 @@ async function compilarLote() {
     } else {
         showToast('Houve erros na compilação do lote.', 'err');
     }
+}
+
+// ── Registro do Sistema ──────────────────────────────────────────────────
+let _registroCache = null;
+
+async function loadRegistro() {
+    const container = document.getElementById('registro-container');
+    if (!container) return;
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><div style="font-size:32px">⏳</div><div>Carregando inventário...</div></div>';
+
+    const r = await api('/api/registro-sistema', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{}'});
+    if (!r.ok) {
+        container.innerHTML = `<div class="ai-alert danger"><span class="ai-alert-icon">⚠️</span><span>Erro: ${r.erro}</span></div>`;
+        return;
+    }
+
+    _registroCache = r.registro;
+    const reg = r.registro;
+    let html = '';
+
+    // ── KPI Cards ──
+    html += '<div class="health-stats" style="margin-bottom:24px">';
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value" style="color:var(--accent)">${reg.total_tipos}</span><span class="stat-label">Tipos de Documento</span></div>`;
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value" style="color:var(--green)">${reg.total_leis}</span><span class="stat-label">Leis Cadastradas</span></div>`;
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value" style="color:var(--accent2)">${reg.variaveis.total}</span><span class="stat-label">Variáveis Schema</span></div>`;
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value">${reg.zonas_urbanisticas.length}</span><span class="stat-label">Zonas Mapeadas</span></div>`;
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value">${reg.total_checklists}</span><span class="stat-label">Checklists</span></div>`;
+    if (reg.variaveis.novas_pendentes > 0) {
+        html += `<div class="health-stat" style="min-width:100px;flex:1;border-color:rgba(245,158,11,0.4)"><span class="stat-value" style="color:var(--orange)">${reg.variaveis.novas_pendentes}</span><span class="stat-label">Variáveis Novas</span></div>`;
+    }
+    html += '</div>';
+
+    // ── Tipos de Documento ──
+    html += '<div class="health-section">';
+    html += '<div class="health-section-title" style="color:var(--accent)">📄 Tipos de Documento Registrados</div>';
+    const catLabels = {parecer_tecnico:'Parecer Técnico', parecer_simples:'Parecer Simples', oficio:'Ofício/Memorando', comunicado:'Comunicado', comunicado_pendencia:'Comunicado Pendência'};
+    for (let cat in reg.tipos_parecer) {
+        const tipos = reg.tipos_parecer[cat];
+        html += `<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase">${catLabels[cat]||cat} (${tipos.length})</div>`;
+        html += '<div style="display:flex;flex-wrap:wrap;gap:6px">';
+        tipos.forEach(t => {
+            html += `<span class="badge badge-b">${t}</span>`;
+        });
+        html += '</div></div>';
+    }
+    html += '</div>';
+
+    // ── Leis Cadastradas ──
+    html += '<div class="health-section">';
+    html += '<div class="health-section-title" style="color:var(--green)">⚖️ Leis e Documentos na Base de Conhecimento</div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px">';
+    reg.leis_cadastradas.forEach(l => {
+        const isLei = l.arquivo.includes('lei_') || l.arquivo.includes('lc_') || l.arquivo.includes('decreto');
+        const icon = isLei ? '📜' : (l.arquivo.includes('manual') ? '📖' : '📄');
+        html += `<div class="health-doc-item"><span class="doc-status">${icon}</span><div class="doc-info"><div class="doc-name">${l.arquivo}</div><div class="doc-note">${l.tamanho_kb} KB</div></div></div>`;
+    });
+    html += '</div>';
+    html += `<div style="margin-top:12px;font-size:12px;color:var(--muted)">Total: ${reg.base_conhecimento.total_arquivos} arquivos (${reg.base_conhecimento.tamanho_total_kb} KB)</div>`;
+    html += '</div>';
+
+    // ── Variáveis do Schema ──
+    html += '<div class="health-section">';
+    html += `<div class="health-section-title" style="color:var(--accent2)">🔧 Variáveis do Schema JSON (${reg.variaveis.total})</div>`;
+    html += '<details><summary style="cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px">Clique para expandir lista completa</summary>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">';
+    reg.variaveis.todas.forEach(v => {
+        const isObrig = reg.variaveis.obrigatorias.includes(v);
+        html += `<span class="badge ${isObrig ? 'badge-r' : 'badge-b'}" title="${isObrig ? 'Obrigatória' : 'Opcional'}">${v}</span>`;
+    });
+    html += '</div></details>';
+    if (reg.variaveis.novas_pendentes > 0) {
+        html += `<div class="ai-alert" style="margin-top:12px"><span class="ai-alert-icon">⚠️</span><span>${reg.variaveis.novas_pendentes} variável(is) nova(s) detectada(s) pelo Gemini aguardando promoção. Revise em <code>03_NOVAS_VARIAVEIS_PROPOSTAS.md</code>.</span></div>`;
+    }
+    html += '</div>';
+
+    // ── Zonas Urbanísticas ──
+    html += '<div class="health-section">';
+    html += '<div class="health-section-title" style="color:var(--text)">🗺️ Zonas Urbanísticas Mapeadas</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:8px">';
+    reg.zonas_urbanisticas.forEach(z => {
+        html += `<span class="badge badge-g">${z}</span>`;
+    });
+    html += '</div></div>';
+
+    // ── Checklists ──
+    html += '<div class="health-section">';
+    html += `<div class="health-section-title" style="color:var(--text)">✅ Checklists por Tipo de Processo (${reg.total_checklists})</div>`;
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px">';
+    reg.checklists.forEach(c => {
+        html += `<div style="padding:8px 12px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:8px;font-size:12px;color:var(--text)">✅ ${c}</div>`;
+    });
+    html += '</div></div>';
+
+    // ── Arquivos de Treino ──
+    html += '<div class="health-section">';
+    html += '<div class="health-section-title" style="color:var(--orange)">🎓 Arquivos de Treinamento IA</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px">';
+    reg.treino_arquivos.forEach(f => {
+        html += `<span class="badge badge-j">${f}</span>`;
+    });
+    html += '</div>';
+    html += `<div style="margin-top:8px;font-size:12px;color:var(--muted)">JSONs de exemplo no motor: ${reg.jsons_exemplo.length} | Decisões de triagem registradas: ${reg.total_decisoes_triagem}</div>`;
+    html += '</div>';
+
+    container.innerHTML = html;
+}
+
+async function exportarRegistro() {
+    if (!_registroCache) await loadRegistro();
+    if (!_registroCache) { showToast('Carregue o registro primeiro.', 'warn'); return; }
+    const reg = _registroCache;
+    
+    let md = '# Inventário do Sistema GEM SMOSU\\n\\n';
+    md += `**Data:** ${new Date().toLocaleDateString('pt-BR')}\\n\\n`;
+    
+    md += `## Resumo\\n- ${reg.total_tipos} tipos de documento\\n- ${reg.total_leis} leis cadastradas\\n- ${reg.variaveis.total} variáveis no schema\\n- ${reg.zonas_urbanisticas.length} zonas mapeadas\\n- ${reg.total_checklists} checklists\\n\\n`;
+    
+    md += '## Tipos de Documento\\n';
+    for (let cat in reg.tipos_parecer) {
+        md += `### ${cat}\\n`;
+        reg.tipos_parecer[cat].forEach(t => md += `- ${t}\\n`);
+    }
+    
+    md += '\\n## Leis Cadastradas\\n';
+    reg.leis_cadastradas.forEach(l => md += `- ${l.arquivo} (${l.tamanho_kb} KB)\\n`);
+    
+    md += '\\n## Variáveis\\n';
+    reg.variaveis.todas.forEach(v => md += `- ${v}${reg.variaveis.obrigatorias.includes(v) ? ' *(obrigatória)*' : ''}\\n`);
+    
+    md += '\\n## Zonas\\n';
+    reg.zonas_urbanisticas.forEach(z => md += `- ${z}\\n`);
+    
+    await navigator.clipboard.writeText(md.replace(/\\n/g, '\n'));
+    showToast('Inventário copiado para a área de transferência! Cole no Gemini.', 'ok');
 }
 
 refresh(); setInterval(refresh, 10000);

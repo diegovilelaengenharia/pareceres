@@ -15,6 +15,9 @@ PASTA_SAIDA   = os.path.join(PROJECT_ROOT, "2_Documentos_Prontos")
 PASTA_MODELOS = os.path.join(PROJECT_ROOT, "0_Modelos_Prontos")
 PASTA_TREINO  = os.path.join(PROJECT_ROOT, "3_Treinar_Inteligencia")
 PASTA_RETRO   = os.path.join(os.path.dirname(SCRIPT_DIR), "03_Retroalimentacao_e_Estudos")
+PASTA_EXEMPLOS_IN  = os.path.join(PASTA_RETRO, "exemplos_entrada")
+PASTA_EXEMPLOS_OUT = os.path.join(PASTA_RETRO, "exemplos_saida")
+PASTA_BASE_CONHECIMENTO = os.path.join(PASTA_RETRO, "base_conhecimento")
 PASTA_HIST    = os.path.join(PASTA_RETRO, "historico")
 HTML_FILE     = os.path.join(SCRIPT_DIR, "painel_gem.html")
 PORT          = 8765
@@ -49,16 +52,35 @@ def api_salvar_json(nome, conteudo):
 
         # --- EXTRAÇÃO DE NOVAS VARIÁVEIS ---
         chaves_conhecidas = {
-            "numero_processo", "requerente", "paragrafo_abertura", "considerandos", 
-            "conclusao", "numero_documento", "data_aprovacao", "nome_obra", "logradouro", 
-            "bairro", "proprietario_nome", "proprietario_cpf_cnpj", "area_total_obra", 
-            "areas_matriz", "responsavel_execucao_nome", "responsavel_execucao_cpf_cnpj", 
-            "texto_despacho_responsavel_tecnico", "titulo_documento", "texto_certidao", 
-            "assinantes", "fundamentacao_legal", "documentos_emitir", "observacoes_finais", 
-            "multas_calculadas", "excecoes_aplicadas", "tipo_relatorio", "data_processo", 
-            "assunto", "ano_construcao", "taxa_permeabilidade", "profissional_nome", 
-            "profissional_registro", "desenhista", "lote", "quadra", "inscricao_municipal", 
-            "area_terreno", "texto_livre", "taxa_ocupacao"
+            # ── Identificação do Processo ──
+            "tipo_relatorio", "numero_processo", "data_processo", "assunto",
+            "requerente", "proprietario", "proprietario_nome", "proprietario_cpf_cnpj",
+            # ── Localização e Cadastro ──
+            "logradouro", "bairro", "inscricao_municipal", "lote", "quadra",
+            # ── Índices Urbanísticos ──
+            "area_terreno", "area_total_construida", "taxa_ocupacao",
+            "coef_aproveitamento", "taxa_permeabilidade", "zona_uso",
+            # ── Responsável Técnico ──
+            "profissional_nome", "profissional_registro", "art_rrt", "desenhista",
+            # ── Corpo do Parecer ──
+            "paragrafo_abertura", "considerandos", "fundamentacao_legal", "conclusao",
+            "memoria_de_calculo", "historico_cronologico", "partes_envolvidas",
+            # ── Documentos a Emitir ──
+            "documentos_emitir", "observacoes_finais",
+            # ── Multas e Exceções ──
+            "multas_calculadas", "excecoes_aplicadas", "ano_construcao",
+            # ── Documentos Oficiais (Alvará/Habite-se/Certidão) ──
+            "numero_documento", "data_aprovacao", "nome_obra",
+            "area_total_obra", "areas_matriz",
+            "autor_projeto_nome", "autor_projeto_crea", "autor_projeto_art",
+            "responsavel_tecnico_nome", "responsavel_tecnico_crea", "responsavel_tecnico_art",
+            "construtora_nome", "construtora_cpf_cnpj", "observacoes",
+            "responsavel_execucao_nome", "responsavel_execucao_cpf_cnpj",
+            "texto_despacho_responsavel_tecnico",
+            "titulo_documento", "texto_certidao", "assinantes",
+            # ── Modo Livre / Extras ──
+            "texto_livre", "extras_extraidos", "analise_documental",
+            "licao_aprendida", "data_conclusao_obra",
         }
         
         novas_variaveis = {k: v for k, v in dados.items() if k not in chaves_conhecidas}
@@ -171,9 +193,12 @@ def api_abrir_pasta(qual):
         "saida": PASTA_SAIDA, 
         "modelos": PASTA_MODELOS, 
         "treino": PASTA_TREINO,
+        "exemplos_entrada": PASTA_EXEMPLOS_IN,
+        "exemplos_saida": PASTA_EXEMPLOS_OUT,
         "retro": os.path.join(os.path.dirname(SCRIPT_DIR), "03_Retroalimentacao_e_Estudos")
     }
     pasta = pastas.get(qual, PASTA_SAIDA)
+    os.makedirs(pasta, exist_ok=True)
     try:
         os.startfile(pasta)
         return {"ok": True}
@@ -239,6 +264,114 @@ def api_aprender(data):
             return {"ok": True, "msg": "Feedback registrado no RETROALIMENTACAO_IA.md"}
     except Exception as e:
         return {"ok": False, "erro": str(e)}
+
+def api_registro_sistema():
+    """Retorna inventário completo do sistema para visibilidade."""
+    from config import TIPOS_DOCUMENTO
+    
+    # ── Tipos de parecer agrupados por categoria ──
+    tipos_por_cat = {}
+    for tipo, cat in TIPOS_DOCUMENTO.items():
+        tipos_por_cat.setdefault(cat, []).append(tipo)
+    
+    # ── Leis cadastradas na base_conhecimento ──
+    leis = []
+    if os.path.isdir(PASTA_BASE_CONHECIMENTO):
+        for arq in sorted(os.listdir(PASTA_BASE_CONHECIMENTO)):
+            if arq.endswith(('.md', '.json', '.txt')) and arq != 'desktop.ini':
+                caminho = os.path.join(PASTA_BASE_CONHECIMENTO, arq)
+                tam = round(os.path.getsize(caminho) / 1024, 1)
+                leis.append({"arquivo": arq, "tamanho_kb": tam})
+    
+    # ── Variáveis do schema ──
+    chaves_obrig = [
+        "tipo_relatorio", "numero_processo", "requerente",
+        "paragrafo_abertura", "considerandos", "conclusao"
+    ]
+    chaves_todas = [
+        "tipo_relatorio", "numero_processo", "data_processo", "assunto",
+        "requerente", "proprietario", "proprietario_nome", "proprietario_cpf_cnpj",
+        "logradouro", "bairro", "inscricao_municipal", "lote", "quadra",
+        "area_terreno", "area_total_construida", "taxa_ocupacao",
+        "coef_aproveitamento", "taxa_permeabilidade", "zona_uso",
+        "profissional_nome", "profissional_registro", "art_rrt", "desenhista",
+        "paragrafo_abertura", "considerandos", "fundamentacao_legal", "conclusao",
+        "memoria_de_calculo", "historico_cronologico", "partes_envolvidas",
+        "documentos_emitir", "observacoes_finais",
+        "multas_calculadas", "excecoes_aplicadas", "ano_construcao",
+        "numero_documento", "data_aprovacao", "nome_obra",
+        "area_total_obra", "areas_matriz",
+        "responsavel_execucao_nome", "texto_despacho_responsavel_tecnico",
+        "titulo_documento", "texto_certidao", "assinantes",
+        "texto_livre", "extras_extraidos", "analise_documental",
+    ]
+    
+    # ── Contar variáveis novas pendentes ──
+    novas_pendentes = 0
+    arq_novas = os.path.join(PASTA_TREINO, "03_NOVAS_VARIAVEIS_PROPOSTAS.md")
+    if os.path.exists(arq_novas):
+        with open(arq_novas, encoding="utf-8") as f:
+            novas_pendentes = f.read().count("## Extraído")
+    
+    # ── Zonas urbanísticas ──
+    zonas = ["ZUR1", "ZUR2", "ZUR3", "ZUR_Social", "ZC1", "ZC2",
+             "ZAE1", "ZAE2", "ZAE3", "ZAE4", "ZIND"]
+    
+    # ── Checklists por tipo ──
+    checklists = [
+        "Alvará de Construção", "Regularização de Obra", "Habite-se",
+        "Certificado de Averbação", "Alvará de Demolição", "Certidão de Demolição",
+        "Alvará de Reforma/Ampliação", "Certidão de Decadência",
+        "Certidão Nome de Rua/Localização", "2ª Via (Certidão de Número)",
+        "2ª Via (Habite-se)", "Renovação de Alvará", "Substituição de Projeto",
+        "Desmembramento/Topografia", "Retificação de Área", "Usucapião"
+    ]
+    
+    # ── Processos exemplo ──
+    jsons_exemplo = []
+    json_dir = os.path.join(SCRIPT_DIR, "json")
+    if os.path.isdir(json_dir):
+        jsons_exemplo = [f for f in os.listdir(json_dir)
+                         if f.endswith('.json') and f != 'desktop.ini']
+    
+    # ── Arquivos de treino ──
+    treino_arquivos = []
+    if os.path.isdir(PASTA_TREINO):
+        treino_arquivos = [f for f in os.listdir(PASTA_TREINO)
+                           if f.endswith(('.md', '.json')) and f != 'desktop.ini']
+    
+    # ── Decisões de triagem ──
+    total_decisoes = 0
+    arq_decisoes = os.path.join(PASTA_HIST, "decisoes_triagem.jsonl")
+    if os.path.exists(arq_decisoes):
+        with open(arq_decisoes, encoding="utf-8") as f:
+            total_decisoes = sum(1 for _ in f)
+    
+    return {
+        "ok": True,
+        "registro": {
+            "tipos_parecer": tipos_por_cat,
+            "total_tipos": len(TIPOS_DOCUMENTO),
+            "leis_cadastradas": leis,
+            "total_leis": len(leis),
+            "variaveis": {
+                "total": len(set(chaves_todas)),
+                "obrigatorias": chaves_obrig,
+                "todas": sorted(set(chaves_todas)),
+                "novas_pendentes": novas_pendentes,
+            },
+            "zonas_urbanisticas": zonas,
+            "checklists": checklists,
+            "total_checklists": len(checklists),
+            "base_conhecimento": {
+                "total_arquivos": len(leis),
+                "tamanho_total_kb": round(sum(l["tamanho_kb"] for l in leis), 1),
+            },
+            "treino_arquivos": treino_arquivos,
+            "jsons_exemplo": jsons_exemplo,
+            "total_decisoes_triagem": total_decisoes,
+        }
+    }
 
 # ── Handler ───────────────────────────────────────────────────────────────────
 
@@ -323,6 +456,8 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({"ok": False, "erro": str(e)})
         elif path == "/api/inspecionar":
             self._json(api_inspecionar(data.get("conteudo", "{}")))
+        elif path == "/api/registro-sistema":
+            self._json(api_registro_sistema())
         else: self._send(404, "text/plain", b"Not found")
 
     def do_DELETE(self):
@@ -334,18 +469,82 @@ class Handler(BaseHTTPRequestHandler):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    print(f"\n  ================================================")
-    print(f"   Painel GEM v2 -- Motor SMOSU Oliveira/MG")
-    print(f"   http://localhost:{PORT}")
-    print(f"   Pressione Ctrl+C para encerrar")
-    print(f"  ================================================\n")
+    # Garantir pastas existam
+    os.makedirs(PASTA_EXEMPLOS_IN, exist_ok=True)
+    os.makedirs(PASTA_EXEMPLOS_OUT, exist_ok=True)
+    os.makedirs(PASTA_HIST, exist_ok=True)
+
+    # ── Habilitar cores ANSI no Windows ──
+    try:
+        import ctypes
+        kernel32 = ctypes.windll.kernel32
+        kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
+    except Exception:
+        pass
+
+    # ── Cores ANSI ──
+    R  = "\033[0m"       # Reset
+    B  = "\033[1m"       # Bold
+    CY = "\033[96m"      # Ciano claro
+    GR = "\033[92m"      # Verde claro
+    YL = "\033[93m"      # Amarelo
+    MG = "\033[95m"      # Magenta
+    BL = "\033[94m"      # Azul
+    DM = "\033[90m"      # Cinza escuro
+    WH = "\033[97m"      # Branco
+
+    # ── Contagens rápidas ──
+    from config import TIPOS_DOCUMENTO
+    n_tipos = len(TIPOS_DOCUMENTO)
+    n_leis = 0
+    if os.path.isdir(PASTA_BASE_CONHECIMENTO):
+        n_leis = len([f for f in os.listdir(PASTA_BASE_CONHECIMENTO)
+                      if f.endswith(('.md', '.json', '.txt')) and f != 'desktop.ini'])
+    n_treino = 0
+    if os.path.isdir(PASTA_TREINO):
+        n_treino = len([f for f in os.listdir(PASTA_TREINO)
+                        if f.endswith(('.md', '.json'))])
+
+    print()
+    print(f"  {CY}{'═' * 60}{R}")
+    print(f"  {CY}║{R}  {B}{WH}██████╗ ███████╗███╗   ███╗{R}                              {CY}║{R}")
+    print(f"  {CY}║{R}  {B}{WH}██╔════╝ ██╔════╝████╗ ████║{R}                              {CY}║{R}")
+    print(f"  {CY}║{R}  {B}{CY}██║  ███╗█████╗  ██╔████╔██║{R}  {B}{WH}Motor de Inteligência{R}      {CY}║{R}")
+    print(f"  {CY}║{R}  {B}{BL}██║   ██║██╔══╝  ██║╚██╔╝██║{R}  {DM}Pareceres Técnicos{R}         {CY}║{R}")
+    print(f"  {CY}║{R}  {B}{MG}╚██████╔╝███████╗██║ ╚═╝ ██║{R}  {DM}SMOSU — Oliveira/MG{R}        {CY}║{R}")
+    print(f"  {CY}║{R}  {B}{MG} ╚═════╝ ╚══════╝╚═╝     ╚═╝{R}                             {CY}║{R}")
+    print(f"  {CY}{'═' * 60}{R}")
+    print()
+    print(f"  {B}{WH}  Versão 5.0{R}  {DM}│{R}  {GR}Painel Web de Gestão Documental{R}")
+    print(f"  {DM}  ─────────────────────────────────────────────────{R}")
+    print()
+    print(f"  {YL}  ▸ Servidor:{R}     {B}http://localhost:{PORT}{R}")
+    print(f"  {YL}  ▸ Documentos:{R}   {n_tipos} tipos registrados")
+    print(f"  {YL}  ▸ Base Legal:{R}   {n_leis} leis/normas cadastradas")
+    print(f"  {YL}  ▸ Treino IA:{R}    {n_treino} arquivos de instrução")
+    print()
+    print(f"  {DM}  ┌─────────────────────────────────────────────┐{R}")
+    print(f"  {DM}  │{R}  {GR}📂 Entrada:{R}  {DM}1_Colar_JSON_Aqui/{R}             {DM}│{R}")
+    print(f"  {DM}  │{R}  {BL}📁 Saída:{R}    {DM}2_Documentos_Prontos/{R}           {DM}│{R}")
+    print(f"  {DM}  │{R}  {MG}📚 Treino:{R}   {DM}3_Treinar_Inteligencia/{R}         {DM}│{R}")
+    print(f"  {DM}  │{R}  {YL}📋 Base:{R}     {DM}03_Retroalimentacao_e_Estudos/{R}  {DM}│{R}")
+    print(f"  {DM}  └─────────────────────────────────────────────┘{R}")
+    print()
+    print(f"  {DM}  Engenheiro: Diego Tarcísio N. Vilela — CREA 235.474/D{R}")
+    print(f"  {DM}  Secretaria Municipal de Obras — Prefeitura de Oliveira{R}")
+    print()
+    print(f"  {GR}  ✓ Sistema pronto. Abrindo navegador...{R}")
+    print(f"  {DM}  Pressione Ctrl+C para encerrar.{R}")
+    print()
+
     server = HTTPServer(("localhost", PORT), Handler)
     def _abrir():
         time.sleep(1)
         webbrowser.open(f"http://localhost:{PORT}")
     threading.Thread(target=_abrir, daemon=True).start()
     try: server.serve_forever()
-    except KeyboardInterrupt: print("\n  Painel encerrado.")
+    except KeyboardInterrupt:
+        print(f"\n  {YL}⏹  Painel GEM encerrado com segurança.{R}\n")
 
 if __name__ == "__main__":
     main()
