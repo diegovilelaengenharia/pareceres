@@ -100,12 +100,13 @@ def _html_carimbo(d: dict) -> str:
     linhas = [
         ("Endereço",        endereco,                           "Inscrição Mun.",   _safe(d.get("inscricao_municipal"))),
         ("Proprietário",    _safe(d.get("proprietario", d.get("requerente"))),
-                                                                "Desenhista",       _safe(d.get("desenhista"))),
+                                                                "Resp. Técnico",    _safe(d.get("profissional_nome", d.get("responsavel_tecnico")))),
         ("Lote",            _safe(d.get("lote")),               "Quadra",           _safe(d.get("quadra"))),
         ("Área Terreno",    _safe(d.get("area_terreno")),       "Área Total Const.", _safe(d.get("area_total_construida"))),
         ("Taxa Ocupação",   _safe(d.get("taxa_ocupacao")),      "Coef. Aproveita.", _safe(d.get("coef_aproveitamento"))),
-        ("Permeabilidade",  _safe(d.get("taxa_permeabilidade")),"Resp. Técnico",    _safe(d.get("profissional_nome"))),
-        ("ART/RRT",         _safe(d.get("art_rrt_numero")),     "Zona de Uso",      _safe(d.get("zona_uso"))),
+        ("Permeabilidade",  _safe(d.get("taxa_permeabilidade")),"Pavimentos",       _safe(d.get("pavimentos"))),
+        ("Vagas Garagem",   _safe(d.get("vagas_garagem")),      "Zona de Uso",      _safe(d.get("zona_uso"))),
+        ("ART/RRT",         _safe(d.get("art_rrt_numero")),     "Multa Específica", _safe(d.get("tipo_multa_especifica"))),
     ]
 
     rows = ""
@@ -146,6 +147,24 @@ def _html_corpo(d: dict) -> str:
                 f'<span class="kw-considerando">Considerando que</span> {_md_inline(limpo)}'
                 f'</p>'
             )
+
+    multas = d.get("multas_aplicaveis", [])
+    if multas:
+        if isinstance(multas, str):
+            multas = [m.strip() for m in multas.split("\n") if m.strip()]
+        partes.append('<div class="subsec-header subsec-red">MULTAS APLICÁVEIS</div>')
+        for m in multas:
+            limpo = m.lstrip("•▪- \t")
+            partes.append(f'<p class="par-fund" style="color:#7f0000;">▪ {_md_inline(limpo)}</p>')
+
+    condicionantes = d.get("condicionantes_aprovacao", [])
+    if condicionantes:
+        if isinstance(condicionantes, str):
+            condicionantes = [c.strip() for c in condicionantes.split("\n") if c.strip()]
+        partes.append('<div class="subsec-header subsec-green">CONDICIONANTES DE APROVAÇÃO</div>')
+        for c in condicionantes:
+            limpo = c.lstrip("•▪- \t")
+            partes.append(f'<p class="par-fund" style="color:#1b5e20;">▪ {_md_inline(limpo)}</p>')
 
     fund = d.get("fundamentacao_legal", [])
     if fund:
@@ -194,7 +213,7 @@ def _html_documentos(d: dict) -> str:
 
 def _html_assinatura(d: dict) -> str:
     assinante = d.get("assinante", {})
-    nome     = assinante.get("nome",     "Diego Tarcísio Nunes Vilela")
+    nome     = d.get("assinante_parecer") or assinante.get("nome",     "Diego Tarcísio Nunes Vilela")
     titulo   = assinante.get("titulo",   "Engenheiro Civil")
     registro = assinante.get("registro", "CREA 235.474/D")
     cidade   = d.get("cidade", "Oliveira")
@@ -378,6 +397,11 @@ section:last-child { border-bottom: none; }
   color: #1a4f1a;
   background: #edfaed;
   border-left: 3px solid #2e7d32;
+}
+.subsec-red {
+  color: #7f0000;
+  background: #ffebee;
+  border-left: 3px solid #ef9a9a;
 }
 .kw-considerando { font-weight: bold; color: #1F3864; }
 .par-considerando {

@@ -4,9 +4,13 @@
 Painel GEM v2 — Interface web completa para SMOSU Oliveira/MG.
 http://localhost:8765 — sem API externa.
 """
-import http.server, json, os, subprocess, sys, glob, webbrowser, threading
+import json, os, subprocess, sys, glob, webbrowser, threading
 import urllib.parse, tempfile, time
 from http.server import BaseHTTPRequestHandler, HTTPServer
+
+# Garante saída UTF-8 no terminal Windows (evita UnicodeEncodeError no banner)
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT  = os.path.dirname(os.path.dirname(SCRIPT_DIR))
@@ -80,7 +84,17 @@ def api_salvar_json(nome, conteudo):
             "titulo_documento", "texto_certidao", "assinantes",
             # ── Modo Livre / Extras ──
             "texto_livre", "extras_extraidos", "analise_documental",
-            "licao_aprendida", "data_conclusao_obra",
+            "licao_aprendida", "data_conclusao_obra", "modo_compilacao",
+            # ── Campos adicionais válidos ──
+            "area_decadente_m2", "observacoes_fiscais", "confrontantes",
+            "cno_numero", "matricula_sri", "proprietario",
+            "numero_alvara_anterior", "data_vistoria", "fiscal_responsavel",
+            "data_habitese_anterior", "area_demolir", "area_regularizar",
+            "area_nova", "valor_total_multas", "valor_total_taxas",
+            "habite_se_anterior", "zona_uso", "lote", "quadra",
+            "desenhista", "condicoes_pendentes", "pavimentos", "vagas_garagem",
+            "agentes_fiscais", "assinante_parecer", "multas_aplicaveis",
+            "condicionantes_aprovacao", "art_rrt", "area_total_construida",
         }
         
         novas_variaveis = {k: v for k, v in dados.items() if k not in chaves_conhecidas}
@@ -457,7 +471,10 @@ class Handler(BaseHTTPRequestHandler):
         elif path == "/api/inspecionar":
             self._json(api_inspecionar(data.get("conteudo", "{}")))
         elif path == "/api/registro-sistema":
-            self._json(api_registro_sistema())
+            try:
+                self._json(api_registro_sistema())
+            except Exception as e:
+                self._json({"ok": False, "erro": f"Erro ao carregar registro: {e}"})
         else: self._send(404, "text/plain", b"Not found")
 
     def do_DELETE(self):

@@ -134,8 +134,11 @@ O sistema agora é modular e suporta 29 tipos de documentos organizados em 4 cat
 
     "documentos_emitir": [
         {
-            "tipo": "Alvará de Construção nº 313/2025 — regularização ...",
-            "obs": "Alvará emitido para fins de regularização ..."
+            "tipo": "alvara_regularizacao",
+            "obs": "Alvará emitido para fins de regularização da área consolidada."
+        },
+        {
+            "tipo": "habitese_comum"
         }
     ]
 }
@@ -241,6 +244,12 @@ O compilador Python **bloqueia** a geração se encontrar esse marcador, forçan
 ---
 
 ## Campos Avançados — `extras_extraidos` (OBRIGATÓRIO, não opcional)
+
+> **⚠️ REGRA DE OURO DA ESTRUTURA (RIGIDEZ vs. LIBERDADE):**
+> O Motor Python é engessado e precisa de uma espinha dorsal rígida. Para conceitos padronizados que constam nos templates, **nunca invente nomes**. Use **sempre as chaves oficiais na raiz do JSON** (ex: `"agentes_fiscais"`, `"matricula_sri"`, `"numero_alvara"`, `"data_parecer_fiscal"`, `"art_rrt"`, `"zona_uso"`).
+> O campo `documentos_emitir` também deve usar **exclusivamente os IDs técnicos** (ex: `"alvara_regularizacao"` e não `"Alvará de Regularização de Imóvel"`).
+> 
+> Use o `extras_extraidos` **APENAS** para a sua capacidade criativa e investigativa — ou seja, para dados totalmente atípicos (ex: nomes de logradouros antigos, processos apensados, vizinhos confrontantes). Não jogue dados vitais do processo aqui dentro achando que o Motor Python vai adivinhar.
 
 Este campo é o **depósito livre de dados brutos** do processo. Tudo que você extraiu do PDF e não coube nos campos padrão deve entrar aqui. Não deixe vazio se houver qualquer informação adicional.
 

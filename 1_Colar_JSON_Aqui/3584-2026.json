@@ -1,0 +1,37 @@
+{
+  "tipo_relatorio": "alvara_regularizacao",
+  "numero_processo": "3584/2026",
+  "data_processo": "20 de Março de 2026",
+  "assunto": "Regularização, Reforma Interna e Reforma da Fachada de Edificação Residencial",
+  "requerente": "LUCIANA CASTRO PACHECO KOPPERSCHMIDT",
+  "logradouro": "Rua da Canastra, 68",
+  "bairro": "São Sebastião",
+  "inscricao_municipal": "01.05.012.0176.001",
+  "area_terreno": "456,07m²",
+  "area_total_construida": "307,05m²",
+  "taxa_ocupacao": "61,31%",
+  "coef_aproveitamento": "0,4094",
+  "taxa_permeabilidade": "49,92%",
+  "pavimentos": "3",
+  "vagas_garagem": "2",
+  "zona_uso": "ZUR 02",
+  "responsavel_tecnico": "Washington Luis Borges Costa (CREA-MG 249.250/D)",
+  "agentes_fiscais": "Ryan Abílio A. de Morais (Mat. 30880603-1) e Wallace Alencar Martins Silveira (Mat. 306017-9)",
+  "assinante_parecer": "Engenheiro Diego T. N. Vilela",
+  "paragrafo_abertura": "Trata-se de requerimento para licenciamento de Regularização cumulada com Reforma Interna e Reforma da Fachada de edificação residencial distribuída em 3 pavimentos, protocolado no âmbito da Secretaria de Obras e Serviços Urbanos, no qual figura como requerente LUCIANA CASTRO PACHECO KOPPERSCHMIDT, devidamente representada pelo Engenheiro Civil Washington Luis Borges Costa.",
+  "considerandos": [
+    "Considerando que a área objeto do licenciamento encontra-se inserida no perímetro correspondente à Zona de Uso Restrito 02 (ZUR 02), com uso residencial, conforme diretrizes urbanísticas vigentes;",
+    "Considerando que o imóvel encontra-se lastreado por Escritura Pública de Compra e Venda lavrada em 27/06/2025 (Matrícula Originária nº 33.426), atestando a titularidade da requerente;",
+    "Considerando o Parecer Fiscal exarado em 23/03/2026 pelos agentes Ryan Abílio A. de Morais e Wallace Alencar Martins Silveira, que, em vistoria in loco, constataram área de terreno de 456,07m² e edificação/reforma com 307,05m²;",
+    "Considerando que os referidos fiscais atestaram o início das obras e reformas em desconformidade prévia, ou seja, sem a prévia expedição do competente alvará municipal;",
+    "Considerando a análise das pranchas do projeto físico entregues em balcão, nas quais restou comprovado o pleno atendimento aos parâmetros exigidos para a ZUR 02, aferindo-se Taxa de Ocupação de 61,31%, Taxa de Permeabilidade de 49,92%, Coeficiente de Aproveitamento de 0,4094, além da alocação de 2 vagas de garagem."
+  ],
+  "multas_aplicaveis": [
+    "Lavratura de Auto de Infração/Multa, com fulcro na Lei Municipal nº 1.544, em virtude do início de obra/reforma sem a correspondente licença, incidente sobre a área total atestada pela fiscalização (307,05m²)."
+  ],
+  "condicionantes_aprovacao": [
+    "Comprovação de quitação da guia de multa (Lei 1.544) referente à execução de obras sem alvará prévio.",
+    "Apresentação da Certidão de Matrícula atualizada constando o devido registro da propriedade em nome da requerente, fato que será exigido impreterivelmente na etapa de solicitação da Carta de Habite-se."
+  ],
+  "conclusao": "Diante do exposto e em consonância com a legislação em vigor, manifesto-me FAVORÁVEL à aprovação dos projetos e continuidade do processo de Regularização e Reforma, ficando, contudo, a expedição do alvará EXPRESSAMENTE CONDICIONADA ao recolhimento da multa punitiva por obra sem licença. É o parecer."
+}

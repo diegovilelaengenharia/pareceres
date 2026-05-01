@@ -181,7 +181,7 @@ def build_dados_carimbo(doc, d):
         ("Endereço:",       end_completo,
          "Inscrição Mun.:", d.get("inscricao_municipal", "")),
         ("Proprietário:",   d.get("proprietario", d.get("requerente", "")),
-         "Resp. Técnico:",  d.get("profissional_nome", "")),
+         "Resp. Técnico:",  d.get("profissional_nome", d.get("responsavel_tecnico", ""))),
         ("Lote:",           d.get("lote", ""),
          "Quadra:",         d.get("quadra", "")),
         ("Área Terreno:",   d.get("area_terreno", ""),
@@ -189,7 +189,11 @@ def build_dados_carimbo(doc, d):
         ("Taxa Ocupação:",  d.get("taxa_ocupacao", ""),
          "Coef. Aprov.:",   d.get("coef_aproveitamento", "")),
         ("Permeabilidade:", d.get("taxa_permeabilidade", ""),
-         "",  ""),
+         "Pavimentos:",     d.get("pavimentos", "")),
+        ("Vagas Garagem:",  d.get("vagas_garagem", ""),
+         "Zona de Uso:",    d.get("zona_uso", "")),
+        ("ART/RRT:",        d.get("art_rrt_numero", d.get("art_rrt", "")),
+         "Multa Específica:", d.get("tipo_multa_especifica", "")),
     ]
 
     W_L1 = 2000
@@ -290,6 +294,22 @@ def build_corpo(doc, d):
                          after=PAR_AFTER, indent_cm=INDENT)
             add_run(p, "Considerando que ", bold=True, size=SZ_CORPO)
             rich_segments(p, cons_limpo, size=SZ_CORPO)
+
+    if d.get("multas_aplicaveis"):
+        add_section_heading(doc, "Multas Aplicáveis")
+        for multa in _ensure_list(d["multas_aplicaveis"]):
+            p_multa = add_para(doc, line=LINE_SPC, before=0, after=PAR_AFTER, indent_cm=INDENT)
+            r_bullet = add_run(p_multa, "▪ ", size=SZ_CORPO, bold=True)
+            r_bullet.font.color.rgb = RGBColor(0xCC, 0x00, 0x00) # Red bullet
+            rich_segments(p_multa, multa, size=SZ_CORPO)
+
+    if d.get("condicionantes_aprovacao"):
+        add_section_heading(doc, "Condicionantes de Aprovação")
+        for cond in _ensure_list(d["condicionantes_aprovacao"]):
+            p_cond = add_para(doc, line=LINE_SPC, before=0, after=PAR_AFTER, indent_cm=INDENT)
+            r_bullet = add_run(p_cond, "▪ ", size=SZ_CORPO, bold=True)
+            r_bullet.font.color.rgb = RGBColor(0x00, 0x80, 0x00) # Green bullet
+            rich_segments(p_cond, cond, size=SZ_CORPO)
 
     if d.get("paragrafos_adicionais"):
         for txt in _ensure_list(d["paragrafos_adicionais"]):
@@ -479,7 +499,7 @@ def build_assinatura(doc, d):
     p_line.paragraph_format.keep_with_next = True
 
     # Nome em negrito (destaque)
-    nome = assinante.get("nome", ASSINANTE["nome"])
+    nome = d.get("assinante_parecer") or assinante.get("nome", ASSINANTE["nome"])
     p_nome = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
                       line=LINE_SPC, before=40, after=0)
     r_nome = add_run(p_nome, nome, bold=True, size=SZ_CORPO)

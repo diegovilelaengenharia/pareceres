@@ -15,6 +15,7 @@ Acabei de enviar os arquivos de um processo administrativo. Execute **imediatame
 
 **1. FASE ZERO — TRIAGEM IMEDIATA**
 Varra todos os anexos. Extraia TUDO: matrículas, ARTs/RRTs, valores pagos, nomes de fiscais (com matrícula funcional), **todas as datas** (abertura, vistorias, alvarás anteriores, habite-ses históricos, averbações), observações manuscritas, embargos, laudos.
+> **ATENÇÃO (Projetos Físicos):** Os projetos arquitetônicos e As built são entregues de forma física, nem sempre estão no digital. Tenha cuidado ao analisar o comprovante de abertura do processo para não dar pendência incorreta.
 
 **Monte mentalmente a linha do tempo do processo** (do fato mais antigo ao mais recente) antes de qualquer análise. Esta ordem cronológica deve guiar a narrativa dos considerandos.
 
@@ -37,6 +38,8 @@ Gere um único bloco JSON completo, seguindo rigorosamente o template do tipo de
 ✘ observacoes_gerais      ✘ resumo
 ✘ analise                 ✘ irregularidades
 ```
+
+> **Nomes canônicos obrigatórios:** use `responsavel_tecnico` (não `tecnico_responsavel`), `multas_aplicaveis` (não `multas`), `condicionantes_aprovacao` (não `condicionantes`), `agentes_fiscais` (não `fiscais`), `area_terreno` (não `area_lote`). Tabela completa em `02_GEM_REFERENCIA.md`.
 
 ---
 
@@ -149,6 +152,8 @@ Para `alvara_regularizacao`, `habitese_multa` e qualquer processo com **As-Built
 
 ## Parâmetros por Zona (LC 267/2019)
 
+> **REGRA DE OURO (ZONEAMENTO):** O Zoneamento DEVE ser usado o da LEI 267 junto da tabela de bairros e zona. NUNCA use o espelho cadastral para essa informação.
+
 | Zona | TO máx. | CA | TP mín. | Afastamentos mín. |
 |------|---------|-----|---------|-------------------|
 | ZUR1 | 60% | 1,5 | 20% | 1,50m (lat/fron/fund) |
@@ -241,7 +246,13 @@ Para `alvara_regularizacao`, `habitese_multa` e qualquer processo com **As-Built
 4. **Datas** sempre por extenso: "28 de janeiro de 2026" — nunca "28/01/2026"
 5. **`considerandos`** e **`fundamentacao_legal`** são arrays de strings
 6. **`historico_cronologico`** obrigatório nos pareceres técnicos — array de eventos em ordem cronológica (do mais antigo ao mais recente), cada um com: `data`, `evento`, `tipo`, `referencia`, e `agentes` (quando vistoria fiscal)
-7. **`partes_envolvidas`** obrigatório nos pareceres técnicos — objeto com `requerente` (com `qualidade`), `responsavel_tecnico` (com `conselho`, `tipo_rt`, `numero_rt` simplificado), `agentes_fiscais` (array com nome + matrícula funcional), e `assinante_parecer`
+7. **`partes_envolvidas`** obrigatório nos pareceres técnicos — objeto com `requerente` (com `qualidade`), `responsavel_tecnico` (com `conselho`, `tipo_rt`, `numero_rt` simplificado), `agentes_fiscais` (array com nome + matrícula funcional), e `assinante_parecer` (Valor Padrão: "Engenheiro Diego T. N. Vilela")
+8. **Novas Variáveis Opcionais/Contextuais:** `modo_recebimento_projeto` (ex: Físico), `tipo_multa_especifica` (ex: Lei 1544 - Obra s/ Licença), `pavimentos` e `vagas_garagem` devem ser inseridos se disponíveis.
+9. **Padronização Estrita de Variáveis (NUNCA USE SINÔNIMOS):** 
+   - Utilize a chave raiz `"profissional_nome"` para o nome do engenheiro/arquiteto (reserve a chave `"responsavel_tecnico"` APENAS para uso dentro do array de `partes_envolvidas`).
+   - Utilize a chave raiz `"art_rrt"` para informar a numeração da ART/RRT.
+10. **NUNCA CORTE CAMINHO:**
+    Mesmo em pareceres preliminares ou sumários rápidos, você é **OBRIGADO** a gerar as chaves `"fundamentacao_legal"` e `"documentos_emitir"` (ambas como arrays). Se não tiver certeza, declare a variável vazia ou pendente, mas NUNCA a omita do JSON final, para evitar a falha estrutural do Motor Python.
 
 ### Regra sobre TRT (Técnico em Edificações — CFT/CRT)
 Quando o RT for Técnico em Edificações (TRT):

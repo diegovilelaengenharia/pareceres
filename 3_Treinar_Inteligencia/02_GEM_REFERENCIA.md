@@ -25,7 +25,12 @@ Usado para: `alvara_aprovacao`, `alvara_regularizacao`, `alvara_ampliacao`, `alv
   "taxa_ocupacao": "0,00%",
   "coef_aproveitamento": "0,00",
   "taxa_permeabilidade": "0,00%",
+  "pavimentos": "0",
+  "vagas_garagem": "0",
+  "modo_recebimento_projeto": "Físico ou Digital",
+  "tipo_multa_especifica": "Ex: Lei 1544 - Obra s/ Licença",
   "profissional_nome": "NOME DO ENG/ARQ RESPONSÁVEL",
+  "assinante_parecer": "Engenheiro Diego T. N. Vilela",
   "paragrafo_abertura": "Texto de abertura narrativo do processo...",
   "considerandos": [
     "primeiro considerando com citação legal __Art. X da Lei Y__;",
@@ -162,6 +167,37 @@ Estrutura para as certidões gerais emitidas do balcão:
   ]
 }
 ```
+
+---
+
+## NOMES CANÔNICOS DAS VARIÁVEIS — TABELA DE ALIASES
+
+O motor Python aceita sinônimos para as variáveis abaixo, mas **sempre prefira o nome canônico** para garantir máxima compatibilidade:
+
+| Nome Canônico (USE ESTE) | Sinônimos aceitos (evitar) |
+| --- | --- |
+| `responsavel_tecnico` | tecnico_responsavel, rt, eng_responsavel, profissional_responsavel |
+| `profissional_nome` | nome_profissional, nome_do_profissional, profissional |
+| `art_rrt` | art_rrt_numero, numero_art, art, rrt, numero_rrt |
+| `requerente` | proprietario, proprietario_nome, interessado, solicitante |
+| `logradouro` | endereco, rua, avenida, endereco_obra |
+| `bairro` | bairro_obra, distrito |
+| `inscricao_municipal` | inscricao, im, cadastro_imobiliario, inscricao_imobiliaria |
+| `area_terreno` | area_lote, area_total_terreno, area_do_terreno |
+| `taxa_ocupacao` | ocupacao, taxa_de_ocupacao, to |
+| `taxa_permeabilidade` | permeabilidade, taxa_de_permeabilidade, tp |
+| `coef_aproveitamento` | ca, coeficiente_aproveitamento |
+| `agentes_fiscais` | fiscal, fiscais, agente_fiscal, vistoriadores |
+| `assinante_parecer` | assinante, responsavel_parecer, autor_parecer |
+| `multas_aplicaveis` | multas, multa_aplicavel, autos_infracao, multas_cabiveis |
+| `condicionantes_aprovacao` | condicionantes, condicoes_aprovacao, requisitos_aprovacao |
+| `numero_processo` | processo, protocolo, numero_protocolo |
+| `pavimentos` | numero_pavimentos, andares, numero_andares |
+| `vagas_garagem` | vagas, garagem, numero_vagas, qtd_vagas |
+
+> **Regra:** se o campo canônico estiver ausente no JSON mas um sinônimo estiver presente, o sistema promove o valor automaticamente. Mesmo assim, NUNCA invente campos fora desta lista.
+
+---
 
 ### IMPORTANTE AO RESPONDER
 Não utilize a marcação `"⚠️ VERIFICAR"` se puder evitar cruzando as informações do processo em PDF. Se estiver em dúvida entre o Requerente inicial e o Proprietário real na matrícula, assuma o Proprietário conforme matrícula/certidão e entregue os dados finais e diretos. As chaves devem ter esses nomes EXATOS para o script de compilação em Python do setor ler o seu JSON corretamente na prefeitura.

@@ -25,6 +25,54 @@ Os nomes de campos abaixo são incompatíveis com o motor Python e não devem se
 
 ---
 
+## Nomes Canônicos das Variáveis
+
+Use **exatamente** os nomes abaixo. Nomes errados causam falha silenciosa — seções inteiras do parecer ficam em branco sem aviso:
+
+### 🔴 TIER A — OBRIGATÓRIOS ABSOLUTOS (ausência bloqueia o processo)
+
+| Use ESTE nome         | Nunca use                                   |
+| --------------------- | ------------------------------------------- |
+| `inscricao_municipal` | inscricao, im, cadastro_imobiliario         |
+| `area_terreno`        | area_lote, area_do_terreno, terreno_area    |
+| `numero_processo`     | processo, protocolo, num_processo           |
+| `tipo_relatorio`      | tipo_documento, tipo, categoria_documento   |
+| `requerente`          | proprietario_nome, interessado, solicitante |
+
+### 🟡 TIER B — OBRIGATÓRIOS CONTEXTUAIS (ausência gera [PREENCHER] no documento)
+
+| Use ESTE nome              | Nunca use                                     |
+| -------------------------- | --------------------------------------------- |
+| `profissional_nome`        | nome_profissional, profissional               |
+| `art_rrt`                  | art_rrt_numero, numero_art, art, rrt          |
+| `logradouro`               | endereco, rua, endereco_obra                  |
+| `taxa_ocupacao`            | ocupacao, taxa_de_ocupacao, to                |
+| `taxa_permeabilidade`      | permeabilidade, tp                            |
+| `coef_aproveitamento`      | ca, coeficiente_aproveitamento                |
+| `agentes_fiscais`          | fiscal, fiscais, agente_fiscal, vistoriadores |
+| `assinante_parecer`        | assinante, responsavel_parecer, autor_parecer |
+| `multas_aplicaveis`        | multas, multa_aplicavel, multas_cabiveis      |
+| `condicionantes_aprovacao` | condicionantes, condicoes_aprovacao           |
+| `pavimentos`               | andares, numero_pavimentos                    |
+| `vagas_garagem`            | vagas, garagem, numero_vagas                  |
+
+### 🟢 TIER C — OPCIONAIS/CONTEXTUAIS (preencher quando disponível)
+
+| Use ESTE nome          | Nunca use                                    |
+| ---------------------- | -------------------------------------------- |
+| `responsavel_tecnico`  | tecnico_responsavel, rt, eng_responsavel     |
+| `area_total_construida`| area_construida, area_edificada, area_total  |
+| `area_decadente_m2`    | area_decadente, area_com_decadencia          |
+| `proprietario`         | proprietario_nome, titular_imovel            |
+| `confrontantes`        | confrontantes_nomes, vizinhos, lindeiros     |
+| `observacoes_fiscais`  | observacao_fiscal, nota_fiscal, relato_fiscal|
+| `cno_numero`           | cno, cei, numero_cno, numero_cei             |
+| `licao_aprendida`      | licao, insight_processo, aprendizado         |
+
+> O motor aceita sinônimos como fallback automático, mas o ideal é sempre o nome canônico.
+
+---
+
 ## 📋 FLUXO COMPLETO
 
 ```
@@ -795,6 +843,67 @@ Sugestões diretas para o Claude Code implementar. Liste o que adicionar:
 - Ex: Adicionar campo `data_vistoria_fiscal` como campo padrão nos pareceres técnicos
 
 Se nenhuma: `Nenhuma sugestão de implementação identificada.`
+
+---
+
+---
+
+## ✍️ MODO NARRATIVO (LIVRE) — Formato do campo `texto_livre`
+
+Use este modo quando o engenheiro solicitar **"modo livre"**, **"modo narrativo"** ou quando o tipo de processo for atípico e não se encaixar bem na estrutura de considerandos.
+
+### Quando usar
+- Despachos atípicos sem estrutura padronizada
+- Comunicados internos narrativos
+- Pareceres em que o engenheiro já definiu a redação no chat
+- Tipos de processo ainda não mapeados (novos cenários)
+
+### Estrutura do campo `texto_livre`
+
+O campo `texto_livre` substitui `considerandos` + `fundamentacao_legal`. As regras são:
+
+```
+TÍTULO DE SEÇÃO          → linha em MAIÚSCULAS (aparece em negrito centralizado)
+
+Parágrafo normal         → texto corrido justificado
+
+Novo parágrafo           → linha em branco entre blocos (\n\n)
+
+**Negrito**              → dado crítico, nome, número (mesmas regras do modo institucional)
+
+__Itálico__              → artigo de lei (__Art. 43 da Lei nº 1.544/86__)
+```
+
+### Exemplo de JSON em Modo Narrativo
+
+```json
+{
+  "modo_compilacao": "livre",
+  "tipo_relatorio": "memorando",
+  "numero_processo": "123/2026",
+  "data_processo": "02 de maio de 2026",
+  "assunto": "Encaminhamento de Documentação ao Setor Jurídico",
+  "requerente": "SETOR DE OBRAS",
+
+  "texto_livre": "ASSUNTO\n\nEncaminho ao Setor Jurídico os autos do Processo nº **123/2026**, referente à obra irregular localizada na **Rua das Flores, nº 45**, de propriedade de **João da Silva**, para as providências cabíveis nos termos do __Art. 79 da Lei nº 1.544/86__.\n\nFUNDAMENTAÇÃO\n\nA edificação foi constatada em desacordo com as normas municipais conforme vistoria fiscal realizada em **15 de março de 2026**, conduzida pelo Agente **Carlos Souza** (Mat. 30880603-1).\n\nCONCLUSÃO\n\nSolicita-se emissão de notificação e, se necessário, lavratura de auto de infração para regularização da situação.",
+
+  "documentos_emitir": [
+    { "tipo": "Memorando — Encaminhamento ao Jurídico", "obs": "Para providências legais." }
+  ],
+
+  "extras_extraidos": {
+    "outros": "Caso atípico — obra sem documentação alguma."
+  }
+}
+```
+
+### Regras do campo `texto_livre`
+
+- **Não inclua** `considerandos`, `fundamentacao_legal` nem `paragrafo_abertura` no mesmo JSON — o modo livre substitui todos eles
+- **Inclua sempre** `tipo_relatorio`, `numero_processo`, `data_processo`, `requerente` e `documentos_emitir`
+- Adicione `"modo_compilacao": "livre"` para sinalizar ao motor qual compilador usar
+- Seções em MAIÚSCULAS só ficam em negrito se forem curtas (até 6 palavras) e estiverem isoladas em uma linha
+- Máximo recomendado: 8 parágrafos (o motor não limita, mas o documento fica excessivo acima disso)
 
 ---
 

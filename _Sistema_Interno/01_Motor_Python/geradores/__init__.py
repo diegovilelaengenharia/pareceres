@@ -124,8 +124,18 @@ def gerar_parecer_tecnico(doc, dados, template):
     build_titulo(doc, titulo)
     build_identificacao(doc, dados)
     build_dados_carimbo(doc, dados)
-    if dados.get("partes_envolvidas"):
-        build_partes_envolvidas(doc, dados["partes_envolvidas"])
+    
+    partes = dados.get("partes_envolvidas")
+    if not partes and (dados.get("agentes_fiscais") or dados.get("responsavel_tecnico")):
+        partes = {
+            "requerente": {"nome": dados.get("requerente", "")},
+            "responsavel_tecnico": {"nome": dados.get("responsavel_tecnico", dados.get("profissional_nome", ""))},
+            "agentes_fiscais": dados.get("agentes_fiscais") if isinstance(dados.get("agentes_fiscais"), list) else [dados.get("agentes_fiscais")],
+            "assinante_parecer": {"nome": dados.get("assinante_parecer", "")}
+        }
+    if partes:
+        build_partes_envolvidas(doc, partes)
+        
     if dados.get("historico_cronologico"):
         build_historico_cronologico(doc, dados["historico_cronologico"])
     build_corpo(doc, dados)
@@ -273,6 +283,11 @@ def gerar(dados, caminho_saida=None):
 
     # === VALIDADOR DE INTEGRIDADE PARA AUTO-CORREÇÃO DO GEM ===
     obrigatorios = template.get("campos_obrigatorios", [])
+    
+    # Resolver aliases antes de checar campos faltantes
+    from ._aliases import normalizar_dados
+    dados = normalizar_dados(dados)
+
     campos_faltantes = [c for c in obrigatorios if not dados.get(c)]
     
     if campos_faltantes:
@@ -323,40 +338,59 @@ def gerar(dados, caminho_saida=None):
 def _gerar_pdf(caminho_docx: str) -> str | None:
     """
     Tenta converter o DOCX em PDF usando comtypes/Word COM.
-    Ajustado para NUNCA travar exibindo pop-ups (DisplayAlerts = 0).
+    Copia para um diretório temporário curto quando o caminho excede 220 chars
+    (Word COM falha com caminhos > 255 caracteres).
     """
-    import os
+    import os, shutil, tempfile
     base, _ = os.path.splitext(caminho_docx)
     caminho_pdf = base + ".pdf"
     abs_docx    = os.path.abspath(caminho_docx)
     abs_pdf     = os.path.abspath(caminho_pdf)
 
     print(f"  [.] Convertendo DOCX para PDF (via Word)...")
-    
+
+    # Word COM não suporta paths > 255 chars; usa temp se necessário
+    if len(abs_docx) > 220 or len(abs_pdf) > 220:
+        tmp_dir  = tempfile.gettempdir()
+        tmp_docx = os.path.join(tmp_dir, "gem_conv.docx")
+        tmp_pdf  = os.path.join(tmp_dir, "gem_conv.pdf")
+        shutil.copy2(abs_docx, tmp_docx)
+        docx_conv, pdf_conv = tmp_docx, tmp_pdf
+        usar_temp = True
+    else:
+        docx_conv, pdf_conv = abs_docx, abs_pdf
+        usar_temp = False
+
     try:
         import comtypes.client
-        # Cria a instância do Word
         word = comtypes.client.CreateObject("Word.Application")
         word.Visible = False
-        word.DisplayAlerts = 0  # 0 = wdAlertsNone (Evita qualquer pop-up que trava o código)
-        
+        word.DisplayAlerts = 0
         try:
-            # Abre de forma silenciosa, read-only
-            doc_w = word.Documents.Open(abs_docx, ConfirmConversions=False, ReadOnly=True, AddToRecentFiles=False)
-            doc_w.SaveAs(abs_pdf, FileFormat=17)  # 17 = wdFormatPDF
-            doc_w.Close(0)  # 0 = wdDoNotSaveChanges
+            doc_w = word.Documents.Open(docx_conv, ConfirmConversions=False, ReadOnly=True, AddToRecentFiles=False)
+            doc_w.SaveAs(pdf_conv, FileFormat=17)  # 17 = wdFormatPDF
+            doc_w.Close(0)
         finally:
             word.Quit(0)
-            
+
+        if usar_temp:
+            shutil.move(pdf_conv, abs_pdf)
+            try: os.remove(tmp_docx)
+            except OSError: pass
+
         print(f"  [+] Documento PDF gerado: {caminho_pdf}")
         return caminho_pdf
     except ImportError:
         print("[!] Biblioteca 'comtypes' não instalada. Execute: pip install comtypes")
         return None
     except Exception as e:
+        if usar_temp:
+            for f in (tmp_docx, tmp_pdf):
+                try: os.remove(f)
+                except OSError: pass
         print(f"[!] Erro ao gerar PDF pelo Word COM: {e}")
-        
-        # Fallback para docx2pdf caso o comtypes falhe por alguma peculiaridade
+
+        # Fallback para docx2pdf
         try:
             from docx2pdf import convert
             convert(abs_docx, abs_pdf)

@@ -80,6 +80,9 @@ _TIER_A_CAMPOS = {
 _TIER_B_CAMPOS = {
     "profissional_nome", "profissional_registro",
     "desenhista", "lote", "quadra",
+    "zona_uso", "pavimentos", "vagas_garagem",
+    "tipo_multa_especifica", "modo_recebimento_projeto",
+    "assinante_parecer"
 }
 
 

@@ -53,16 +53,28 @@ def _num(texto) -> float | None:
         return None
 
 
+def _normalizar_zona(z: str) -> str:
+    """Normaliza sigla: remove espaços e zeros iniciais em números (ex: 'ZUR 02' → 'ZUR2')."""
+    z = re.sub(r'\s+', '', z).upper()
+    z = re.sub(r'(?<=[A-Z])0+(\d)', r'\1', z)
+    return z
+
+
 def _detectar_zona(dados: dict) -> str:
     """Retorna zona de 'zona_uso' ou varre todo o JSON em busca de sigla."""
-    zona = str(dados.get("zona_uso", "")).upper().strip()
+    zona = _normalizar_zona(str(dados.get("zona_uso", "")))
     if zona in LIMITES_ZONA:
         return zona
-    # Varredura textual (último recurso)
+    # Varredura textual com suporte a variantes com espaço e zero (ex: "ZUR 02")
     texto = json.dumps(dados, ensure_ascii=False).upper()
     for z in LIMITES_ZONA:
         if z in texto:
             return z
+        m = re.match(r'^([A-Z]+)(\d+)$', z)
+        if m:
+            prefix, num = m.groups()
+            if re.search(rf'{prefix}\s*0*{num}(?!\d)', texto):
+                return z
     return ""
 
 
