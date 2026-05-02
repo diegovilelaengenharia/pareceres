@@ -315,11 +315,9 @@ def main():
                     
                     dados_temp = dados.copy()
                     
-                    # O motor espera IDs técnicos (ex: parecer_tecnico). 
-                    # Se vier descritivo ("Alvará de Regularização"), tentamos deduzir pelo tipo do processo principal.
-                    # Mas o ideal é que seja o ID técnico (que o roteador já usa).
-                    if " " in peca or "—" in peca:
-                        print(f"  {_warn(f'Ignorando tipo descritivo legado: {peca}')}")
+                    # Validar se o ID técnico é reconhecido pelo motor
+                    if peca not in TIPOS_DOCUMENTO:
+                        print(f"  {_err(f'ID técnico inválido em documentos_emitir: {peca}')}")
                         continue
                         
                     dados_temp["tipo_relatorio"] = peca
