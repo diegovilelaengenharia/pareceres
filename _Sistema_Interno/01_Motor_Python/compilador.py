@@ -15,7 +15,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
-from config import TIPOS_DOCUMENTO
+from config import TIPOS_DOCUMENTO, PASTA_ENTRADA
 from geradores import gerar
 
 # Módulos de análise pré-voo
@@ -195,7 +195,7 @@ def main():
 
     # Sem argumentos: tentar usar a pasta padrão 1_Colar_JSON_Aqui
     if not args:
-        pasta_padrao = os.path.join(os.path.dirname(os.path.dirname(SCRIPT_DIR)), "1_Colar_JSON_Aqui")
+        pasta_padrao = PASTA_ENTRADA
         if os.path.exists(pasta_padrao) and glob.glob(os.path.join(pasta_padrao, "*.json")):
             args = [pasta_padrao]
         else:
