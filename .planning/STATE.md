@@ -2,10 +2,11 @@
 
 ## Current Position
 - **Milestone**: v2.0 — Qualidade Interna e Manutenibilidade
-- **Phase**: 3
-- **Status**: pending_planning
+- **Phase**: 3 → 4
+- **Status**: phase_3_complete
 
 ## Recent Accomplishments
+- [2026-05-01] **Fase 3 concluída**: constantes de pasta centralizadas em `config.py`; zero strings literais fora de config; 5/5 testes passaram.
 - [2026-05-01] Milestone v1.0 arquivado. Tag `gsd/v1.0` criada.
 - [2026-05-01] **Fase 2 concluída**: `logger.py`, tipagem no schema, testes negativos (`27084ae`).
 - [2026-05-01] **Fase 1 concluída**: `requirements.txt`, docstrings em `compilador.py`.
