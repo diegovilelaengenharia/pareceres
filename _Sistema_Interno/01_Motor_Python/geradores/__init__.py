@@ -228,7 +228,9 @@ def gerar(dados, caminho_saida=None):
     Retorna:
         Caminho do arquivo gerado.
     """
-    tipo = dados.get("tipo_relatorio", "regularizacao")
+    tipo = dados.get("tipo_relatorio")
+    if not tipo:
+        raise ValueError("O campo 'tipo_relatorio' é obrigatório e não foi encontrado no JSON de entrada.")
     
     # ---------------------------------------------------------
     # RESILIÊNCIA: Se o LLM agrupar os campos em sub-dicionários
@@ -271,9 +273,10 @@ def gerar(dados, caminho_saida=None):
     categoria = TIPOS_DOCUMENTO.get(tipo)
 
     if not categoria:
-        print(f"[!] Tipo de documento desconhecido: '{tipo}'")
-        print(f"    Tipos disponíveis: {', '.join(sorted(TIPOS_DOCUMENTO.keys()))}")
-        raise ValueError(f"Tipo de documento desconhecido: {tipo}")
+        print(f"[!] Tipo de documento inválido ou não mapeado: '{tipo}'")
+        print(f"    Verifique se o 'tipo_relatorio' no JSON corresponde a um ID técnico no config.py.")
+        print(f"    IDs técnicos disponíveis: {', '.join(sorted(TIPOS_DOCUMENTO.keys()))}")
+        raise ValueError(f"Tipo de documento inválido: {tipo}")
 
     print(f"[>] Tipo: {tipo} -> Categoria: {categoria}")
 
