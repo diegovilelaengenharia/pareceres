@@ -1462,6 +1462,22 @@ async function loadRegistro() {
     html += `<div style="margin-top:8px;font-size:12px;color:var(--muted)">JSONs de exemplo no motor: ${reg.jsons_exemplo.length} | Decisões de triagem registradas: ${reg.total_decisoes_triagem}</div>`;
     html += '</div>';
 
+    // ── Logs Estruturados (Observabilidade) ──
+    if (reg.logs_json && reg.logs_json.length > 0) {
+        html += '<div class="health-section">';
+        html += '<div class="health-section-title" style="color:var(--muted)">🚨 Logs de Erros e Avisos Recentes (Observabilidade)</div>';
+        html += '<div style="overflow-x:auto">';
+        html += '<table style="width:100%;font-size:12px;text-align:left;border-collapse:collapse">';
+        html += '<thead style="color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.1)"><tr><th style="padding:4px">Hora</th><th style="padding:4px">Nível</th><th style="padding:4px">Mensagem</th><th style="padding:4px">Dados</th></tr></thead>';
+        html += '<tbody>';
+        reg.logs_json.reverse().forEach(log => {
+            const color = log.level === 'ERROR' ? 'var(--red)' : (log.level === 'WARNING' ? 'var(--orange)' : 'var(--muted)');
+            const dataStr = log.data ? JSON.stringify(log.data, null, 1) : '';
+            html += `<tr style="border-bottom:1px solid rgba(255,255,255,0.05)"><td style="padding:4px;white-space:nowrap">${log.timestamp.split('T')[1].split('.')[0]}</td><td style="padding:4px;color:${color};font-weight:700">${log.level}</td><td style="padding:4px">${log.message}</td><td style="padding:4px"><details><summary style="cursor:pointer">🔍</summary><pre style="font-size:10px;background:rgba(0,0,0,0.2);padding:4px;border-radius:4px">${dataStr}</pre></details></td></tr>`;
+        });
+        html += '</tbody></table></div></div>';
+    }
+
     container.innerHTML = html;
 }
 

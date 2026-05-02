@@ -336,6 +336,19 @@ def api_registro_sistema():
         treino_arquivos = [f for f in os.listdir(PASTA_TREINO)
                            if f.endswith(('.md', '.json')) and f != 'desktop.ini']
     
+    # ── Logs estruturados (JSON) ──
+    logs_json = []
+    log_file = os.path.join(SCRIPT_DIR, "motor.json.log")
+    if os.path.exists(log_file):
+        try:
+            with open(log_file, encoding="utf-8") as f:
+                linhas = f.readlines()
+                for linha in linhas[-50:]:
+                    try:
+                        logs_json.append(json.loads(linha))
+                    except: pass
+        except: pass
+
     # ── Decisões de triagem ──
     total_decisoes = 0
     arq_decisoes = os.path.join(PASTA_HIST, "decisoes_triagem.jsonl")
@@ -366,6 +379,7 @@ def api_registro_sistema():
             "treino_arquivos": treino_arquivos,
             "jsons_exemplo": jsons_exemplo,
             "total_decisoes_triagem": total_decisoes,
+            "logs_json": logs_json
         }
     }
 
