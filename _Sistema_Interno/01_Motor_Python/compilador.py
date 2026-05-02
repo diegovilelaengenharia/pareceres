@@ -193,7 +193,7 @@ def main():
     """
     args = [a for a in sys.argv[1:] if a != "--sem-preview"]
 
-    # Sem argumentos: tentar usar a pasta padrão 1_Colar_JSON_Aqui
+    # Sem argumentos: tentar usar PASTA_ENTRADA
     if not args:
         pasta_padrao = PASTA_ENTRADA
         if os.path.exists(pasta_padrao) and glob.glob(os.path.join(pasta_padrao, "*.json")):

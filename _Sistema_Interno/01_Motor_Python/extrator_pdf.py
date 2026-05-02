@@ -8,10 +8,11 @@ import os
 import sys
 import glob
 
-SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT  = os.path.dirname(os.path.dirname(SCRIPT_DIR))
-PASTA_ENTRADA = os.path.join(PROJECT_ROOT, "1_Colar_JSON_Aqui")
-PASTA_MODELOS = os.path.join(PROJECT_ROOT, "0_Modelos_Prontos")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
+
+from config import PASTA_ENTRADA, PASTA_MODELOS, PASTA_TREINO
 
 
 # ── Extração ──────────────────────────────────────────────────────────────────
@@ -104,18 +105,18 @@ def _cabecalho_txt(nome_pdf: str, metodo: str) -> str:
         f"COMO USAR ESTE ARQUIVO:\n"
         f"\n"
         f"  OPÇÃO A — Via Gemini (gemini.google.com):\n"
-        f"    1. Abra o Gemini e cole as instruções de 3_Treinar_Inteligencia/\n"
+        f"    1. Abra o Gemini e cole as instruções de {os.path.basename(PASTA_TREINO)}/\n"
         f"    2. Em seguida cole o texto abaixo\n"
         f"    3. Peça: 'Gere o JSON estruturado para este processo'\n"
-        f"    4. Salve o JSON em 1_Colar_JSON_Aqui/\n"
+        f"    4. Salve o JSON em {os.path.basename(PASTA_ENTRADA)}/\n"
         f"\n"
         f"  OPÇÃO B — Via Claude Code (este chat):\n"
         f"    1. Copie o texto abaixo e cole no chat\n"
         f"    2. Peça: 'Gere o JSON GEM para este processo'\n"
-        f"    3. Salve o JSON em 1_Colar_JSON_Aqui/\n"
+        f"    3. Salve o JSON em {os.path.basename(PASTA_ENTRADA)}/\n"
         f"\n"
         f"  OPÇÃO C — Manual:\n"
-        f"    1. Abra um modelo da pasta 0_Modelos_Prontos/\n"
+        f"    1. Abra um modelo da pasta {os.path.basename(PASTA_MODELOS)}/\n"
         f"    2. Preencha os campos usando este texto como referência\n"
         f"\n"
         f"{'='*64}\n"
@@ -159,7 +160,7 @@ def processar_pdfs(pasta: str = PASTA_ENTRADA) -> list[str]:
                     f"AVISO: Este PDF é composto por imagens escaneadas.\n"
                     f"Não é possível extrair texto automaticamente.\n\n"
                     f"ALTERNATIVA: Acesse gemini.google.com, anexe o PDF original\n"
-                    f"e use as instruções de 3_Treinar_Inteligencia/01_GEM_INSTRUCOES.md\n"
+                    f"e use as instruções de {os.path.basename(PASTA_TREINO)}/01_GEM_INSTRUCOES.md\n"
                 )
             print(f"  [>] Arquivo de aviso criado: {os.path.basename(txt_path)}")
             txts_gerados.append(txt_path)
@@ -256,9 +257,9 @@ def main():
     print()
     print("     A) Cole o texto no Gemini + instruções GEM → receba o JSON")
     print("     B) Cole o texto aqui no Claude Code → peça o JSON")
-    print("     C) Preencha um modelo manualmente da pasta 0_Modelos_Prontos/")
+    print(f"     C) Preencha um modelo manualmente da pasta {os.path.basename(PASTA_MODELOS)}/")
     print()
-    print("  3. Salve o JSON em 1_Colar_JSON_Aqui/")
+    print(f"  3. Salve o JSON em {os.path.basename(PASTA_ENTRADA)}/")
     print("  4. Volte ao menu e use [1] MOTOR para gerar o DOCX")
     print()
 

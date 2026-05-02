@@ -8,11 +8,13 @@ import sys
 import json
 import re
 
-SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
 
-PASTA_ENTRADA = os.path.join(PROJECT_ROOT, "1_Colar_JSON_Aqui")
-AJUSTES_FILE  = os.path.join(PASTA_ENTRADA, "AJUSTES.txt")
+from config import PASTA_ENTRADA
+
+AJUSTES_FILE = os.path.join(PASTA_ENTRADA, "AJUSTES.txt")
 
 
 def _extrair_json(texto: str) -> dict | None:
@@ -209,6 +211,6 @@ if __name__ == "__main__":
         if f.endswith(".json") and not f.startswith("_")
     ]
     if not jsons:
-        print("[!] Nenhum JSON encontrado em 1_Colar_JSON_Aqui/")
+        print(f"[!] Nenhum JSON encontrado em {os.path.basename(PASTA_ENTRADA)}/")
         sys.exit(1)
     loop_de_ajustes(jsons[0])

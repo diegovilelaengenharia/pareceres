@@ -6,7 +6,7 @@ Um erro bloqueante significa que o compilador vai travar ou gerar documento erra
 
 Uso:
     python schema_validator.py processo.json
-    python schema_validator.py 1_Colar_JSON_Aqui/
+    python schema_validator.py <pasta_entrada>/
 """
 
 import json

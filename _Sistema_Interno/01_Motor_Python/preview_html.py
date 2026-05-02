@@ -592,16 +592,16 @@ def gerar_preview(dados: dict, alertas: list[dict] | None = None, destino: str |
 
 
 if __name__ == "__main__":
-    # Teste rápido com JSON de exemplo
-    import sys, os
-    SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-    PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
-    pasta = os.path.join(PROJECT_ROOT, "1_Colar_JSON_Aqui")
-    jsons = [f for f in os.listdir(pasta) if f.endswith(".json")]
+    import sys
+    _script_dir = os.path.dirname(os.path.abspath(__file__))
+    if _script_dir not in sys.path:
+        sys.path.insert(0, _script_dir)
+    from config import PASTA_ENTRADA
+    jsons = [f for f in os.listdir(PASTA_ENTRADA) if f.endswith(".json")]
     if not jsons:
-        print("[!] Nenhum JSON encontrado em 1_Colar_JSON_Aqui/")
+        print(f"[!] Nenhum JSON encontrado em {os.path.basename(PASTA_ENTRADA)}/")
         sys.exit(1)
-    with open(os.path.join(pasta, jsons[0]), encoding="utf-8") as f:
+    with open(os.path.join(PASTA_ENTRADA, jsons[0]), encoding="utf-8") as f:
         dados = json.load(f)
     caminho = gerar_preview(dados)
     print(f"[OK] Preview aberto: {caminho}")

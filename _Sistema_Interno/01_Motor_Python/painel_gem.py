@@ -12,13 +12,14 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT  = os.path.dirname(os.path.dirname(SCRIPT_DIR))
-PASTA_ENTRADA = os.path.join(PROJECT_ROOT, "1_Colar_JSON_Aqui")
-PASTA_SAIDA   = os.path.join(PROJECT_ROOT, "2_Documentos_Prontos")
-PASTA_MODELOS = os.path.join(PROJECT_ROOT, "0_Modelos_Prontos")
-PASTA_TREINO  = os.path.join(PROJECT_ROOT, "3_Treinar_Inteligencia")
-PASTA_RETRO   = os.path.join(os.path.dirname(SCRIPT_DIR), "03_Retroalimentacao_e_Estudos")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
+
+from config import PROJECT_ROOT, PASTA_ENTRADA, PASTA_SAIDA, PASTA_MODELOS, PASTA_TREINO
+
+PASTA_RETRO = os.path.join(os.path.dirname(SCRIPT_DIR), "03_Retroalimentacao_e_Estudos")
 PASTA_EXEMPLOS_IN  = os.path.join(PASTA_RETRO, "exemplos_entrada")
 PASTA_EXEMPLOS_OUT = os.path.join(PASTA_RETRO, "exemplos_saida")
 PASTA_BASE_CONHECIMENTO = os.path.join(PASTA_RETRO, "base_conhecimento")
@@ -541,9 +542,9 @@ def main():
     print(f"  {YL}  ▸ Treino IA:{R}    {n_treino} arquivos de instrução")
     print()
     print(f"  {DM}  ┌─────────────────────────────────────────────┐{R}")
-    print(f"  {DM}  │{R}  {GR}📂 Entrada:{R}  {DM}1_Colar_JSON_Aqui/{R}             {DM}│{R}")
-    print(f"  {DM}  │{R}  {BL}📁 Saída:{R}    {DM}2_Documentos_Prontos/{R}           {DM}│{R}")
-    print(f"  {DM}  │{R}  {MG}📚 Treino:{R}   {DM}3_Treinar_Inteligencia/{R}         {DM}│{R}")
+    print(f"  {DM}  │{R}  {GR}📂 Entrada:{R}  {DM}{os.path.basename(PASTA_ENTRADA)}/{R}             {DM}│{R}")
+    print(f"  {DM}  │{R}  {BL}📁 Saída:{R}    {DM}{os.path.basename(PASTA_SAIDA)}/{R}           {DM}│{R}")
+    print(f"  {DM}  │{R}  {MG}📚 Treino:{R}   {DM}{os.path.basename(PASTA_TREINO)}/{R}         {DM}│{R}")
     print(f"  {DM}  │{R}  {YL}📋 Base:{R}     {DM}03_Retroalimentacao_e_Estudos/{R}  {DM}│{R}")
     print(f"  {DM}  └─────────────────────────────────────────────┘{R}")
     print()

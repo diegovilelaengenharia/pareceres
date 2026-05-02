@@ -10,11 +10,11 @@ import base64
 import re
 import glob
 
-SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
 
-PASTA_ENTRADA    = os.path.join(PROJECT_ROOT, "1_Colar_JSON_Aqui")
-PASTA_INSTRUCOES = os.path.join(PROJECT_ROOT, "3_Treinar_Inteligencia")
+from config import PASTA_ENTRADA, PASTA_TREINO as PASTA_INSTRUCOES
 
 INSTRUCOES_PRINCIPAL = os.path.join(PASTA_INSTRUCOES, "01_GEM_INSTRUCOES.md")
 INSTRUCOES_REFERENCIA = os.path.join(PASTA_INSTRUCOES, "02_GEM_REFERENCIA.md")
@@ -136,7 +136,7 @@ def analisar_pdf(pdf_path: str) -> dict:
 
 def processar_pdfs_na_pasta() -> list[str]:
     """
-    Varre 1_Colar_JSON_Aqui/ por PDFs, analisa cada um e salva o JSON.
+    Varre PASTA_ENTRADA por PDFs, analisa cada um e salva o JSON.
     Retorna lista de caminhos JSON gerados.
     """
     pdfs = glob.glob(os.path.join(PASTA_ENTRADA, "*.pdf"))

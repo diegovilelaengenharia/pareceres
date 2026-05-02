@@ -46,7 +46,8 @@ from componentes   import (
 from formatacao    import add_para, add_run, rich_segments, set_spacing
 from config        import (
     FONT_TITULO, SZ_CORPO, COR_LABEL_FONT,
-    PAR_AFTER, LINE_SPC
+    PAR_AFTER, LINE_SPC,
+    PASTA_ENTRADA, PASTA_SAIDA,
 )
 
 
@@ -76,7 +77,7 @@ def _caminho_saida_completo(dados: dict, sufixo="") -> str:
         nome_arquivo = nome_arquivo.replace(ch, '')
         nome_pasta = nome_pasta.replace(ch, '')
 
-    base = Path(SCRIPT_DIR).parent.parent / "2_Documentos_Prontos" / nome_pasta
+    base = Path(PASTA_SAIDA) / nome_pasta
     base.mkdir(parents=True, exist_ok=True)
     
     return str(base / nome_arquivo)
@@ -202,10 +203,10 @@ def main():
 
     if not args:
         # Tenta pasta padrão
-        pasta_padrao = Path(SCRIPT_DIR).parent.parent / "1_Colar_JSON_Aqui"
+        pasta_padrao = Path(PASTA_ENTRADA)
         jsons = list(pasta_padrao.glob("*.json")) if pasta_padrao.exists() else []
         if not jsons:
-            print("[!] Nenhum JSON encontrado em 1_Colar_JSON_Aqui")
+            print(f"[!] Nenhum JSON encontrado em {os.path.basename(PASTA_ENTRADA)}")
             print("    Uso: python compilador_livre.py dados.json [saida.docx]")
             sys.exit(0)
         args = [str(pasta_padrao)]

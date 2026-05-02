@@ -10,13 +10,12 @@ import sys
 import glob
 import subprocess
 
-SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
-PASTA_ENTRADA = os.path.join(PROJECT_ROOT, "1_Colar_JSON_Aqui")
+from config import PASTA_ENTRADA
 
 
 def _aguardar_json(pdfs_originais: list[str]) -> list[str]:
