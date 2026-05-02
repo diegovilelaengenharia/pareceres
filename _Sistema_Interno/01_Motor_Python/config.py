@@ -10,7 +10,12 @@ from docx.shared import RGBColor
 #  CAMINHOS
 # ═══════════════════════════════════════════════════════════
 SCRIPT_DIR      = os.path.dirname(os.path.abspath(__file__))
-PROJECT_DIR     = os.path.dirname(SCRIPT_DIR)  # pasta raiz: 02. Pareceres
+PROJECT_DIR     = os.path.dirname(SCRIPT_DIR)  # pasta _Sistema_Interno
+PROJECT_ROOT    = os.path.dirname(PROJECT_DIR)  # pasta raiz: 02. Pareceres
+PASTA_ENTRADA   = os.path.join(PROJECT_ROOT, "1_Colar_JSON_Aqui")
+PASTA_SAIDA     = os.path.join(PROJECT_ROOT, "2_Documentos_Prontos")
+PASTA_MODELOS   = os.path.join(PROJECT_ROOT, "0_Modelos_Prontos")
+PASTA_TREINO    = os.path.join(PROJECT_ROOT, "3_Treinar_Inteligencia")
 LOGO_BRASAO     = os.path.join(SCRIPT_DIR, "logos", "logo_brasao.jpeg")
 LOGO_PREFEITURA = os.path.join(SCRIPT_DIR, "logos", "logo_prefeitura.png")
 TEMPLATES_DIR   = os.path.join(SCRIPT_DIR, "templates")
