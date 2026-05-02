@@ -20,8 +20,8 @@ if _MOTOR_DIR not in _sys.path:
     _sys.path.insert(0, _MOTOR_DIR)
 
 from config import (
-    TIPOS_DOCUMENTO, TEMPLATES_DIR, PROJECT_DIR,
-    FONT_CORPO, SZ_CORPO,
+    TIPOS_DOCUMENTO, TEMPLATES_DIR,
+    FONT_CORPO, SZ_CORPO, PASTA_SAIDA,
 )
 from cabecalho import build_header, add_page_number_footer
 from componentes import (
@@ -102,8 +102,7 @@ def _gerar_nome_saida(dados):
         nome_arquivo = nome_arquivo.replace(ch, '')
         nome_pasta = nome_pasta.replace(ch, '')
 
-    root_dir = os.path.dirname(PROJECT_DIR)
-    final_out_dir = os.path.join(root_dir, "2_Documentos_Prontos", nome_pasta)
+    final_out_dir = os.path.join(PASTA_SAIDA, nome_pasta)
     os.makedirs(final_out_dir, exist_ok=True)
     return os.path.join(final_out_dir, nome_arquivo)
 
