@@ -82,7 +82,6 @@ TIPOS_DOCUMENTO = {
     "alvara_reforma_demolicao_ampliacao": "parecer_tecnico",
     "alvara_substituicao_projeto":        "parecer_tecnico",
     "alvara_troca_responsavel_tecnico":   "parecer_simples",
-    "regularizacao":                      "parecer_tecnico",  # compatibilidade
     "regularizacao_complexa_multipla":    "parecer_tecnico",
 
     # ── Pareceres Simples (sem dados do carimbo) ──
