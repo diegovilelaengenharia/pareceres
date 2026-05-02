@@ -21,6 +21,22 @@ if SCRIPT_DIR not in sys.path:
 from config import TIPOS_DOCUMENTO
 from logger import log_ok, log_warn, log_err, log_info
 
+# ── Carregamento do Esquema Base Dinâmico ───────────────────────────────────
+ESQUEMA_BASE_PATH = os.path.join(SCRIPT_DIR, "templates", "_esquema_base.json")
+
+def carregar_esquema_base():
+    if os.path.exists(ESQUEMA_BASE_PATH):
+        try:
+            with open(ESQUEMA_BASE_PATH, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+ESQUEMA_BASE = carregar_esquema_base()
+CHAVES_CONHECIDAS = set(ESQUEMA_BASE.get("todas_chaves", []))
+TIPOS_CONHECIDOS = set(ESQUEMA_BASE.get("tipos_disponiveis", []))
+
 # ── Chaves obrigatórias por categoria de gerador ────────────────────────────
 _CHAVES_CATEGORIA = {
     "parecer_tecnico": [
@@ -111,12 +127,19 @@ def validar(dados: dict) -> tuple:
 
     categoria = TIPOS_DOCUMENTO.get(tipo)
     if not categoria:
-        validos = ", ".join(sorted(TIPOS_DOCUMENTO.keys()))
+        validos = ", ".join(sorted(TIPOS_CONHECIDOS)) if TIPOS_CONHECIDOS else ", ".join(sorted(TIPOS_DOCUMENTO.keys()))
         erros.append(
             f"tipo_relatorio='{tipo}' não reconhecido.\n"
             f"  Tipos válidos: {validos}"
         )
         return erros, avisos
+
+    # ── 1.1 Chaves conhecidas (Aviso) ────────────────────────────────────────
+    if CHAVES_CONHECIDAS:
+        for k in dados.keys():
+            # Ignora chaves internas e estruturadas (ponto ou colchete indicam subchaves que já validamos o prefixo)
+            if k not in CHAVES_CONHECIDAS and not k.startswith("_") and "." not in k and "[" not in k:
+                avisos.append(f"Chave '{k}' não consta no esquema base de templates. Verifique se o nome está correto.")
 
     # ── 2. Chaves obrigatórias da categoria ──────────────────────────────────
     for chave in _CHAVES_CATEGORIA.get(categoria, []):
@@ -254,12 +277,12 @@ def validar_arquivo(caminho: str) -> bool:
         return True
 
     if erros:
-        log_err(f"{nome} ({tipo}) -- {len(erros)} erro(s) bloqueante(s):")
+        log_err(f"{nome} ({tipo}) -- {len(erros)} erro(s) bloqueante(s):", data={"arquivo": nome, "tipo": tipo, "erros": erros})
         for e in erros:
             log_err(f"  -> {e}")
 
     if avisos:
-        log_warn(f"{nome} ({tipo}) -- {len(avisos)} aviso(s):")
+        log_warn(f"{nome} ({tipo}) -- {len(avisos)} aviso(s):", data={"arquivo": nome, "tipo": tipo, "avisos": avisos})
         for a in avisos:
             log_warn(f"  -> {a}")
 

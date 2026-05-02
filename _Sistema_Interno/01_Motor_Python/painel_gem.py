@@ -55,50 +55,31 @@ def api_salvar_json(nome, conteudo):
     try:
         dados = json.loads(conteudo)
 
-        # --- EXTRAÇÃO DE NOVAS VARIÁVEIS ---
-        chaves_conhecidas = {
-            # ── Identificação do Processo ──
-            "tipo_relatorio", "numero_processo", "data_processo", "assunto",
-            "requerente", "proprietario", "proprietario_nome", "proprietario_cpf_cnpj",
-            # ── Localização e Cadastro ──
-            "logradouro", "bairro", "inscricao_municipal", "lote", "quadra",
-            # ── Índices Urbanísticos ──
-            "area_terreno", "area_total_construida", "taxa_ocupacao",
-            "coef_aproveitamento", "taxa_permeabilidade", "zona_uso",
-            # ── Responsável Técnico ──
-            "profissional_nome", "profissional_registro", "art_rrt", "desenhista",
-            # ── Corpo do Parecer ──
-            "paragrafo_abertura", "considerandos", "fundamentacao_legal", "conclusao",
-            "memoria_de_calculo", "historico_cronologico", "partes_envolvidas",
-            # ── Documentos a Emitir ──
-            "documentos_emitir", "observacoes_finais",
-            # ── Multas e Exceções ──
-            "multas_calculadas", "excecoes_aplicadas", "ano_construcao",
-            # ── Documentos Oficiais (Alvará/Habite-se/Certidão) ──
-            "numero_documento", "data_aprovacao", "nome_obra",
-            "area_total_obra", "areas_matriz",
-            "autor_projeto_nome", "autor_projeto_crea", "autor_projeto_art",
-            "responsavel_tecnico_nome", "responsavel_tecnico_crea", "responsavel_tecnico_art",
-            "construtora_nome", "construtora_cpf_cnpj", "observacoes",
-            "responsavel_execucao_nome", "responsavel_execucao_cpf_cnpj",
-            "texto_despacho_responsavel_tecnico",
-            "titulo_documento", "texto_certidao", "assinantes",
-            # ── Modo Livre / Extras ──
-            "texto_livre", "extras_extraidos", "analise_documental",
-            "licao_aprendida", "data_conclusao_obra", "modo_compilacao",
-            # ── Campos adicionais válidos ──
-            "area_decadente_m2", "observacoes_fiscais", "confrontantes",
-            "cno_numero", "matricula_sri", "proprietario",
-            "numero_alvara_anterior", "data_vistoria", "fiscal_responsavel",
-            "data_habitese_anterior", "area_demolir", "area_regularizar",
-            "area_nova", "valor_total_multas", "valor_total_taxas",
-            "habite_se_anterior", "zona_uso", "lote", "quadra",
-            "desenhista", "condicoes_pendentes", "pavimentos", "vagas_garagem",
-            "agentes_fiscais", "assinante_parecer", "multas_aplicaveis",
-            "condicionantes_aprovacao", "art_rrt", "area_total_construida",
-        }
+        # --- CARREGAMENTO DE CHAVES CONHECIDAS (DINÂMICO) ---
+        esquema_path = os.path.join(SCRIPT_DIR, "templates", "_esquema_base.json")
+        chaves_conhecidas = set()
+        if os.path.exists(esquema_path):
+            try:
+                with open(esquema_path, 'r', encoding='utf-8') as f:
+                    esquema_json = json.load(f)
+                    chaves_conhecidas = set(esquema_json.get("todas_chaves", []))
+            except: pass
+
+        if not chaves_conhecidas:
+            # Fallback (Hardcoded) se o esquema_base falhar ou não existir
+            chaves_conhecidas = {
+                "tipo_relatorio", "numero_processo", "data_processo", "assunto",
+                "requerente", "proprietario", "proprietario_nome", "proprietario_cpf_cnpj",
+                "logradouro", "bairro", "inscricao_municipal", "lote", "quadra",
+                "area_terreno", "area_total_construida", "taxa_ocupacao",
+                "coef_aproveitamento", "taxa_permeabilidade", "zona_uso",
+                "profissional_nome", "profissional_registro", "art_rrt", "desenhista",
+                "paragrafo_abertura", "considerandos", "fundamentacao_legal", "conclusao",
+                "documentos_emitir", "observacoes_finais", "multas_calculadas", "excecoes_aplicadas",
+                "areas_matriz"
+            }
         
-        novas_variaveis = {k: v for k, v in dados.items() if k not in chaves_conhecidas}
+        novas_variaveis = {k: v for k, v in dados.items() if k not in chaves_conhecidas and not k.startswith("_")}
         
         if novas_variaveis:
             from datetime import datetime
