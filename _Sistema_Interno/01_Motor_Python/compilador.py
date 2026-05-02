@@ -28,23 +28,7 @@ import cobertura_considerandos as cob_cons
 import gerador_sero           as gen_sero
 import inspetor_documental    as insp_doc
 
-# ── Cores do terminal (colorama) ──────────────────────────────────────────────
-try:
-    from colorama import init as _colorama_init, Fore, Style
-    _colorama_init(autoreset=True)
-    _OK    = Fore.GREEN  + Style.BRIGHT
-    _WARN  = Fore.YELLOW + Style.BRIGHT
-    _ERR   = Fore.RED    + Style.BRIGHT
-    _INFO  = Fore.CYAN   + Style.BRIGHT
-    _RESET = Style.RESET_ALL
-    _BLUE  = Fore.BLUE   + Style.BRIGHT
-except ImportError:
-    _OK = _WARN = _ERR = _INFO = _RESET = _BLUE = ""
-
-def _ok(msg):   return f"{_OK}[OK]{_RESET} {msg}"
-def _warn(msg): return f"{_WARN}[WARN]{_RESET} {msg}"
-def _err(msg):  return f"{_ERR}[ERR]{_RESET} {msg}"
-def _info(msg): return f"{_INFO}[INFO]{_RESET} {msg}"
+from logger import _ok, _warn, _err, _info, log_ok, log_warn, log_err, log_info, _BLUE, _RESET
 
 
 # ── Relatório pré-voo unificado ───────────────────────────────────────────────
@@ -197,6 +181,16 @@ def _relatorio_pos(dados: dict, caminho_docx: str, resumo_cob: dict) -> None:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
+    """
+    Função principal de orquestração do gerador de documentos.
+    
+    Fluxo de execução:
+    1. Captação de Entrada: Lê arquivos JSON individuais ou varre o diretório em lote.
+    2. Análise Pré-voo: Despacha os dados para os módulos de validação (consistência, cálculos, alertas).
+    3. Preview e Decisão: Renderiza a visualização HTML e aguarda confirmação do usuário.
+    4. Compilação: Aciona o submódulo apropriado dentro de `geradores/` de acordo com a peça técnica.
+    5. Relatório Pós-voo: Avalia a cobertura e exibe resumos e métricas da operação.
+    """
     args = [a for a in sys.argv[1:] if a != "--sem-preview"]
 
     # Sem argumentos: tentar usar a pasta padrão 1_Colar_JSON_Aqui

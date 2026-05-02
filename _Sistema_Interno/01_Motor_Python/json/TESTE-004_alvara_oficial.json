@@ -1,11 +1,22 @@
 {
-    "tipo_relatorio": "alvara_oficial",
-    "numero_documento": "TESTE-004/2026",
+    "tipo_relatorio": "alvara_aprovacao",
     "numero_processo": "TESTE-004/2026",
-    "data_aprovacao": "22 de abril de 2026",
-    "nome_obra": "Residência Unifamiliar — Teste de Regressão",
-    "logradouro": "Rua das Acácias, 100",
-    "bairro": "Centro",
+    "requerente": "FULANO DA SILVA TESTE",
+    "paragrafo_abertura": "Este parecer testa o gerador de Alvará de Aprovação. Processo fictício para regressão automática.",
+    "considerandos": [
+        "Vistos, examinados e deliberados os presentes autos.",
+        "A documentação apresentada está em conformidade com as normas vigentes.",
+        "O projeto atende ao recuo frontal mínimo e taxa de permeabilidade exigidos."
+    ],
+    "conclusao": "Aprovado o projeto de edificação residencial unifamiliar, conforme documentação técnica apresentada, com área total de 150,00 m².",
+    "areas_matriz": [
+        {
+            "categoria": "Obra Nova",
+            "destinacao": "Residencial",
+            "tipo_obra": "Alvenaria",
+            "area_m2": "150,00"
+        }
+    ],
     "proprietario_nome": "FULANO DA SILVA TESTE",
     "proprietario_cpf_cnpj": "000.000.000-00",
     "autor_projeto_nome": "ENGENHEIRO TESTE DA SILVA",
@@ -17,13 +28,13 @@
     "construtora_nome": "Nao se aplica",
     "construtora_cpf_cnpj": "Nao se aplica",
     "area_total_obra": "150,00 m²",
-    "areas_matriz": [
-        {
-            "categoria": "Obra Nova",
-            "destinacao": "Residencial",
-            "tipo_obra": "Alvenaria",
-            "area_m2": "150,00"
-        }
-    ],
-    "observacoes": "Documento gerado pelo teste de regressão TESTE-004. Validade: 01 (um) ano a contar da emissão, nos termos do Art. 9º da Lei nº 1.544/86."
+    "logradouro": "Rua das Acácias, 100",
+    "bairro": "Centro",
+    "lote": "10",
+    "quadra": "25",
+    "inscricao_municipal": "TESTE-000000",
+    "area_terreno": "300,00",
+    "zona_uso": "ZR1",
+    "pavimentos": "1",
+    "observacoes": "Documento gerado pelo teste de regressão TESTE-004. Arquivo fictício."
 }

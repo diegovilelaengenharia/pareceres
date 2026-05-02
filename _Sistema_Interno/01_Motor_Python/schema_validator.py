@@ -19,6 +19,7 @@ if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
 from config import TIPOS_DOCUMENTO
+from logger import log_ok, log_warn, log_err, log_info
 
 # ── Chaves obrigatórias por categoria de gerador ────────────────────────────
 _CHAVES_CATEGORIA = {
@@ -68,6 +69,11 @@ _DEVE_SER_LISTA = [
     "considerandos", "fundamentacao_legal",
     "documentos_emitir", "areas_matriz", "assinantes",
     "observacoes_finais", "multas_calculadas", "excecoes_aplicadas",
+]
+
+# Chaves que devem ser strings
+_DEVE_SER_STRING = [
+    "numero_processo", "requerente", "paragrafo_abertura", "conclusao"
 ]
 
 # ── Criticidade de dados ausentes (⚠️ VERIFICAR) ────────────────────────────
@@ -130,6 +136,14 @@ def validar(dados: dict) -> tuple:
             erros.append(
                 f"'{chave}' deve ser uma lista JSON (array), mas recebeu {type(val).__name__}. "
                 f"Corrija: coloque colchetes [ ] em volta dos itens."
+            )
+
+    for chave in _DEVE_SER_STRING:
+        val = dados.get(chave)
+        if val is not None and not isinstance(val, str):
+            erros.append(
+                f"'{chave}' deve ser texto (string), mas recebeu {type(val).__name__}. "
+                f"Corrija: certifique-se que o valor está entre aspas."
             )
 
     # ── 5. areas_matriz: cada item deve ter as 4 chaves ──────────────────────
@@ -226,32 +240,28 @@ def validar_arquivo(caminho: str) -> bool:
         with open(caminho, encoding="utf-8") as f:
             dados = json.load(f)
     except json.JSONDecodeError as e:
-        print(f"  [✗] {nome}")
-        print(f"        ERRO: JSON inválido — {e}")
+        log_err(f"{nome} - JSON inválido — {e}")
         return False
     except FileNotFoundError:
-        print(f"  [✗] {nome}")
-        print(f"        ERRO: Arquivo não encontrado.")
+        log_err(f"{nome} - Arquivo não encontrado.")
         return False
 
     erros, avisos = validar(dados)
     tipo = dados.get("tipo_relatorio", "?")
 
     if not erros and not avisos:
-        print(f"  [OK] {nome}  ({tipo})")
+        log_ok(f"{nome} ({tipo})")
         return True
 
     if erros:
-        print(f"  [ERRO] {nome}  ({tipo})  -- {len(erros)} erro(s) bloqueante(s):")
+        log_err(f"{nome} ({tipo}) -- {len(erros)} erro(s) bloqueante(s):")
         for e in erros:
-            print(f"        ERRO: {e}")
+            log_err(f"  -> {e}")
 
     if avisos:
-        marcador = "  [AVISO]" if not erros else "        "
-        if not erros:
-            print(f"{marcador} {nome}  ({tipo})  -- {len(avisos)} aviso(s):")
+        log_warn(f"{nome} ({tipo}) -- {len(avisos)} aviso(s):")
         for a in avisos:
-            print(f"        AVISO: {a}")
+            log_warn(f"  -> {a}")
 
     return len(erros) == 0
 

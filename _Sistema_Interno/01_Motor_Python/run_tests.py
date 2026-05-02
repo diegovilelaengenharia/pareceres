@@ -40,8 +40,15 @@ def rodar_teste_motor(caminho_json: str) -> tuple:
         dados = json.load(f)
 
     erros, avisos = validar(dados)
+    eh_invalido = "TESTE-INVALIDO" in os.path.basename(caminho_json).upper()
+
     if erros:
+        if eh_invalido:
+            return True, f"Falhou corretamente — {erros[0]}", 0.0
         return False, f"Schema inválido — {erros[0]}", 0.0
+
+    if eh_invalido:
+        return False, "Deveria ter falhado, mas o schema passou", 0.0
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     nome_base = os.path.splitext(os.path.basename(caminho_json))[0]
