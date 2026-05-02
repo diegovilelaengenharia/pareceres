@@ -29,10 +29,12 @@ This document outlines the phased execution plan.
 - **Requirements**: FR-03, NFR-01
 - **Status**: [pending_planning]
 
-### Phase 6: Documentação de Desenvolvedor
-- **Goal**: Docstrings de módulo em todos os arquivos Python do motor, docstrings em funções públicas longas, e criação de `ARCHITECTURE.md` descrevendo o fluxo completo do sistema.
-- **Requirements**: FR-04
-- **Status**: [pending_planning]
+### Phase 6: Excelência Arquitetural e Inteligência Operacional
+- **Goal**: Elevar a qualidade arquitetural através da abstração de motores, sincronização dinâmica de schema e observabilidade via painel JSON-aware.
+- **Requirements**: FR-03, NFR-01
+- **Status**: [planned]
+- **Plans**:
+    - [ ] 06-01-PLAN.md — Abstração de Motores e Sincronização de Schema
 
 ---
-*Roadmap updated: 2026-05-01*
+*Roadmap updated: 2026-05-02*
