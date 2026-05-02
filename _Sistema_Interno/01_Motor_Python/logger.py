@@ -1,6 +1,8 @@
 import logging
 import sys
 import os
+import json
+from datetime import datetime
 
 try:
     from colorama import init as _colorama_init, Fore, Style
@@ -29,18 +31,22 @@ class ColorFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-class PlainFormatter(logging.Formatter):
-    """Formata logs para arquivo sem caracteres de cor ANSI."""
+class JSONFormatter(logging.Formatter):
+    """Formata logs em JSON para facilitar o consumo por IA (Observabilidade Agent-First)."""
     def format(self, record):
-        level_map = {
-            logging.DEBUG: "DEBUG",
-            logging.INFO: "OK",
-            logging.WARNING: "WARN",
-            logging.ERROR: "ERR",
-            logging.CRITICAL: "CRITICO"
+        log_record = {
+            "timestamp": datetime.fromtimestamp(record.created).isoformat(),
+            "level": record.levelname,
+            "message": record.getMessage(),
+            "module": record.module,
+            "funcName": record.funcName,
+            "line": record.lineno
         }
-        level = level_map.get(record.levelno, record.levelname)
-        return f"[{record.asctime}] [{level}] {record.getMessage()}"
+        # Se houver dados extras no log, inclui no JSON
+        if hasattr(record, "extra_data"):
+            log_record["data"] = record.extra_data
+            
+        return json.dumps(log_record, ensure_ascii=False)
 
 def get_logger():
     logger = logging.getLogger("motor_gem")
@@ -52,27 +58,28 @@ def get_logger():
         ch.setLevel(logging.DEBUG)
         ch.setFormatter(ColorFormatter())
 
-        # File Handler (limpo, sem cores)
-        # Salva o log na raiz da pasta _Sistema_Interno/01_Motor_Python/
-        log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "motor.log")
-        fh = logging.FileHandler(log_file, encoding="utf-8")
-        fh.setLevel(logging.DEBUG)
-        fh.setFormatter(PlainFormatter())
+        # JSON Handler (Agent-First Observability)
+        log_file_json = os.path.join(os.path.dirname(os.path.abspath(__file__)), "motor.json.log")
+        jh = logging.FileHandler(log_file_json, encoding="utf-8")
+        jh.setLevel(logging.DEBUG)
+        jh.setFormatter(JSONFormatter())
 
         logger.addHandler(ch)
-        logger.addHandler(fh)
+        logger.addHandler(jh)
         
     return logger
 
-# Funções auxiliares para migração rápida
+# Funções auxiliares
 _log = get_logger()
 
-def _ok(msg):   return f"{_OK}[OK]{_RESET} {msg}"
-def _warn(msg): return f"{_WARN}[WARN]{_RESET} {msg}"
-def _err(msg):  return f"{_ERR}[ERR]{_RESET} {msg}"
-def _info(msg): return f"{_INFO}[INFO]{_RESET} {msg}"
+def log_ok(msg, data=None):
+    _log.info(msg, extra={"extra_data": data} if data else {})
 
-def log_ok(msg): _log.info(msg)
-def log_warn(msg): _log.warning(msg)
-def log_err(msg): _log.error(msg)
-def log_info(msg): _log.debug(msg) # Mapeamos info para DEBUG para não confundir com o [OK] no arquivo
+def log_warn(msg, data=None):
+    _log.warning(msg, extra={"extra_data": data} if data else {})
+
+def log_err(msg, data=None):
+    _log.error(msg, extra={"extra_data": data} if data else {})
+
+def log_info(msg, data=None):
+    _log.debug(msg, extra={"extra_data": data} if data else {})

@@ -18,6 +18,7 @@ import re
 import json
 import sys
 import os
+from base_engine import BaseEngine
 
 # ── Tabela de faixas — Art. 79 Lei 1.544/86 ──────────────────────────────────
 # (area_min, area_max_inclusive, percentual_urm_esperado, label)
@@ -30,17 +31,6 @@ _FAIXAS_ART79 = [
 
 _TOLERANCIA_R = 0.50   # Tolerância aritmética em R$
 _TOLERANCIA_P = 0.001  # Tolerância de percentual (comparação float)
-
-
-def _num(texto) -> float | None:
-    """Extrai float de string, aceita vírgula como decimal."""
-    if texto is None:
-        return None
-    limpo = re.sub(r"[^\d,.]", "", str(texto)).replace(",", ".")
-    try:
-        return float(limpo) if limpo else None
-    except ValueError:
-        return None
 
 
 def _faixa_esperada(area: float) -> tuple[float, str]:
@@ -59,10 +49,10 @@ def _verificar_item(item: dict, idx: int) -> tuple[list[str], list[str]]:
     base_legal = item.get("base_legal", "?")
     prefixo    = f"multas_calculadas[{idx}] ({base_legal})"
 
-    area      = _num(item.get("area_m2"))
-    pct_urm   = _num(item.get("percentual_urm"))
-    valor_urm = _num(item.get("valor_urm"))
-    resultado = _num(item.get("resultado_r$") or item.get("resultado_rs"))
+    area      = BaseEngine.parse_number(item.get("area_m2"))
+    pct_urm   = BaseEngine.parse_number(item.get("percentual_urm"))
+    valor_urm = BaseEngine.parse_number(item.get("valor_urm"))
+    resultado = BaseEngine.parse_number(item.get("resultado_r$") or item.get("resultado_rs"))
     excecao   = item.get("excecao_aplicada")
 
     # Exceção aplicada — se resultado deve ser 0, apenas confirmar
@@ -70,7 +60,7 @@ def _verificar_item(item: dict, idx: int) -> tuple[list[str], list[str]]:
         if resultado is not None and resultado > 0.01:
             avisos.append(
                 f"{prefixo}: 'excecao_aplicada' preenchida ('{excecao}'), "
-                f"mas resultado_r$ = R${resultado:.2f} (esperado R$0,00 ou valor reduzido). "
+                f"mas resultado_r$ = {BaseEngine.format_currency(resultado)} (esperado R$0,00 ou valor reduzido). "
                 "Confirme se a exceção anula totalmente a multa."
             )
         return erros, avisos
@@ -91,28 +81,32 @@ def _verificar_item(item: dict, idx: int) -> tuple[list[str], list[str]]:
                 )
 
             if pct_urm is not None and abs(pct_urm - pct_esperado) > _TOLERANCIA_P:
-                erros.append(
+                msg = (
                     f"{prefixo}: percentual_urm={pct_urm}% incorreto para {area}m² "
                     f"(faixa '{label_esperado}' exige {pct_esperado}%). "
                     "Verifique a tabela do Art. 79 Lei 1.544/86."
                 )
+                erros.append(msg)
+                BaseEngine.log_report("ERR", msg, {"area": area, "pct_gem": pct_urm, "pct_esp": pct_esperado})
 
     # ── Verificação aritmética: area × valor_urm = resultado ─────────────────
     if area is not None and valor_urm is not None and resultado is not None:
         esperado  = round(area * valor_urm, 2)
         diferenca = abs(esperado - resultado)
         if diferenca > _TOLERANCIA_R:
-            erros.append(
+            msg = (
                 f"{prefixo}: Cálculo incorreto — "
-                f"{area}m² × R${valor_urm:.2f}/m² = R${esperado:.2f}, "
-                f"mas resultado_r$ = R${resultado:.2f} "
-                f"(diferença de R${diferenca:.2f}). "
+                f"{area}m² × {BaseEngine.format_currency(valor_urm)}/m² = {BaseEngine.format_currency(esperado)}, "
+                f"mas resultado_r$ = {BaseEngine.format_currency(resultado)} "
+                f"(diferença de {BaseEngine.format_currency(diferenca)}). "
                 "Corrija o valor antes de compilar."
             )
+            erros.append(msg)
+            BaseEngine.log_report("ERR", msg, {"esperado": esperado, "informado": resultado})
     elif area is not None and valor_urm is not None and resultado is None:
         avisos.append(
             f"{prefixo}: 'resultado_r$' ausente. "
-            f"Valor esperado: {area:.2f}m² × R${valor_urm:.2f}/m² = R${area * valor_urm:.2f}."
+            f"Valor esperado: {area:.2f}m² × {BaseEngine.format_currency(valor_urm)}/m² = {BaseEngine.format_currency(area * valor_urm)}."
         )
 
     return erros, avisos
@@ -146,10 +140,10 @@ def verificar(dados: dict) -> tuple[list[str], list[str], list[dict]]:
         e, a = _verificar_item(item, i)
         erros.extend(e)
         avisos.extend(a)
-        resultado = _num(item.get("resultado_r$") or item.get("resultado_rs")) or 0.0
+        resultado = BaseEngine.parse_number(item.get("resultado_r$") or item.get("resultado_rs")) or 0.0
         resumo.append({
             "base_legal":   item.get("base_legal", "?"),
-            "area_m2":      _num(item.get("area_m2")),
+            "area_m2":      BaseEngine.parse_number(item.get("area_m2")),
             "resultado_r$": resultado,
             "excecao":      item.get("excecao_aplicada"),
         })
@@ -172,14 +166,16 @@ def imprimir_relatorio(erros: list[str], avisos: list[str], resumo: list[dict]) 
         for r in resumo:
             exc_str  = f"  [EXCECAO: {r['excecao']}]" if r["excecao"] else ""
             area_str = f"{r['area_m2']}m²" if r["area_m2"] is not None else "?"
+            val_fmt  = BaseEngine.format_currency(r['resultado_r$'])
             print(
                 f"  {r['base_legal']:<35} "
                 f"{area_str:>8}  "
-                f"R$ {r['resultado_r$']:>8.2f}"
+                f"{val_fmt:>12}"
                 f"{exc_str}"
             )
         if len(resumo) > 1:
-            print(f"  {'TOTAL':>44}  R$ {total_geral:>8.2f}")
+            total_fmt = BaseEngine.format_currency(total_geral)
+            print(f"  {'TOTAL':>44}  {total_fmt:>12}")
 
     for e in erros:
         print(f"\n  [ERRO DE CÁLCULO] {e}")

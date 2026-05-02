@@ -12,6 +12,7 @@ ATENÇÃO: Verifique os valores de LIMITES_ZONA contra o texto da LC 267/2019.
 
 import re
 import json
+from base_engine import BaseEngine
 
 # ── Limites por zona urbanística (LC 267/2019 — confirmar com o texto da lei) ─
 # to_max : Taxa de Ocupação máxima (%)
@@ -41,17 +42,6 @@ _TIPOS_COM_INDICE = {
 
 
 # ── Utilitários ───────────────────────────────────────────────────────────────
-
-def _num(texto) -> float | None:
-    """Extrai float de strings como '86,23%', '180,00m²', '1,5'."""
-    if texto is None:
-        return None
-    limpo = re.sub(r"[^\d,.]", "", str(texto)).replace(",", ".")
-    try:
-        return float(limpo) if limpo else None
-    except ValueError:
-        return None
-
 
 def _normalizar_zona(z: str) -> str:
     """Normaliza sigla: remove espaços e zeros iniciais em números (ex: 'ZUR 02' → 'ZUR2')."""
@@ -116,19 +106,21 @@ def calcular(dados: dict) -> dict:
     resultado["limites"] = limites
 
     if not zona:
-        resultado["avisos"].append(
+        msg = (
             "Zona urbanística não identificada. Adicione 'zona_uso' ao JSON "
             "(ex: 'ZUR3', 'OCRE'). Usando limites genéricos: "
             f"TO<={_LIMITE_PADRAO['to_max']}%, CA<={_LIMITE_PADRAO['ca_max']}, "
             f"TP>={_LIMITE_PADRAO['tp_min']}%."
         )
+        resultado["avisos"].append(msg)
+        BaseEngine.log_report("WARN", msg, {"context": "identificacao_zona"})
 
     # ── Valores do Gem ────────────────────────────────────────────────────────
-    to_g  = _num(dados.get("taxa_ocupacao"))
-    tp_g  = _num(dados.get("taxa_permeabilidade"))
-    ca_g  = _num(dados.get("coef_aproveitamento"))
-    at_g  = _num(dados.get("area_terreno"))
-    ac_g  = _num(dados.get("area_total_construida"))
+    to_g  = BaseEngine.parse_number(dados.get("taxa_ocupacao"))
+    tp_g  = BaseEngine.parse_number(dados.get("taxa_permeabilidade"))
+    ca_g  = BaseEngine.parse_number(dados.get("coef_aproveitamento"))
+    at_g  = BaseEngine.parse_number(dados.get("area_terreno"))
+    ac_g  = BaseEngine.parse_number(dados.get("area_total_construida"))
 
     resultado["gem"] = {
         "to": to_g, "tp": tp_g, "ca": ca_g,
@@ -147,7 +139,7 @@ def calcular(dados: dict) -> dict:
     areas = dados.get("areas_matriz", [])
     if areas:
         total_calc = sum(
-            (_num(item.get("area_m2", 0)) or 0.0)
+            (BaseEngine.parse_number(item.get("area_m2", 0)) or 0.0)
             for item in areas
             if isinstance(item, dict)
         )
@@ -167,30 +159,42 @@ def calcular(dados: dict) -> dict:
     if not lote_pequeno:
         if to_g is not None:
             if to_g > limites["to_max"]:
-                resultado["erros"].append(
+                msg = (
                     f"TO EXCEDE O LIMITE: {to_g:.2f}% > {limites['to_max']}% "
                     f"(zona {resultado['zona']}). Verificar multa ou exceção."
                 )
+                resultado["erros"].append(msg)
+                BaseEngine.log_report("ERR", msg, {"to_gem": to_g, "to_lim": limites["to_max"], "zona": zona})
         else:
-            resultado["avisos"].append("'taxa_ocupacao' ausente — não foi possível validar TO.")
+            msg = "'taxa_ocupacao' ausente — não foi possível validar TO."
+            resultado["avisos"].append(msg)
+            BaseEngine.log_report("WARN", msg)
 
         if tp_g is not None:
             if tp_g < limites["tp_min"]:
-                resultado["erros"].append(
+                msg = (
                     f"TP ABAIXO DO MÍNIMO: {tp_g:.2f}% < {limites['tp_min']}% "
                     f"(zona {resultado['zona']}). Verificar multa ou exceção."
                 )
+                resultado["erros"].append(msg)
+                BaseEngine.log_report("ERR", msg, {"tp_gem": tp_g, "tp_lim": limites["tp_min"], "zona": zona})
         else:
-            resultado["avisos"].append("'taxa_permeabilidade' ausente — não foi possível validar TP.")
+            msg = "'taxa_permeabilidade' ausente — não foi possível validar TP."
+            resultado["avisos"].append(msg)
+            BaseEngine.log_report("WARN", msg)
 
     if ca_g is not None:
         if ca_g > limites["ca_max"]:
-            resultado["erros"].append(
+            msg = (
                 f"CA EXCEDE O LIMITE: {ca_g:.2f} > {limites['ca_max']} "
                 f"(zona {resultado['zona']}). Verificar multa ou exceção."
             )
+            resultado["erros"].append(msg)
+            BaseEngine.log_report("ERR", msg, {"ca_gem": ca_g, "ca_lim": limites["ca_max"], "zona": zona})
     else:
-        resultado["avisos"].append("'coef_aproveitamento' ausente — não foi possível validar CA.")
+        msg = "'coef_aproveitamento' ausente — não foi possível validar CA."
+        resultado["avisos"].append(msg)
+        BaseEngine.log_report("WARN", msg)
 
     # Divergência CA entre Gem e soma de areas_matriz
     ca_calc = resultado["areas_calc"].get("ca_calc")
