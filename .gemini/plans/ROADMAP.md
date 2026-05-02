@@ -17,17 +17,19 @@ This document outlines the phased execution plan.
 - **Requirements**: FR-01, NFR-01, NFR-02
 - **Status**: [complete] — 1/1 planos concluídos; constantes de pasta centralizadas em `config.py`; 5/5 testes passaram
 
-### Phase 4: Limpeza de Lógica Legada no Compilador
+### ✅ Phase 4: Limpeza de Lógica Legada no Compilador *(concluída 2026-05-02)*
 - **Goal**: Consolidar e remover o código de despacho de "tipos descritivos legados" em `compilador.py`. Toda lógica de mapeamento de tipos deve fluir exclusivamente via `config.TIPOS_DOCUMENTO`.
 - **Requirements**: FR-02, NFR-01
-- **Status**: [in_progress]
+- **Status**: [complete]
 - **Plans**:
-    - [ ] 04-01-PLAN.md — Limpeza e Consolidação de Tipos de Documento
+    - [x] 04-01-PLAN.md — Limpeza e Consolidação de Tipos de Documento
 
 ### Phase 5: Detector de Dessincronização de Templates
-- **Goal**: Criar `template_checker.py` que compara placeholders nos arquivos `.docx` de `0_Modelos_Prontos/` com os campos injetados pelos geradores, emitindo relatório de divergências.
+- **Goal**: Criar `template_checker.py` que compara placeholders e campos nos arquivos JSON de `0_Modelos_Prontos/` e `templates/` com os campos injetados/requisitados pelos geradores.
 - **Requirements**: FR-03, NFR-01
-- **Status**: [pending_planning]
+- **Status**: [planned]
+- **Plans**:
+    - [ ] 05-01-PLAN.md — Criação do Detector de Dessincronização
 
 ### Phase 6: Excelência Arquitetural e Inteligência Operacional
 - **Goal**: Elevar a qualidade arquitetural através da abstração de motores, sincronização dinâmica de schema e observabilidade via painel JSON-aware.
@@ -35,6 +37,11 @@ This document outlines the phased execution plan.
 - **Status**: [planned]
 - **Plans**:
     - [ ] 06-01-PLAN.md — Abstração de Motores e Sincronização de Schema
+
+### Phase 7: Integração de OCR de Alta Fidelidade (Gemini)
+- **Goal**: Implementar fluxo de entrada baseado no Gemini CLI para extração de dados de PDFs complexos, eliminando a dependência de extratores locais limitados.
+- **Requirements**: FR-05, NFR-01
+- **Status**: [planned]
 
 ---
 *Roadmap updated: 2026-05-02*
