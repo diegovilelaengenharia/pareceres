@@ -1,0 +1,47 @@
+{
+  "memoria_de_calculo": "PREENCHER: data da vistoria, fiscal responsável, área verificada. Registrar se há decadência aplicável.",
+
+  "tipo_relatorio": "habitese_comum",
+  "numero_processo": "⚠️ VERIFICAR — ex: 1234/2026",
+  "data_processo": "⚠️ VERIFICAR — ex: 23 de abril de 2026",
+  "assunto": "Habite-se — Conclusão de Obra ⚠️ VERIFICAR (residencial/comercial)",
+  "requerente": "⚠️ VERIFICAR — NOME COMPLETO EM MAIÚSCULAS",
+
+  "logradouro": "⚠️ VERIFICAR — Rua/Av., nº XXX",
+  "bairro": "⚠️ VERIFICAR",
+  "inscricao_municipal": "⚠️ VERIFICAR",
+  "profissional_nome": "Diego Tarcísio Nunes Vilela",
+
+  "data_vistoria": "⚠️ VERIFICAR — ex: 15 de abril de 2026",
+  "fiscal_responsavel": "⚠️ VERIFICAR — Nome do Fiscal, Mat. XXXXXXX",
+
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, no exercício de suas atribuições legais, **emite o presente parecer técnico** relativo à solicitação de Habite-se de edificação concluída, conforme segue:",
+
+  "considerandos": [
+    "⚠️ VERIFICAR — identificar o alvará de construção de origem (nº, data, processo);",
+    "⚠️ VERIFICAR — descrever a vistoria realizada: fiscal, data, área verificada, pavimentos;",
+    "⚠️ VERIFICAR — confirmar que a obra está concluída e conforme o projeto aprovado;",
+    "⚠️ VERIFICAR — informar ART de execução (nº, profissional, CREA/CAU);",
+    "⚠️ VERIFICAR — confirmar recolhimento da taxa de Habite-se."
+  ],
+
+  "fundamentacao_legal": [
+    "__Art. 9º da Lei Municipal nº 1.544/86 (Código de Obras)__: ⚠️ VERIFICAR — art. que fundamenta a emissão do Habite-se.",
+    "__Decreto Municipal nº 4.149/2019__: Requisitos procedimentais de documentação e taxas cumpridos."
+  ],
+
+  "conclusao": "Diante do exposto, visto que a edificação encontra-se concluída e conforme o projeto aprovado, com todas as exigências legais atendidas, profiro parecer técnico **FAVORÁVEL** à emissão do Habite-se.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Habite-se — ⚠️ VERIFICAR (área total e tipo de uso)",
+      "obs": "⚠️ VERIFICAR — mencionar condições especiais, se houver."
+    }
+  ],
+
+  "extras_extraidos": {
+    "alvara_anterior": "⚠️ VERIFICAR — Alvará nº XXX/AAAA",
+    "art_rrt_numero": "⚠️ VERIFICAR",
+    "valores_pagos": [{"descricao": "Taxa de Habite-se", "valor": "R$ ⚠️ VERIFICAR"}]
+  }
+}

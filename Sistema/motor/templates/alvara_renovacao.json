@@ -1,0 +1,48 @@
+{
+    "tipo_relatorio": "alvara_renovacao",
+    "titulo_documento": "PARECER SETOR TÉCNICO - SMOSU",
+    "categoria": "parecer_simples",
+    "descricao": "Renovação (prorrogação) de Alvará de Construção por 180 dias",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "requerente",
+        "numero_alvara",
+        "area_liberada",
+        "logradouro",
+        "considerandos"
+    ],
+    "campos_opcionais": [
+        "bairro",
+        "status_obra",
+        "data_vencimento_alvara",
+        "matricula_sri",
+        "inscricao_municipal",
+        "processo_aprovacao_origem",
+        "area_ja_averbada",
+        "area_acrescimo_renovacao",
+        "retificar_alvara",
+        "documentos_emitir"
+    ],
+    "descricao_campos_opcionais": {
+        "status_obra": "Status da obra conforme parecer fiscal (ex: 'em fase de execução', 'fundações concluídas')",
+        "data_vencimento_alvara": "Data de vencimento do alvará original",
+        "processo_aprovacao_origem": "Processo original que aprovou o projeto (ex: 18988/2019)",
+        "area_ja_averbada": "Área já averbada no SRI constante na matrícula (ex: 51,70m²) — quando o alvará precisa ser retificado para discriminar área existente + acréscimo",
+        "area_acrescimo_renovacao": "Área complementar (nova) que está sendo construída além da já averbada (ex: 70,03m²)",
+        "retificar_alvara": "true — quando o alvará deve ser RETIFICADO antes da renovação para constar corretamente a área existente averbada e o acréscimo separadamente"
+    },
+    "assunto_padrao": "Renovação de Alvará de Construção",
+    "modelo_considerandos": [
+        "[OBRIGATÓRIO] a solicitação do requerente;",
+        "[OBRIGATÓRIO] o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº [numero_alvara], com área liberada de [area_liberada], não foi concluída, encontrando-se [status_obra] no imóvel localizado na [logradouro], bairro [bairro], em Oliveira/MG."
+    ],
+    "modelo_conclusao": "Diante disto, poderá ser expedida a renovação do Alvará de Construção por 180 dias, conforme Lei nº 1.544/86. Constar no campo de observação: \"Alvará prorrogado por 180 dias, com data de validade a contar do deferimento\".",
+    "documentos_tipicos": [
+        {
+            "tipo": "Renovação do Alvará de Construção nº [numero_alvara] — [area_liberada]",
+            "obs": "Alvará prorrogado por 180 dias, com data de validade a contar do deferimento."
+        }
+    ],
+    "nota_obrigatoria_gem": "ATENÇÃO: Não renovar alvará caduco cuja obra não foi iniciada (fundações não concluídas), conforme Ação Civil Pública nº 5002141-25.2021.8.13.0456. Neste caso, emitir comunicado_indeferimento."
+}

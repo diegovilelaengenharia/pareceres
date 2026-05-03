@@ -1,0 +1,88 @@
+{
+  "_comentario": "GABARITO — baseado no processo real 545/2026. Use como few-shot: os campos ⚠️ devem ser preenchidos para cada processo novo.",
+
+  "memoria_de_calculo": "Área terreno: 360,00m². Área projeção: 227,96m². TO = 227,96/360,00×100 = 63,32% (limite ZUR03: 70% ✓). CA = 254,13/360,00 = 0,706 (limite ZUR03: 3,5 ✓). Área permeável: 74,14m². TP = 74,14/360,00×100 = 20,59% (mínimo ZUR03: 20% ✓). Área total: 254,13m². Já regularizada (AV-5/1999): 69,00m². Complementar sem licença: 254,13−69,00 = 185,13m². Decadência: planta cadastral Ago/2002 atesta 99,08m² existentes (>5 anos, Art. 150 §4º CTN). Multa Art. 79 incide sobre: 185,13−99,08 = 86,05m² (parcela não alcançada pela decadência).",
+
+  "tipo_relatorio": "alvara_regularizacao",
+  "numero_processo": "545/2026",
+  "data_processo": "15 de janeiro de 2026",
+  "assunto": "Regularização de Edificação (Habite-se e Averbação)",
+  "requerente": "NEILOR NELSON DE OLIVEIRA VIDAL",
+
+  "logradouro": "Rua Quinze de Novembro, nº 720",
+  "bairro": "Do Rosário",
+  "inscricao_municipal": "01.03.119.0276.001",
+  "proprietario": "Neilor Nelson de Oliveira Vidal",
+  "desenhista": "Diego Tarcísio Nunes Vilela",
+  "lote": "17",
+  "quadra": "40",
+  "area_terreno": "360,00m²",
+  "area_total_construida": "254,13m²",
+  "area_projecao": "227,96m²",
+  "taxa_ocupacao": "63,32%",
+  "coef_aproveitamento": "0,706",
+  "taxa_permeabilidade": "20,59%",
+  "area_permeavel": "74,14m²",
+  "zona_uso": "ZUR03",
+  "profissional_nome": "Diego Tarcísio Nunes Vilela",
+
+  "area_ja_regularizada": "69,00m²",
+  "area_complementar": "185,13m²",
+  "area_decadencia": "99,08m²",
+  "data_referencia_decadencia": "Agosto de 2002 (Planta Cadastral Municipal)",
+
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face deste Processo Administrativo nº 545/2026, onde o requerente Neilor Nelson de Oliveira Vidal solicita a regularização de obra (Habite-se e Averbação) para edificação residencial com área total construída de 254,13m², composto por terreno de 360,00m² (composto de 01 matrícula), taxa de ocupação de 63,32% (área de projeção de 227,96m²), taxa de permeabilidade de 20,59% (área permeável de 74,14m²). Localizado no zoneamento ZUR03 na Rua Quinze de Novembro, nº 720, Bairro Do Rosário, onde de acordo com o parecer fiscal emitido por Wallace Alencar Martins Silveira e Marlei Henrique de Oliveira, a construção se encontra finalizada, habitável e confere com o projeto As-Built apresentado.",
+
+  "considerandos": [
+    "Que o requerente apresentou Título de Propriedade com MATRÍCULA DE INTEIRO TEOR sob nº 11.769 (Lote 17, Quadra 40, com área de 360,00m²) e Inscrição Cadastral 01.03.119.0276.001, comprovando a regularidade dominial do imóvel, conforme exigido pelo Art. 1º do Decreto Municipal nº 4.149/2019.",
+    "Que para o projeto As-Built e Laudo Técnico (Data: 08/01/2026), foi emitido o Termo de Responsabilidade Técnica TRT nº CFT2605342989 pelo profissional Wdson Willian de Oliveira Belmiro, atendendo ao requisito de responsabilidade técnica previsto no Art. 48 da Lei Municipal nº 1.544/86.",
+    "Que o imóvel está inserido no Zoneamento ZUR03, sendo verificados os índices urbanísticos conforme Tabela 1 do Art. 9º da LC 267/2019: Taxa de Ocupação de 63,32% (= 227,96/360,00×100) abaixo do limite de 70%; Coeficiente de Aproveitamento de 0,706 (= 254,13/360,00) abaixo do limite de 3,5; Taxa de Permeabilidade de 20,59% (= 74,14/360,00×100) acima do mínimo de 20%.",
+    "Que a análise documental demonstra que o imóvel possui área existente já regularizada de 69,00m², conforme Averbação AV-5 de 07/05/1999 na Matrícula nº 11.769. A área total constatada no projeto As-Built é de 254,13m², resultando em área complementar edificada sem licença prévia de 185,13m² (= 254,13 − 69,00), sobre a qual incidem as sanções previstas no Art. 79 da Lei nº 1.544/86 e Arts. 38-39 da LC nº 267/2019.",
+    "Que, nos termos do Art. 150, §4º do Código Tributário Nacional (decadência administrativa), a Planta Cadastral Municipal datada de Agosto de 2002 atesta a existência consolidada de 99,08m² de área construída no lote há mais de 5 (cinco) anos sem autuação fiscal, configurando a decadência do direito de lançamento das penalidades para esta parcela, a qual será objeto de Certidão de Decadência específica."
+  ],
+
+  "fundamentacao_legal": [
+    "__Lei Complementar nº 267/2019 (Uso e Ocupação do Solo)__, Art. 9º, Tabela 1 — parâmetros urbanísticos ZUR03 (TO máx. 70%, CA máx. 3,5, TP mín. 20%); Arts. 38 e 39 — penalidades por edificação sem alvará.",
+    "__Lei Municipal nº 1.544/86 (Código de Obras)__, Art. 79 — multa por construção sem alvará, escalonada por área (1% a 5% da URM/m²); Art. 48 — obrigatoriedade de responsabilidade técnica.",
+    "__Decreto Municipal nº 4.149/2019__ — procedimentos e documentação para regularização.",
+    "__Código Tributário Nacional, Art. 150, §4º__ — decadência do direito de lançamento por inércia fiscal superior a 5 anos."
+  ],
+
+  "conclusao": "Diante do exposto, aprovado e verificado o projeto As-Built e as considerações do parecer fiscal, tendo sido sanadas as pendências documentais, profiro parecer técnico **FAVORÁVEL** à regularização, com emissão dos documentos relacionados abaixo.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Alvará de Regularização — 254,13m²",
+      "obs": "Alvará emitido para regularização de imóvel edificado sem projeto aprovado pela prefeitura, referente à área existente de 69,00m² e à área complementar de 185,13m², mediante o cumprimento do Art. 79 da Lei nº 1.544/1986 e Arts. 38 e 39 da Lei Complementar nº 267/2019."
+    },
+    {
+      "tipo": "Certidão de Decadência — 99,08m²",
+      "obs": "Conforme Averbação AV-5 (Matrícula 11.769, Maio/1999) e Planta Cadastral Municipal de Agosto/2002, atesta-se a existência consolidada de 99,08m² de área construída no lote, garantindo a decadência para esta parcela nos termos do Art. 150, §4º do CTN."
+    },
+    {
+      "tipo": "Carta de Habite-se — 254,13m²",
+      "obs": "Referente à área total construída de 254,13m², conforme projeto As-Built aprovado."
+    },
+    {
+      "tipo": "Carta de Averbação — 185,13m²",
+      "obs": "Referente exclusivamente à área complementar de 185,13m² (= 254,13 − 69,00m² já averbada via AV-5/1999)."
+    }
+  ],
+
+  "extras_extraidos": {
+    "matricula_numero": "11.769",
+    "trt_numero": "CFT2605342989",
+    "profissional_responsavel": "Wdson Willian de Oliveira Belmiro",
+    "fiscal_vistoriador": "Wallace Alencar Martins Silveira e Marlei Henrique de Oliveira",
+    "situacao_obra": "finalizada, habitável, confere com As-Built",
+    "data_laudo_asbuilt": "08/01/2026"
+  },
+
+  "historico_cronologico": [
+    {"data": "07/05/1999", "evento": "Averbação AV-5 — 69,00m² regularizados na Matrícula 11.769"},
+    {"data": "Agosto/2002", "evento": "Planta Cadastral Municipal registra 99,08m² no lote (base da decadência)"},
+    {"data": "15/01/2026", "evento": "Abertura do Processo 545/2026 — solicitação de regularização"},
+    {"data": "08/01/2026", "evento": "Emissão do TRT CFT2605342989 para o projeto As-Built"},
+    {"data": "03/03/2025", "evento": "Emissão do Parecer Técnico favorável"}
+  ]
+}

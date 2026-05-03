@@ -1,0 +1,9 @@
+{
+  "tipo_relatorio": "alvara_regularizacao",
+  "numero_processo": "123/2026",
+  "requerente": "Fulano de Tal",
+  "paragrafo_abertura": "Texto",
+  "considerandos": ["item 1"],
+  "conclusao": "Fim",
+  "chave_inexistente_xyz": "valor"
+}

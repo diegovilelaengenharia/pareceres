@@ -1,0 +1,69 @@
+{
+    "tipo_relatorio": "alvara_regularizacao",
+    "numero_processo": "6100",
+    "data_processo": "15 de julho de 2025",
+    "assunto": "Regularização de Obra — Habite-se, Averbação e Certidão de Decadência",
+    "requerente": "Maria Aparecida Silva Vasconcelos",
+    
+    "_SECAO_DADOS_CARIMBO": "=== DADOS TÉCNICOS DO DECRETO 4.149/2019 ===",
+    "logradouro": "Rua Coronel Teodorinho, nº 15",
+    "bairro": "Acácio Ribeiro",
+    "inscricao_municipal": "01.01.048.0038.001",
+    "proprietario": "Maria Aparecida Silva Vasconcelos",
+    "desenhista": "Diego Tarcísio Nunes Vilela",
+    "lote": "-",
+    "quadra": "-",
+    "area_terreno": "180,00m²",
+    "area_total_construida": "154,08m²",
+    "taxa_ocupacao": "86,23%",
+    "coef_aproveitamento": "0,85",
+    "taxa_permeabilidade": "5,95%",
+    "profissional_nome": "Diego Tarcísio Nunes Vilela",
+
+    "_SECAO_CORPO": "=== CORPO DO PARECER ===",
+    "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, no uso de suas atribuições legais, **emite o presente parecer técnico** conforme segue:",
+    
+    "considerandos": [
+        "a requerente é proprietária do imóvel registrado sob **Matrícula nº 24.239** do Serviço Registral de Imóveis (SRI), com área de terreno de **180,00m²** e testada de **15,00m**, situado na Rua Coronel Teodorinho, nº 15, Bairro Acácio Ribeiro, Oliveira/MG, com Inscrição Cadastral 01.01.048.0038.001, no qual não constava averbação da totalidade da área construída;",
+        "a edificação residencial unifamiliar possui **82,58m²** regularizados por **Habite-se nº 928/2010**, datado de 06/01/2010, expedido pelo Processo nº 4620/2010, comprovando a decadência desta área, construída há mais de 05 (cinco) anos, nos termos do Art. 150, § 4º do Código Tributário Nacional;",
+        "o parecer fiscal emitido pelos Agentes **Marlei Henrique de Oliveira**, Matrícula 3087661-8, e **Rogério Firmino Barros**, Matrícula 30880745-1, em 29/09/2025, atesta que a área construída total de **154,08m²** — distribuída em dois pavimentos, sendo o inferior com 28,01m² e o superior com 126,07m² — confere com o Projeto As Built apresentado, com Coeficiente de Aproveitamento (CA) de **0,85**, Taxa de Ocupação (TO) de **86,23%** e taxa de permeabilidade de **5,95%**, declarando a edificação finalizada e habitável;",
+        "para o projeto foi emitida a Anotação de Responsabilidade Técnica (ART) **nº MG20254298386** para as atividades de elaboração do Projeto As Built e Laudo Técnico de Estabilidade e Segurança da Edificação, pelo Engenheiro Civil **Diego Tarcísio Nunes Vilela**, CREA/MG 235.474/D, cujo laudo técnico atesta condições adequadas de segurança, estabilidade e salubridade da edificação, em conformidade com a ABNT NBR 14.645:2001;",
+        "para a análise técnica, foram observadas as legislações municipais vigentes, em especial a **Lei nº 1.544/86** (Código de Obras) e a **Lei nº 267/2019** (Lei de Uso e Ocupação do Solo), sendo aplicado o Art. 15 desta última, que prevê o reconhecimento de edificações com ocupação existente anterior à sua publicação; e que o imóvel está inserido na zona **ZUR 3**, conforme classificação da Lei Complementar nº 267/2019;",
+        "consta no projeto a existência de abertura (janela) posicionada a distância inferior a 1,50m da divisa, em desconformidade com o Art. 43 da Lei nº 1.544/86; contudo, foi apresentado e aceito **Termo de Anuência** devidamente assinado pelo proprietário do imóvel confrontante, autorizando a permanência da abertura, em conformidade com o Art. 1.301 do Código Civil;",
+        "a requerente comprovou o recolhimento de todas as taxas e multas exigidas no Comunicado emitido em 14/11/2025, conforme guias de pagamento DAM apresentadas em 04/12/2025, a saber: Taxa de Habite-se (R$ 81,20), Taxa de Aprovação de Projeto referente a 71,50m² (R$ 306,02), Multa por construir sem licença — 71,50m², Art. 79, Lei nº 1.544/86 (R$ 193,77) — e Multa por quebra de parâmetros urbanísticos — 54,50m², Arts. 38 e 39, Lei nº 267/2019 (R$ 700,33) — totalizando **R$ 1.281,32** em regularizações fiscais."
+    ],
+
+    "_SECAO_FUNDAMENTACAO": "=== ANÁLISE LEGAL E TÉCNICA ===",
+    "fundamentacao_legal": [
+        "**Art. 150, § 4º do Código Tributário Nacional (CTN):** Aplica-se ao caso para fins de reconhecimento da decadência da área de 82,58m², construída há mais de 5 anos.",
+        "**Art. 79 da Lei nº 1.544/86 e Arts. 38 e 39 da Lei nº 267/2019:** Fundamentam a emissão do Alvará de Construção para fins de regularização das áreas de acréscimo e aplicação de multas por infração de parâmetros urbanísticos.",
+        "**Art. 43 da Lei nº 1.544/86 c/c Art. 1.301 do Código Civil:** Resguardado mediante apresentação de Termo de Anuência assinado pelo confrontante para a manutenção de abertura a menos de 1,50m da divisa."
+    ],
+
+    "_SECAO_CONCLUSAO_EMISSAO": "=== CONCLUSÃO ===",
+    "conclusao": "Diante do exposto, visto que a requerente sanou todas as pendências apontadas, apresentou documentação técnica completa e comprovou o recolhimento das taxas e multas devidas, conclui-se que a regularização da edificação atende aos requisitos técnicos e legais aplicáveis, podendo ser emitidos os seguintes documentos:",
+    "paragrafo_emissao": "Após a aprovação deste parecer, os documentos acima relacionados serão emitidos pelos funcionários responsáveis pelo **Setor de Emissão de Documentos** e, posteriormente, ficarão disponíveis para retirada no **Guichê de Entrega de Documentos** da Prefeitura Municipal de Oliveira, bem como no **Sistema Digital da IPM**.",
+    
+    "_SECAO_DOCUMENTOS": "=== DOCUMENTOS A EMITIR ===",
+    "documentos_emitir": [
+        {
+            "tipo": "Alvará de Construção nº 313/2025 — regularização de edificação residencial unifamiliar com área total de 154,08m²",
+            "obs": "Alvará emitido para fins de regularização do acréscimo de 71,50m² construído sem licença da Prefeitura, mediante cumprimento do Art. 79 da Lei nº 1.544/86 e Arts. 38 e 39 da Lei nº 267/2019, sendo que 82,58m² já se encontravam regularizados pelo Habite-se nº 928/2010."
+        },
+        {
+            "tipo": "Habite-se Total nº 273/2025 — área total construída de 154,08m² (existente 82,58m² + acréscimo 71,50m²)"
+        },
+        {
+            "tipo": "Certidão de Decadência — 82,58m²",
+            "obs": "Comprovados pelo Habite-se nº 928/2010, datado de 06/01/2010, para fins de comprovação perante a Receita Federal do Brasil, nos termos do Art. 150, § 4º do CTN."
+        },
+        {
+            "tipo": "2ª Via do Habite-se nº 928/2010",
+            "obs": "Para arquivo da requerente, referente ao processo nº 4620/2010."
+        },
+        {
+            "tipo": "Certidão de Averbação — imóvel residencial com 154,08m² construídos",
+            "obs": "Valor total do imóvel de R$ 265.163,44 (duzentos e sessenta e cinco mil, cento e sessenta e três reais e quarenta e quatro centavos), conforme Laudo de Avaliação da Comissão de Avaliação da Prefeitura Municipal de Oliveira, datado de 15/12/2025; Alvará de Construção: 09/12/2025; Data do Habite-se: 10/12/2025."
+        }
+    ]
+}

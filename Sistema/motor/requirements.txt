@@ -1,0 +1,9 @@
+python-docx
+colorama
+jinja2
+google-generativeai
+anthropic
+pdfplumber
+pypdf
+docling
+rapidocr-onnxruntime

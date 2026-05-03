@@ -1,0 +1,22 @@
+{
+    "tipo_relatorio": "parecer_juridico",
+    "titulo_documento": "PARECER TÉCNICO – SMOSU",
+    "categoria": "oficio",
+    "descricao": "Parecer para o Setor Jurídico (usucapião, retificação, etc.)",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "requerente",
+        "destinatario_para",
+        "assunto",
+        "considerandos"
+    ],
+    "modelo_destinatario": {
+        "destinatario_titulo": "AO SETOR JURÍDICO",
+        "destinatario_para": "Setor Jurídico",
+        "destinatario_de": "Setor Técnico - SMOSU"
+    },
+    "modelo_abertura": "Em resposta ao memorando nº [Número]/[Ano], a Secretaria Municipal de Obras e Serviços Urbanos (SMOSU), por meio de seu Departamento Técnico, vem prestar esclarecimentos acerca do processo supracitado.",
+    "modelo_considerandos": [
+        "Após a análise do levantamento planimétrico, do memorial descritivo e da ART/RRT nº [Número], elaborados por [Nome do Profissional], constatou-se que a área em questão, localizada em [Endereço], com [Área] m², NÃO FERE os interesses do Município, não apresentando qualquer inconveniência ou interferência nas áreas e patrimônios públicos municipais."
+    ]
+}

@@ -1,0 +1,12 @@
+{
+  "general": {
+    "plan": {
+      "directory": ".gemini/plans"
+    }
+  },
+  "permissions": {
+    "allow": [
+      "Bash(*)"
+    ]
+  }
+}

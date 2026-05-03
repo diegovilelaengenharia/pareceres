@@ -1,0 +1,30 @@
+{
+  "memoria_de_calculo": "PREENCHER: descrever o motivo do encaminhamento à Secretaria de Meio Ambiente / CODEMA. Indicar o que foi constatado em campo.",
+
+  "tipo_relatorio": "oficio_meio_ambiente",
+  "numero_processo": "⚠️ VERIFICAR — ex: 1234/2026",
+  "data_processo": "⚠️ VERIFICAR — ex: 23 de abril de 2026",
+  "assunto": "Encaminhamento para Análise Ambiental — ⚠️ VERIFICAR (motivo: APP / Curso d'água / Vegetação)",
+  "numero_oficio": "⚠️ VERIFICAR — Ofício nº XXX/2026",
+
+  "destinatario_titulo": "SECRETARIA MUNICIPAL DE MEIO AMBIENTE",
+  "destinatario_para": "⚠️ VERIFICAR — Nome do Secretário / Responsável",
+  "destinatario_de": "Diego Tarcísio Nunes Vilela — Engenheiro Civil, CREA 235.474/D — SMOSU",
+
+  "considerandos": [
+    "⚠️ VERIFICAR — identificar o processo e o requerente (nome, endereço, inscrição cadastral);",
+    "⚠️ VERIFICAR — descrever a constatação que motivou o encaminhamento: presença de APP, curso d'água, vegetação de preservação, etc.;",
+    "⚠️ VERIFICAR — descrever a solicitação feita pelo requerente (construção, regularização, ampliação, etc.);",
+    "⚠️ VERIFICAR — mencionar se há norma ambiental aplicável identificada: Lei nº 3.971/2023, CONAMA 303, etc."
+  ],
+
+  "conclusao": "Diante do exposto, encaminha-se o processo à **Secretaria Municipal de Meio Ambiente** para análise e emissão de **⚠️ VERIFICAR (Licença Ambiental / Parecer Técnico Ambiental / Autorização de Supressão)**, condicionando-se o prosseguimento da análise urbanística ao pronunciamento ambiental competente.",
+
+  "documentos_emitir": [],
+
+  "extras_extraidos": {
+    "matricula_numero": "⚠️ VERIFICAR",
+    "observacoes_fiscais": "⚠️ VERIFICAR — relato das constatações de campo, se houver",
+    "outros": "⚠️ VERIFICAR — legislação ambiental específica identificada"
+  }
+}

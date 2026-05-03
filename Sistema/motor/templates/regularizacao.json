@@ -1,0 +1,7 @@
+{
+    "tipo_relatorio": "regularizacao",
+    "titulo_documento": "PARECER SETOR TÉCNICO - SMOSU",
+    "categoria": "parecer_tecnico",
+    "descricao": "Alias para alvara_regularizacao — mantido para compatibilidade com JSONs anteriores",
+    "alias_de": "alvara_regularizacao"
+}

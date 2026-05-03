@@ -1,0 +1,22 @@
+{
+    "tipo_relatorio": "certidao_averbacao_decadencia",
+    "numero_processo": "TESTE-003/2026",
+    "data_processo": "22 de abril de 2026",
+    "assunto": "Certidão de Averbação por Decadência Administrativa — Teste de Regressão",
+    "requerente": "BELTRANA OLIVEIRA TESTE",
+    "logradouro": "Av. Brasil, 500",
+    "bairro": "Santo Antônio",
+    "area_terreno": "180,00m²",
+    "area_total_construida": "90,00m²",
+    "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos (SMOSU) certifica, para os devidos fins de **averbação cartorária**, a ocorrência da decadência administrativa sobre a edificação sita na **Av. Brasil, nº 500**, Bairro Santo Antônio. Este é um **caso de teste de regressão** do Motor GEM para verificação do gerador de parecer simples.",
+    "considerandos": [
+        "a edificação em questão apresenta evidências robustas de conclusão há mais de **5 (cinco) anos** ininterruptos, constatadas por meio de imagens de aerofotogrametria do acervo municipal e declarações de confrontantes;",
+        "aplica-se ao caso a __decadência administrativa prevista no Art. 150, §4º da Lei nº 5.172/1966 (CTN)__, que afasta a cobrança de multas sobre a área edificada há mais de 5 anos, no total de **90,00m²**;",
+        "o terreno possui área de **180,00m²**, inferior ao limite de **220,00m²**, configurando a isenção de afastamentos prevista no __§13 do Art. 9º da Lei Complementar nº 267/2019__."
+    ],
+    "fundamentacao_legal": [
+        "__Art. 150, §4º do Código Tributário Nacional (Lei nº 5.172/1966)__: Se a lei não fixar prazo à homologação, será ele de 5 (cinco) anos, a contar da ocorrência do fato gerador. Transcorrido esse prazo sem que a Fazenda Pública se tenha pronunciado, considera-se homologado o lançamento e definitivamente extinto o crédito. Aplicado por analogia administrativa, afasta penalidades sobre área edificada há mais de 5 anos.",
+        "__§13 do Art. 9º da Lei Complementar nº 267/2019__: Lote com área igual ou inferior a 220m² aplica afastamentos do Código Civil (Arts. 1.299 a 1.301) em substituição aos parâmetros da zona, isentando-o das restrições de afastamento frontal, lateral e de fundo."
+    ],
+    "conclusao": "Certifica-se a **decadência administrativa** sobre os **90,00m²** da edificação, ficando autorizada a averbação no Cartório de Registro de Imóveis competente. **[TESTE DE REGRESSÃO — documento gerado automaticamente para verificação do engine]**"
+}

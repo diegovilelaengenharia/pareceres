@@ -1,0 +1,17 @@
+{
+    "tipo_relatorio": "comunicado_pendencia",
+    "numero_processo": "10654/2025",
+    "data_processo": "25/11/2025",
+    "assunto": "COMUNICADO DE PENDÊNCIA — REGULARIZAÇÃO E DOCUMENTAÇÃO",
+    "requerente": "JOÃO BATISTA DA COSTA",
+
+    "paragrafo_abertura": "O Departamento Técnico da Secretaria Municipal de Obras e Serviços Urbanos (SMOSU) analisou a documentação juntada ao processo de regularização 'As Built' da edificação situada na Rua Dorvelino de Paula Pereira, nº 93, Bairro Domingos Ribeiro. A análise técnica encontra-se suspensa devido às seguintes pendências:",
+
+    "considerandos": [
+        "**Multas Urbanísticas Acumulativas:** O imóvel apresenta extrapolação de índices construtivos, exigindo o recolhimento das multas previstas na LC 267/2019 de forma cumulativa: Excesso de Ocupação (27,62m²) e Déficit de Permeabilidade (9,78m²).",
+        "**Arquivo Digital:** Enviar o PDF do Projeto através do sistema digital (Atende.Net).",
+        "**Cópia do Projeto:** Entregar 01 (uma) cópia física impressa do projeto 'As Built' no balcão da Prefeitura."
+    ],
+
+    "conclusao": "O processo permanecerá suspenso até a regularização das pendências listadas. Após o recolhimento das multas e apresentação dos documentos, a análise será retomada para emissão do Alvará de Regularização e Carta de Habite-se."
+}

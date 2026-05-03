@@ -1,0 +1,53 @@
+{
+    "tipo_relatorio": "habitese_condominio",
+    "titulo_documento": "PARECER SETOR TÉCNICO – SMOSU",
+    "categoria": "parecer_simples",
+    "descricao": "Habite-se e Averbação com Convenção de Condomínio — múltiplos requerentes e matrículas individuais",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "requerente",
+        "logradouro",
+        "numero_alvara",
+        "area_total_construida",
+        "inscricao_municipal",
+        "considerandos"
+    ],
+    "campos_opcionais": [
+        "processo_aprovacao_origem",
+        "numero_alvara_origem",
+        "matriculas_individuais",
+        "encaminhar_comissao_avaliacao",
+        "agente_fiscal",
+        "data_parecer_fiscal",
+        "documentos_emitir"
+    ],
+    "descricao_campos_opcionais": {
+        "processo_aprovacao_origem": "Processo que originou o alvará (ex: 425/2024 — processo apenso)",
+        "numero_alvara_origem": "Número do alvará de construção que licenciou a obra (ex: 253/2021)",
+        "matriculas_individuais": "Array com as matrículas individuais de cada unidade do condomínio. Ex: ['Matrícula 37001 — Unidade 101', 'Matrícula 37002 — Unidade 102']",
+        "encaminhar_comissao_avaliacao": "true — encaminhar à Comissão de Avaliação para elaboração do laudo necessário à averbação",
+        "agente_fiscal": "Nome e matrícula do agente fiscal que certificou a obra",
+        "data_parecer_fiscal": "Data do parecer fiscal"
+    },
+    "assunto_padrao": "Habite-se e Averbação",
+    "nota_obrigatoria_gem": "Este tipo é usado quando o imóvel é um CONDOMÍNIO com convenção registrada e múltiplas matrículas individuais. Os requerentes são múltiplos ('Edvaldo Lara Coelho e Outros'). A averbação deve constar o número individual de cada matrícula conforme convenção de condomínio.",
+    "modelo_considerandos": [
+        "[OBRIGATÓRIO] o requerimento em anexo;",
+        "[OBRIGATÓRIO] o título de propriedade em nome dos requerentes e registro de instituição de condomínio individualizados, Inscrição Cadastral [inscricao_municipal];",
+        "[SE processo_aprovacao_origem] os processos apensos, no qual o processo [processo_aprovacao_origem] originou o Alvará de Construção nº [numero_alvara_origem] em nome do requerente, com área de [area_total_construida], no endereço [logradouro];",
+        "[OBRIGATÓRIO] o parecer fiscal que certifica que a edificação confere com o projeto aprovado, estando habitável;",
+        "[SE encaminhar_comissao_avaliacao] este processo deverá ser encaminhado à Comissão de Avaliação para elaboração do laudo de avaliação, necessário para a emissão da Certidão de Averbação."
+    ],
+    "modelo_conclusao": "Diante disto, poderá ser emitido o Habite-se total do alvará em nome dos requerentes. Emitir Averbação conforme registro da convenção de condomínio anexo, constando o número individual de cada matrícula.",
+    "documentos_tipicos": [
+        {
+            "tipo": "Carta de Habite-se Total — área de [area_total_construida]",
+            "obs": "Habite-se emitido em nome dos requerentes ([requerente]), referente ao Alvará de Construção nº [numero_alvara], área total de [area_total_construida]."
+        },
+        {
+            "tipo": "Certidão de Averbação — conforme convenção de condomínio",
+            "obs": "Emitir averbação conforme registro da convenção de condomínio anexo, constando o número individual de cada matrícula. Encaminhar à Comissão de Avaliação para laudo."
+        }
+    ]
+}

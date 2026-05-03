@@ -1,0 +1,38 @@
+{
+    "tipo_relatorio": "alvara_reforma_demolicao_ampliacao",
+    "numero_processo": "TESTE-002/2026",
+    "data_processo": "22 de abril de 2026",
+    "assunto": "Alvará de Reforma e Ampliação — Teste de Regressão",
+    "requerente": "FULANO DA SILVA TESTE",
+    "logradouro": "Rua das Acácias, 100",
+    "bairro": "Centro",
+    "inscricao_municipal": "00.00.000.0000.000",
+    "proprietario": "FULANO DA SILVA TESTE",
+    "lote": "001",
+    "quadra": "001",
+    "area_terreno": "300,00m²",
+    "area_total_construida": "150,00m²",
+    "taxa_ocupacao": "50,00%",
+    "coef_aproveitamento": "0,50",
+    "taxa_permeabilidade": "25,00%",
+    "profissional_nome": "ENGENHEIRO TESTE DA SILVA",
+    "paragrafo_abertura": "O presente processo documenta o requerimento de aprovação de projeto de reforma e ampliação de edificação residencial unifamiliar situada no **Centro** do Município. Este é um **caso de teste de regressão** do Motor GEM, destinado a verificar se o engine de compilação continua gerando o documento corretamente após alterações no código.",
+    "considerandos": [
+        "a documentação apresentada encontra-se completa, com matrícula do imóvel (**Matrícula nº 00.001**), ART de projeto (**ART 000001**) e ART de execução (**ART 000002**) devidamente registradas, e comprovante de recolhimento de taxa municipal no valor de **R$ 500,00**;",
+        "o terreno possui área de **300,00m²**, superior ao limite de **220,00m²**, de modo que não se aplica a isenção do __§13 do Art. 9º da Lei Complementar nº 267/2019__, submetendo-se o projeto à verificação integral dos parâmetros da zona;",
+        "o projeto respeita integralmente os parâmetros urbanísticos da zona, com **Taxa de Ocupação de 50,00%** (máximo permitido: 70%) e **Taxa de Permeabilidade de 25,00%** (mínimo exigido: 20%), ambos conformes com a __Lei Complementar nº 267/2019__;",
+        "nenhuma infração foi constatada — a obra ainda não foi iniciada —, não incidindo multas ou penalidades nos termos do __Art. 79 da Lei nº 1.544/86__."
+    ],
+    "fundamentacao_legal": [
+        "__Lei Complementar nº 267/2019 (Uso e Ocupação do Solo)__: Os parâmetros de Taxa de Ocupação (50,00%) e Taxa de Permeabilidade (25,00%) encontram-se dentro dos limites admitidos pela zona, conferindo regularidade urbanística ao projeto.",
+        "__Art. 79 da Lei Municipal nº 1.544/86 (Código de Obras)__: Inaplicável ao caso, pois o parecer fiscal atestou que a obra ainda não foi iniciada, afastando a incidência de penalidades pecuniárias.",
+        "__Decreto Municipal nº 4.149/2019__: A documentação e o recolhimento de taxas satisfazem os requisitos procedimentais para aprovação de projeto."
+    ],
+    "conclusao": "Diante do exposto, profiro parecer técnico **FAVORÁVEL** ao deferimento da solicitação de Alvará de Reforma e Ampliação. **[TESTE DE REGRESSÃO — este documento foi gerado automaticamente para verificação do engine]**",
+    "documentos_emitir": [
+        {
+            "tipo": "Alvará de Reforma e Ampliação (Área resultante: 150,00m²)",
+            "obs": "Validade de **01 (um) ano** a contar da emissão, nos termos do __Art. 9º da Lei nº 1.544/86__."
+        }
+    ]
+}

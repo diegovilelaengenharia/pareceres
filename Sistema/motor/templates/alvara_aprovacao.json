@@ -1,0 +1,58 @@
+{
+    "tipo_relatorio": "alvara_aprovacao",
+    "titulo_documento": "PARECER SETOR TÉCNICO - SMOSU",
+    "categoria": "parecer_tecnico",
+    "descricao": "Aprovação de projeto residencial ou popular — emissão de alvará de construção e certidão de número",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "assunto",
+        "requerente",
+        "logradouro",
+        "bairro",
+        "area_terreno",
+        "area_total_construida",
+        "taxa_ocupacao",
+        "taxa_permeabilidade",
+        "coef_aproveitamento",
+        "profissional_nome",
+        "considerandos",
+        "documentos_emitir",
+        "zona_uso",
+        "art_rrt"
+    ],
+    "campos_opcionais": [
+        "inscricao_municipal",
+        "proprietario",
+        "lote",
+        "quadra",
+        "paragrafos_adicionais",
+        "fundamentacao_legal",
+        "historico_cronologico",
+        "partes_envolvidas"
+    ],
+    "modelo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face do Processo Administrativo nº [numero_processo], onde o requerente [requerente] solicita a aprovação de projeto [tipo_projeto_ex_residencial_unifamiliar] de [area_total_construida], no Lote [lote], Quadra [quadra], em terreno localizado no Zoneamento [zona_uso], com área total de [area_terreno], taxa de ocupação de [taxa_ocupacao], taxa de permeabilidade de [taxa_permeabilidade] e coeficiente de aproveitamento de [coef_aproveitamento], localizado na [logradouro], bairro [bairro].",
+    "modelo_considerandos": [
+        "De acordo com o PARECER FISCAL emitido por [nomes_e_matriculas_dos_fiscais], a construção não foi iniciada, sendo tirado o nº [numero_da_porta].",
+        "A REQUERENTE apresentou título de propriedade através de MATRÍCULA DE INTEIRO TEOR com registro nº [matricula_sri] do SRI, [outros_comprovantes_ex_contrato_compra_e_venda] e INSCRIÇÃO IMOBILIÁRIA [inscricao_municipal].",
+        "Para o PROJETO apresentado, foi emitida a [ART_ou_RRT_ou_TRT] [art_rrt] para as atividades de [atividades_ex_projeto_e_execucao] pelo [titulo_profissional] [profissional_nome], Registro Nacional nº [registro_crea_cau_cft]."
+    ],
+    "modelo_conclusao": "Diante disto, verificado e aprovado o PROJETO, poderá ser emitido:",
+    "documentos_tipicos": [
+        {
+            "tipo": "Alvará de Construção de [Tipo de Edificação] de [Área]m² válido por 01 ano",
+            "obs": "data em 01 ano a contar da data do alvará, onde a edificação possui área total de [Área_Total]m², sendo [Área_Garagem]m² referente à área de garagem, e deverá atender à taxa de permeabilidade mínima de [Taxa_Minima]% do referido terreno que corresponde a [Area_Permeabilidade_Minima]m² (o projeto prevê [Area_Permeabilidade_Projeto]m²), respeitando o projeto aprovado."
+        },
+        {
+            "tipo": "Certidão de Número: [numero_da_porta] para o SAAE e CEMIG."
+        },
+        {
+            "tipo": "Certidão de Localização."
+        }
+    ],
+    "legislacao_aplicavel": [
+        "Decreto nº 4.149/2019",
+        "Lei nº 1.544/86 (Código de Obras)",
+        "Lei nº 267/2019 (Uso e Ocupação do Solo)"
+    ]
+}

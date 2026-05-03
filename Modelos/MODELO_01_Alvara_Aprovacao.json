@@ -1,0 +1,116 @@
+{
+  "_comentario": "GABARITO — baseado no processo real 108/2026 (Juliana Borges Sílvio, ZUR-3). Use como few-shot: substitua os campos para cada processo novo, mantendo a estrutura e qualidade dos considerandos.",
+
+  "memoria_de_calculo": "Área terreno: 129,50m². Área licenciada (computada): 59,10m². Área total implantada: 73,47m² (= 59,10 + 14,37m² de garagem descoberta sem estrutura — não computa CA). TO sobre projeção da edificação (sem garagem descoberta): 46,52% — limite ZUR-3: 70% ✓. CA = 59,10/129,50 = 0,456 (parecer original indica 0,42 — usar valor calculado). Limite ZUR-3: 3,5 ✓. TP = área permeável / 129,50 × 100 = 20,47% — mínimo ZUR-3: 20% ✓. TP mínima exigida: 129,50 × 20% = 25,90m² (projeto prevê 26,52m²). Lote ≤ 220m²: aplica-se a exceção do §13 Art. 9º LC 267/2019 — afastamentos pelo Código Civil (1,50m); TP/TO permanecem obrigatórias.",
+
+  "tipo_relatorio": "alvara_aprovacao",
+  "numero_processo": "108/2026",
+  "data_processo": "08 de janeiro de 2026",
+  "assunto": "Alvará de Construção e Certidão de Número",
+  "requerente": "JULIANA BORGES SÍLVIO",
+
+  "logradouro": "Alameda José Inácio de Andrade, s/n",
+  "bairro": "Acácio Ribeiro 2",
+  "inscricao_municipal": "01.01.182.0139",
+  "matricula_sri": "41999",
+  "lote": "Parte do Lote 22",
+  "quadra": "03",
+
+  "zona_uso": "ZUR-3",
+  "categoria_uso": "UR 1",
+  "area_terreno": "129,50m²",
+  "area_total_construida": "59,10m²",
+  "area_implantada_total": "73,47m²",
+  "area_garagem_descoberta": "14,37m²",
+  "area_permeavel": "26,52m²",
+  "area_permeavel_minima": "25,90m²",
+  "taxa_ocupacao": "46,52%",
+  "coef_aproveitamento": "0,42",
+  "taxa_permeabilidade": "20,47%",
+
+  "profissional_nome": "Sidney Cesar Caminha",
+  "profissional_titulo": "Técnico em Edificações",
+  "profissional_registro": "Registro Nacional nº 04138615629",
+  "art_rrt": "CFT2505331379",
+  "art_atividade": "Projeto e Execução Arquitetônica, Instalação Hidráulica, Impermeabilização, Muro de Arrimo, Instalação Elétrica e Cálculo Estrutural",
+  "agentes_fiscais": "Marlei Henrique de Oliveira (Mat. 3087661-8) e Rogério Firmino Barros (Mat. 30880745-1)",
+  "situacao_obra": "não iniciada",
+  "numero_porta": "51",
+
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face do Processo Administrativo nº 108/2026, onde a requerente JULIANA BORGES SÍLVIO solicita a aprovação de projeto residencial popular unifamiliar de 59,10m², Parte do Lote 22, Quadra 03, em terreno localizado no Zoneamento ZUR-3, em Categoria de Uso UR 1, com área total de 129,50m², taxa de ocupação de 46,52%, taxa de permeabilidade de 20,47% e coeficiente de aproveitamento de 0,42, localizado na Alameda José Inácio de Andrade, bairro Acácio Ribeiro 2. De acordo com o PARECER FISCAL emitido por Marlei Henrique de Oliveira (Mat. 3087661-8) e Rogério Firmino Barros (Mat. 30880745-1), a construção não foi iniciada, sendo tirado o nº 51.",
+
+  "considerandos": [
+    "Que a REQUERENTE apresentou título de propriedade através de MATRÍCULA DE INTEIRO TEOR com registro nº 41999 do SRI, COMPROMISSO PARTICULAR DE COMPRA E VENDA, e INSCRIÇÃO IMOBILIÁRIA 01.01.182.0139, comprovando a regularidade dominial conforme exigido pelo Art. 1º do Decreto Municipal nº 4.149/2019.",
+    "Que para o PROJETO apresentado, foi emitido o TERMO DE RESPONSABILIDADE TÉCNICA TRT nº CFT2505331379 para as atividades de Projeto e Execução Arquitetônica, Instalação Hidráulica, Impermeabilização, Muro de Arrimo, Instalação Elétrica e Cálculo Estrutural, pelo Técnico em Edificações Sidney Cesar Caminha, Registro Nacional nº 04138615629, atendendo ao requisito de responsabilidade técnica do Art. 48 da Lei Municipal nº 1.544/86.",
+    "Que o imóvel está inserido no Zoneamento ZUR-3, sendo verificados os índices urbanísticos conforme Tabela 1 do Art. 9º da Lei Complementar nº 267/2019: Taxa de Ocupação de 46,52% abaixo do limite de 70%; Coeficiente de Aproveitamento de 0,42 (= 59,10/129,50) abaixo do limite de 3,5; Taxa de Permeabilidade de 20,47% acima do mínimo de 20%, atendendo a área permeável de 26,52m² (mínimo exigido: 129,50 × 20% = 25,90m²).",
+    "Que o lote possui área de 129,50m², sendo inferior ao limite de 220,00m² previsto no §13 do Art. 9º da LC 267/2019, aplicando-se a exceção que remete os afastamentos laterais e de fundos ao Código Civil (Art. 1.301 — mínimo de 1,50m), em substituição às faixas tabeladas; permanecendo obrigatórias a Taxa de Ocupação e a Taxa de Permeabilidade.",
+    "Que o setor técnico salienta que a análise se ateve ao Código de Obras do Município de Oliveira (Lei nº 1544, de 04 de Março de 1986), à Lei de Uso e Ocupação do Solo (Lei nº 267, de 11 de Outubro de 2019) e ao Decreto nº 4.149 de 19 de dezembro de 2019."
+  ],
+
+  "fundamentacao_legal": [
+    "__Decreto Municipal nº 4.149/2019__ (Procedimentos para Aprovação de Projetos): estabelece o rito processual desta análise, os parâmetros exigidos no carimbo técnico e os requisitos documentais mínimos para tramitação do processo.",
+    "__Lei Municipal nº 1.544/86 (Código de Obras), Art. 48__: obrigatoriedade da responsabilidade técnica formalizada via ART/RRT/TRT, atendida pelo TRT nº CFT2505331379 do Técnico em Edificações Sidney Cesar Caminha.",
+    "__Lei Complementar nº 267/2019 (Uso e Ocupação do Solo), Art. 9º, Tabela 1__: parâmetros urbanísticos do Zoneamento ZUR-3 — Taxa de Ocupação máxima 70%, Coeficiente de Aproveitamento máximo 3,5 e Taxa de Permeabilidade mínima 20%, todos atendidos pelo projeto.",
+    "__Lei Complementar nº 267/2019, Art. 9º §13__: exceção dos afastamentos para lotes com área inferior a 220,00m², remetendo-os ao Código Civil (Art. 1.301), aplicável ao presente caso (terreno de 129,50m²)."
+  ],
+
+  "conclusao": "Diante do exposto, verificado e aprovado o PROJETO, profiro parecer técnico **FAVORÁVEL** ao deferimento, podendo ser emitidos os documentos relacionados abaixo.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Alvará de Construção de Residência Unifamiliar — 59,10m²",
+      "obs": "Validade de 01 (um) ano a contar da data do alvará. A edificação possui área total de 73,47m², sendo 14,37m² referentes à área de garagem descoberta sem estrutura (não computa CA), e deverá atender à taxa de permeabilidade mínima de 20% do referido terreno, que corresponde a 25,90m² (o projeto prevê 26,52m²), respeitando o projeto aprovado."
+    },
+    {
+      "tipo": "Certidão de Número — nº 51",
+      "obs": "Para os fins de cadastro junto ao SAAE e à CEMIG."
+    },
+    {
+      "tipo": "Certidão de Localização",
+      "obs": "Confirmação da localização do imóvel: Alameda José Inácio de Andrade, bairro Acácio Ribeiro 2, Inscrição 01.01.182.0139."
+    }
+  ],
+
+  "extras_extraidos": {
+    "matricula_numero": "41999",
+    "trt_numero": "CFT2505331379",
+    "profissional_responsavel": "Sidney Cesar Caminha (Técnico em Edificações, RN nº 04138615629)",
+    "fiscais": [
+      {"nome": "Marlei Henrique de Oliveira", "matricula_funcional": "3087661-8"},
+      {"nome": "Rogério Firmino Barros", "matricula_funcional": "30880745-1"}
+    ],
+    "situacao_obra": "não iniciada",
+    "numero_porta_tirado": "51",
+    "valores_pagos": []
+  },
+
+  "historico_cronologico": [
+    {"data": "08/01/2026", "evento": "Abertura do Processo 108/2026 — solicitação de Alvará de Construção e Certidão de Número", "tipo": "abertura_processo"},
+    {"data": "[data_trt]", "evento": "Emissão do TRT CFT2505331379 para o projeto arquitetônico e execução", "tipo": "documento_municipal", "referencia": "TRT CFT2505331379"},
+    {"data": "[data_vistoria]", "evento": "Parecer fiscal: obra não iniciada, número predial 51 tirado", "tipo": "vistoria_fiscal", "agentes": ["Marlei Henrique de Oliveira", "Rogério Firmino Barros"]},
+    {"data": "04/03/2026", "evento": "Emissão do Parecer Técnico favorável", "tipo": "documento_municipal"}
+  ],
+
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "JULIANA BORGES SÍLVIO",
+      "qualidade": "compradora — Compromisso Particular de Compra e Venda"
+    },
+    "responsavel_tecnico": {
+      "nome": "Sidney Cesar Caminha",
+      "conselho": "CFT/CRT",
+      "tipo_rt": "TRT",
+      "numero_rt": "CFT2505331379",
+      "titulo": "Técnico em Edificações"
+    },
+    "agentes_fiscais": [
+      {"nome": "Marlei Henrique de Oliveira", "matricula_funcional": "3087661-8"},
+      {"nome": "Rogério Firmino Barros", "matricula_funcional": "30880745-1"}
+    ],
+    "assinante_parecer": {
+      "nome": "Diego Tarcísio Nunes Vilela",
+      "titulo": "Engenheiro Civil",
+      "registro": "CREA 235.474/D"
+    }
+  }
+}

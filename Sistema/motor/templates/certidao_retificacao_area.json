@@ -1,0 +1,19 @@
+{
+    "tipo_relatorio": "certidao_retificacao_area",
+    "titulo_documento": "PARECER SETOR TÉCNICO – SMOSU",
+    "categoria": "parecer_simples",
+    "descricao": "Parecer para retificação de área (geralmente para o Registro Predial)",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "requerente",
+        "considerandos"
+    ],
+    "assunto_padrao": "Certidão de Retificação de Área",
+    "modelo_abertura": "Verificando o processo de retificação de área formulado pelo requerente para o terreno urbano localizado na [Endereço Completo], lote [X], quadra [Y], no município de Oliveira/MG, no qual o Serviço Registral de Imóveis solicitou desta Prefeitura que se manifestasse quanto às confrontações e alinhamento do imóvel.",
+    "modelo_considerandos": [
+        "foi constatado que a retificação NÃO FERE os interesses do Município."
+    ],
+    "modelo_conclusao": "Salientamos que foi avaliada por esta secretaria apenas a situação do alinhamento do imóvel que confronta com a frente da via de domínio público, não sendo avaliado o contexto geral do projeto ou litígios entre confrontantes particulares.",
+    "notas": "Este parecer é direcionado ao SRI (Serviço Registral de Imóveis)."
+}

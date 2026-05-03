@@ -1,21 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python run_tests.py)",
-      "Bash(git commit -m ' *)",
-      "Bash(ls -la *.md)",
-      "Bash(ls -la MEMORY*)",
-      "Bash(ls -la CLAUDE*)",
-      "Read(//c/Users/diego/.claude/projects/c--Users-diego-Meu-Drive-02--Trabalho--Engenheiro-Civil--02--Prefeitura--PMO--1--Gemini-02--Pareceres/memory/**)",
-      "Read(//c/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/3_Treinar_Inteligencia/**)",
-      "PowerShell(Get-Process -Name WINWORD)",
-      "PowerShell(Stop-Process -Name WINWORD -Force)",
-      "Read(//c/Users/diego/.antigravity/**)",
-      "Read(//c/Users/diego/**)",
-      "mcp__claude_ai_PDF_Viewer__list_pdfs"
-    ],
-    "additionalDirectories": [
-      "C:\\Users\\diego\\.claude"
+      "Skill(gsd-discuss-phase)",
+      "Bash(dir /s /b *.json *.md *.py *.docx *.html)",
+      "Bash(findstr /v \"desktop.ini\")",
+      "Bash(findstr /v \".git\")",
+      "Bash(findstr /v \"node_modules\")",
+      "Bash(Get-ChildItem -Recurse -Directory)",
+      "Bash(Select-Object FullName)"
     ]
   }
 }

@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Painel GEM — Inteligência SMOSU</title>
+  <link rel="stylesheet" href="/painel_gem.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">🏛</div>
+    <div>
+      <h1>Painel GEM</h1>
+      <div class="sub">Motor de IA para Pareceres Técnicos — SMOSU Oliveira/MG</div>
+    </div>
+  </div>
+  <div class="header-center developer-header-info">
+    <div class="dev-avatar">👨‍💻</div>
+    <div class="dev-details">
+      <span class="dev-name">Diego Tarcísio N. Vilela</span>
+      <span class="dev-role">Engenheiro Civil <span class="divider">•</span> CREA 235.474/D</span>
+      <span class="dev-org">Secretaria Municipal de Obras</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn btn-s" onclick="limparPastaEntrada()" title="Remove todos os PDFs e JSONs da entrada">🧹 Limpar Entrada</button>
+    <button class="btn btn-s" onclick="abrirPasta('entrada')" title="Abrir pasta de PDFs e JSONs">📂 Entrada</button>
+    <button class="btn btn-s" onclick="abrirPasta('treino')" title="Abrir pasta de treinamento IA">📚 Treino</button>
+    <button class="btn btn-s" onclick="abrirPasta('saida')" title="Abrir pasta de resultados">📁 Saída</button>
+  </div>
+</div>
+
+<div class="wizard-bar">
+  <div class="wz-step active" onclick="goStep(1)" id="ws1"><div class="wz-num">1</div><div class="wz-label">Entrada & Análise</div></div>
+  <div class="wz-line" id="wl1"></div>
+  <div class="wz-step" onclick="goStep(2)" id="ws2"><div class="wz-num">2</div><div class="wz-label">Auditoria e Revisão</div></div>
+  <div class="wz-line" id="wl2"></div>
+  <div class="wz-step" onclick="goStep(3)" id="ws3"><div class="wz-num">3</div><div class="wz-label">Geração</div></div>
+  <div class="wz-line" id="wl3"></div>
+  <div class="wz-step" onclick="goStep(4)" id="ws4"><div class="wz-num">4</div><div class="wz-label">Resultado</div></div>
+</div>
+
+<div class="main">
+
+  <!-- PASSO 1: ENTRADA -->
+  <div class="step-panel active" id="step1">
+    <div class="dashboard-wrapper">
+      <!-- Barra Lateral -->
+      <div class="dash-sidebar">
+
+        <div class="dash-nav">
+          <button class="nav-btn active" id="btn-nav-novo" onclick="switchDashView('novo')">
+            <span class="icon">✨</span> Novo Processo
+          </button>
+          <button class="nav-btn" id="btn-nav-hist" onclick="switchDashView('hist')">
+            <span class="icon">📂</span> Histórico <span class="nav-badge" id="badge-hist" style="display:none">0</span>
+          </button>
+          <button class="nav-btn" id="btn-nav-metricas" onclick="switchDashView('metricas')">
+            <span class="icon">📊</span> Métricas de IA
+          </button>
+          <button class="nav-btn" id="btn-nav-lote" onclick="switchDashView('lote')">
+            <span class="icon">📦</span> Modo Lote <span class="nav-badge badge-warn" id="badge-lote" style="display:none">0</span>
+          </button>
+          <button class="nav-btn" id="btn-nav-auditoria" onclick="goStep(2)">
+            <span class="icon">📝</span> Auditoria e Edição
+          </button>
+          <button class="nav-btn" id="btn-nav-registro" onclick="switchDashView('registro')">
+            <span class="icon">📋</span> Registro do Sistema
+          </button>
+          <button class="nav-btn" id="btn-nav-ajuda" onclick="switchDashView('ajuda')">
+            <span class="icon">📚</span> Ajuda & Manuais
+          </button>
+        </div>
+      </div>
+
+      <!-- Conteúdo Principal -->
+      <div class="dash-content">
+
+        <!-- Visão: Métricas de IA -->
+        <div id="view-metricas" style="display:none">
+          <div class="card">
+            <div class="card-h" style="display:flex;align-items:center;justify-content:space-between">
+              <span>📊 Métricas de Retroalimentação da IA</span>
+              <div style="display:flex;gap:8px">
+                  <button class="btn btn-g" onclick="exportarRelatorio()" style="font-size:12px;padding:6px 14px" title="Gerar markdown para colar no Gemini">📤 Exportar Relatório</button>
+                  <button class="btn btn-s" onclick="loadMetricas()" style="font-size:12px;padding:6px 14px">🔄 Atualizar</button>
+              </div>
+            </div>
+            <div class="card-b" id="metricas-container">
+              <div style="text-align:center;padding:40px;color:var(--muted)">
+                <div style="font-size:40px;margin-bottom:12px">📊</div>
+                <div style="font-size:14px">Carregando métricas...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visão: Modo Lote -->
+        <div id="view-lote" style="display:none">
+          <div class="card">
+            <div class="card-h" style="display:flex;align-items:center;justify-content:space-between">
+              <span>📦 Triagem em Lote</span>
+              <button class="btn btn-s" onclick="carregarLote()" style="font-size:12px;padding:6px 14px">🔄 Inspecionar Todos</button>
+            </div>
+            <div class="card-b">
+              <div style="margin-bottom:16px;font-size:13px;color:var(--muted)">
+                Inspecione e processe múltiplos processos simultaneamente.
+              </div>
+              <div id="lote-container">
+                <table style="width:100%; border-collapse: collapse; font-size:13px; text-align:left;">
+                  <thead>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.1); color:var(--muted);">
+                      <th style="padding:10px 8px;font-weight:600">Sel</th>
+                      <th style="padding:10px 8px;font-weight:600">Processo</th>
+                      <th style="padding:10px 8px;font-weight:600">Tipo</th>
+                      <th style="padding:10px 8px;font-weight:600">Score</th>
+                      <th style="padding:10px 8px;font-weight:600">Veredito</th>
+                      <th style="padding:10px 8px;font-weight:600;text-align:right">Ação</th>
+                    </tr>
+                  </thead>
+                  <tbody id="lote-tbody">
+                    <tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted)">Clique em "Inspecionar Todos" para carregar os processos da pasta de entrada.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <!-- Progress Bar do Lote -->
+              <div id="lote-progress-container" style="display:none; margin-top:20px;">
+                  <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:6px;">
+                      <span id="lote-progress-text">Processando...</span>
+                      <span id="lote-progress-pct">0%</span>
+                  </div>
+                  <div style="width:100%; height:8px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                      <div id="lote-progress-bar" style="height:100%; width:0%; background:var(--accent); transition:width 0.3s;"></div>
+                  </div>
+              </div>
+
+              <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+                <label style="font-size:13px; cursor:pointer;"><input type="checkbox" id="lote-sel-todos" onchange="toggleLoteAll(this)" style="margin-right:6px">Selecionar Todos</label>
+                <button class="btn btn-g btn-lg" id="btn-compilar-lote" onclick="compilarLote()" disabled>🚀 Compilar Selecionados</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visão: Novo Processo -->
+        <div id="view-novo">
+          <div class="card" style="margin-bottom:24px;">
+            <div class="card-h" style="display:flex;align-items:center;justify-content:space-between">
+              <span>⚡ Extração e Dados (Novo Processo)</span>
+              <div id="ocr-status-badge" class="badge badge-g" title="Docling (IBM) ativo para PDFs escaneados">🤖 OCR Local Ativo</div>
+            </div>
+            <div class="card-b">
+              <div class="tab-p active" id="tab-json" style="display:block; padding:0;">
+                <div style="margin-bottom:16px;display:flex;gap:10px;justify-content:flex-end;">
+                  <button class="btn btn-s" onclick="copiarInstrucoes()">📋 Copiar Prompt Gemini</button>
+                  <button class="btn btn-s" onclick="window.open('https://gemini.google.com/gem/c0f3480899a2','_blank')">🌐 Abrir Analista Gemini</button>
+                </div>
+                <textarea id="json-input" oninput="handleJSONInput()" placeholder='Cole aqui o JSON gerado ou extraído...'></textarea>
+                <div class="json-info" id="json-info"></div>
+                <div id="json-visual-preview" style="display:none; margin-top: 16px;"></div>
+                <div id="health-dashboard-container" style="display:none; margin-top: 16px;"></div>
+                
+                <!-- Auditoria Inteligente (Pre-geração) -->
+                <div id="smart-alerts-container"></div>
+                
+                <div style="display:flex;gap:8px;align-items:center;margin-top:16px">
+                  <input type="text" id="json-nome" placeholder="Nome (ex: 1270-2026)" style="flex:1">
+                  <button class="btn btn-p" onclick="salvarEAvancar()">💾 Salvar e Avançar →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" id="precedentes-card" style="display:none; margin-bottom:20px;">
+            <div class="card-h" style="color:var(--accent2)">🔍 Precedentes Sugeridos</div>
+            <div class="card-b" id="precedentes-list" style="font-size:12px;color:var(--muted)"></div>
+          </div>
+        </div>
+
+        <!-- Visão: Histórico -->
+        <div id="view-hist" style="display:none;">
+          <div class="card" id="historico-area">
+            <div class="card-h">📂 Histórico de Processos Analisados <button class="btn-s" style="padding:4px 10px;border-radius:6px;font-size:12px" onclick="refresh()">🔄 Atualizar</button></div>
+            <div class="card-b">
+              <ul class="file-list history-list" id="file-list"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visão: Registro do Sistema -->
+        <div id="view-registro" style="display:none">
+          <div class="card">
+            <div class="card-h" style="display:flex;align-items:center;justify-content:space-between">
+              <span>📋 Registro Completo do Sistema</span>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-s" onclick="exportarRegistro()" style="font-size:12px;padding:6px 14px" title="Copiar inventário em markdown">📤 Exportar MD</button>
+                <button class="btn btn-s" onclick="loadRegistro()" style="font-size:12px;padding:6px 14px">🔄 Atualizar</button>
+              </div>
+            </div>
+            <div class="card-b" id="registro-container">
+              <div style="text-align:center;padding:40px;color:var(--muted)">
+                <div style="font-size:40px;margin-bottom:12px">📋</div>
+                <div style="font-size:14px">Carregando inventário do sistema...</div>
+              </div>
+            </div>
+            </div>
+            </div>
+
+            <!-- Visão: Ajuda e Manuais -->
+            <div id="view-ajuda" style="display:none">
+            <div class="grid" style="grid-template-columns: 320px 1fr; gap: 24px;">
+            <div class="card">
+              <div class="card-h">📚 Manuais Técnicos</div>
+              <div class="card-b">
+                <ul id="docs-list" class="file-list"></ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-h" id="doc-title">📖 Selecione um Guia</div>
+              <div class="card-b" id="doc-content" style="background:#fff; color:#333; border-radius:12px; padding:32px; overflow-y:auto; height:75vh; line-height:1.7; font-size:14px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.1)">
+                <div style="text-align:center; padding:100px 0; color:#999">
+                  <div style="font-size:48px; margin-bottom:16px">📖</div>
+                  <p>Clique em um arquivo na lista lateral para ler as instruções.</p>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+
+            </div> <!-- /dash-content -->
+    </div>
+  </div>
+
+  <!-- PASSO 2: REVISÃO + EDITOR VISUAL -->
+  <div class="step-panel" id="step2">
+    <div class="card" style="padding:0">
+
+      <!-- Barra de controle única e compacta -->
+      <div id="preview-toolbar" style="display:flex;gap:6px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border);flex-wrap:wrap;">
+        <span id="step2-title" style="font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap;margin-right:4px">👁️ Auditoria</span>
+        <select id="preview-sel" style="flex:1;min-width:130px;max-width:220px;font-size:12px;padding:5px 8px;height:30px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text)"><option value="">Selecione...</option></select>
+        <button class="btn btn-p" onclick="carregarPreview()" style="font-size:11px;padding:5px 10px;height:30px">👁 Preview</button>
+        <button class="btn btn-s" onclick="abrirPreviewNovaAba()" id="btn-nova-aba" style="display:none;font-size:11px;padding:5px 10px;height:30px" title="Tela cheia">🔗</button>
+        <button class="btn btn-s" onclick="imprimirPreview()" id="btn-imprimir" style="display:none;font-size:11px;padding:5px 10px;height:30px" title="Imprimir / PDF">🖨</button>
+        <div style="flex:1"></div>
+        <button class="btn btn-s" id="btn-toggle-editor" onclick="toggleEditorVisual()" style="font-size:11px;padding:5px 10px;height:30px">✏️ Editar</button>
+        <button class="btn btn-o" onclick="sugerirCorrecaoIA()" style="font-size:11px;padding:5px 10px;height:30px" title="Feedback para IA">🧠</button>
+      </div>
+
+      <div class="card-b" style="padding:12px 14px">
+
+        <!-- Preview iframe -->
+        <div id="preview-wrapper" style="position:relative;">
+          <iframe id="preview-iframe" class="preview-frame" srcdoc="<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#94a3b8;font-family:sans-serif'><h3>Nenhum documento carregado</h3><p>Selecione um JSON e clique em Carregar Preview</p></div>"></iframe>
+        </div>
+
+        <!-- Editor Visual (oculto por padrão) -->
+        <div id="editor-visual" style="display:none">
+          <div style="margin-bottom:16px;padding:12px 16px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:10px;font-size:13px;color:var(--muted)">
+            💡 Edite os campos abaixo. Ao salvar, o JSON é atualizado e o preview é recarregado automaticamente.
+          </div>
+
+          <!-- Seção: Identificação -->
+          <div class="editor-section">
+            <div class="editor-section-title">📋 Identificação do Processo</div>
+            <div class="editor-grid">
+              <div class="editor-field"><label>Número do Processo</label><input type="text" id="ef-numero_processo" placeholder="ex: 1270/2026"></div>
+              <div class="editor-field"><label>Data do Processo</label><input type="text" id="ef-data_processo" placeholder="ex: 03 de fevereiro de 2026"></div>
+              <div class="editor-field editor-full"><label>Requerente / Proprietário</label><input type="text" id="ef-requerente" placeholder="Nome completo"></div>
+              <div class="editor-field editor-full"><label>Assunto</label><input type="text" id="ef-assunto" placeholder="Descrição do assunto"></div>
+            </div>
+          </div>
+
+          <!-- Seção: Localização -->
+          <div class="editor-section">
+            <div class="editor-section-title">📍 Localização e Cadastro</div>
+            <div class="editor-grid">
+              <div class="editor-field editor-full"><label>Logradouro</label><input type="text" id="ef-logradouro" placeholder="Rua, Av., etc."></div>
+              <div class="editor-field"><label>Bairro</label><input type="text" id="ef-bairro"></div>
+              <div class="editor-field"><label>Inscrição Municipal</label><input type="text" id="ef-inscricao_municipal"></div>
+              <div class="editor-field"><label>Lote</label><input type="text" id="ef-lote"></div>
+              <div class="editor-field"><label>Quadra</label><input type="text" id="ef-quadra"></div>
+            </div>
+          </div>
+
+          <!-- Seção: Índices Urbanísticos -->
+          <div class="editor-section">
+            <div class="editor-section-title">📐 Índices Urbanísticos e Área</div>
+            <div class="editor-grid">
+              <div class="editor-field"><label>Área do Terreno</label><input type="text" id="ef-area_terreno" placeholder="ex: 330,00m²"></div>
+              <div class="editor-field"><label>Área Total Construída</label><input type="text" id="ef-area_total_construida"></div>
+              <div class="editor-field"><label>Taxa de Ocupação</label><input type="text" id="ef-taxa_ocupacao" placeholder="ex: 42,36%"></div>
+              <div class="editor-field"><label>Coef. de Aproveitamento</label><input type="text" id="ef-coef_aproveitamento" placeholder="ex: 0,43"></div>
+              <div class="editor-field"><label>Taxa de Permeabilidade</label><input type="text" id="ef-taxa_permeabilidade" placeholder="ex: 15%"></div>
+              <div class="editor-field"><label>Zona de Uso</label><input type="text" id="ef-zona_uso" placeholder="ex: ZUR 2"></div>
+            </div>
+          </div>
+
+          <!-- Seção: Responsável Técnico -->
+          <div class="editor-section">
+            <div class="editor-section-title">👷 Responsável Técnico</div>
+            <div class="editor-grid">
+              <div class="editor-field editor-full"><label>Nome do Profissional</label><input type="text" id="ef-profissional_nome"></div>
+              <div class="editor-field"><label>ART / RRT</label><input type="text" id="ef-art_rrt"></div>
+            </div>
+          </div>
+
+          <!-- Seção: Análise Técnica -->
+          <div class="editor-section">
+            <div class="editor-section-title">📄 Análise Técnica</div>
+            <div class="editor-grid">
+              <div class="editor-field editor-full">
+                <label>Parágrafo de Abertura</label>
+                <textarea id="ef-paragrafo_abertura" rows="3" style="min-height:80px" placeholder="Trata-se de processo..."></textarea>
+              </div>
+              <div class="editor-field editor-full">
+                <label>Considerandos <span style="color:var(--muted);font-weight:400">(um por linha)</span></label>
+                <textarea id="ef-considerandos" rows="6" style="min-height:120px" placeholder="Cada considerando em uma linha..."></textarea>
+              </div>
+              <div class="editor-field editor-full">
+                <label>Fundamentação Legal <span style="color:var(--muted);font-weight:400">(um por linha)</span></label>
+                <textarea id="ef-fundamentacao_legal" rows="4" style="min-height:80px"></textarea>
+              </div>
+              <div class="editor-field editor-full">
+                <label>Conclusão / Encaminhamento</label>
+                <textarea id="ef-conclusao" rows="3" style="min-height:70px"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:8px">
+            <button class="btn btn-g btn-lg" onclick="salvarEdicaoVisual()" style="flex:1">💾 Salvar e Atualizar Preview</button>
+            <button class="btn btn-s" onclick="toggleEditorVisual()">✕ Cancelar</button>
+          </div>
+        </div>
+
+        <!-- Rodapé de ações -->
+        <div class="btns" style="justify-content:space-between;margin-top:20px">
+          <button class="btn btn-s" onclick="goStep(1)">← Voltar ao Início</button>
+          <button class="btn btn-g btn-lg" onclick="goStep(3)">✅ Parecer Auditado e Aprovado →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PASSO 3: GERAÇÃO -->
+  <div class="step-panel" id="step3">
+    <div class="card" style="max-width:800px;margin:0 auto;">
+      <div class="card-h">🚀 Compilação Final</div>
+      <div class="card-b">
+        <div class="mode-cards">
+          <div class="mode-card selected" id="mc-motor" onclick="selMode('motor')">
+            <div class="icon">⚙️</div>
+            <h3>Modo Institucional (Motor)</h3>
+            <p>Gerará o documento estruturado com considerandos e padronização SMOSU.</p>
+          </div>
+          <div class="mode-card" id="mc-livre" onclick="selMode('livre')">
+            <div class="icon">✍️</div>
+            <h3>Modo Narrativo (Livre)</h3>
+            <p>Geração flexível baseada no texto corrido, ideal para despachos atípicos.</p>
+          </div>
+        </div>
+        <div style="text-align:center;margin:24px 0">
+          <button class="btn btn-p btn-lg" onclick="compilar()" id="btn-compilar" style="width:100%;max-width:400px;font-size:16px;">
+            <span id="btn-compilar-text">🚀 Compilar Documentos (DOCX + PDF)</span>
+          </button>
+        </div>
+        <div class="log" id="compilar-log" style="display:none"></div>
+        <div class="btns"><button class="btn btn-s" onclick="goStep(2)">← Revisar novamente</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASSO 4: RESULTADO -->
+  <div class="step-panel" id="step4">
+    <div class="card" style="max-width:700px;margin:0 auto;">
+      <div class="card-b">
+        <div class="result-ok" id="result-area">
+          <div class="big-icon">✅</div>
+          <h2>Documentos Gerados com Sucesso!</h2>
+          <p>O parecer técnico foi validado e gerado em DOCX.</p>
+          <div id="result-docs" style="background:rgba(0,0,0,0.2);padding:16px;border-radius:12px;margin:24px auto;text-align:left;border:1px solid var(--border)"></div>
+          <div class="btns" style="justify-content:center;gap:16px;">
+            <button class="btn btn-p btn-lg" onclick="abrirPasta('saida')">📁 Abrir Pasta de Destino</button>
+            <button class="btn btn-s btn-lg" onclick="novoProcesso()">🔄 Novo Parecer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Container de Toasts -->
+<div id="toast-container"></div>
+
+<!-- SVGs -->
+<svg style="display:none">
+  <symbol id="icon-spinner" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+  </symbol>
+</svg>
+
+<script>
+let curStep=1, curMode='motor', savedJsonName='';
+
+// ── Toasts ──
+function showToast(msg, type='info') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  const icon = type==='ok'?'✅':type==='err'?'❌':type==='warn'?'⚠️':'ℹ️';
+  t.innerHTML = `<span>${icon}</span> <div>${msg}</div>`;
+  c.appendChild(t);
+  setTimeout(() => {
+    t.classList.add('fadeOut');
+    setTimeout(() => t.remove(), 300);
+  }, 4000);
+}
+
+// ── Wizard Navigation ──
+function switchDashView(view) {
+  document.getElementById('view-novo').style.display    = view === 'novo'     ? 'block' : 'none';
+  document.getElementById('view-hist').style.display    = view === 'hist'     ? 'block' : 'none';
+  document.getElementById('view-metricas').style.display = view === 'metricas' ? 'block' : 'none';
+  document.getElementById('view-lote').style.display    = view === 'lote'     ? 'block' : 'none';
+  document.getElementById('view-registro').style.display = view === 'registro' ? 'block' : 'none';
+  document.getElementById('view-ajuda').style.display    = view === 'ajuda'    ? 'block' : 'none';
+
+  document.getElementById('btn-nav-novo').classList.toggle('active',     view === 'novo');
+  document.getElementById('btn-nav-hist').classList.toggle('active',     view === 'hist');
+  document.getElementById('btn-nav-metricas').classList.toggle('active', view === 'metricas');
+  document.getElementById('btn-nav-lote').classList.toggle('active',     view === 'lote');
+  document.getElementById('btn-nav-registro').classList.toggle('active', view === 'registro');
+  document.getElementById('btn-nav-ajuda').classList.toggle('active',    view === 'ajuda');
+
+  if (view === 'metricas') loadMetricas();
+  if (view === 'lote') carregarLote();
+  if (view === 'registro') loadRegistro();
+  if (view === 'ajuda') loadDocs();
+}
+
+function goStep(n){
+  curStep=n;
+  for(let i=1;i<=4;i++){
+    const panel = document.getElementById('step'+i);
+    if(i===n){ panel.classList.add('active'); } else { panel.classList.remove('active'); }
+    
+    const ws=document.getElementById('ws'+i);
+    ws.classList.remove('active','done');
+    if(i<n) ws.classList.add('done');
+    else if(i===n) ws.classList.add('active');
+    
+    if(i<4){
+      const wl=document.getElementById('wl'+i);
+      wl.classList.remove('done','active');
+      if(i<n) wl.classList.add('done');
+      else if(i===n) wl.classList.add('active');
+    }
+  }
+  if(n===2) refreshPreviewSel();
+  if(n===1||n===2) refresh();
+}
+
+// (Tabs removidos a pedido do usuário)
+
+// ── API helpers ──
+async function api(p,o){
+  try {
+    const res = await fetch(p,o);
+    return await res.json();
+  } catch(e) {
+    return {ok:false, erro:"Erro de conexão com o Motor Python."};
+  }
+}
+
+// (Drag and Drop removido a pedido do usuário)
+
+// ── Refresh ──
+async function refresh(){
+  const d=await api('/api/status');
+  if(!d.jsons) return;
+  const fl=document.getElementById('file-list');
+  let h='';
+  d.jsons.forEach(j=>{
+    h+=`<li class="file-item"><span>📋 ${j.nome}</span><div class="file-actions">
+      <button title="Visualizar/Auditar" onclick="quickPreview('${j.nome}')">👁 Auditoria</button>
+      <button title="Editar JSON" onclick="editarJSON('${j.nome}')">✏️ Editar</button>
+      <button title="Remover" onclick="removerJSON('${j.nome}')">🗑 Remover</button></div></li>`;
+  });
+  d.pdfs.forEach(p=>{h+=`<li class="file-item"><span style="color:var(--muted)">📄 ${p.nome}</span></li>`;});
+  fl.innerHTML=h||'<li class="file-item" style="color:var(--muted)">Nenhum processo em aberto</li>';
+
+  // Atualizar badges da sidebar
+  const _cnt = d.jsons ? d.jsons.length : 0;
+  const _bHist = document.getElementById('badge-hist');
+  const _bLote = document.getElementById('badge-lote');
+  if (_bHist) { _bHist.textContent = _cnt; _bHist.style.display = _cnt > 0 ? 'inline-block' : 'none'; }
+  if (_bLote) { _bLote.textContent = _cnt; _bLote.style.display = _cnt > 1 ? 'inline-block' : 'none'; }
+
+  // (Modelos removidos a pedido do usuário)
+}
+
+function refreshPreviewSel(){
+  api('/api/status').then(d=>{
+    if(!d.jsons) return;
+    const ps=document.getElementById('preview-sel');
+    ps.innerHTML='<option value="">Selecione...</option>'+d.jsons.map(j=>`<option value="${j.nome}">${j.nome}</option>`).join('');
+    if(savedJsonName) ps.value=savedJsonName;
+  });
+}
+
+// ── Intelligent Validation ──
+function performSmartAudit(dados) {
+  const container = document.getElementById('smart-alerts-container');
+  container.innerHTML = '';
+  let alerts = [];
+  
+  if(dados.taxa_permeabilidade && parseFloat(dados.taxa_permeabilidade) < 10) {
+      alerts.push({type: 'danger', icon: '⚠️', text: 'Taxa de permeabilidade inferior a 10%. Verificar LC 267/2019.'});
+  }
+  if(dados.assunto && dados.assunto.toLowerCase().includes('regulariza') && dados.ano_construcao && parseInt(dados.ano_construcao) < 2018) {
+      alerts.push({type: 'warn', icon: '⏳', text: 'Obra anterior a 2018. Possível incidência de Decadência Tributária.'});
+  }
+  if(dados.tipo_relatorio && dados.tipo_relatorio.toLowerCase().includes('regularização')) {
+      document.getElementById('precedentes-card').style.display = 'block';
+      document.getElementById('precedentes-list').innerHTML = `<div style="margin-bottom:8px">Processos similares encontrados no Motor:</div>
+        <div class="badge badge-b" style="cursor:pointer" onclick="showToast('Precedente copiado','info')">Proc 1065/2026</div>
+        <div class="badge badge-b" style="cursor:pointer" onclick="showToast('Precedente copiado','info')">Proc 190/2026</div>`;
+  } else {
+      document.getElementById('precedentes-card').style.display = 'none';
+  }
+
+  alerts.forEach(a => {
+      container.innerHTML += `<div class="ai-alert ${a.type}"><span class="ai-alert-icon">${a.icon}</span> <span>${a.text}</span></div>`;
+  });
+}
+
+function renderJsonPreview(d) {
+    const preview = document.getElementById('json-visual-preview');
+    if(!preview) return;
+    
+    let html = `<div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:16px; font-size:13px; color:var(--text);">`;
+    html += `<h4 style="margin-top:0;margin-bottom:12px;color:var(--accent);display:flex;align-items:center;gap:6px;"><span>📋</span> Resumo dos Dados Importados</h4>`;
+    html += `<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">`;
+    
+    const dec = d.ano_construcao ? (new Date().getFullYear() - parseInt(d.ano_construcao)) + ' anos' : null;
+    const inds = (d.taxa_ocupacao ? `TO: ${d.taxa_ocupacao}` : '') + (d.taxa_permeabilidade ? ` | TP: ${d.taxa_permeabilidade}` : '');
+    
+    const fields = [
+        {label: "Requerente", val: d.requerente || d.proprietario_nome || d.proprietario},
+        {label: "Assunto / Tipo", val: d.assunto || d.tipo_relatorio},
+        {label: "Endereço", val: d.logradouro ? (d.logradouro + (d.bairro ? ' - '+d.bairro : '')) : ''},
+        {label: "Áreas (Terreno / Const.)", val: d.area_terreno ? (d.area_terreno + ' / ' + (d.area_total_construida||'')) : ''},
+        {label: "Índices", val: inds},
+        {label: "Profissional", val: d.profissional_nome || d.responsavel_execucao_nome},
+        {label: "Decadência", val: dec}
+    ];
+
+    fields.forEach(f => {
+        if(f.val && String(f.val).trim() !== '' && String(f.val).trim() !== '/') {
+            html += `<div><span style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.5px">${f.label}</span><br><strong style="color:var(--text-bright)">${f.val}</strong></div>`;
+        }
+    });
+    
+    html += `</div>`;
+    
+    if(d.extras_extraidos && Object.keys(d.extras_extraidos).length > 0) {
+        html += `<div style="margin-top:16px; border-top:1px solid var(--border); padding-top:12px;">
+                 <span style="color:var(--muted);font-size:11px;text-transform:uppercase;">💡 Dados Extras Detectados (IA)</span>
+                 <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">`;
+        for(let k in d.extras_extraidos) {
+            let v = d.extras_extraidos[k];
+            if(typeof v === 'object') v = JSON.stringify(v);
+            if(v && v !== '...' && v !== 'N/A' && String(v).trim() !== '') {
+               html += `<span style="background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:4px; font-size:11px; border:1px solid rgba(255,255,255,0.1)"><b>${k}:</b> <span style="color:var(--accent2)">${v.length > 50 ? v.substring(0,50)+'...' : v}</span></span>`;
+            }
+        }
+        html += `</div></div>`;
+    }
+    
+    html += `</div>`;
+    preview.innerHTML = html;
+    preview.style.display = 'block';
+}
+
+
+let jsonDebounceTimer;
+function handleJSONInput() {
+    clearTimeout(jsonDebounceTimer);
+    jsonDebounceTimer = setTimeout(validateJSON, 500);
+}
+
+async function validateJSON(){
+  const ta=document.getElementById('json-input'), info=document.getElementById('json-info'), preview=document.getElementById('json-visual-preview');
+  const v=ta.value.trim();
+  document.getElementById('smart-alerts-container').innerHTML = '';
+  const healthContainer = document.getElementById('health-dashboard-container');
+  if(healthContainer) healthContainer.style.display = 'none';
+  
+  if(!v){ta.classList.remove('valid','invalid');info.innerHTML='';if(preview) preview.style.display='none'; ta.style.height='300px'; return}
+  try{
+    const d=JSON.parse(v);
+    ta.classList.add('valid');ta.classList.remove('invalid');
+    let badges='<span class="badge badge-g">✓ Sintaxe OK</span>';
+    if(d.tipo_relatorio) badges+=`<span class="badge badge-b">${d.tipo_relatorio}</span>`;
+    if(d.numero_processo){
+      badges+=`<span class="badge badge-j">Proc. ${d.numero_processo}</span>`;
+      document.getElementById('json-nome').value=d.numero_processo.replace('/','-');
+    }
+    info.innerHTML=badges;
+    performSmartAudit(d);
+    renderJsonPreview(d);
+    
+    // Inspecionar Saúde Documental
+    const r = await api('/api/inspecionar', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({conteudo: v})});
+    if(r && r.ok && r.inspecao && r.inspecao.veredito !== 'ERRO' && r.inspecao.veredito !== 'INDETERMINADO') {
+        renderHealthDashboard(r.inspecao, r.roteamento);
+    }
+    
+    ta.style.height = '120px';
+  }catch(e){
+    ta.classList.add('invalid');ta.classList.remove('valid');
+    info.innerHTML=`<span class="badge badge-r">✗ Erro no JSON: ${e.message.substring(0,60)}</span>`;
+    if(preview) preview.style.display='none';
+    ta.style.height = '300px';
+  }
+}
+
+// ── Sprint 2: Radar de Saúde ─────────────────────────────────────
+function renderRadarChart(inspecao, roteamento) {
+    const tot = Math.max(inspecao.total_obrigatorios || 1, 1);
+    const hasPecas = roteamento && (
+        (roteamento.pecas_primarias  && roteamento.pecas_primarias.length  > 0) ||
+        (roteamento.pecas_paralelas  && roteamento.pecas_paralelas.length  > 0)
+    );
+    const dims = [
+        { label: 'Score',    val: inspecao.score || 0 },
+        { label: 'Docs OK',  val: Math.round((inspecao.total_regulares || 0) / tot * 100) },
+        { label: 'Sem Bloq', val: (inspecao.bloqueantes_faltando || 0) === 0 ? 100 : Math.max(0, 100 - (inspecao.bloqueantes_faltando * 34)) },
+        { label: 'Completo', val: Math.round((1 - (inspecao.total_pendentes || 0) / tot) * 100) },
+        { label: 'Peças',    val: hasPecas ? 100 : 40 }
+    ];
+    const W = 190, CX = 95, CY = 95, R = 66, n = 5;
+    const step = (2 * Math.PI) / n, startA = -Math.PI / 2;
+    let svg = `<svg viewBox="0 0 ${W} ${W}" width="${W}" height="${W}" style="display:block;flex-shrink:0">`;
+    // Grid
+    [0.25, 0.5, 0.75, 1.0].forEach((r, ri) => {
+        const pts = Array.from({length: n}, (_, i) => {
+            const a = startA + i * step;
+            return `${CX + Math.cos(a)*R*r},${CY + Math.sin(a)*R*r}`;
+        }).join(' ');
+        svg += `<polygon points="${pts}" fill="${ri===3?'rgba(79,156,255,0.03)':'none'}" stroke="rgba(79,156,255,${ri===3?'0.18':'0.09'})" stroke-width="1"/>`;
+    });
+    // Axes
+    for(let i=0;i<n;i++){
+        const a=startA+i*step;
+        svg+=`<line x1="${CX}" y1="${CY}" x2="${CX+Math.cos(a)*R}" y2="${CY+Math.sin(a)*R}" stroke="rgba(79,156,255,0.14)" stroke-width="1"/>`;
+    }
+    // Data polygon
+    const sc = inspecao.score || 0;
+    const fill   = sc>=80?'rgba(16,185,129,0.18)':sc>=50?'rgba(245,158,11,0.15)':'rgba(239,68,68,0.15)';
+    const stroke = sc>=80?'rgba(16,185,129,0.85)':sc>=50?'rgba(245,158,11,0.85)':'rgba(239,68,68,0.75)';
+    const pts = dims.map((d,i)=>{
+        const a=startA+i*step, r=R*Math.max(0,Math.min(100,d.val))/100;
+        return `${CX+Math.cos(a)*r},${CY+Math.sin(a)*r}`;
+    }).join(' ');
+    svg += `<polygon points="${pts}" fill="${fill}" stroke="${stroke}" stroke-width="1.5" stroke-linejoin="round"/>`;
+    // Vertex dots
+    dims.forEach((d,i)=>{
+        const a=startA+i*step, r=R*Math.max(0,Math.min(100,d.val))/100;
+        svg+=`<circle cx="${CX+Math.cos(a)*r}" cy="${CY+Math.sin(a)*r}" r="2.5" fill="${stroke}"/>`;
+    });
+    // Labels
+    dims.forEach((d,i)=>{
+        const a=startA+i*step;
+        const lx=CX+Math.cos(a)*(R+17), ly=CY+Math.sin(a)*(R+17);
+        svg+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-size="8.5" fill="rgba(126,168,204,0.85)" font-family="Inter,sans-serif" font-weight="600">${d.label}</text>`;
+    });
+    svg += `</svg>`;
+    return svg;
+}
+
+// ── Sprint 2: Timeline de Processo ───────────────────────────────
+function renderTimeline(veredito) {
+    const vMap  = { 'APTO':'verdict-apto', 'CONDICIONADO':'verdict-cond', 'PENDÊNCIA':'verdict-pend', 'PENDENCIA':'verdict-pend' };
+    const vIcon = { 'APTO':'✓', 'CONDICIONADO':'!', 'PENDÊNCIA':'✗', 'PENDENCIA':'✗' };
+    const vc = vMap[veredito]  || 'verdict-pend';
+    const vi = vIcon[veredito] || '?';
+    return `<div class="process-timeline">
+        <div class="tl-step"><div class="tl-dot done">✓</div><div class="tl-label">JSON</div></div>
+        <div class="tl-line done"></div>
+        <div class="tl-step"><div class="tl-dot done">✓</div><div class="tl-label">Inspecionado</div></div>
+        <div class="tl-line done"></div>
+        <div class="tl-step"><div class="tl-dot ${vc}">${vi}</div><div class="tl-label">${veredito}</div></div>
+        <div class="tl-line"></div>
+        <div class="tl-step"><div class="tl-dot pending">○</div><div class="tl-label">Compilar</div></div>
+    </div>`;
+}
+
+// ── Armazena último resultado de inspeção/roteamento para geração seletiva ──
+let ultimaInspecao = null;
+let ultimoRoteamento = null;
+
+function renderHealthDashboard(inspecao, roteamento) {
+    const container = document.getElementById('health-dashboard-container');
+    if(!container) return;
+    
+    ultimaInspecao = inspecao;
+    ultimoRoteamento = roteamento;
+    
+    const score = inspecao.score;
+    const veredito = inspecao.veredito;
+    
+    // Classe do score para cor da barra
+    let scoreClass = 'score-zero';
+    let scoreColor = 'var(--red)';
+    if(score >= 100) { scoreClass = 'score-high'; scoreColor = 'var(--green)'; }
+    else if(score >= 70) { scoreClass = 'score-mid'; scoreColor = 'var(--orange)'; }
+    else if(score > 0) { scoreClass = 'score-low'; scoreColor = '#f97316'; }
+    
+    let vereditoClass = 'pendencia';
+    if(veredito === 'APTO') vereditoClass = 'apto';
+    else if(veredito === 'CONDICIONADO') vereditoClass = 'condicionado';
+    
+    let html = `<div class="health-card" data-veredito="${veredito}">`;
+    
+    // ── Header: Score grande + Badge do veredito ──
+    html += `<div class="health-header">`;
+    html += `<div style="flex:1;min-width:0">
+        <span class="health-score-big" style="color:${scoreColor}">${score}%</span>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">Score de Saúde Documental</div>
+        ${renderTimeline(veredito)}
+    </div>`;
+    html += `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0">
+        ${renderRadarChart(inspecao, roteamento)}
+        <span class="health-veredito ${vereditoClass}">${veredito}</span>
+    </div>`;
+    html += `</div>`;
+    
+    // ── Barra de progresso animada ──
+    html += `<div class="health-bar-wrapper">`;
+    html += `<div class="health-bar"><div class="health-bar-fill ${scoreClass}" style="width:0%;" id="health-bar-fill"></div></div>`;
+    html += `<div class="health-bar-labels"><span>0%</span><span>50%</span><span>100%</span></div>`;
+    html += `</div>`;
+    
+    // ── Estatísticas resumidas ──
+    html += `<div class="health-stats">`;
+    html += `<div class="health-stat"><span class="stat-value" style="color:var(--green)">${inspecao.total_regulares || 0}</span><span class="stat-label">Regulares</span></div>`;
+    html += `<div class="health-stat"><span class="stat-value" style="color:var(--orange)">${inspecao.total_ressalvas || 0}</span><span class="stat-label">Ressalvas</span></div>`;
+    html += `<div class="health-stat"><span class="stat-value" style="color:var(--red)">${inspecao.total_pendentes || 0}</span><span class="stat-label">Pendentes</span></div>`;
+    html += `<div class="health-stat"><span class="stat-value">${inspecao.total_obrigatorios || 0}</span><span class="stat-label">Total</span></div>`;
+    if(inspecao.bloqueantes_faltando > 0) {
+      html += `<div class="health-stat" style="border-color:rgba(239,68,68,0.4)"><span class="stat-value" style="color:var(--red)">${inspecao.bloqueantes_faltando}</span><span class="stat-label">Bloqueantes</span></div>`;
+    }
+    html += `</div>`;
+    
+    // ── Justificativa ──
+    if (inspecao.anomalia) {
+        html += `<div style="background:rgba(239, 68, 68, 0.1); border-left:3px solid var(--red); padding:10px 14px; border-radius:4px; margin:12px 0 8px; color:var(--text); font-size:13px;">
+            <strong style="color:var(--red);">⚠️ Anomalia Detectada:</strong> ${inspecao.anomalia}
+        </div>`;
+    }
+    
+    html += `<div style="font-size:13px;color:var(--muted);margin:8px 0 4px;line-height:1.5">${inspecao.justificativa}</div>`;
+    
+    // ── Grid de Documentos com status ──
+    const allItems = [];
+    if(inspecao.pendencias && inspecao.pendencias.length > 0) {
+        inspecao.pendencias.forEach(p => allItems.push({...p, status:'pendente'}));
+    }
+    if(inspecao.ressalvas && inspecao.ressalvas.length > 0) {
+        inspecao.ressalvas.forEach(r => allItems.push({...r, status:'ressalva'}));
+    }
+    
+    if(allItems.length > 0) {
+        html += `<div class="health-section">`;
+        html += `<div class="health-section-title" style="color:var(--red)">📋 Itens que Requerem Atenção (${allItems.length})</div>`;
+        html += `<div class="health-docs-grid">`;
+        allItems.forEach(item => {
+            const isPendente = item.status === 'pendente';
+            const isBloq = item.bloqueante;
+            const statusEmoji = isPendente ? '🔴' : '🟡';
+            const gravidade = isBloq ? 'bloq' : (item.gravidade === 'impeditivo' ? 'impe' : 'ress');
+            const gravLabel = isBloq ? 'BLOQUEANTE' : (item.gravidade === 'impeditivo' ? 'IMPEDITIVO' : 'RESSALVA');
+            html += `<div class="health-doc-item ${isBloq ? 'bloqueante' : ''}">
+                <span class="doc-status">${statusEmoji}</span>
+                <div class="doc-info">
+                    <div class="doc-name">${item.documento}</div>
+                    <div class="doc-note">${item.nota || ''}</div>
+                </div>
+                <span class="doc-badge ${gravidade}">${gravLabel}</span>
+            </div>`;
+        });
+        html += `</div></div>`;
+    }
+    
+    // ── Seletor de Peças com Checkboxes ──
+    if(roteamento && (roteamento.pecas_primarias.length > 0 || roteamento.pecas_paralelas.length > 0)) {
+        html += `<div class="health-section">`;
+        html += `<div class="health-section-title" style="color:var(--accent2)">📄 Peças Sugeridas — Selecione para Gerar</div>`;
+        html += `<div class="peca-selector" id="peca-selector">`;
+        
+        roteamento.pecas_primarias.forEach(p => {
+            html += `<div class="peca-item checked" onclick="togglePeca(this)">
+                <input type="checkbox" checked value="${p}">
+                <span class="peca-label">📄 ${p}</span>
+                <span class="peca-type primaria">Primária</span>
+            </div>`;
+        });
+        roteamento.pecas_paralelas.forEach(p => {
+            html += `<div class="peca-item checked" onclick="togglePeca(this)">
+                <input type="checkbox" checked value="${p}">
+                <span class="peca-label">📎 ${p}</span>
+                <span class="peca-type paralela">Paralela</span>
+            </div>`;
+        });
+        
+        html += `</div>`;
+        
+        html += `<div class="peca-actions">
+            <button class="btn btn-g btn-lg" onclick="gerarPecasSelecionadas()" id="btn-gerar-pecas" style="flex:1">
+                🚀 Gerar Peças Selecionadas
+            </button>
+            <button class="btn btn-s" onclick="toggleAllPecas(true)" title="Selecionar todas">☑ Todas</button>
+            <button class="btn btn-s" onclick="toggleAllPecas(false)" title="Limpar seleção">☐ Nenhuma</button>
+        </div>`;
+        
+        html += `</div>`;
+    }
+    
+    // ── Condicionantes Editáveis ──
+    if(roteamento && roteamento.condicionantes && roteamento.condicionantes.length > 0) {
+        html += `<div class="health-section">`;
+        html += `<div class="health-section-title" style="color:var(--orange)">⚠️ Condicionantes (${roteamento.condicionantes.length}) — edite ou remova</div>`;
+        html += `<div class="cond-editor" id="cond-editor">`;
+        roteamento.condicionantes.forEach((c, i) => {
+            html += `<div class="cond-item" id="cond-${i}">
+                <input type="checkbox" checked>
+                <textarea class="cond-text" rows="1" oninput="autoResizeCond(this)">${c}</textarea>
+                <button class="cond-remove" onclick="document.getElementById('cond-${i}').remove()" title="Remover condicionante">✕</button>
+            </div>`;
+        });
+        html += `</div></div>`;
+    }
+    
+    // ── Justificativas do Roteador (colapsável) ──
+    if(roteamento && roteamento.justificativas && roteamento.justificativas.length > 0) {
+        html += `<details class="route-justificativas">
+            <summary>🔍 Justificativas do Roteamento (${roteamento.justificativas.length} regras aplicadas)</summary>`;
+        roteamento.justificativas.forEach(j => {
+            html += `<div style="padding:2px 0;">• ${j}</div>`;
+        });
+        html += `</details>`;
+    }
+    
+    html += `</div>`;
+    container.innerHTML = html;
+    container.style.display = 'block';
+    
+    // Animar barra de progresso após render
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            const bar = document.getElementById('health-bar-fill');
+            if(bar) bar.style.width = (score === 0 && inspecao.bloqueantes_faltando > 0) ? '100%' : score + '%';
+        }, 100);
+    });
+}
+
+function togglePeca(el) {
+    const cb = el.querySelector('input[type="checkbox"]');
+    cb.checked = !cb.checked;
+    el.classList.toggle('checked', cb.checked);
+}
+
+function toggleAllPecas(selectAll) {
+    document.querySelectorAll('.peca-item').forEach(el => {
+        const cb = el.querySelector('input[type="checkbox"]');
+        cb.checked = selectAll;
+        el.classList.toggle('checked', selectAll);
+    });
+}
+
+function autoResizeCond(textarea) {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+}
+
+function getPecasSelecionadas() {
+    const pecas = [];
+    document.querySelectorAll('#peca-selector input[type="checkbox"]:checked').forEach(cb => {
+        pecas.push(cb.value);
+    });
+    return pecas;
+}
+
+function getCondicionantesAtivas() {
+    const conds = [];
+    document.querySelectorAll('#cond-editor .cond-item').forEach(el => {
+        const cb = el.querySelector('input[type="checkbox"]');
+        if(cb && cb.checked) {
+            const texto = el.querySelector('.cond-text');
+            if(texto && texto.value.trim()) conds.push(texto.value.trim());
+        }
+    });
+    return conds;
+}
+
+async function gerarPecasSelecionadas() {
+    const pecas = getPecasSelecionadas();
+    if(pecas.length === 0) {
+        showToast('Selecione ao menos uma peça para gerar.', 'warn');
+        return;
+    }
+    
+    const condicionantes = getCondicionantesAtivas();
+    
+    showToast(`Preparando ${pecas.length} peça(s): ${pecas.join(', ')}`, 'info');
+    
+    // Registrar decisão para retroalimentação e atualizar JSON
+    const jsonInput = document.getElementById('json-input').value.trim();
+    let conteudoAtualizado = jsonInput;
+    try {
+        const dadosJson = JSON.parse(jsonInput);
+        const decisao = {
+            processo: dadosJson.numero_processo || '?',
+            tipo: dadosJson.tipo_relatorio || '?',
+            score: ultimaInspecao ? ultimaInspecao.score : 0,
+            veredito_ia: ultimaInspecao ? ultimaInspecao.veredito : '?',
+            pecas_sugeridas: ultimoRoteamento ? [...(ultimoRoteamento.pecas_primarias||[]), ...(ultimoRoteamento.pecas_paralelas||[])] : [],
+            pecas_aceitas: pecas,
+            condicionantes: condicionantes,
+        };
+        
+        // Enviar feedback em background (não bloquear)
+        api('/api/aprender', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({feedback: JSON.stringify(decisao), tipo: 'decisao_triagem'})
+        });
+        
+        // Injetar decisões no JSON para o compilador
+        dadosJson.documentos_emitir = pecas;
+        if (!dadosJson.extras_extraidos) dadosJson.extras_extraidos = {};
+        dadosJson.extras_extraidos.condicionantes_ativas = condicionantes;
+        conteudoAtualizado = JSON.stringify(dadosJson, null, 2);
+        
+    } catch(e) { /* silencioso */ }
+    
+    // Salvar JSON e avançar para compilação
+    const nome = document.getElementById('json-nome').value.trim() || 'processo';
+    const r = await api('/api/salvar-json', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({nome: nome, conteudo: conteudoAtualizado})
+    });
+    if(r.ok) {
+        savedJsonName = r.nome;
+        showToast(`${r.nome} salvo! Avançando para compilação...`, 'ok');
+        setTimeout(() => goStep(3), 600);
+    } else {
+        showToast('Erro ao salvar: ' + r.erro, 'err');
+    }
+}
+
+// ── Save JSON ──
+async function salvarEAvancar(){
+  const t=document.getElementById('json-input').value.trim();
+  const n=document.getElementById('json-nome').value.trim()||'processo';
+  if(!t){showToast('Cole ou extraia os dados primeiro.','err');return}
+  const r=await api('/api/salvar-json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:n,conteudo:t})});
+  if(r.ok){
+    savedJsonName=r.nome; 
+    showToast(`Arquivo ${r.nome} salvo na base!`, 'ok');
+    setTimeout(()=>goStep(2), 600);
+  } else showToast('Erro ao salvar: '+r.erro,'err');
+}
+
+// (Modelos removidos a pedido do usuário)
+
+async function copiarInstrucoes(){
+  const r=await api('/api/instrucoes');
+  if(r.ok){await navigator.clipboard.writeText(r.conteudo); showToast('Instruções copiadas! Cole no Gemini.','ok')}
+  else showToast(r.erro,'err');
+}
+
+async function quickPreview(nome){savedJsonName=nome;goStep(2);setTimeout(()=>{document.getElementById('preview-sel').value=nome;carregarPreview()},300)}
+async function editarJSON(nome){
+  // Ir para o Step 2 e abrir diretamente o editor visual
+  goStep(2);
+  
+  // Atualizar o select do preview para apontar para este arquivo
+  const sel = document.getElementById('preview-sel');
+  // Aguardar o refresh popular o select se ainda estiver vazio
+  if (!Array.from(sel.options).some(o => o.value === nome)) {
+    await refresh();
+  }
+  sel.value = nome;
+  
+  // Abrir o editor visual
+  setTimeout(() => carregarEditorVisual(nome), 200);
+}
+async function removerJSON(nome){
+  if(!confirm(`Excluir permanentemente ${nome}?`))return;
+  await fetch('/api/remover-json/'+encodeURIComponent(nome),{method:'DELETE'});
+  showToast(`${nome} removido.`, 'ok');
+  refresh();
+}
+
+// ── Preview & IA Feedback ──
+async function carregarPreview(){
+  const s=document.getElementById('preview-sel').value;
+  if(!s){showToast('Selecione um JSON para auditar.','warn');return}
+  showToast('Gerando visualização...','info');
+  const r=await api('/api/preview/'+encodeURIComponent(s));
+  if(r.ok){
+      let html = r.html.replace('</head>', '<style>.ai-generated{background:rgba(59,130,246,0.1);border-bottom:1px dashed #3b82f6;cursor:pointer;transition:all 0.2s;}.ai-generated:hover{background:rgba(59,130,246,0.2);}</style></head>');
+      document.getElementById('preview-iframe').srcdoc=html;
+      document.getElementById('btn-nova-aba').style.display='inline-block';
+      document.getElementById('btn-imprimir').style.display='inline-block';
+      showToast('Auditoria pronta para revisão.', 'ok');
+  } else showToast(r.erro,'err');
+}
+
+function abrirPreviewNovaAba(){
+  const html = document.getElementById('preview-iframe').srcdoc;
+  if(!html || html.includes('Nenhum documento')) return;
+  const w = window.open(); w.document.write(html); w.document.close();
+}
+
+function imprimirPreview() {
+  const iframe = document.getElementById('preview-iframe');
+  if(!iframe.srcdoc || iframe.srcdoc.includes('Nenhum documento')) return;
+  iframe.contentWindow.focus();
+  iframe.contentWindow.print();
+}
+
+async function sugerirCorrecaoIA() {
+  const msg = prompt("A IA gerou algo errado? Descreva o que o Motor deve aprender (Ex: 'Nunca usar a palavra X'):");
+  if(msg) {
+    await api('/api/aprender', {method:'POST', body: JSON.stringify({feedback: msg})});
+    showToast("Feedback enviado! O Gemini foi atualizado.", "ok");
+  }
+}
+
+// ── Compile ──
+function selMode(m){
+  curMode=m;
+  document.getElementById('mc-motor').classList.toggle('selected',m==='motor');
+  document.getElementById('mc-livre').classList.toggle('selected',m==='livre');
+}
+async function compilar(){
+  const b=document.getElementById('btn-compilar'), l=document.getElementById('compilar-log'), txt=document.getElementById('btn-compilar-text');
+  b.disabled=true; 
+  txt.innerHTML=`<svg class="spinner" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:8px"><use href="#icon-spinner"></use></svg> Compilando...`;
+  l.style.display='block'; l.textContent='Acionando Motor Python...\n';
+  
+  const ep=curMode==='livre'?'/api/compilar-livre':'/api/compilar';
+  const r=await api(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+  l.textContent = r.saida || '(sem saída do terminal)';
+  
+  b.disabled=false; txt.innerHTML='🚀 Compilar Documentos (DOCX + PDF)';
+  if(r.ok){
+    showToast('Documentos gerados com sucesso!', 'ok');
+    const d=await api('/api/status');
+    const rd=document.getElementById('result-docs');
+    rd.innerHTML=d.docs.length && d.docs[0].arquivos.length > 0 ? d.docs[0].arquivos.map(a=>`<div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;gap:10px;"><span style="color:var(--accent)">📄</span> ${a}</div>`).join('') : '<div style="color:var(--muted)">Consulte a pasta de saída para ver os arquivos.</div>';
+    setTimeout(()=>goStep(4), 800);
+  }else showToast('Houve um erro na compilação. Veja o log.', 'err');
+}
+
+function novoProcesso(){
+  document.getElementById('json-input').value='';
+  document.getElementById('json-nome').value='';
+  document.getElementById('json-info').innerHTML='';
+  document.getElementById('smart-alerts-container').innerHTML='';
+  document.getElementById('json-input').classList.remove('valid','invalid');
+  savedJsonName=''; goStep(1); refresh();
+}
+
+async function abrirPasta(q){await api('/api/abrir/'+q)}
+
+// ── Métricas de Retroalimentação ──────────────────────────────
+async function loadMetricas() {
+    const container = document.getElementById('metricas-container');
+    if (!container) return;
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><div style="font-size:32px">⏳</div><div>Carregando...</div></div>';
+
+    const r = await api('/api/metricas', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{}'});
+    if (!r.ok) {
+        container.innerHTML = `<div class="ai-alert danger"><span class="ai-alert-icon">⚠️</span><span>Erro ao carregar métricas: ${r.erro}</span></div>`;
+        return;
+    }
+
+    const m = r.metricas;
+
+    let html = '';
+
+    // ── KPI Cards ──
+    html += '<div class="health-stats" style="margin-bottom:24px">';
+    html += `<div class="health-stat" style="min-width:120px;flex:1">
+        <span class="stat-value" style="color:var(--accent)">${m.total_processos}</span>
+        <span class="stat-label">Processos Analisados</span>
+    </div>`;
+    html += `<div class="health-stat" style="min-width:120px;flex:1">
+        <span class="stat-value" style="color:${m.score_medio >= 80 ? 'var(--green)' : m.score_medio >= 50 ? 'var(--orange)' : 'var(--red)'}">${m.score_medio}%</span>
+        <span class="stat-label">Score Médio</span>
+    </div>`;
+
+    const taxaCor = m.taxa_acerto_ia >= 80 ? 'var(--green)' : m.taxa_acerto_ia >= 60 ? 'var(--orange)' : 'var(--red)';
+    html += `<div class="health-stat" style="min-width:120px;flex:1">
+        <span class="stat-value" style="color:${taxaCor}">${m.taxa_acerto_ia}%</span>
+        <span class="stat-label">Taxa de Acerto IA</span>
+    </div>`;
+    html += '</div>';
+
+    // ── Barra de acerto da IA ──
+    if (m.total_processos > 0) {
+        const barClass = m.taxa_acerto_ia >= 80 ? 'score-high' : m.taxa_acerto_ia >= 50 ? 'score-mid' : 'score-low';
+        html += `<div class="health-section">`;
+        html += `<div class="health-section-title" style="color:var(--accent)">🎯 Precisão das Sugestões de Peças</div>`;
+        html += `<div class="health-bar-wrapper">`;
+        html += `<div class="health-bar"><div class="health-bar-fill ${barClass}" id="metricas-bar" style="width:0%"></div></div>`;
+        html += `<div class="health-bar-labels"><span>0%</span><span>Engenheiro concordou com a IA em ${m.taxa_acerto_ia}% dos casos</span><span>100%</span></div>`;
+        html += `</div></div>`;
+    }
+
+    // ── Top Condicionantes ──
+    if (m.top_condicionantes && m.top_condicionantes.length > 0) {
+        html += `<div class="health-section">`;
+        html += `<div class="health-section-title" style="color:var(--orange)">⚠️ Condicionantes Mais Frequentes</div>`;
+        m.top_condicionantes.forEach((c, i) => {
+            const pct = Math.round((c.qtd / m.total_processos) * 100);
+            html += `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+                <span style="font-size:16px;font-weight:800;color:var(--muted);min-width:24px">${i+1}</span>
+                <div style="flex:1;font-size:12px;color:var(--text);line-height:1.4">${c.texto}</div>
+                <span style="font-size:11px;font-weight:700;color:var(--orange);white-space:nowrap">${c.qtd}× (${pct}%)</span>
+            </div>`;
+        });
+        html += `</div>`;
+    }
+
+    // ── Estado vazio ──
+    if (m.total_processos === 0) {
+        html = `<div style="text-align:center;padding:48px 24px;color:var(--muted)">
+            <div style="font-size:48px;margin-bottom:16px">🌱</div>
+            <div style="font-size:16px;font-weight:600;margin-bottom:8px">Nenhum dado ainda</div>
+            <div style="font-size:13px">As métricas serão coletadas automaticamente quando você usar o botão<br>"🚀 Gerar Peças Selecionadas" no Dashboard de Saúde.</div>
+        </div>`;
+    }
+
+    container.innerHTML = html;
+
+    // Animar barra
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            const bar = document.getElementById('metricas-bar');
+            if (bar) bar.style.width = m.taxa_acerto_ia + '%';
+        }, 100);
+    });
+}
+
+async function exportarRelatorio() {
+    const r = await api('/api/exportar-relatorio', { method: 'POST' });
+    if (r.ok) {
+        showToast('Relatório exportado para retroalimentacao/relatorio_semanal_treino.md', 'ok');
+        // Pode abrir a pasta no Windows para facilitar
+        api('/api/abrir/retro');
+    } else {
+        showToast('Erro ao exportar: ' + (r.erro || 'Desconhecido'), 'err');
+    }
+}
+
+// ── Funções Auxiliares ───────────────────────────────────────────
+let _editorJsonAtual = null;
+let _editorModoAtivo = false;
+
+function toggleEditorVisual() {
+    if (!_editorModoAtivo) {
+        const sel = document.getElementById('preview-sel').value;
+        if (!sel) { showToast('Selecione e carregue um processo primeiro.', 'warn'); return; }
+        carregarEditorVisual(sel);
+    } else {
+        _editorModoAtivo = false;
+        document.getElementById('editor-visual').style.display = 'none';
+        document.getElementById('preview-wrapper').style.display = 'block';
+        document.getElementById('btn-toggle-editor').textContent = '✏️ Editar';
+        document.getElementById('step2-title').textContent = '👁️ Auditoria';
+    }
+}
+
+async function carregarEditorVisual(nomeJson) {
+    const r = await api('/api/ler-json/' + encodeURIComponent(nomeJson));
+    if (!r.ok) { showToast('Erro ao ler JSON: ' + r.erro, 'err'); return; }
+    try { _editorJsonAtual = JSON.parse(r.conteudo); }
+    catch(e) { showToast('JSON inválido: ' + e.message, 'err'); return; }
+
+    const d = _editorJsonAtual;
+    const simples = ['numero_processo','data_processo','requerente','assunto',
+                     'logradouro','bairro','inscricao_municipal','lote','quadra',
+                     'area_terreno','area_total_construida','taxa_ocupacao',
+                     'coef_aproveitamento','taxa_permeabilidade','zona_uso',
+                     'profissional_nome','art_rrt','paragrafo_abertura','conclusao'];
+    simples.forEach(k => {
+        const el = document.getElementById('ef-' + k);
+        if (el) el.value = d[k] || '';
+    });
+
+    const cons = d.considerandos;
+    document.getElementById('ef-considerandos').value =
+        Array.isArray(cons) ? cons.join('\n') : (cons || '');
+
+    const fund = d.fundamentacao_legal;
+    document.getElementById('ef-fundamentacao_legal').value =
+        Array.isArray(fund) ? fund.join('\n') : (fund || '');
+
+    _editorModoAtivo = true;
+    document.getElementById('preview-wrapper').style.display = 'none';
+    document.getElementById('editor-visual').style.display = 'block';
+    document.getElementById('btn-toggle-editor').textContent = '👁 Preview';
+    document.getElementById('step2-title').textContent = '✏️ Editando';
+    showToast('Dados carregados para edição.', 'info');
+}
+
+async function salvarEdicaoVisual() {
+    if (!_editorJsonAtual) { showToast('Nenhum dado carregado.', 'warn'); return; }
+    const d = Object.assign({}, _editorJsonAtual);
+
+    const simples = ['numero_processo','data_processo','requerente','assunto',
+                     'logradouro','bairro','inscricao_municipal','lote','quadra',
+                     'area_terreno','area_total_construida','taxa_ocupacao',
+                     'coef_aproveitamento','taxa_permeabilidade','zona_uso',
+                     'profissional_nome','art_rrt','paragrafo_abertura','conclusao'];
+    simples.forEach(k => {
+        const el = document.getElementById('ef-' + k);
+        if (el) d[k] = el.value.trim() || d[k];
+    });
+
+    d.considerandos = document.getElementById('ef-considerandos').value
+        .split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    d.fundamentacao_legal = document.getElementById('ef-fundamentacao_legal').value
+        .split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+    const nome = document.getElementById('preview-sel').value.replace('.json','');
+    const r = await api('/api/salvar-json', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({nome, conteudo: JSON.stringify(d, null, 2)})
+    });
+    if (!r.ok) { showToast('Erro ao salvar: ' + r.erro, 'err'); return; }
+
+    _editorJsonAtual = d;
+    showToast('Dados salvos! Atualizando preview...', 'ok');
+    toggleEditorVisual();
+    setTimeout(carregarPreview, 400);
+}
+
+// ── Modo Batch (Triagem em Lote) ─────────────────────────────────────
+let loteProcessos = [];
+
+async function carregarLote() {
+    const tbody = document.getElementById('lote-tbody');
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;"><svg class="spinner" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:8px"><use href="#icon-spinner"></use></svg> Carregando processos...</td></tr>';
+    document.getElementById('btn-compilar-lote').disabled = true;
+    document.getElementById('lote-sel-todos').checked = false;
+    document.getElementById('lote-progress-container').style.display = 'none';
+
+    const st = await api('/api/status');
+    if (!st.jsons || st.jsons.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted)">Nenhum JSON encontrado na pasta de entrada.</td></tr>';
+        return;
+    }
+
+    loteProcessos = [];
+    tbody.innerHTML = '';
+
+    for (let j of st.jsons) {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+        tr.innerHTML = `<td colspan="6" style="padding:10px 8px; color:var(--muted)"><svg class="spinner" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:8px"><use href="#icon-spinner"></use></svg> Inspecionando ${j.nome}...</td>`;
+        tbody.appendChild(tr);
+
+        // Fetch JSON content
+        const rJson = await api('/api/ler-json/' + encodeURIComponent(j.nome));
+        if (rJson.ok) {
+            // Inspect JSON
+            const rInsp = await api('/api/inspecionar', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: rJson.conteudo });
+            if (rInsp.ok) {
+                const ins = rInsp.inspecao;
+                const rot = rInsp.roteamento;
+                
+                let dJson = {};
+                try { dJson = JSON.parse(rJson.conteudo); } catch(e){}
+                let tipo = dJson.tipo_relatorio || 'Desconhecido';
+                
+                let scoreText = ins.score + '%';
+                let scoreColor = ins.score >= 80 ? 'var(--green)' : ins.score >= 50 ? 'var(--orange)' : 'var(--red)';
+                
+                if (ins.veredito === 'INDETERMINADO' && ins.score === 0) {
+                    scoreText = '--';
+                    scoreColor = 'var(--muted)';
+                }
+                
+                let vereditoColor = ins.veredito === 'APTO' ? 'var(--green)' : ins.veredito === 'CONDICIONADO' ? 'var(--orange)' : ins.veredito === 'INDETERMINADO' ? 'var(--muted)' : 'var(--red)';
+                let checkDisabled = ins.veredito === 'PENDÊNCIA' ? 'disabled' : '';
+
+                tr.innerHTML = `
+                    <td style="padding:10px 8px"><input type="checkbox" class="lote-chk" value="${j.nome}" ${checkDisabled} onchange="atualizarBtnLote()"></td>
+                    <td style="padding:10px 8px; font-weight:600">${j.nome.replace('.json', '')}</td>
+                    <td style="padding:10px 8px; color:var(--muted)">${tipo}</td>
+                    <td style="padding:10px 8px; font-weight:700; color:${scoreColor}">${scoreText}</td>
+                    <td style="padding:10px 8px; font-weight:700; color:${vereditoColor}">${ins.veredito}</td>
+                    <td style="padding:10px 8px; text-align:right">
+                        <button class="btn-s" onclick="quickPreview('${j.nome}')" style="font-size:11px;padding:4px 8px">👁 Auditoria</button>
+                    </td>
+                `;
+            } else {
+                tr.innerHTML = `<td colspan="6" style="padding:10px 8px; color:var(--red)">Erro ao inspecionar ${j.nome}</td>`;
+            }
+        } else {
+            tr.innerHTML = `<td colspan="6" style="padding:10px 8px; color:var(--red)">Erro ao ler ${j.nome}</td>`;
+        }
+    }
+    atualizarBtnLote();
+}
+
+function toggleLoteAll(chk) {
+    const chks = document.querySelectorAll('.lote-chk:not([disabled])');
+    chks.forEach(c => c.checked = chk.checked);
+    atualizarBtnLote();
+}
+
+function atualizarBtnLote() {
+    const selecionados = document.querySelectorAll('.lote-chk:checked').length;
+    const btn = document.getElementById('btn-compilar-lote');
+    if (selecionados > 0) {
+        btn.disabled = false;
+        btn.innerHTML = `🚀 Compilar ${selecionados} Selecionados`;
+    } else {
+        btn.disabled = true;
+        btn.innerHTML = `🚀 Compilar Selecionados`;
+    }
+}
+
+async function compilarLote() {
+    const chks = document.querySelectorAll('.lote-chk:checked');
+    if (chks.length === 0) return;
+
+    const progCont = document.getElementById('lote-progress-container');
+    const progText = document.getElementById('lote-progress-text');
+    const progPct = document.getElementById('lote-progress-pct');
+    const progBar = document.getElementById('lote-progress-bar');
+    
+    progCont.style.display = 'block';
+    document.getElementById('btn-compilar-lote').disabled = true;
+    
+    let sucessos = 0;
+    
+    let arquivos = [];
+    for (let i = 0; i < chks.length; i++) {
+        const nome = chks[i].value;
+        arquivos.push(nome);
+        progText.textContent = `[${i+1}/${chks.length}] Preparando ${nome}...`;
+        let p = Math.round(((i + 0.5) / chks.length) * 100);
+        progPct.textContent = p + '%';
+        progBar.style.width = p + '%';
+    }
+    
+    progText.textContent = `Concluído. Acionando Motor Python para ${arquivos.length} processo(s)...`;
+    
+    const ep = '/api/compilar-lote';
+    const r = await api(ep, {
+        method: 'POST', 
+        headers: {'Content-Type':'application/json'}, 
+        body: JSON.stringify({arquivos: arquivos})
+    });
+    
+    progPct.textContent = '100%';
+    progBar.style.width = '100%';
+    
+    if (r.ok) {
+        showToast(`Lote compilado com sucesso!`, 'ok');
+        setTimeout(() => goStep(4), 1000);
+    } else {
+        showToast('Houve erros na compilação do lote.', 'err');
+    }
+}
+
+// ── Registro do Sistema ──────────────────────────────────────────────────
+let _registroCache = null;
+
+async function loadRegistro() {
+    const container = document.getElementById('registro-container');
+    if (!container) return;
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><div style="font-size:32px">⏳</div><div>Carregando inventário...</div></div>';
+
+    const r = await api('/api/registro-sistema', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{}'});
+    if (!r.ok) {
+        container.innerHTML = `<div class="ai-alert danger"><span class="ai-alert-icon">⚠️</span><span>Erro: ${r.erro}</span></div>`;
+        return;
+    }
+
+    _registroCache = r.registro;
+    const reg = r.registro;
+    let html = '';
+
+    // ── KPI Cards ──
+    html += '<div class="health-stats" style="margin-bottom:24px">';
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value" style="color:var(--accent)">${reg.total_tipos}</span><span class="stat-label">Tipos de Documento</span></div>`;
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value" style="color:var(--green)">${reg.total_leis}</span><span class="stat-label">Leis Cadastradas</span></div>`;
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value" style="color:var(--accent2)">${reg.variaveis.total}</span><span class="stat-label">Variáveis Schema</span></div>`;
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value">${reg.zonas_urbanisticas.length}</span><span class="stat-label">Zonas Mapeadas</span></div>`;
+    html += `<div class="health-stat" style="min-width:100px;flex:1"><span class="stat-value">${reg.total_checklists}</span><span class="stat-label">Checklists</span></div>`;
+    if (reg.variaveis.novas_pendentes > 0) {
+        html += `<div class="health-stat" style="min-width:100px;flex:1;border-color:rgba(245,158,11,0.4)"><span class="stat-value" style="color:var(--orange)">${reg.variaveis.novas_pendentes}</span><span class="stat-label">Variáveis Novas</span></div>`;
+    }
+    html += '</div>';
+
+    // ── Tipos de Documento ──
+    html += '<div class="health-section">';
+    html += '<div class="health-section-title" style="color:var(--accent)">📄 Tipos de Documento Registrados</div>';
+    const catLabels = {parecer_tecnico:'Parecer Técnico', parecer_simples:'Parecer Simples', oficio:'Ofício/Memorando', comunicado:'Comunicado', comunicado_pendencia:'Comunicado Pendência'};
+    for (let cat in reg.tipos_parecer) {
+        const tipos = reg.tipos_parecer[cat];
+        html += `<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase">${catLabels[cat]||cat} (${tipos.length})</div>`;
+        html += '<div style="display:flex;flex-wrap:wrap;gap:6px">';
+        tipos.forEach(t => {
+            html += `<span class="badge badge-b">${t}</span>`;
+        });
+        html += '</div></div>';
+    }
+    html += '</div>';
+
+    // ── Leis Cadastradas ──
+    html += '<div class="health-section">';
+    html += '<div class="health-section-title" style="color:var(--green)">⚖️ Leis e Documentos na Base de Conhecimento</div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px">';
+    reg.leis_cadastradas.forEach(l => {
+        const isLei = l.arquivo.includes('lei_') || l.arquivo.includes('lc_') || l.arquivo.includes('decreto');
+        const icon = isLei ? '📜' : (l.arquivo.includes('manual') ? '📖' : '📄');
+        html += `<div class="health-doc-item"><span class="doc-status">${icon}</span><div class="doc-info"><div class="doc-name">${l.arquivo}</div><div class="doc-note">${l.tamanho_kb} KB</div></div></div>`;
+    });
+    html += '</div>';
+    html += `<div style="margin-top:12px;font-size:12px;color:var(--muted)">Total: ${reg.base_conhecimento.total_arquivos} arquivos (${reg.base_conhecimento.tamanho_total_kb} KB)</div>`;
+    html += '</div>';
+
+    // ── Variáveis do Schema ──
+    html += '<div class="health-section">';
+    html += `<div class="health-section-title" style="color:var(--accent2)">🔧 Variáveis do Schema JSON (${reg.variaveis.total})</div>`;
+    html += '<details><summary style="cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px">Clique para expandir lista completa</summary>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">';
+    reg.variaveis.todas.forEach(v => {
+        const isObrig = reg.variaveis.obrigatorias.includes(v);
+        html += `<span class="badge ${isObrig ? 'badge-r' : 'badge-b'}" title="${isObrig ? 'Obrigatória' : 'Opcional'}">${v}</span>`;
+    });
+    html += '</div></details>';
+    if (reg.variaveis.novas_pendentes > 0) {
+        html += `<div class="ai-alert" style="margin-top:12px"><span class="ai-alert-icon">⚠️</span><span>${reg.variaveis.novas_pendentes} variável(is) nova(s) detectada(s) pelo Gemini aguardando promoção. Revise em <code>03_NOVAS_VARIAVEIS_PROPOSTAS.md</code>.</span></div>`;
+    }
+    html += '</div>';
+
+    // ── Zonas Urbanísticas ──
+    html += '<div class="health-section">';
+    html += '<div class="health-section-title" style="color:var(--text)">🗺️ Zonas Urbanísticas Mapeadas</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:8px">';
+    reg.zonas_urbanisticas.forEach(z => {
+        html += `<span class="badge badge-g">${z}</span>`;
+    });
+    html += '</div></div>';
+
+    // ── Checklists ──
+    html += '<div class="health-section">';
+    html += `<div class="health-section-title" style="color:var(--text)">✅ Checklists por Tipo de Processo (${reg.total_checklists})</div>`;
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px">';
+    reg.checklists.forEach(c => {
+        html += `<div style="padding:8px 12px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:8px;font-size:12px;color:var(--text)">✅ ${c}</div>`;
+    });
+    html += '</div></div>';
+
+    // ── Arquivos de Treino ──
+    html += '<div class="health-section">';
+    html += '<div class="health-section-title" style="color:var(--orange)">🎓 Arquivos de Treinamento IA</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px">';
+    reg.treino_arquivos.forEach(f => {
+        html += `<span class="badge badge-j">${f}</span>`;
+    });
+    html += '</div>';
+    html += `<div style="margin-top:8px;font-size:12px;color:var(--muted)">JSONs de exemplo no motor: ${reg.jsons_exemplo.length} | Decisões de triagem registradas: ${reg.total_decisoes_triagem}</div>`;
+    html += '</div>';
+
+    // ── Logs Estruturados (Observabilidade) ──
+    if (reg.logs_json && reg.logs_json.length > 0) {
+        html += '<div class="health-section">';
+        html += '<div class="health-section-title" style="color:var(--muted)">🚨 Logs de Erros e Avisos Recentes (Observabilidade)</div>';
+        html += '<div style="overflow-x:auto">';
+        html += '<table style="width:100%;font-size:12px;text-align:left;border-collapse:collapse">';
+        html += '<thead style="color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.1)"><tr><th style="padding:4px">Hora</th><th style="padding:4px">Nível</th><th style="padding:4px">Mensagem</th><th style="padding:4px">Dados</th></tr></thead>';
+        html += '<tbody>';
+        reg.logs_json.reverse().forEach(log => {
+            const color = log.level === 'ERROR' ? 'var(--red)' : (log.level === 'WARNING' ? 'var(--orange)' : 'var(--muted)');
+            const dataStr = log.data ? JSON.stringify(log.data, null, 1) : '';
+            html += `<tr style="border-bottom:1px solid rgba(255,255,255,0.05)"><td style="padding:4px;white-space:nowrap">${log.timestamp.split('T')[1].split('.')[0]}</td><td style="padding:4px;color:${color};font-weight:700">${log.level}</td><td style="padding:4px">${log.message}</td><td style="padding:4px"><details><summary style="cursor:pointer">🔍</summary><pre style="font-size:10px;background:rgba(0,0,0,0.2);padding:4px;border-radius:4px">${dataStr}</pre></details></td></tr>`;
+        });
+        html += '</tbody></table></div></div>';
+    }
+
+    container.innerHTML = html;
+}
+
+async function exportarRegistro() {
+    if (!_registroCache) await loadRegistro();
+    if (!_registroCache) { showToast('Carregue o registro primeiro.', 'warn'); return; }
+    const reg = _registroCache;
+    
+    let md = '# Inventário do Sistema GEM SMOSU\\n\\n';
+    md += `**Data:** ${new Date().toLocaleDateString('pt-BR')}\\n\\n`;
+    
+    md += `## Resumo\\n- ${reg.total_tipos} tipos de documento\\n- ${reg.total_leis} leis cadastradas\\n- ${reg.variaveis.total} variáveis no schema\\n- ${reg.zonas_urbanisticas.length} zonas mapeadas\\n- ${reg.total_checklists} checklists\\n\\n`;
+    
+    md += '## Tipos de Documento\\n';
+    for (let cat in reg.tipos_parecer) {
+        md += `### ${cat}\\n`;
+        reg.tipos_parecer[cat].forEach(t => md += `- ${t}\\n`);
+    }
+    
+    md += '\\n## Leis Cadastradas\\n';
+    reg.leis_cadastradas.forEach(l => md += `- ${l.arquivo} (${l.tamanho_kb} KB)\\n`);
+    
+    md += '\\n## Variáveis\\n';
+    reg.variaveis.todas.forEach(v => md += `- ${v}${reg.variaveis.obrigatorias.includes(v) ? ' *(obrigatória)*' : ''}\\n`);
+    
+    md += '\\n## Zonas\\n';
+    reg.zonas_urbanisticas.forEach(z => md += `- ${z}\\n`);
+    
+    await navigator.clipboard.writeText(md.replace(/\\n/g, '\n'));
+    showToast('Inventário copiado para a área de transferência! Cole no Gemini.', 'ok');
+}
+
+// ── Ajuda e Manuais ──
+async function loadDocs() {
+  const r = await api('/api/docs');
+  if(!r.ok) return showToast(r.erro, 'err');
+  const list = document.getElementById('docs-list');
+  list.innerHTML = r.docs.map(d => `
+    <li class="file-item" onclick="readDoc('${d}')" style="cursor:pointer">
+      <span>📄 ${d}</span>
+      <div class="file-actions"><button style="color:var(--accent)">📖 Ler</button></div>
+    </li>
+  `).join('');
+}
+
+async function readDoc(nome) {
+  const r = await api('/api/docs/' + encodeURIComponent(nome));
+  if(!r.ok) return showToast(r.erro, 'err');
+  
+  document.getElementById('doc-title').innerHTML = `📖 ${nome}`;
+  if (typeof marked !== 'undefined') {
+    document.getElementById('doc-content').innerHTML = marked.parse(r.conteudo);
+  } else {
+    document.getElementById('doc-content').innerHTML = `<pre style="white-space:pre-wrap">${r.conteudo}</pre>`;
+  }
+  showToast(`Carregado: ${nome}`, 'ok');
+}
+
+// ── Manutenção ──
+async function limparPastaEntrada() {
+  if (!confirm('Deseja realmente remover todos os PDFs e JSONs da pasta de entrada? Esta ação não pode ser desfeita.')) return;
+  const r = await api('/api/limpar-entrada', {method:'POST'});
+  if (r.ok) {
+    showToast(`Limpeza concluída! ${r.removidos} arquivos removidos.`, 'ok');
+    refresh();
+  } else {
+    showToast(r.erro, 'err');
+  }
+}
+
+refresh(); setInterval(refresh, 10000);
+</script>
+</body>
+</html>

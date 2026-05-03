@@ -1,0 +1,22 @@
+{
+  "memoria_de_calculo": "PREENCHER: listar os materiais necessários com quantidade e justificativa. Indicar setor solicitante e urgência.",
+
+  "tipo_relatorio": "oficio_interno_materiais",
+  "numero_processo": "⚠️ VERIFICAR — ex: Ofício nº XXX/2026-SMOSU",
+  "data_processo": "⚠️ VERIFICAR — ex: 23 de abril de 2026",
+  "assunto": "Solicitação de Materiais de Expediente — SMOSU",
+
+  "destinatario_titulo": "OFÍCIO AO GABINETE",
+  "destinatario_para": "⚠️ VERIFICAR — Nome do Chefe de Gabinete / Secretário",
+  "destinatario_de": "Diego Tarcísio Nunes Vilela — Engenheiro Civil, CREA 235.474/D — SMOSU",
+
+  "considerandos": [
+    "⚠️ VERIFICAR — justificar a necessidade dos materiais solicitados (reposição de estoque, novo projeto, etc.);",
+    "⚠️ VERIFICAR — listar os itens: item 1 — descrição — quantidade X; item 2 — descrição — quantidade X; etc.;",
+    "⚠️ VERIFICAR — informar urgência ou prazo, se aplicável."
+  ],
+
+  "conclusao": "Diante do exposto, solicita-se a aquisição dos materiais listados acima, indispensáveis para a continuidade das atividades administrativas e técnicas desta Secretaria.",
+
+  "documentos_emitir": []
+}

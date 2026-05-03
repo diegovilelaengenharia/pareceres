@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python run_tests.py)",
+      "Bash(git commit -m ' *)",
+      "Bash(ls -la *.md)",
+      "Bash(ls -la MEMORY*)",
+      "Bash(ls -la CLAUDE*)",
+      "Read(//c/Users/diego/.gemini/projects/c--Users-diego-Meu-Drive-02--Trabalho--Engenheiro-Civil--02--Prefeitura--PMO--1--Gemini-02--Pareceres/memory/**)",
+      "Read(//c/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/3_Treinar_Inteligencia/**)",
+      "PowerShell(Get-Process -Name WINWORD)",
+      "PowerShell(Stop-Process -Name WINWORD -Force)",
+      "Read(//c/Users/diego/.antigravity/**)",
+      "Read(//c/Users/diego/**)",
+      "mcp__claude_ai_PDF_Viewer__list_pdfs",
+      "Skill(gsd-complete-milestone)",
+      "Skill(gsd-complete-milestone:*)",
+      "Skill(gsd-new-milestone)",
+      "Skill(gsd-new-milestone:*)",
+      "Skill(gsd-plan-phase)",
+      "Skill(gsd-plan-phase:*)",
+      "Skill(gsd-execute-phase)",
+      "Skill(gsd-execute-phase:*)",
+      "WebFetch(domain:github.com)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\diego\\.gemini"
+    ]
+  }
+}

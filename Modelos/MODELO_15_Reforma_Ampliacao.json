@@ -1,0 +1,117 @@
+{
+  "_comentario": "GABARITO — baseado no processo real 12329/2025 (Késsia Maria Cândido Salviano, ZUR3). Caso de reforma + demolição parcial + ampliação. Use como few-shot: substitua os campos, mantendo a estrutura e a decomposição de área (existente − demolição + ampliação = total final).",
+
+  "memoria_de_calculo": "Área terreno: 200,00m². Composição final: 52,54m² (existente averbada) − 0,94m² (demolição) + 194,62m² (ampliação) = 246,22m² total final. TO = área de projeção / 200,00 × 100 = 135,70/200,00 × 100 = 67,85% — limite ZUR3: 70% ✓. CA = 246,22 / 200,00 = 1,231 — limite ZUR3: 3,5 ✓. TP = 40,60 / 200,00 × 100 = 20,30% — mínimo ZUR3: 20% ✓. TP mínima exigida: 200,00 × 20% = 40,00m² (projeto prevê 40,60m²). Lote 200m² < 220m² → aplicar §13 Art. 9º LC 267/2019 (afastamentos pelo Código Civil, 1,50m).",
+
+  "tipo_relatorio": "alvara_reforma_demolicao_ampliacao",
+  "numero_processo": "12329/2025",
+  "data_processo": "18 de dezembro de 2025",
+  "assunto": "Alvará de Reforma, Demolição e Ampliação",
+  "requerente": "KÉSSIA MARIA CÂNDIDO SALVIANO",
+
+  "logradouro": "Alameda das Violetas, nº 81",
+  "bairro": "Residencial Recanto da Serra",
+  "inscricao_municipal": "01.01.278.0150.001",
+  "matricula_sri": "32676",
+  "lote": "Lote 016",
+  "quadra": "004",
+
+  "zona_uso": "ZUR3",
+  "categoria_uso": "UR 1",
+  "area_terreno": "200,00m²",
+  "area_ja_averbada": "52,54m²",
+  "area_demolicao": "0,94m²",
+  "area_ampliacao": "194,62m²",
+  "area_total_construida": "246,22m²",
+  "area_permeavel": "40,60m²",
+  "area_permeavel_minima": "40,00m²",
+  "taxa_ocupacao": "67,85%",
+  "coef_aproveitamento": "1,231",
+  "taxa_permeabilidade": "20,30%",
+
+  "profissional_nome": "Stella Pires de Castro",
+  "profissional_titulo": "Arquiteta e Urbanista",
+  "profissional_registro": "CAU/BR nº 00A1495402",
+  "art_rrt": "15541842",
+  "art_rrt_execucao": "16660917",
+  "art_atividade": "Projeto Arquitetônico de Reforma",
+  "art_atividade_execucao": "Execução de Obra",
+
+  "agentes_fiscais": "Wallace Alencar Martins Silveira (Mat. 306017-9) e Silvania F. Santos Pedrosa (Mat. 3083160-1)",
+  "situacao_obra": "não iniciada",
+
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face deste Processo Administrativo nº 12329/2025, onde a requerente KÉSSIA MARIA CÂNDIDO SALVIANO solicita a reforma, demolição e ampliação de edificação residencial unifamiliar de 246,22m² (sendo 52,54m² de área já existente averbada, da qual ocorrerá a demolição de 0,94m², acrescida de 194,62m² de área de ampliação nova), em terreno localizado no Zoneamento ZUR3 com área total de 200,00m², taxa de ocupação de 67,85%, taxa de permeabilidade de 20,30% e coeficiente de aproveitamento de 1,231, localizado na Alameda das Violetas, nº 81, bairro Residencial Recanto da Serra (Lote 016, Quadra 004). De acordo com o PARECER FISCAL emitido por Wallace Alencar Martins Silveira (Mat. 306017-9) e Silvania F. Santos Pedrosa (Mat. 3083160-1), a construção ainda não foi iniciada.",
+
+  "considerandos": [
+    "Que o terreno está registrado sob MATRÍCULA DE INTEIRO TEOR nº 32676 em nome da própria requerente (com área averbada de 52,54m²) e possui INSCRIÇÃO CADASTRAL 01.01.278.0150.001, comprovando a regularidade dominial e a existência da edificação previamente regularizada, conforme exigido pelo Art. 1º do Decreto Municipal nº 4.149/2019.",
+    "Que para o projeto, foram apresentados o RRT nº 15541842 referente à atividade de Projeto Arquitetônico de Reforma, e o respectivo RRT nº 16660917 contemplando a atividade de Execução de Obra, ambos de responsabilidade da Arquiteta e Urbanista Stella Pires de Castro, CAU/BR nº 00A1495402, englobando a área da ampliação de 194,62m², atendendo ao requisito do Art. 48 da Lei Municipal nº 1.544/86.",
+    "Que a composição final da área edificada é: 52,54m² existentes averbados − 0,94m² de demolição + 194,62m² de ampliação nova = 246,22m² de área total final licenciada, estando verificados os índices urbanísticos conforme Tabela 1 do Art. 9º da Lei Complementar nº 267/2019 para Zoneamento ZUR3: Taxa de Ocupação de 67,85% (= 135,70/200,00×100) abaixo do limite de 70%; Coeficiente de Aproveitamento de 1,231 (= 246,22/200,00) abaixo do limite de 3,5; Taxa de Permeabilidade de 20,30% (= 40,60/200,00×100) acima do mínimo de 20%, atendendo a área permeável de 40,60m² (mínimo exigido: 200,00×20% = 40,00m²).",
+    "Que o lote possui área de 200,00m², sendo inferior ao limite de 220,00m² previsto no §13 do Art. 9º da LC 267/2019, aplicando-se a exceção que remete os afastamentos laterais e de fundos ao Código Civil (Art. 1.301 — mínimo de 1,50m), em substituição às faixas previstas na Tabela 1; permanecendo obrigatórias a Taxa de Ocupação e a Taxa de Permeabilidade.",
+    "Que o setor técnico salienta que a análise se ateve ao Código de Obras do Município de Oliveira (Lei nº 1544, de 04 de Março de 1986) e à Lei de Uso e Ocupação do Solo (Lei Complementar nº 267, de 11 de outubro de 2019) e ao Decreto nº 4.149 de 19 de dezembro de 2019."
+  ],
+
+  "fundamentacao_legal": [
+    "__Decreto Municipal nº 4.149/2019__ (Procedimentos para Aprovação de Projetos): rito processual e requisitos documentais aplicados à análise.",
+    "__Lei Municipal nº 1.544/86 (Código de Obras), Art. 48__: obrigatoriedade da responsabilidade técnica, atendida pelo RRT nº 15541842 (projeto) e RRT nº 16660917 (execução) da Arquiteta Stella Pires de Castro.",
+    "__Lei Complementar nº 267/2019 (Uso e Ocupação do Solo), Art. 9º, Tabela 1__: parâmetros urbanísticos do Zoneamento ZUR3 — Taxa de Ocupação máxima 70%, Coeficiente de Aproveitamento máximo 3,5 e Taxa de Permeabilidade mínima 20%, todos atendidos pelo projeto.",
+    "__Lei Complementar nº 267/2019, Art. 9º §13__: exceção dos afastamentos para lotes com área inferior a 220,00m², remetendo-os ao Código Civil (Art. 1.301), aplicável ao presente caso (terreno de 200,00m²)."
+  ],
+
+  "conclusao": "Diante do exposto, verificado e aprovado o PROJETO de reforma, demolição e ampliação, profiro parecer técnico **FAVORÁVEL** ao deferimento, podendo ser emitido o documento relacionado abaixo.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Alvará de Reforma, Demolição e Ampliação — Residência Unifamiliar 246,22m² (área total final)",
+      "obs": "Validade de 01 (um) ano a contar da data do alvará. Composição: 52,54m² existentes averbados (com demolição de 0,94m²) + 194,62m² de ampliação nova = 246,22m² total final. A edificação deverá manter a taxa de permeabilidade de 20,30% do terreno (40,60m²), respeitando o projeto aprovado."
+    }
+  ],
+
+  "extras_extraidos": {
+    "matricula_numero": "32676",
+    "area_ja_averbada": "52,54m²",
+    "area_demolicao": "0,94m²",
+    "area_ampliacao": "194,62m²",
+    "area_total_final": "246,22m²",
+    "rrt_projeto": "15541842",
+    "rrt_execucao": "16660917",
+    "profissional_responsavel": "Stella Pires de Castro (Arquiteta e Urbanista, CAU/BR nº 00A1495402)",
+    "fiscais": [
+      {"nome": "Wallace Alencar Martins Silveira", "matricula_funcional": "306017-9"},
+      {"nome": "Silvania F. Santos Pedrosa", "matricula_funcional": "3083160-1"}
+    ],
+    "situacao_obra": "não iniciada",
+    "valores_pagos": []
+  },
+
+  "historico_cronologico": [
+    {"data": "18/12/2025", "evento": "Abertura do Processo 12329/2025 — solicitação de Alvará de Reforma, Demolição e Ampliação", "tipo": "abertura_processo"},
+    {"data": "[data_rrt_projeto]", "evento": "Emissão do RRT nº 15541842 — Projeto Arquitetônico de Reforma", "tipo": "documento_externo", "referencia": "RRT 15541842"},
+    {"data": "[data_rrt_execucao]", "evento": "Emissão do RRT nº 16660917 — Execução de Obra", "tipo": "documento_externo", "referencia": "RRT 16660917"},
+    {"data": "[data_vistoria]", "evento": "Parecer fiscal: obra não iniciada", "tipo": "vistoria_fiscal", "agentes": ["Wallace Alencar Martins Silveira", "Silvania F. Santos Pedrosa"]},
+    {"data": "26/03/2026", "evento": "Emissão do Parecer Técnico favorável", "tipo": "documento_municipal"}
+  ],
+
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "KÉSSIA MARIA CÂNDIDO SALVIANO",
+      "qualidade": "proprietária — Matrícula nº 32676"
+    },
+    "responsavel_tecnico": {
+      "nome": "Stella Pires de Castro",
+      "conselho": "CAU/BR",
+      "tipo_rt": "RRT",
+      "numero_rt_projeto": "15541842",
+      "numero_rt_execucao": "16660917",
+      "titulo": "Arquiteta e Urbanista"
+    },
+    "agentes_fiscais": [
+      {"nome": "Wallace Alencar Martins Silveira", "matricula_funcional": "306017-9"},
+      {"nome": "Silvania F. Santos Pedrosa", "matricula_funcional": "3083160-1"}
+    ],
+    "assinante_parecer": {
+      "nome": "Diego Tarcísio Nunes Vilela",
+      "titulo": "Engenheiro Civil",
+      "registro": "CREA 235.474/D"
+    }
+  }
+}

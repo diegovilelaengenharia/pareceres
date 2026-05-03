@@ -1,0 +1,11 @@
+{
+  "tipo_relatorio": "alvara_construcao_comercial",
+  "numero_processo": "1234/2026",
+  "requerente": "TESTE",
+  "paragrafo_abertura": "Teste",
+  "considerandos": [
+    "Teste"
+  ],
+  "conclusao": "Teste",
+  "documentos_emitir": []
+}

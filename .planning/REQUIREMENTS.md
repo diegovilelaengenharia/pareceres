@@ -1,35 +1,56 @@
-# Requirements — Milestone v2.0
+# Requirements — Milestone v2.0 & v3.0
 
 **Milestone:** v2.0 — Qualidade Interna e Manutenibilidade
-**Scope:** Refatoração sem novas features. Foco nos 4 concerns abertos do CONCERNS.md.
-**Created:** 2026-05-01
+**Milestone:** v3.0 — Expansão da Inteligência e Geoprocessamento
+**Created:** 2026-05-01 (v2.0), 2026-05-02 (v3.0)
 
 ---
 
-## Functional Requirements
+## Functional Requirements (v2.0)
 
 ### FR-01 — Portabilidade de Paths
 - O motor deve ser executável sem edição manual de caminhos após clonar o repositório.
-- Paths hardcoded (strings literais com `C:\`, `D:\`, etc.) devem ser substituídos por paths relativos usando `pathlib.Path` ou `os.path`.
-- Entry points `.bat` devem usar `%~dp0` ou equivalente para resolução de caminho relativo ao script.
 - **Acceptance:** `grep -r "C:\\" _Sistema_Interno/` retorna zero resultados em código Python.
 
 ### FR-02 — Limpeza de Lógica Legada no Compilador
 - Remover ou consolidar a lógica de "tipos descritivos legados" em `compilador.py`.
-- A função de despacho de tipo deve ser limpa, linear e mapeada exclusivamente via `config.TIPOS_DOCUMENTO`.
-- Qualquer alias ou mapeamento remanescente de tipos antigos deve ser documentado ou removido se não utilizado.
 - **Acceptance:** `compilador.py` não contém branches `if tipo in [...]` com listas hardcoded de tipos antigos.
 
 ### FR-03 — Mecanismo de Detecção de Dessincronização de Templates
-- Criar um utilitário que compare os placeholders existentes nos templates Word (`.docx` em `0_Modelos_Prontos/`) com as chaves injetadas pelos geradores correspondentes em `geradores/`.
-- O utilitário deve emitir um relatório de: (a) placeholders no template sem gerador, (b) campos no gerador sem placeholder no template.
+- Criar um utilitário que compare os placeholders existentes nos templates Word com as chaves injetadas pelos geradores.
 - **Acceptance:** Executar `python template_checker.py` produz relatório sem erros críticos nos templates atuais.
 
 ### FR-04 — Documentação de Desenvolvedor
-- Todos os módulos Python em `_Sistema_Interno/01_Motor_Python/` devem ter docstring de nível de módulo (`"""..."""` no topo do arquivo).
-- Funções públicas com mais de 10 linhas devem ter docstring descrevendo parâmetros, retorno e efeitos colaterais.
-- Criar `_Sistema_Interno/01_Motor_Python/ARCHITECTURE.md` descrevendo: fluxo de entrada → pré-voo → geração → saída, lista de módulos e responsabilidades.
-- **Acceptance:** `python -c "import compilador; help(compilador)"` exibe documentação legível.
+- Documentar módulos e funções públicas. Criar `ARCHITECTURE.md`.
+
+### FR-05 — Integração de OCR com Gemini CLI
+- Utilizar capacidades do Gemini para ler PDFs complexos e gerar JSON.
+
+### ARCH-01 — Arquitetura de Pacotes Python
+- Organizar o motor Python em subpacotes (core, generators, analyzers, extractors, ui, utils).
+- **Acceptance:** Não existem arquivos `.py` (exceto `__init__.py`) diretamente na raiz de `01_Motor_Python/`.
+
+### ARCH-02 — Limpeza da Raiz do Projeto
+- Remover scripts utilitários da raiz do projeto, movendo-os para pastas internas do sistema.
+- **Acceptance:** A raiz contém apenas pastas numeradas e o entry-point `.bat`.
+
+### ARCH-03 — Consolidação de Planejamento
+- Unificar toda a documentação de planejamento e requisitos em um único local (`.planning/`).
+- **Acceptance:** O diretório `.gemini/plans/` foi removido ou está vazio após a consolidação.
+
+---
+
+## Functional Requirements (v3.0)
+
+### FR-06 — Integração de Legislações 2025
+- O sistema deve incorporar a LEI Nº 4.071/2025 e atualizar valores de URM/VRM para o exercício de 2025/2026.
+- A base RAG `02_GEM_REFERENCIA.md` deve ser a fonte da verdade para estas citações.
+- **Acceptance:** O motor calcula multas usando os novos índices e cita a LEI 4.071 nos pareceres de teste.
+
+### FR-07 — Inteligência Geográfica (IEPHA e Zoneamento)
+- Implementar mecanismo de cruzamento de endereços com áreas de preservação do IEPHA e zoneamento específico.
+- O sistema deve alertar automaticamente se um imóvel estiver em área de proteção histórica.
+- **Acceptance:** Processar um logradouro no "Centro" dispara um aviso de restrição IEPHA no parecer gerado.
 
 ---
 
@@ -40,16 +61,11 @@
 - A suite `run_tests.py --motor` deve passar 100% após cada fase.
 
 ### NFR-02 — Execução Local Windows
-- O sistema deve continuar executando 100% local no Windows sem dependências externas novas.
-
-### NFR-03 — Commits Atômicos por Fase
-- Cada fase entregue em commit(s) rastreáveis, com mensagem descritiva.
+- O sistema deve continuar executando 100% local no Windows sem dependências externas novas (exceto API Gemini já em uso).
 
 ---
 
 ## Out of Scope
 
-- Novos tipos de documento ou fluxos de tramitação (→ v3.0+)
-- Integração com sistemas externos (SEI, banco de dados, APIs) (→ v3.0+)
-- Conversão automática para PDF em background (problema de ambiente, não de código)
+- Integração com sistemas externos de banco de dados SQL (→ v4.0+)
 - Interface web nova (→ backlog)

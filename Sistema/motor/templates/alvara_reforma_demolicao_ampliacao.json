@@ -1,0 +1,68 @@
+{
+    "tipo_relatorio": "alvara_reforma_demolicao_ampliacao",
+    "titulo_documento": "PARECER SETOR TÉCNICO - SMOSU",
+    "categoria": "parecer_tecnico",
+    "descricao": "Reforma, demolição parcial e ampliação no mesmo processo",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "assunto",
+        "requerente",
+        "logradouro",
+        "bairro",
+        "lote",
+        "quadra",
+        "area_terreno",
+        "area_total_construida",
+        "area_averbada_anterior",
+        "area_demolicao",
+        "area_ampliacao",
+        "taxa_ocupacao",
+        "taxa_permeabilidade",
+        "coef_aproveitamento",
+        "zona_uso",
+        "art_rrt",
+        "profissional_nome",
+        "considerandos",
+        "documentos_emitir"
+    ],
+    "campos_opcionais": [
+        "inscricao_municipal",
+        "matricula_sri",
+        "proprietario",
+        "agentes_fiscais",
+        "area_permeavel_m2",
+        "profissional_registro",
+        "art_atividade",
+        "art_rrt_execucao",
+        "paragrafos_adicionais",
+        "fundamentacao_legal"
+    ],
+    "descricao_campos_opcionais": {
+        "area_averbada_anterior": "Área já existente e averbada (ex: 52,54m²)",
+        "area_demolicao": "Área que será demolida dentro da parte existente (ex: 0,94m²)",
+        "area_ampliacao": "Área nova que será acrescida (ex: 194,62m²)",
+        "area_permeavel_m2": "Área permeável em m² prevista no projeto (ex: 40,60m²)",
+        "agentes_fiscais": "Nomes e matrículas dos agentes do parecer fiscal",
+        "profissional_registro": "Registro do profissional (ex: CAU/BR nº 00A1495402)",
+        "art_atividade": "Atividade da primeira ART/RRT (ex: Projeto Arquitetônico de Reforma)",
+        "art_rrt_execucao": "Número da segunda ART/RRT quando há RRT de projeto + RRT de execução separados"
+    },
+    "modelo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face deste Processo Administrativo, onde o requerente solicita a reforma, demolição e ampliação de edificação residencial unifamiliar de [area_total_construida] (sendo [area_averbada_anterior] de área já existente averbada, da qual ocorrerá a demolição de [area_demolicao], acrescida de [area_ampliacao] de área de ampliação nova), em terreno localizado no Zoneamento [zona_uso] com área total de [area_terreno], taxa de ocupação de [taxa_ocupacao], taxa de permeabilidade de [taxa_permeabilidade] e coeficiente de aproveitamento de [coef_aproveitamento], localizado na [logradouro], bairro [bairro] (Lote [lote], Quadra [quadra]). De acordo com o parecer fiscal emitido por [agentes_fiscais], a construção ainda não foi iniciada.",
+    "modelo_considerandos": [
+        "[OBRIGATÓRIO] o terreno está registrado sob Matrícula nº [matricula_sri] em nome do(a) requerente (com área averbada de [area_averbada_anterior]) e possui Inscrição Cadastral [inscricao_municipal];",
+        "[OBRIGATÓRIO] para o projeto, foram apresentados a [ART/RRT] nº [art_rrt] referente à atividade de [art_atividade], e [SE art_rrt_execucao] o respectivo [ART/RRT] nº [art_rrt_execucao] contemplando a atividade de Execução de Obra, ambos de responsabilidade do(a) [título: Arquiteta e Urbanista / Engenheiro Civil / Técnico em Edificações] [profissional_nome], [profissional_registro], englobando a área da ampliação de [area_ampliacao]."
+    ],
+    "modelo_conclusao": "Diante disto, verificado e aprovado o projeto, poderá ser emitido:",
+    "documentos_tipicos": [
+        {
+            "tipo": "Alvará de Reforma, Demolição e Ampliação de edificação residencial unifamiliar para área total final de [area_total_construida]",
+            "obs": "Válido por 01 ano a contar da data do alvará. A edificação licenciada para reforma e ampliação no nº [numero_porta] deverá manter a taxa de permeabilidade de [taxa_permeabilidade] do terreno ([area_permeavel_m2]) e respeitar o projeto aprovado. Área composta por: [area_averbada_anterior] já existente averbada (com demolição de [area_demolicao]) + [area_ampliacao] de área nova."
+        }
+    ],
+    "legislacao_aplicavel": [
+        "Decreto nº 4.149/2019",
+        "Lei nº 1.544/86 (Código de Obras)",
+        "Lei Complementar nº 267/2019 (Uso e Ocupação do Solo)"
+    ]
+}

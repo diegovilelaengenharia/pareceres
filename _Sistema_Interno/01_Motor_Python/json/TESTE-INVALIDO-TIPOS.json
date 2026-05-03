@@ -1,8 +1,0 @@
-{
-    "tipo_relatorio": "alvara_aprovacao",
-    "numero_processo": 12345,
-    "requerente": ["Fulano"],
-    "paragrafo_abertura": true,
-    "considerandos": "Isto devia ser uma lista",
-    "conclusao": 1000
-}

@@ -1,0 +1,31 @@
+{
+    "tipo": "referencia",
+    "descricao": "Checklist de documentos obrigatórios para abertura de processos na SMOSU",
+    "alvara_construcao_reforma_ampliacao": [
+        "Documento Pessoal (CPF, RG) / Procuração (se aplicável)",
+        "Comprovante de endereço atualizado",
+        "Certidão Imobiliária (Matrícula atualizada, ou Contrato de Compra e Venda + Matrícula)",
+        "Projeto Arquitetônico (Digital: DWG e PDF)",
+        "ART / RRT / TRT (Projeto e Execução)",
+        "Guia de Recolhimento de Taxa de Licença quitada",
+        "Certidão Negativa de Débitos Municipais",
+        "Espelho Cadastral"
+    ],
+    "regularizacao_as_built": [
+        "Mesmos documentos do alvará",
+        "Projeto As Built",
+        "Laudo Técnico de Vistoria (com ART/RRT de laudo)"
+    ],
+    "desmembramento_divisao_retificacao": [
+        "Documentos pessoais e propriedade do terreno",
+        "Levantamento Topográfico Georreferenciado (DWG e PDF)",
+        "Memorial Descritivo (PDF)",
+        "ART / RRT / TRT pertinente ao levantamento",
+        "Certidão Negativa de Débitos"
+    ],
+    "certidoes_simples": [
+        "Documentos Pessoais",
+        "Matrícula ou Contrato de Compra e Venda",
+        "Espelho Cadastral do imóvel"
+    ]
+}

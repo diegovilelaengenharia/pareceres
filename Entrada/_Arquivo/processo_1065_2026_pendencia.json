@@ -1,0 +1,13 @@
+{
+    "tipo_relatorio": "comunicado_pendencia",
+    "numero_processo": "1065/2026",
+    "data_processo": "28/01/2026",
+    "assunto": "COMUNICADO DE PENDÊNCIA — MULTAS E DECADÊNCIA",
+    "requerente": "EDIMIRCE EDUARDO DE OLIVEIRA",
+    "paragrafo_abertura": "O Departamento Técnico da Secretaria Municipal de Obras e Serviços Urbanos (SMOSU) analisou a documentação do processo de regularização de obra, Habite-se e Declaração de Decadência. A análise técnica e legal do processo encontra-se temporariamente suspensa devido às pendências relacionadas abaixo:",
+    "considerandos": [
+        "**Indeferimento Automático da Decadência:** Ao consultarmos a Planta Cadastral do município, constatou-se que não há registro de área construída há mais de 5 (cinco) anos no lote. Sendo assim, a isenção de taxas por prazo temporal (decadência) não pode ser deferida de ofício sem provas materiais adicionais.",
+        "**Multas Urbanísticas Acumulativas (LC 267/2019):** A obra executada possui uma Taxa de Ocupação de 87,05% e uma Taxa de Permeabilidade de apenas 1,87%. Face a essa divergência, é obrigatório o recolhimento das multas cumulativas referentes à soma destas áreas irregulares, compreendendo: (a) Taxa de aprovação devida pela diferença entre a área apresentada e a área do alvará anterior; e (b) Multa por edificar sem licença da prefeitura, incidente sobre a mesma área irregular."
+    ],
+    "conclusao": "O processo continuará suspenso até a resolução destas pendências. O requerente deverá providenciar o pagamento das guias de multa junto ao setor de arrecadação. Caso deseje prosseguir com a solicitação de decadência, deverá apresentar provas documentais inequívocas de que a obra foi concluída há mais de 5 anos (ex: Histórico de Imagens de Satélite, Contas antigas de CEMIG/SAAE vinculadas ao local). Somente após a regularização destas pendências será possível agendar a vistoria 'in loco' para posterior liberação do Habite-se."
+}

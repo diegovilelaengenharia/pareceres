@@ -1,0 +1,121 @@
+{
+  "_comentario": "GABARITO — habite-se com infração de taxa de permeabilidade (TP abaixo do mínimo). Use como few-shot: substitua os campos, mantendo a estrutura dos considerandos e o registro explícito do pagamento da multa.",
+
+  "memoria_de_calculo": "Área terreno: 320,00m². Alvará original: nº 0143/2025 (processo 8742/2025), área licenciada 187,20m². Projeto aprovado previa TP = 64,80m² (= 20,25%). Vistoria fiscal constatou TP realizada = 52,60m² (= 52,60/320,00×100 = 16,44%). Déficit de permeabilidade: 64,00m² (mínimo 20%) − 52,60m² = 11,40m². Infração Art. 38 + Art. 39 LC 267/2019. Multa paga via DAM nº 2026041832 em 15/04/2026, valor R$ 1.120,00. TO (conforme construído): 189,76/320,00×100 = 59,30% ≤ 70% ✓. CA: 187,20/320,00 = 0,585 ≤ 3,5 ✓.",
+
+  "tipo_relatorio": "habitese_multa",
+  "numero_processo": "3721/2026",
+  "data_processo": "12 de fevereiro de 2026",
+  "assunto": "Habite-se — Residência Unifamiliar (com regularização de infração)",
+  "requerente": "PAULO ROBERTO ALVES MACHADO",
+
+  "logradouro": "Rua Antônio Rodrigues, nº 155",
+  "bairro": "Jardim das Paineiras",
+  "inscricao_municipal": "01.02.203.0412",
+  "matricula_sri": "28843",
+  "lote": "Lote 14",
+  "quadra": "22",
+
+  "zona_uso": "ZUR-3",
+  "area_terreno": "320,00m²",
+  "area_total_construida": "187,20m²",
+  "taxa_ocupacao": "59,30%",
+  "coef_aproveitamento": "0,585",
+  "taxa_permeabilidade": "16,44%",
+  "area_permeavel": "52,60m²",
+  "area_permeavel_minima": "64,00m²",
+
+  "numero_alvara_emitido": "0143/2025",
+  "data_alvara_emitido": "10 de abril de 2025",
+  "numero_processo_alvara": "8742/2025",
+
+  "profissional_nome": "Marcos Aurélio da Costa Pinto",
+  "profissional_titulo": "Engenheiro Civil",
+  "profissional_registro": "CREA 312.456/D",
+  "art_rrt": "2025/CREA-MG/312456-01",
+  "art_atividade": "Execução de Obra — Residência Unifamiliar",
+
+  "agentes_fiscais": "Wallace Alencar Martins Silveira (Mat. 306017-9) e Silvania F. Santos Pedrosa (Mat. 3083160-1)",
+  "situacao_obra": "concluída, habitável — com infração de taxa de permeabilidade",
+
+  "infracao_tipo": "taxa_permeabilidade",
+  "infracao_previsto": "64,80m² (20,25%)",
+  "infracao_realizado": "52,60m² (16,44%)",
+  "infracao_deficit": "11,40m² abaixo do mínimo legal de 64,00m²",
+  "multa_base_legal": "Art. 38 e Art. 39 da Lei Complementar nº 267/2019",
+  "multa_valor": "R$ 1.120,00",
+  "multa_dam": "DAM nº 2026041832",
+  "multa_data_pagamento": "15/04/2026",
+
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face do Processo Administrativo nº 3721/2026, onde o requerente PAULO ROBERTO ALVES MACHADO solicita o Habite-se de edificação residencial unifamiliar de 187,20m², Lote 14, Quadra 22, em terreno localizado no Zoneamento ZUR-3 com área total de 320,00m², taxa de ocupação de 59,30%, taxa de permeabilidade como construído de 16,44% e coeficiente de aproveitamento de 0,585, localizado na Rua Antônio Rodrigues, nº 155, bairro Jardim das Paineiras. De acordo com o PARECER FISCAL emitido por Wallace Alencar Martins Silveira (Mat. 306017-9) e Silvania F. Santos Pedrosa (Mat. 3083160-1), a construção se encontra concluída e em condições de habitabilidade, porém foi constatada infração de taxa de permeabilidade.",
+
+  "considerandos": [
+    "Que a edificação foi licenciada pelo Alvará de Construção nº 0143/2025, emitido em 10 de abril de 2025 no Processo Administrativo nº 8742/2025, para área de 187,20m², residência unifamiliar, Lote 14, Quadra 22, na Rua Antônio Rodrigues, nº 155, conforme registro da SMOSU.",
+    "Que de acordo com o PARECER FISCAL emitido por Wallace Alencar Martins Silveira (Mat. 306017-9) e Silvania F. Santos Pedrosa (Mat. 3083160-1), a obra se encontra concluída e em condições de habitabilidade, conferindo com o projeto aprovado quanto à área construída e implantação, sendo identificada, contudo, divergência na taxa de permeabilidade efetivamente implantada em relação ao projeto aprovado.",
+    "Que o PARECER FISCAL identificou que não foi respeitada a taxa de permeabilidade mínima aprovada em projeto: o projeto aprovado previa área permeável de 64,80m² (= 64,80/320,00×100 = 20,25%) e o realizado foi de 52,60m² (= 52,60/320,00×100 = 16,44%), resultando em déficit de 11,40m² em relação ao mínimo legal de 64,00m² (= 320,00×20%), configurando infração aos Arts. 38 e 39 da Lei Complementar nº 267/2019.",
+    "Que o requerente efetuou o pagamento da multa referente à infração de taxa de permeabilidade constatada, conforme DAM nº 2026041832 quitado em 15/04/2026, no valor de R$ 1.120,00, nos termos do escalonamento previsto no Art. 39 da LC nº 267/2019.",
+    "Que o requerente apresentou MATRÍCULA DE INTEIRO TEOR nº 28843 do SRI e INSCRIÇÃO IMOBILIÁRIA 01.02.203.0412, comprovando a regularidade dominial do imóvel.",
+    "Que o setor técnico salienta que a análise se ateve ao Código de Obras do Município de Oliveira (Lei nº 1.544, de 04 de março de 1986), à Lei de Uso e Ocupação do Solo (Lei Complementar nº 267, de 11 de outubro de 2019) e ao Decreto nº 4.149 de 19 de dezembro de 2019."
+  ],
+
+  "fundamentacao_legal": [
+    "__Decreto Municipal nº 4.149/2019__ (Procedimentos para Aprovação de Projetos): rito processual e requisitos documentais para emissão do Habite-se.",
+    "__Lei Municipal nº 1.544/86 (Código de Obras), Arts. 39 e 40__: condições para emissão do Habite-se — obra concluída conforme projeto aprovado e pagamento das taxas devidas.",
+    "__Lei Complementar nº 267/2019 (Uso e Ocupação do Solo), Art. 9º, Tabela 1__: taxa de permeabilidade mínima de 20% para Zoneamento ZUR-3.",
+    "__Lei Complementar nº 267/2019, Arts. 38 e 39__: infração por descumprimento da taxa de permeabilidade mínima; multa calculada sobre o déficit apurado, paga via DAM nº 2026041832."
+  ],
+
+  "conclusao": "Diante do exposto, verificada a conclusão da obra, confirmado o pagamento da multa referente à infração de taxa de permeabilidade (DAM nº 2026041832 — R$ 1.120,00), profiro parecer técnico **FAVORÁVEL** ao deferimento, podendo ser emitido o documento relacionado abaixo.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Carta de Habite-se — Residência Unifamiliar 187,20m²",
+      "obs": "Habite-se emitido após regularização de infração de taxa de permeabilidade (déficit de 11,40m²), mediante pagamento de multa de R$ 1.120,00 via DAM nº 2026041832, quitado em 15/04/2026, nos termos dos Arts. 38 e 39 da LC nº 267/2019. A área permeável implantada de 52,60m² (16,44%) é inferior ao mínimo de 64,00m² (20%) exigido para o terreno de 320,00m²."
+    }
+  ],
+
+  "extras_extraidos": {
+    "alvara_anterior_numero": "0143/2025",
+    "alvara_anterior_processo": "8742/2025",
+    "alvara_anterior_data": "10/04/2025",
+    "infracao_detectada": "taxa de permeabilidade abaixo do mínimo — déficit 11,40m²",
+    "multa_dam": "2026041832",
+    "multa_valor": "R$ 1.120,00",
+    "multa_data_pagamento": "15/04/2026",
+    "valores_pagos": [
+      {"descricao": "Multa Art. 38-39 LC 267/2019 — déficit de permeabilidade (11,40m²)", "valor": "R$ 1.120,00", "dam": "2026041832", "data": "15/04/2026"}
+    ]
+  },
+
+  "historico_cronologico": [
+    {"data": "10/04/2025", "evento": "Emissão do Alvará de Construção nº 0143/2025 — processo 8742/2025, área 187,20m²", "tipo": "documento_municipal"},
+    {"data": "12/02/2026", "evento": "Abertura do Processo 3721/2026 — solicitação de Habite-se", "tipo": "abertura_processo"},
+    {"data": "[data_vistoria]", "evento": "Vistoria fiscal: obra concluída e habitável; infração de TP detectada (52,60m² vs. 64,80m² aprovado)", "tipo": "vistoria_fiscal", "agentes": ["Wallace Alencar Martins Silveira", "Silvania F. Santos Pedrosa"]},
+    {"data": "15/04/2026", "evento": "Pagamento da multa Art. 39 LC 267/2019 via DAM nº 2026041832 — R$ 1.120,00", "tipo": "pagamento"},
+    {"data": "25/04/2026", "evento": "Emissão do Parecer Técnico favorável com registro da multa paga", "tipo": "documento_municipal"}
+  ],
+
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "PAULO ROBERTO ALVES MACHADO",
+      "qualidade": "proprietário — Matrícula nº 28843"
+    },
+    "responsavel_tecnico": {
+      "nome": "Marcos Aurélio da Costa Pinto",
+      "conselho": "CREA-MG",
+      "tipo_rt": "ART",
+      "numero_rt": "2025/CREA-MG/312456-01",
+      "titulo": "Engenheiro Civil",
+      "atividade": "Execução de Obra"
+    },
+    "agentes_fiscais": [
+      {"nome": "Wallace Alencar Martins Silveira", "matricula_funcional": "306017-9"},
+      {"nome": "Silvania F. Santos Pedrosa", "matricula_funcional": "3083160-1"}
+    ],
+    "assinante_parecer": {
+      "nome": "Diego Tarcísio Nunes Vilela",
+      "titulo": "Engenheiro Civil",
+      "registro": "CREA 235.474/D"
+    }
+  }
+}

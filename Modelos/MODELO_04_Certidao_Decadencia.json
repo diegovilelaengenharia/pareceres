@@ -1,0 +1,48 @@
+{
+  "memoria_de_calculo": "PREENCHER: data do Habite-se anterior ou data cadastral que comprova a existência há +5 anos. Data de referência: DD/MM/AAAA. Anos decorridos: X anos. Fundamento: Art. 150 §4º CTN.",
+
+  "tipo_relatorio": "certidao_averbacao_decadencia",
+  "numero_processo": "⚠️ VERIFICAR — ex: 1234/2026",
+  "data_processo": "⚠️ VERIFICAR — ex: 23 de abril de 2026",
+  "assunto": "Certidão de Averbação por Decadência — Art. 150 §4º CTN",
+  "requerente": "⚠️ VERIFICAR — NOME COMPLETO EM MAIÚSCULAS",
+
+  "logradouro": "⚠️ VERIFICAR — Rua/Av., nº XXX",
+  "bairro": "⚠️ VERIFICAR",
+  "inscricao_municipal": "⚠️ VERIFICAR",
+  "profissional_nome": "Diego Tarcísio Nunes Vilela",
+
+  "data_conclusao_obra": "⚠️ VERIFICAR — DD/MM/AAAA (data do habite-se ou espelho cadastral mais antigo)",
+
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, no uso de suas atribuições legais, **certifica** que, após análise da documentação apresentada, constata-se que a edificação objeto do presente processo foi concluída há mais de 05 (cinco) anos, aplicando-se a decadência nos termos do Art. 150, §4º do Código Tributário Nacional, conforme exposto a seguir:",
+
+  "considerandos": [
+    "⚠️ VERIFICAR — identificar o imóvel (matrícula, inscrição cadastral, logradouro);",
+    "⚠️ VERIFICAR — descrever a edificação existente: área, tipo de uso, pavimentos;",
+    "a edificação foi concluída conforme comprovado por **⚠️ VERIFICAR (Habite-se nº X/AAAA, datado de DD/MM/AAAA / Espelho Cadastral de DD/MM/AAAA / Planta Cadastral de DD/MM/AAAA)**, evidenciando sua existência há mais de **05 (cinco) anos** na data do presente parecer;",
+    "decorrido o prazo de 5 anos sem o lançamento do crédito tributário pelo Fisco Municipal, operam-se os efeitos da decadência previstos no __Art. 150, §4º do Código Tributário Nacional (CTN)__, extinguindo o direito de constituir o crédito tributário relativo às taxas e multas de construção sobre a área decadente de **⚠️ VERIFICAR X,XXm²**;",
+    "⚠️ VERIFICAR — mencionar se houve ou não processo de regularização anterior, documentos analisados."
+  ],
+
+  "fundamentacao_legal": [
+    "__Art. 150, §4º do Código Tributário Nacional (CTN)__: O prazo decadencial de 5 anos para constituição do crédito tributário encontra-se vencido, operando-se a extinção do direito de lançar tributo sobre a área decadente.",
+    "__Art. 15 da Lei Complementar nº 267/2019__: ⚠️ VERIFICAR — aplicável se lote ≤ 220m².",
+    "__Decreto Municipal nº 4.149/2019__: Certidão emitida em conformidade com os requisitos procedimentais da Secretaria."
+  ],
+
+  "conclusao": "Diante do exposto, certifica-se que a área de **⚠️ VERIFICAR X,XXm²** da edificação está sujeita à decadência nos termos do Art. 150, §4º do CTN, podendo ser utilizada esta Certidão para fins de **averbação perante o Cartório de Registro de Imóveis** e junto à **Receita Federal do Brasil**, para comprovação da regularização fiscal da construção.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Averbação por Decadência — ⚠️ VERIFICAR (área decadente em m²)",
+      "obs": "Para fins de averbação junto ao Cartório de Registro de Imóveis, nos termos do __Art. 150, §4º do CTN__."
+    }
+  ],
+
+  "extras_extraidos": {
+    "matricula_numero": "⚠️ VERIFICAR",
+    "habitese_anterior": "⚠️ VERIFICAR — Habite-se nº X/AAAA ou Espelho Cadastral de DD/MM/AAAA",
+    "area_decadente_m2": "⚠️ VERIFICAR",
+    "confrontantes": "⚠️ VERIFICAR"
+  }
+}

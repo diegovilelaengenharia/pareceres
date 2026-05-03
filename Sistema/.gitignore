@@ -1,0 +1,19 @@
+# Ignorar arquivos do Word e PDF gerados (dados da prefeitura)
+*.docx
+*.pdf
+!*_engine/prompt_modelo.md
+
+# Ignorar pastas de ambiente virtual Python se houver no futuro
+__pycache__/
+venv/
+.env
+
+# Ignorar arquivos de sistema do Windows/Mac
+desktop.ini
+.DS_Store
+
+# Ignorar arquivos temporários do Word
+~*.docx
+
+# Ignorar a pasta json para não subir dados reais de obras
+_engine/json/*.json

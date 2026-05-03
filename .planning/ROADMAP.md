@@ -15,22 +15,70 @@ This document outlines the phased execution plan.
 ### ✅ Phase 3: Portabilidade de Paths *(concluída 2026-05-01)*
 - **Goal**: Substituir todos os paths hardcoded em código Python e scripts `.bat` por resoluções relativas (`pathlib.Path(__file__).parent`, `%~dp0`), garantindo que o motor funcione após clonar em qualquer diretório.
 - **Requirements**: FR-01, NFR-01, NFR-02
-- **Status**: [complete] — 1/1 planos concluídos; constantes de pasta centralizadas em `config.py`; 5/5 testes passaram
+- **Status**: [complete]
 
-### Phase 4: Limpeza de Lógica Legada no Compilador
+### ✅ Phase 4: Limpeza de Lógica Legada no Compilador *(concluída 2026-05-02)*
 - **Goal**: Consolidar e remover o código de despacho de "tipos descritivos legados" em `compilador.py`. Toda lógica de mapeamento de tipos deve fluir exclusivamente via `config.TIPOS_DOCUMENTO`.
 - **Requirements**: FR-02, NFR-01
-- **Status**: [pending_planning]
+- **Status**: [complete]
 
-### Phase 5: Detector de Dessincronização de Templates
-- **Goal**: Criar `template_checker.py` que compara placeholders nos arquivos `.docx` de `0_Modelos_Prontos/` com os campos injetados pelos geradores, emitindo relatório de divergências.
+### ✅ Phase 5: Detector de Dessincronização de Templates *(concluída 2026-05-02)*
+- **Goal**: Criar `template_checker.py` que compara placeholders e campos nos arquivos JSON de `0_Modelos_Prontos/` e `templates/` com os campos injetados/requisitados pelos geradores.
 - **Requirements**: FR-03, NFR-01
-- **Status**: [pending_planning]
+- **Status**: [complete]
+- **Plans**:
+    - [x] 05-01-PLAN.md — Criação do Detector de Dessincronização
 
-### Phase 6: Documentação de Desenvolvedor
-- **Goal**: Docstrings de módulo em todos os arquivos Python do motor, docstrings em funções públicas longas, e criação de `ARCHITECTURE.md` descrevendo o fluxo completo do sistema.
-- **Requirements**: FR-04
-- **Status**: [pending_planning]
+### ✅ Phase 6: Excelência Arquitetural e Inteligência Operacional *(concluída 2026-05-02)*
+- **Goal**: Elevar a qualidade arquitetural através da abstração de motores, sincronização dinâmica de schema e observabilidade via painel JSON-aware.
+- **Requirements**: FR-03, NFR-01
+- **Status**: [complete]
+- **Plans**:
+    - [x] 06-01-PLAN.md — Abstração de Motores e Sincronização de Schema
+
+### ✅ Phase 7: Integração de OCR de Alta Fidelidade (Local) *(concluída 2026-05-02)*
+- **Goal**: Implementar fluxo de entrada baseado em Docling + PaddleOCR para extração de dados de PDFs complexos, eliminando a dependência de APIs externas.
+- **Requirements**: FR-05, NFR-01, NFR-02
+- **Status**: [complete]
+- **Plans**:
+    - [x] 07-01-PLAN.md — Implementação e Validação de OCR Local Híbrido
+
+### ✅ Phase 9: Reorganização Estrutural e Consolidação *(concluída 2026-05-02)*
+- **Goal**: Reorganizar o motor Python em subpacotes, limpar a raiz do projeto e consolidar o planejamento em `.planning/`.
+- **Requirements**: ARCH-01, ARCH-02, ARCH-03
+- **Status**: [complete]
+- **Plans**:
+    - [x] 09-01-PLAN.md — Reorganização e Consolidação de Estrutura
+
+### ✅ Phase 10: Manutenção e Finalização *(concluída 2026-05-02)*
+- **Goal**: Refinar a UI/UX, consolidar a documentação e preparar o sistema para entrega final (Produto Final).
+- **Requirements**: FR-04, NFR-01, NFR-02
+- **Status**: [complete]
+- **Plans**:
+    - [x] 10-01-PLAN.md — Refinamento Estrutural e Documentação
+    - [x] 10-02-PLAN.md — Evolução UI/UX (Painel GEM)
+
+### ✅ Phase 11: Qualidade e Inteligência dos Pareceres *(concluída 2026-05-02)*
+- **Goal**: Elevar a qualidade dos documentos gerados pelo GEM — reescrever prompts, criar gabaritos, adicionar cálculos explícitos (TO, CA, TP, multas), formato de considerandos narrativo+legal, fluxo de confirmação de documentos antes da geração do JSON.
+- **Requirements**: FR-01, FR-02, FR-06
+- **Status**: [complete]
+- **Plans**:
+    - [x] 11-01-PLAN.md — Reescrita de Prompts e Gabarito de Qualidade
+    - [ ] 11-02-PLAN.md — Novos Modelos JSON (alvará_regularização, habitese_multa)
+- **Context**: [11-CONTEXT.md](phases/11-qualidade-inteligencia/11-CONTEXT.md)
 
 ---
-*Roadmap updated: 2026-05-01*
+
+## Milestone v3.0 — Expansão da Inteligência e Geoprocessamento
+
+*Objetivo: Integrar legislações de 2025, diretrizes de preservação histórica (IEPHA) e automação de cruzamento geográfico.*
+
+### Phase 8: Expansão da Inteligência e Integração de Legislações
+- **Goal**: Processar a pasta "LEGISLAÇÕES PARA TREINAR E REVISAR", extrair informações cruciais e atualizar a base de conhecimento e lógica do motor (IEPHA, Multas 2025, LEI 4.071/2025).
+- **Requirements**: FR-06, FR-07
+- **Status**: [planned]
+- **Plans**:
+    - [ ] 08-01-PLAN.md — Integração de Legislações 2025 e IEPHA
+
+---
+*Roadmap updated: 2026-05-02*

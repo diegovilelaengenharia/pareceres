@@ -1,0 +1,48 @@
+{
+    "tipo_relatorio": "certidao_numero_2via",
+    "titulo_documento": "PARECER SETOR TÉCNICO – SMOSU",
+    "categoria": "parecer_simples",
+    "descricao": "Segunda Via de Certidão de Número (para SAAE e CEMIG)",
+    "campos_obrigatorios": [
+        "numero_processo",
+        "data_processo",
+        "requerente",
+        "logradouro",
+        "bairro",
+        "numero_porta",
+        "numero_alvara",
+        "matricula_sri",
+        "inscricao_municipal",
+        "considerandos"
+    ],
+    "campos_opcionais": [
+        "lote",
+        "quadra",
+        "area_liberada",
+        "data_oficio",
+        "agente_fiscal",
+        "status_obra",
+        "documentos_emitir"
+    ],
+    "descricao_campos_opcionais": {
+        "area_liberada": "Área liberada pelo alvará de construção (ex: 119,00m²)",
+        "data_oficio": "Data do ofício/requerimento que originou o pedido de 2ª via (ex: 23/4/2026)",
+        "agente_fiscal": "Nome do fiscal que verificou o status da obra",
+        "status_obra": "Status da obra conforme parecer fiscal (ex: 'foi iniciada', 'em andamento', 'não iniciada')",
+        "lote": "Número do lote a constar na certidão de número (ex: Lote 17)",
+        "quadra": "Número da quadra a constar na certidão de número (ex: Quadra 10)"
+    },
+    "assunto_padrao": "Segunda Via de Certidões de Número",
+    "modelo_considerandos": [
+        "[SE data_oficio] a solicitação do requerente, por meio de ofício datado de [data_oficio];",
+        "[OBRIGATÓRIO] o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº [numero_alvara], referente ao projeto aprovado em nome do requerente no processo [numero_processo] com área liberada de [area_liberada], [status_obra], localizada na [logradouro], nº [numero_porta], no bairro [bairro], em Oliveira/MG;",
+        "[OBRIGATÓRIO] o requerente apresentou título de propriedade do imóvel sendo uma Certidão de Inteiro Teor, registrada sob Matrícula [matricula_sri] e Inscrição Cadastral [inscricao_municipal]."
+    ],
+    "modelo_conclusao": "Diante disto, poderá ser expedida a segunda via de certidão de número para SAAE e CEMIG, onde deve constar o lote e quadra do referido imóvel ([lote], [quadra]).",
+    "documentos_tipicos": [
+        {
+            "tipo": "2ª Via de Certidão de Número: [numero_porta] para o SAAE e CEMIG",
+            "obs": "Constar Lote [lote], Quadra [quadra] do imóvel localizado na [logradouro], bairro [bairro]."
+        }
+    ]
+}
