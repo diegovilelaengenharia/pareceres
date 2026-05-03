@@ -33,7 +33,7 @@ def carregar_json(caminho):
         return None
 
 def check_templates():
-    PASTA_MODELOS = os.path.join(PROJECT_ROOT, "Modelos")
+    PASTA_MODELOS = os.path.join(PROJECT_ROOT, "Sistema", "modelos")
     PASTA_TEMPLATES = os.path.join(ENGINE_ROOT, "templates")
     
     if not os.path.exists(PASTA_MODELOS):
