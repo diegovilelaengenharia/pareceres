@@ -7,7 +7,12 @@
       "Bash(findstr /v \".git\")",
       "Bash(findstr /v \"node_modules\")",
       "Bash(Get-ChildItem -Recurse -Directory)",
-      "Bash(Select-Object FullName)"
+      "Bash(Select-Object FullName)",
+      "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.bg-shell')",
+      "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.claude')",
+      "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.gemini')",
+      "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.gsd')",
+      "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.planning')"
     ]
   }
 }
