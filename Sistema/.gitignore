@@ -1,19 +1,18 @@
-# Ignorar arquivos do Word e PDF gerados (dados da prefeitura)
-*.docx
-*.pdf
-!*_engine/prompt_modelo.md
+# Gerados pelo sistema — não rastrear
+Saida/_Testes/
+Saida/_Historico/
+logs/
 
-# Ignorar pastas de ambiente virtual Python se houver no futuro
+# Gerados pelo Python
 __pycache__/
+*.pyc
 venv/
 .env
 
-# Ignorar arquivos de sistema do Windows/Mac
+# Outputs temporários de testes
+motor/json/_output_testes/
+
+# Sistema
 desktop.ini
 .DS_Store
-
-# Ignorar arquivos temporários do Word
 ~*.docx
-
-# Ignorar a pasta json para não subir dados reais de obras
-_engine/json/*.json

@@ -12,7 +12,12 @@
       "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.claude')",
       "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.gemini')",
       "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.gsd')",
-      "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.planning')"
+      "Bash(attrib +h +s 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/.planning')",
+      "Bash(rm 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/base_conhecimento/manual_sero_extra2.txt')",
+      "Bash(rm 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/motor/json/test_inexistente.json')",
+      "Bash(rm 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/motor/json/teste_desconhecido.json')",
+      "Bash(rm 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/motor/json/teste_gemma.json')",
+      "Bash(rm 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/inteligencia/Guia_Pareceres_Completos.md')"
     ]
   }
 }
