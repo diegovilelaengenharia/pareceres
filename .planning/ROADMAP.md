@@ -73,6 +73,11 @@ This document outlines the phased execution plan.
 
 *Objetivo: Integrar legislações de 2025, diretrizes de preservação histórica (IEPHA) e automação de cruzamento geográfico.*
 
+### ✅ Phase 12: Upgrade dos Compiladores DOCX/PDF *(concluída 2026-05-03)*
+- **Goal**: Elevar a fidelidade visual e robustez técnica dos documentos gerados. Corrigir bugs de layout (margens de célula, largura de rodapé/cards), adicionar section headings coloridos para multas (vermelho) e condicionantes (verde), caixa sombreada para memória de cálculo, borda lateral nos itens de documentos, e unificar `compilador_livre.py` com o pipeline principal.
+- **Requirements**: qualidade visual, fidelidade DOCX/PDF, profissionalismo dos pareceres
+- **Status**: [complete]
+
 ### Phase 8: Expansão da Inteligência e Integração de Legislações
 - **Goal**: Processar a pasta "LEGISLAÇÕES PARA TREINAR E REVISAR", extrair informações cruciais e atualizar a base de conhecimento e lógica do motor (IEPHA, Multas 2025, LEI 4.071/2025).
 - **Requirements**: FR-06, FR-07

@@ -145,7 +145,7 @@ def add_page_number_footer(doc):
     pPr.append(pBdr)
 
     # ── Tabela 2 colunas: Texto à esquerda | Página à direita ──
-    tbl = footer.add_table(rows=1, cols=2, width=Twips(9360))
+    tbl = footer.add_table(rows=1, cols=2, width=Twips(10200))
     tbl.autofit = False
     # Sem bordas
     tblPr = tbl._tbl.tblPr
@@ -157,9 +157,9 @@ def add_page_number_footer(doc):
     tblPr.append(tblBrd)
 
     row = tbl.rows[0]
-    # Coluna esquerda: nome da secretaria
+    # Coluna esquerda: nome da secretaria (7200 + 3000 = 10200)
     c_left = row.cells[0]
-    c_left.width = Twips(6000)
+    c_left.width = Twips(7200)
     p_left = c_left.paragraphs[0]
     p_left.alignment = WD_ALIGN_PARAGRAPH.LEFT
     set_spacing(p_left, line=260, before=8, after=0)
@@ -169,7 +169,7 @@ def add_page_number_footer(doc):
 
     # Coluna direita: Página X de Y
     c_right = row.cells[1]
-    c_right.width = Twips(3360)
+    c_right.width = Twips(3000)
     fp = c_right.paragraphs[0]
     fp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     set_spacing(fp, line=260, before=8, after=0)

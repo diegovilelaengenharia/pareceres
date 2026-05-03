@@ -14,7 +14,18 @@ from docx.oxml import OxmlElement
 from core.config import (
     FONT_TITULO, SZ_CORPO, SZ_TABELA,
     COR_LABEL_FONT, COR_CINZA_TEXTO,
-    PAR_AFTER, LINE_SPC, ASSINANTE, CIDADE,
+    PAR_AFTER, LINE_SPC, ASSINANTE, CIDADE, INDENT_PADRAO,
+    W_IDENT_LABEL, W_IDENT_VALUE,
+    W_CARIMBO_L1, W_CARIMBO_V1, W_CARIMBO_L2, W_CARIMBO_V2,
+    W_PARTES_LABEL, W_PARTES_VALUE,
+    W_HIST_DATA, W_HIST_EVENT, W_HIST_REF,
+    W_CARD_TOTAL, AREA_UTIL_TWIPS,
+    COR_PENDENCIA_FILL, COR_PENDENCIA_BORDA,
+    COR_PENDENCIA_TEXTO, COR_PENDENCIA_ICON,
+    COR_SUCESSO_FILL, COR_SUCESSO_BORDA,
+    COR_SUCESSO_TEXTO, COR_SUCESSO_ICON,
+    COR_ALERTA_RED, COR_ALERTA_GREEN, COR_DOC_BOX_FILL,
+    COR_INST,
 )
 from generators.formatacao import (
     set_spacing, set_font, add_run, add_para, rich_segments,
@@ -77,8 +88,6 @@ def build_titulo(doc, titulo="PARECER SETOR TÉCNICO - SMOSU"):
 
 def build_identificacao(doc, d):
     """Tabela de identificação com 3 linhas: Processo, Assunto, Requerente."""
-    W_LABEL = 2268
-    W_VALUE = 7938
     tbl = doc.add_table(rows=3, cols=2)
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
     apply_table_borders(tbl)
@@ -95,7 +104,7 @@ def build_identificacao(doc, d):
     for i, (rot, val) in enumerate(linhas):
         row = tbl.rows[i]
         c_rot = row.cells[0]
-        apply_label_cell(c_rot, W_LABEL)
+        apply_label_cell(c_rot, W_IDENT_LABEL)
         p_rot = c_rot.paragraphs[0]
         p_rot.alignment = WD_ALIGN_PARAGRAPH.LEFT
         set_spacing(p_rot, line=280, before=70, after=70)
@@ -104,7 +113,7 @@ def build_identificacao(doc, d):
         r_rot.font.color.rgb = COR_LABEL_FONT
 
         c_val = row.cells[1]
-        apply_value_cell(c_val, W_VALUE)
+        apply_value_cell(c_val, W_IDENT_VALUE)
         p_val = c_val.paragraphs[0]
         p_val.alignment = WD_ALIGN_PARAGRAPH.LEFT
         set_spacing(p_val, line=280, before=70, after=70)
@@ -196,10 +205,10 @@ def build_dados_carimbo(doc, d):
          "Multa Específica:", d.get("tipo_multa_especifica", "")),
     ]
 
-    W_L1 = 2000
-    W_V1 = 3500
-    W_L2 = 2000
-    W_V2 = 2700
+    W_L1 = W_CARIMBO_L1
+    W_V1 = W_CARIMBO_V1
+    W_L2 = W_CARIMBO_L2
+    W_V2 = W_CARIMBO_V2
 
     for lab1, val1, lab2, val2 in linhas:
         row = tbl.add_row()
@@ -226,17 +235,17 @@ def build_dados_carimbo(doc, d):
 
         # Alerta: Área do Terreno < 220m² → verde + "exceção da lei"
         if lab1 == "Área Terreno:" and alerta_excecao:
-            cor_v1 = RGBColor(0x00, 0x80, 0x00)
+            cor_v1 = COR_ALERTA_GREEN
             alerta_msg_v1 = "  (exceção da lei)"
 
         # Alerta: Taxa Ocupação > 70% → vermelho + "conferir zoneamento"
         if lab1 == "Taxa Ocupação:" and alerta_zoneamento:
-            cor_v1 = RGBColor(0xCC, 0x00, 0x00)
+            cor_v1 = COR_ALERTA_RED
             alerta_msg_v1 = "  (conferir zoneamento)"
 
         # Alerta: Permeabilidade < 20% → vermelho
         if lab1 == "Permeabilidade:" and alerta_zoneamento:
-            cor_v1 = RGBColor(0xCC, 0x00, 0x00)
+            cor_v1 = COR_ALERTA_RED
             alerta_msg_v1 = "  (conferir zoneamento)"
 
         rich_segments(p1, val1, size=SZ_TABELA, color=cor_v1)
@@ -273,7 +282,7 @@ def build_dados_carimbo(doc, d):
 
 def build_corpo(doc, d):
     """Corpo do parecer: abertura, considerandos e parágrafos adicionais."""
-    INDENT = 1.25
+    INDENT = INDENT_PADRAO
 
     if d.get("paragrafo_abertura"):
         p_ab = add_para(doc, line=LINE_SPC, before=300,
@@ -301,19 +310,19 @@ def build_corpo(doc, d):
             rich_segments(p, cons_limpo, size=SZ_CORPO)
 
     if d.get("multas_aplicaveis"):
-        add_section_heading(doc, "Multas Aplicáveis")
+        add_section_heading(doc, "Multas e Penalidades Aplicáveis", fill='7B1A0A')
         for multa in _ensure_list(d["multas_aplicaveis"]):
-            p_multa = add_para(doc, line=LINE_SPC, before=0, after=PAR_AFTER, indent_cm=INDENT)
-            r_bullet = add_run(p_multa, "▪ ", size=SZ_CORPO, bold=True)
-            r_bullet.font.color.rgb = RGBColor(0xCC, 0x00, 0x00) # Red bullet
+            p_multa = add_para(doc, line=LINE_SPC, before=40, after=PAR_AFTER, indent_cm=INDENT)
+            r_bullet = add_run(p_multa, "▪  ", size=SZ_CORPO, bold=True)
+            r_bullet.font.color.rgb = COR_ALERTA_RED
             rich_segments(p_multa, multa, size=SZ_CORPO)
 
     if d.get("condicionantes_aprovacao"):
-        add_section_heading(doc, "Condicionantes de Aprovação")
+        add_section_heading(doc, "Condicionantes de Aprovação", fill='1A5C1A')
         for cond in _ensure_list(d["condicionantes_aprovacao"]):
-            p_cond = add_para(doc, line=LINE_SPC, before=0, after=PAR_AFTER, indent_cm=INDENT)
-            r_bullet = add_run(p_cond, "▪ ", size=SZ_CORPO, bold=True)
-            r_bullet.font.color.rgb = RGBColor(0x00, 0x80, 0x00) # Green bullet
+            p_cond = add_para(doc, line=LINE_SPC, before=40, after=PAR_AFTER, indent_cm=INDENT)
+            r_bullet = add_run(p_cond, "▪  ", size=SZ_CORPO, bold=True)
+            r_bullet.font.color.rgb = COR_ALERTA_GREEN
             rich_segments(p_cond, cond, size=SZ_CORPO)
 
     if d.get("paragrafos_adicionais"):
@@ -332,7 +341,7 @@ def build_fundamentacao(doc, d):
     if not d.get("fundamentacao_legal"):
         return
 
-    INDENT = 1.25
+    INDENT = INDENT_PADRAO
     add_section_heading(doc, "Da Análise Legal e Técnica")
 
     # Base legal padrão e simplificada exigida em todos os pareceres
@@ -356,24 +365,34 @@ def build_fundamentacao(doc, d):
 # ═══════════════════════════════════════════════════════════
 
 def add_doc_item(doc, tipo, obs=None):
-    """Bloco de documento elegante: titulo destacado + observacao em estilo distinto."""
+    """Bloco de documento com borda lateral azul e fundo claríssimo."""
     from docx.shared import Pt, Cm
 
-    # Linha do titulo: fundo azul claríssimo, bullet colorido, nome em negrito
+    # Linha do título: fundo azul claríssimo, bullet colorido, nome em negrito
     p_tipo = doc.add_paragraph()
     p_tipo.alignment = WD_ALIGN_PARAGRAPH.LEFT
     p_tipo.paragraph_format.left_indent  = Cm(0.3)
     p_tipo.paragraph_format.space_before = Pt(10)
     p_tipo.paragraph_format.space_after  = Pt(2)
-    p_tipo.paragraph_format.line_spacing = Pt(14)
+    p_tipo.paragraph_format.line_spacing = Pt(15)
 
     # Fundo azul claríssimo via shading XML
     pPr = p_tipo._p.get_or_add_pPr()
     shd = OxmlElement('w:shd')
     shd.set(qn('w:val'), 'clear')
     shd.set(qn('w:color'), 'auto')
-    shd.set(qn('w:fill'), 'EBF0FA')
+    shd.set(qn('w:fill'), COR_DOC_BOX_FILL)
     pPr.append(shd)
+
+    # Borda lateral esquerda azul institucional
+    pBdr = OxmlElement('w:pBdr')
+    left_b = OxmlElement('w:left')
+    left_b.set(qn('w:val'), 'single')
+    left_b.set(qn('w:sz'), '12')
+    left_b.set(qn('w:color'), COR_INST)
+    left_b.set(qn('w:space'), '8')
+    pBdr.append(left_b)
+    pPr.append(pBdr)
 
     r_bullet = p_tipo.add_run("\u2713  ")
     set_font(r_bullet, size=11, bold=True)
@@ -383,7 +402,7 @@ def add_doc_item(doc, tipo, obs=None):
     set_font(r_tipo, size=11, bold=True)
     r_tipo.font.color.rgb = RGBColor(0x1A, 0x1A, 0x1A)
 
-    # Observacao: prefixo azul + texto italico cinza discreto, recuado
+    # Observa\u00e7\u00e3o: prefixo azul + texto it\u00e1lico cinza, recuado
     if obs:
         p_obs = doc.add_paragraph()
         p_obs.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -497,7 +516,7 @@ def build_assinatura(doc, d):
     bot = OxmlElement('w:bottom')
     bot.set(qn('w:val'),   'single')
     bot.set(qn('w:sz'),    '6')
-    bot.set(qn('w:color'), '1F3864')
+    bot.set(qn('w:color'), COR_INST)
     bot.set(qn('w:space'), '1')
     pBdr.append(bot)
     pPr.append(pBdr)
@@ -508,7 +527,7 @@ def build_assinatura(doc, d):
     p_nome = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
                       line=LINE_SPC, before=40, after=0)
     r_nome = add_run(p_nome, nome, bold=True, size=SZ_CORPO)
-    r_nome.font.color.rgb = RGBColor(0x1F, 0x38, 0x64)
+    r_nome.font.color.rgb = COR_LABEL_FONT
     p_nome.paragraph_format.keep_with_next = True
 
     # Título e Registro em tamanho menor
@@ -518,14 +537,14 @@ def build_assinatura(doc, d):
         p = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
                      line=240, before=0, after=0)
         r = add_run(p, texto, bold=False, size=9)
-        r.font.color.rgb = RGBColor(0x44, 0x44, 0x44)
+        r.font.color.rgb = COR_CINZA_TEXTO
         p.paragraph_format.keep_with_next = True
 
     # Secretaria
     p_sec = add_para(doc, align=WD_ALIGN_PARAGRAPH.CENTER,
                      line=240, before=0, after=120)
     r_sec = add_run(p_sec, "Secretaria Municipal de Obras e Serviços Urbanos", bold=False, size=9)
-    r_sec.font.color.rgb = RGBColor(0x44, 0x44, 0x44)
+    r_sec.font.color.rgb = COR_CINZA_TEXTO
 
 
 # ═══════════════════════════════════════════════════════════
@@ -632,9 +651,6 @@ def build_partes_envolvidas(doc, partes: dict):
     if not linhas:
         return
 
-    W_LABEL = 2800
-    W_VALUE = 7400
-
     tbl = doc.add_table(rows=len(linhas), cols=2)
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
     apply_table_borders(tbl)
@@ -644,7 +660,7 @@ def build_partes_envolvidas(doc, partes: dict):
         row = tbl.rows[i]
 
         c_papel = row.cells[0]
-        _set_cell_width(c_papel, W_LABEL)
+        _set_cell_width(c_papel, W_PARTES_LABEL)
         _apply_cell_fill(c_papel, fill_hex)
         set_cell_margins(c_papel, top=40, bottom=40, left=80, right=40)
         p_papel = c_papel.paragraphs[0]
@@ -655,7 +671,7 @@ def build_partes_envolvidas(doc, partes: dict):
         r_p.font.color.rgb = COR_LABEL_FONT
 
         c_id = row.cells[1]
-        _set_cell_width(c_id, W_VALUE)
+        _set_cell_width(c_id, W_PARTES_VALUE)
         _apply_cell_fill(c_id, fill_hex)
         set_cell_margins(c_id, top=40, bottom=40, left=80, right=40)
         p_id = c_id.paragraphs[0]
@@ -685,24 +701,19 @@ def build_historico_cronologico(doc, historico: list):
     r_tit = add_run(p_tit, "HISTÓRICO CRONOLÓGICO DO PROCESSO", bold=True, size=SZ_TABELA)
     r_tit.font.color.rgb = COR_LABEL_FONT
 
-    W_DATA  = 1400
-    W_EVENT = 6200
-    W_REF   = 2600
-    CABECALHO_FILL = '1F3864'
-
     tbl = doc.add_table(rows=len(historico) + 1, cols=3)
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
     apply_table_borders(tbl)
 
     # Cabeçalho
-    headers = [("DATA", W_DATA, WD_ALIGN_PARAGRAPH.CENTER),
-               ("EVENTO / DESCRIÇÃO", W_EVENT, WD_ALIGN_PARAGRAPH.LEFT),
-               ("REFERÊNCIA / AGENTES", W_REF, WD_ALIGN_PARAGRAPH.LEFT)]
+    headers = [("DATA", W_HIST_DATA, WD_ALIGN_PARAGRAPH.CENTER),
+               ("EVENTO / DESCRIÇÃO", W_HIST_EVENT, WD_ALIGN_PARAGRAPH.LEFT),
+               ("REFERÊNCIA / AGENTES", W_HIST_REF, WD_ALIGN_PARAGRAPH.LEFT)]
     hrow = tbl.rows[0]
     for j, (hdr, w, align) in enumerate(headers):
         cell = hrow.cells[j]
         _set_cell_width(cell, w)
-        _apply_cell_fill(cell, CABECALHO_FILL)
+        _apply_cell_fill(cell, COR_INST)
         set_cell_margins(cell, top=50, bottom=50, left=80, right=40)
         p = cell.paragraphs[0]
         p.alignment = align
@@ -718,7 +729,7 @@ def build_historico_cronologico(doc, historico: list):
 
         # DATA
         c_data = row.cells[0]
-        _set_cell_width(c_data, W_DATA)
+        _set_cell_width(c_data, W_HIST_DATA)
         _apply_cell_fill(c_data, fill_hex)
         set_cell_margins(c_data, top=40, bottom=40, left=80, right=40)
         p_d = c_data.paragraphs[0]
@@ -730,7 +741,7 @@ def build_historico_cronologico(doc, historico: list):
 
         # EVENTO
         c_ev = row.cells[1]
-        _set_cell_width(c_ev, W_EVENT)
+        _set_cell_width(c_ev, W_HIST_EVENT)
         _apply_cell_fill(c_ev, fill_hex)
         set_cell_margins(c_ev, top=40, bottom=40, left=80, right=40)
         p_ev = c_ev.paragraphs[0]
@@ -740,7 +751,7 @@ def build_historico_cronologico(doc, historico: list):
 
         # REFERÊNCIA / AGENTES
         c_ref = row.cells[2]
-        _set_cell_width(c_ref, W_REF)
+        _set_cell_width(c_ref, W_HIST_REF)
         _apply_cell_fill(c_ref, fill_hex)
         set_cell_margins(c_ref, top=40, bottom=40, left=80, right=40)
         p_ref = c_ref.paragraphs[0]
@@ -777,7 +788,7 @@ def _box_colorido(doc, fill_hex, borda_hex, borda_sz='12'):
 
     # Largura total
     tblW = OxmlElement('w:tblW')
-    tblW.set(qn('w:w'), '9360')   # ~16,5 cm em twips
+    tblW.set(qn('w:w'), str(W_CARD_TOTAL))   # ~16,5 cm em twips
     tblW.set(qn('w:type'), 'dxa')
     for old in tblPr.findall(qn('w:tblW')):
         tblPr.remove(old)
@@ -824,11 +835,7 @@ def build_comunicado_pendencia(doc, d):
       ④ Conclusão
       ⑤ Assinatura
     """
-    INDENT = 1.25
-    COR_ALERTA_FILL  = 'FFFDF2'   # amarelo-âmbar super claro
-    COR_ALERTA_BORDA = 'F2C94C'   # amarelo/âmbar suave pastel
-    COR_OK_FILL      = 'F5FCF5'   # verde muito clarinho e suave
-    COR_OK_BORDA     = '81C784'   # verde pastel suave
+    INDENT = INDENT_PADRAO
 
     # ── ① Parágrafo de abertura ────────────────────────────────────────────
     if d.get("paragrafo_abertura"):
@@ -840,7 +847,7 @@ def build_comunicado_pendencia(doc, d):
     p_esp = doc.add_paragraph()
     set_spacing(p_esp, line=80, before=0, after=0)
 
-    card_alert, cell_alert = _box_colorido(doc, COR_ALERTA_FILL, COR_ALERTA_BORDA, '18')
+    card_alert, cell_alert = _box_colorido(doc, COR_PENDENCIA_FILL, COR_PENDENCIA_BORDA, '18')
 
     # Título do box
     p_tit = cell_alert.paragraphs[0]
@@ -848,7 +855,7 @@ def build_comunicado_pendencia(doc, d):
     set_spacing(p_tit, line=260, before=60, after=60)
     r_icon = p_tit.add_run("⚠  DOCUMENTOS PENDENTES — ANÁLISE SUSPENSA")
     set_font(r_icon, name="Cambria", size=11, bold=True)
-    r_icon.font.color.rgb = RGBColor(0x99, 0x65, 0x15)
+    r_icon.font.color.rgb = COR_PENDENCIA_ICON
 
     # Subtítulo
     p_sub = cell_alert.add_paragraph()
@@ -860,7 +867,7 @@ def build_comunicado_pendencia(doc, d):
         "para o prosseguimento do processo:"
     )
     set_font(r_sub, size=10, italic=True)
-    r_sub.font.color.rgb = RGBColor(0x73, 0x5C, 0x1F)
+    r_sub.font.color.rgb = COR_PENDENCIA_ICON
 
     # Lista de pendências
     considerandos = _ensure_list(d.get("considerandos", []))
@@ -871,7 +878,7 @@ def build_comunicado_pendencia(doc, d):
         # Ícone de marcador
         r_bullet = p_item.add_run("  ✗  ")
         set_font(r_bullet, size=10, bold=True)
-        r_bullet.font.color.rgb = RGBColor(0xE6, 0x7E, 0x22)
+        r_bullet.font.color.rgb = COR_PENDENCIA_BORDA # Use orange for bullet
         # Texto do item (sem "Considerando que" — é uma lista de pendências)
         texto = item.lstrip("0123456789. ")  # remove "1. ", "2. " se houver
         if texto.lower().startswith("considerando que "):
@@ -879,21 +886,21 @@ def build_comunicado_pendencia(doc, d):
         elif texto.lower().startswith("considerando "):
             texto = texto[13:].strip()
             
-        rich_segments(p_item, texto, size=10, color=RGBColor(0x5C, 0x4A, 0x21))
+        rich_segments(p_item, texto, size=10, color=COR_PENDENCIA_TEXTO)
 
     # Espaço após o box
     p_esp2 = doc.add_paragraph()
     set_spacing(p_esp2, line=80, before=0, after=0)
 
     # ── ③ Box de Orientação (verde) ────────────────────────────────────────
-    card_ok, cell_ok = _box_colorido(doc, COR_OK_FILL, COR_OK_BORDA, '18')
+    card_ok, cell_ok = _box_colorido(doc, COR_SUCESSO_FILL, COR_SUCESSO_BORDA, '18')
 
     p_ok_tit = cell_ok.paragraphs[0]
     p_ok_tit.alignment = WD_ALIGN_PARAGRAPH.LEFT
     set_spacing(p_ok_tit, line=260, before=60, after=40)
     r_ok_icon = p_ok_tit.add_run("✔  COMO REGULARIZAR E RETOMAR O PROCESSO")
     set_font(r_ok_icon, name="Cambria", size=11, bold=True)
-    r_ok_icon.font.color.rgb = RGBColor(0x2E, 0x7D, 0x32)
+    r_ok_icon.font.color.rgb = COR_SUCESSO_ICON
 
     orientacoes = [
         "Reúna todos os documentos listados acima em sua versão original ou digitalizada com legibilidade plena.",
@@ -907,10 +914,10 @@ def build_comunicado_pendencia(doc, d):
         set_spacing(p_or, line=260, before=20, after=20)
         r_num = p_or.add_run(f"  {i}.  ")
         set_font(r_num, size=10, bold=True)
-        r_num.font.color.rgb = RGBColor(0x2E, 0x7D, 0x32)
+        r_num.font.color.rgb = COR_SUCESSO_ICON
         r_or = p_or.add_run(orient)
         set_font(r_or, size=10)
-        r_or.font.color.rgb = RGBColor(0x26, 0x4D, 0x26)
+        r_or.font.color.rgb = COR_SUCESSO_TEXTO
 
     # Espaço após box verde
     p_esp3 = doc.add_paragraph()
@@ -924,5 +931,51 @@ def build_comunicado_pendencia(doc, d):
 
     # ── ⑤ Assinatura ───────────────────────────────────────────────────────
     build_assinatura(doc, d)
+
+
+# ═══════════════════════════════════════════════════════════
+#  MEMÓRIA DE CÁLCULO
+# ═══════════════════════════════════════════════════════════
+
+def build_memoria_calculo(doc, d):
+    """
+    Renderiza a seção de Memória de Cálculo em caixa sombreada.
+    Gerado quando o JSON contém o campo 'memoria_de_calculo'.
+    """
+    memoria = d.get("memoria_de_calculo")
+    if not memoria:
+        return
+
+    add_section_heading(doc, "Memória de Cálculo e Índices Urbanísticos")
+
+    # Caixa cinza-azulada para isolar o bloco de cálculo
+    card, cell = _box_colorido(doc, 'EFF2F8', 'B0BAD0', '8')
+
+    # Substituir os parágrafos internos por linhas da memória
+    for p_old in list(cell.paragraphs[1:]):
+        p_old._element.getparent().remove(p_old._element)
+
+    p_mem = cell.paragraphs[0]
+    p_mem.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    set_spacing(p_mem, line=LINE_SPC, before=0, after=0)
+    rich_segments(p_mem, memoria, size=SZ_TABELA)
+
+    # Para cada quebra de linha no texto, cria parágrafo separado
+    linhas = [l.strip() for l in memoria.split('\n') if l.strip()]
+    if len(linhas) > 1:
+        # Substitui o parágrafo único por múltiplos parágrafos
+        p_mem.clear()
+        rich_segments(p_mem, linhas[0], size=SZ_TABELA)
+        for linha in linhas[1:]:
+            p_extra = cell.add_paragraph()
+            p_extra.alignment = WD_ALIGN_PARAGRAPH.LEFT
+            set_spacing(p_extra, line=LINE_SPC, before=0, after=0)
+            rich_segments(p_extra, linha, size=SZ_TABELA)
+
+    # Respiro após a caixa
+    p_esp = doc.add_paragraph()
+    set_spacing(p_esp, line=80, before=0, after=0)
+
+    add_separator(doc, color='D0D0D0')
 
 

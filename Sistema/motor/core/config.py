@@ -64,6 +64,51 @@ COR_CINZA_LEVE   = RGBColor(0x66, 0x66, 0x66)
 """Configuração de layout e ritmo vertical."""
 PAR_AFTER = 120
 LINE_SPC  = 276   # 1.15 linhas (276 twips)
+INDENT_PADRAO = 1.25 # Identação padrão em cm
+
+# ═══════════════════════════════════════════════════════════
+#  DESIGN SYSTEM / LAYOUT (Tabelas e Cards)
+# ═══════════════════════════════════════════════════════════
+"""Dimensões (em twips) e cores para componentes visuais."""
+
+# Tabela de Identificação
+W_IDENT_LABEL = 2268
+W_IDENT_VALUE = 7938
+
+# Tabela de Dados Técnicos (Carimbo)
+W_CARIMBO_L1 = 2000
+W_CARIMBO_V1 = 3500
+W_CARIMBO_L2 = 2000
+W_CARIMBO_V2 = 2700
+
+# Tabela de Partes Envolvidas
+W_PARTES_LABEL = 2800
+W_PARTES_VALUE = 7400
+
+# Tabela de Histórico Cronológico
+W_HIST_DATA  = 1400
+W_HIST_EVENT = 6200
+W_HIST_REF   = 2600
+
+# Comunicado de Pendência (Cards)
+W_CARD_TOTAL = 10200  # corrigido: cobre a área útil completa (~18cm)
+COR_PENDENCIA_FILL  = 'FFFDF2'
+COR_PENDENCIA_BORDA = 'F2C94C'
+COR_PENDENCIA_TEXTO = RGBColor(0x5C, 0x4A, 0x21)
+COR_PENDENCIA_ICON  = RGBColor(0x99, 0x65, 0x15)
+
+COR_SUCESSO_FILL  = 'F5FCF5'
+COR_SUCESSO_BORDA = '81C784'
+COR_SUCESSO_TEXTO = RGBColor(0x26, 0x4D, 0x26)
+COR_SUCESSO_ICON  = RGBColor(0x2E, 0x7D, 0x32)
+
+# Alertas e Destaques
+COR_ALERTA_RED   = RGBColor(0xCC, 0x00, 0x00)
+COR_ALERTA_GREEN = RGBColor(0x00, 0x80, 0x00)
+COR_DOC_BOX_FILL = 'EBF0FA'
+
+# Área útil da página (Cm(21) - Cm(1.5) - Cm(1.5) ≈ 10205 twips; conservativo)
+AREA_UTIL_TWIPS = 10200
 
 # ═══════════════════════════════════════════════════════════
 #  ASSINANTE PADRÃO

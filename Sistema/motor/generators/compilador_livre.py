@@ -36,15 +36,17 @@ if SCRIPT_DIR not in sys.path:
 
 from docx import Document
 from docx.shared import Pt, Cm
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 
-from cabecalho     import build_header
+from cabecalho     import build_header, add_page_number_footer
 from componentes   import (
     build_titulo, build_identificacao, build_dados_carimbo,
     build_conclusao_e_docs, build_assinatura,
     add_doc_item, _ensure_list, _build_conclusao_bloco
 )
-from formatacao    import add_para, add_run, rich_segments, set_spacing
-from config        import (
+from formatacao    import add_para, add_run, rich_segments, set_spacing, set_font
+from geradores_core import _criar_documento_base, _gerar_pdf
+from core.config   import (
     FONT_TITULO, SZ_CORPO, COR_LABEL_FONT,
     PAR_AFTER, LINE_SPC,
     PASTA_ENTRADA, PASTA_SAIDA,
@@ -107,15 +109,12 @@ def _build_corpo_livre(doc, dados: dict):
         linhas = bloco.splitlines()
         if len(linhas) == 1 and bloco.isupper():
             p = add_para(doc, line=LINE_SPC, before=200, after=80)
-            from docx.enum.text import WD_ALIGN_PARAGRAPH
             p.alignment = WD_ALIGN_PARAGRAPH.LEFT
             r = p.add_run(bloco)
-            from generators.formatacao import set_font
             set_font(r, name=FONT_TITULO, size=SZ_CORPO, bold=True)
             r.font.color.rgb = COR_LABEL_FONT
         else:
             # Parágrafo normal justificado com recuo
-            from docx.enum.text import WD_ALIGN_PARAGRAPH
             p = add_para(doc, line=LINE_SPC, before=0, after=PAR_AFTER, indent_cm=INDENT)
             p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
             # Junta as linhas internas com espaço
@@ -130,17 +129,11 @@ def gerar_livre(dados: dict, caminho_saida: str = None) -> str:
     Gera o DOCX no modo livre usando texto_livre como corpo.
     Mantém o mesmo layout visual do compilador.py.
     """
-    doc = Document()
+    doc = _criar_documento_base()
 
-    # ── Margens ────────────────────────────────────────────────────
-    for section in doc.sections:
-        section.top_margin    = Cm(2.0)
-        section.bottom_margin = Cm(2.0)
-        section.left_margin   = Cm(3.0)
-        section.right_margin  = Cm(2.0)
-
-    # ── Blocos padrão do layout ────────────────────────────────────
+    # ── Blocos padrão do layout (idêntico ao compilador.py) ────────
     build_header(doc)
+    add_page_number_footer(doc)
     build_titulo(doc, dados.get("titulo_documento", "PARECER SETOR TÉCNICO - SMOSU"))
     build_identificacao(doc, dados)
     build_dados_carimbo(doc, dados)
@@ -156,12 +149,10 @@ def gerar_livre(dados: dict, caminho_saida: str = None) -> str:
     _build_conclusao_bloco(doc, conclusao)
 
     if dados.get("documentos_emitir"):
-        from docx.enum.text import WD_ALIGN_PARAGRAPH
         p_doc_tit = doc.add_paragraph()
         p_doc_tit.paragraph_format.page_break_before = True
         set_spacing(p_doc_tit, line=LINE_SPC, before=200, after=80)
         r_dt = p_doc_tit.add_run("Emissão de Documentos:")
-        from generators.formatacao import set_font
         set_font(r_dt, name=FONT_TITULO, size=SZ_CORPO, bold=True)
         r_dt.font.color.rgb = COR_LABEL_FONT
 
@@ -177,19 +168,8 @@ def gerar_livre(dados: dict, caminho_saida: str = None) -> str:
     doc.save(caminho_saida)
     print(f"[+] Documento DOCX (modo livre) gerado: {caminho_saida}")
 
-    # ── Converter para PDF ─────────────────────────────────────────
-    try:
-        import subprocess
-        pdf_path = caminho_saida.replace(".docx", ".pdf")
-        subprocess.run(
-            ["python", "-c",
-             f"from docx2pdf import convert; convert(r'{caminho_saida}', r'{pdf_path}')"],
-            capture_output=True, timeout=60
-        )
-        if Path(pdf_path).exists():
-            print(f"[+] Documento PDF  gerado: {pdf_path}")
-    except Exception as e:
-        print(f"[!] PDF não gerado: {e}")
+    # ── Converter para PDF (mesmo pipeline robusto do compilador.py) ──
+    _gerar_pdf(caminho_saida)
 
     return caminho_saida
 

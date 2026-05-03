@@ -4,14 +4,14 @@ Helpers de baixo nível para fontes, espaçamento, tabelas e campos.
 """
 
 import re
-from docx.shared import Pt, Cm, Twips
+from docx.shared import Pt, Cm, Twips, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_ALIGN_VERTICAL
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 from core.config import (
-    FONT_CORPO, SZ_CORPO, COR_INST, COR_LABEL_BG,
+    FONT_CORPO, FONT_TITULO, SZ_CORPO, COR_INST, COR_LABEL_BG,
     COR_BORDA_TABELA, PAR_AFTER, LINE_SPC,
 )
 
@@ -121,8 +121,11 @@ def no_borders(cell):
 def set_cell_margins(cell, top=0, bottom=0, left=80, right=80):
     """Define margens internas de uma célula."""
     tcPr = cell._tc.get_or_add_tcPr()
+    # Remove margem anterior para evitar duplicação
+    for old in tcPr.findall(qn('w:tcMar')):
+        tcPr.remove(old)
     mar = OxmlElement('w:tcMar')
-    for side, val in [('top', top), ('bottom', bottom), ('start', left), ('end', right)]:
+    for side, val in [('top', top), ('bottom', bottom), ('left', left), ('right', right)]:
         el = OxmlElement(f'w:{side}')
         el.set(qn('w:w'), str(val))
         el.set(qn('w:type'), 'dxa')
@@ -190,33 +193,39 @@ def add_separator(doc, color=COR_INST):
     pPr_sep.append(pb_sep)
 
 
-def add_section_heading(doc, titulo: str):
+def add_section_heading(doc, titulo: str, fill: str = None, text_color: RGBColor = None):
     """
-    Título de seção com fundo azul escuro e texto branco.
-    Usado em CONSIDERANDOS, FUNDAMENTAÇÃO LEGAL e CONCLUSÃO TÉCNICA.
+    Título de seção com fundo colorido e texto claro.
+
+    Parâmetros opcionais:
+      fill       — cor de fundo em hex sem '#' (padrão: COR_INST azul)
+      text_color — RGBColor do texto (padrão: branco)
+
+    Variantes de uso:
+      Padrão (azul)    → add_section_heading(doc, "Considerandos")
+      Multas (vermelho) → add_section_heading(doc, "Multas Aplicáveis", fill='7B1A0A')
+      Condicionantes   → add_section_heading(doc, "Condicionantes", fill='1A5C1A')
     """
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    set_spacing(p, line=240, before=200, after=60)
+    set_spacing(p, line=260, before=260, after=80)
 
-    # Fundo azul institucional via shading
+    bg = fill or COR_INST
     pPr = p._p.get_or_add_pPr()
     shd = OxmlElement('w:shd')
     shd.set(qn('w:val'), 'clear')
     shd.set(qn('w:color'), 'auto')
-    shd.set(qn('w:fill'), COR_INST)
+    shd.set(qn('w:fill'), bg)
     pPr.append(shd)
 
-    # Indentação para parecer com margem lateral
     ind = OxmlElement('w:ind')
     ind.set(qn('w:left'), '0')
     pPr.append(ind)
 
-    from docx.shared import RGBColor as _RGB
-    r = p.add_run(f"  {titulo.upper()}")
-    from core.config import FONT_TITULO as _FT
-    set_font(r, name=_FT, size=9, bold=True)
-    r.font.color.rgb = _RGB(0xFF, 0xFF, 0xFF)
+    tc = text_color or RGBColor(0xFF, 0xFF, 0xFF)
+    r = p.add_run(f"    {titulo.upper()}")
+    set_font(r, name=FONT_TITULO, size=10, bold=True)
+    r.font.color.rgb = tc
     return p
 
 
