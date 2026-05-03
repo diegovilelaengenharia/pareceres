@@ -159,7 +159,7 @@ def api_ler_modelo(nome):
         return {"ok": True, "conteudo": f.read()}
 
 def api_instrucoes():
-    arq = os.path.join(PASTA_TREINO, "01_GEM_INSTRUCOES.md")
+    arq = os.path.join(PASTA_TREINO, "TRIGGER.md")
     if not os.path.exists(arq):
         return {"ok": False, "erro": "Arquivo de instrucoes nao encontrado."}
     with open(arq, encoding="utf-8") as f:

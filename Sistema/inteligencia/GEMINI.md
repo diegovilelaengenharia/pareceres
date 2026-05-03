@@ -1,11 +1,8 @@
-# Configurações de Contexto e Inteligência
-Este arquivo consolida as instruções e memórias principais do projeto para o Gemini CLI.
+# Contexto GEM SMOSU — Gemini CLI
 
-@Sistema/inteligencia/00_INSTRUCAO_SISTEMA_GEMINI.md
-@Sistema/inteligencia/01_GEM_INSTRUCOES.md
-@Sistema/inteligencia/02_GEM_REFERENCIA.md
-@Sistema/inteligencia/03_NOVAS_VARIAVEIS_PROPOSTAS.md
-@Sistema/inteligencia/04_GEM_TRIAGEM.md
+@Sistema/inteligencia/INSTRUCOES.md
+@Sistema/inteligencia/REFERENCIA.md
+@Sistema/inteligencia/GABARITOS.md
+@Sistema/inteligencia/RETROALIMENTACAO.md
 
-# Memória Local
-As anotações e regras de funcionamento do motor estão registradas nos arquivos da pasta Sistema/inteligencia/.
+# Uso diário: cole o conteúdo de TRIGGER.md para iniciar o Wizard.

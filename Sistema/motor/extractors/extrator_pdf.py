@@ -168,7 +168,7 @@ def processar_pdfs(pasta: str = PASTA_ENTRADA) -> list[str]:
                     f"AVISO: Este PDF é composto por imagens escaneadas.\n"
                     f"Não é possível extrair texto automaticamente.\n\n"
                     f"ALTERNATIVA: Acesse gemini.google.com, anexe o PDF original\n"
-                    f"e use as instruções de {os.path.basename(PASTA_TREINO)}/01_GEM_INSTRUCOES.md\n"
+                    f"e use as instruções de {os.path.basename(PASTA_TREINO)}/TRIGGER.md\n"
                 )
             print(f"  [>] Arquivo de aviso criado: {os.path.basename(txt_path)}")
             txts_gerados.append(txt_path)
