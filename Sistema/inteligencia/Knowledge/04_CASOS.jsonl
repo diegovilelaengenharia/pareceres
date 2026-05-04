@@ -1,0 +1,3 @@
+{"arquivo": "PROC_6100_2025.pdf", "padroes_detectados": {"numero_processo": "6100/2025", "zoneamento": "ZUR3", "area": 154.08, "bairro": "Centro", "leis": ["Art. 79 Lei 1544", "Art. 39 LC 267"], "tipo": "regularizacao"}}
+{"arquivo": "PROC_2765_2026.pdf", "padroes_detectados": {"numero_processo": "2765/2026", "zoneamento": "ZUR2", "area": 180.0, "bairro": "Residencial Cesar Almeida", "leis": ["LC 267/2019 Art. 9 §13"], "tipo": "aprovacao_novo"}}
+{"arquivo": "PROC_8235_2025.pdf", "padroes_detectados": {"numero_processo": "8235/2025", "zoneamento": "ZUR3", "area": 116.74, "bairro": "Aparecida", "leis": ["Art. 39 LC 267", "TP 0%"], "tipo": "regularizacao"}}
