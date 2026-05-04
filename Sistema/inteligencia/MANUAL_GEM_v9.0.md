@@ -1,6 +1,6 @@
-# 📘 MANUAL DE OPERAÇÃO GEM SMOSU — Versão 7.0 (Maio/2026)
+# 📘 MANUAL DE OPERAÇÃO GEM SMOSU — Versão 9.0 (Maio/2026)
 
-Este manual consolida os aprendizados de 10 processos reais de alta complexidade analisados em 03/05/2026. Ele deve ser a referência máxima para a configuração do Gemini Gem.
+Este manual consolida os aprendizados de 10 processos reais de alta complexidade analisados em 03–04/05/2026 e a implantação do SIA (Sistema Interativo de Análise). Ele é a referência máxima para a configuração do Gemini Gem.
 
 ---
 
