@@ -9,8 +9,12 @@ import json
 import glob
 from docx import Document
 
-# Adiciona o diretório atual ao sys.path para importações locais
+# Adiciona o diretório atual e o diretório motor ao sys.path para importações
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MOTOR_DIR = os.path.dirname(SCRIPT_DIR)
+
+if MOTOR_DIR not in sys.path:
+    sys.path.insert(0, MOTOR_DIR)
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
@@ -116,6 +120,12 @@ def main():
             print(f"  {_ERR}Erro ao ler JSON: {e}")
             erros += 1
             continue
+
+        # ── Suporte a Bundling (Emissão Múltipla) ──────────────────────────────
+        # Se for o tipo mestre e não houver lista explícita, injeta o padrão
+        if dados.get("tipo_relatorio") == "certidoes_separadas_localizacao_confrontacao":
+            if not dados.get("documentos_emitir"):
+                dados["documentos_emitir"] = ["parecer_tecnico", "certidao_localizacao", "certidao_confrontacao"]
 
         # ── Pré-voo ───────────────────────────────────────────────────────────
         sucesso_pre, resumo_cob = _relatorio_prevoo(dados)
