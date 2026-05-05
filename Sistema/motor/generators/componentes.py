@@ -87,20 +87,35 @@ def build_titulo(doc, titulo="PARECER SETOR TÉCNICO - SMOSU"):
 # ═══════════════════════════════════════════════════════════
 
 def build_identificacao(doc, d):
-    """Tabela de identificação com 3 linhas: Processo, Assunto, Requerente."""
-    tbl = doc.add_table(rows=3, cols=2)
+    """Tabela de identificação dinâmica (Processo, Assunto, Requerente)."""
+    
+    # Montar lista de linhas candidatas filtrando valores vazios/nulos per D-04
+    linhas = []
+    
+    # 1. Processo
+    if d.get('numero_processo'):
+        val_proc = f"{d.get('numero_processo', '')}"
+        if d.get('data_processo'):
+            val_proc += f"  —  {d.get('data_processo')}"
+        linhas.append(("Processo nº", val_proc))
+        
+    # 2. Assunto
+    if d.get("assunto"):
+        linhas.append(("Assunto", d.get("assunto")))
+        
+    # 3. Requerente
+    if d.get("requerente"):
+        linhas.append(("Requerente", d.get("requerente")))
+
+    # Se não houver nada, não gera tabela
+    if not linhas:
+        return
+
+    # Criar tabela com o número exato de linhas filtradas
+    tbl = doc.add_table(rows=len(linhas), cols=2)
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
     apply_table_borders(tbl)
 
-    linhas = [
-        (
-            "Processo nº",
-            f"{d.get('numero_processo', '')}  —  {d.get('data_processo', '')}"
-            if d.get('numero_processo') else ""
-        ),
-        ("Assunto",    d.get("assunto", "")),
-        ("Requerente", d.get("requerente", "")),
-    ]
     for i, (rot, val) in enumerate(linhas):
         row = tbl.rows[i]
         c_rot = row.cells[0]
@@ -292,19 +307,32 @@ def build_corpo(doc, d):
     if d.get("considerandos"):
         add_section_heading(doc, "Considerandos")
         for cons in _ensure_list(d["considerandos"]):
-            cons_limpo = cons
-            # Remove o "Considerando que" se o GEM já tiver escrito na string
-            if cons_limpo.lower().startswith("considerando que "):
-                cons_limpo = cons_limpo[17:].strip()
-            elif cons_limpo.lower().startswith("considerando "):
-                cons_limpo = cons_limpo[13:].strip()
-                
+            cons_limpo = cons.strip()
+            
+            # 1. Remoção robusta de prefixos redundantes (Considerando que, Que, etc)
+            # Remove "Considerando que " ou "Considerando " (case insensitive)
+            cons_limpo = re.sub(r'^(considerando\s+(que\s+)?)+', '', cons_limpo, flags=re.IGNORECASE).strip()
+            # Remove "Que " se tiver sobrado no início
+            cons_limpo = re.sub(r'^que\s+', '', cons_limpo, flags=re.IGNORECASE).strip()
+            
+            # 2. Primeira letra em maiúscula se não for negrito ou marcador
+            if cons_limpo and not cons_limpo.startswith('**') and not re.match(r'^(\d+\.|[A-Za-z]\.|\d+\s*\-)', cons_limpo):
+                cons_limpo = cons_limpo[0].upper() + cons_limpo[1:]
+
             p = add_para(doc, line=LINE_SPC, before=0,
                          after=PAR_AFTER, indent_cm=INDENT)
             
-            # Inteligência de Prefixo: 
-            # Não adiciona "Considerando que" se a linha já começar com numeração ou negrito técnico
-            if not re.match(r'^(\d+\.|[A-Za-z]\.|\*\*|\d+\s*\-)', cons_limpo.strip()):
+            # 3. Inteligência de Prefixo: 
+            # NÃO adiciona "Considerando que " se:
+            # - O texto original já tinha (removido no passo 1, então checamos se o usuário forneceu um texto finalizado)
+            # - Começa com numeração (1., 2.) ou letras (a., b.)
+            # - Começa com negrito técnico (**Art.**)
+            # - Começa com marcador de lista (- ou *)
+            # - O usuário sinalizou que é um texto final
+            ja_tem_prefixo = re.match(r'^(considerando|que)\b', cons.strip(), re.I)
+            eh_lista = re.match(r'^(\d+\.|[A-Za-z]\.|\*\*|\d+\s*\-|\*|\-)', cons_limpo)
+            
+            if not ja_tem_prefixo and not eh_lista:
                 add_run(p, "Considerando que ", bold=True, size=SZ_CORPO)
                 
             rich_segments(p, cons_limpo, size=SZ_CORPO)
@@ -337,27 +365,32 @@ def build_corpo(doc, d):
 # ═══════════════════════════════════════════════════════════
 
 def build_fundamentacao(doc, d):
-    """Seção de fundamentação legal com bullets."""
-    if not d.get("fundamentacao_legal"):
+    """Seção de fundamentação legal com bullets e hierarquia correta."""
+    if not d.get("fundamentacao_legal") and not d.get("tipo_relatorio") in ["alvara_aprovacao", "alvara_regularizacao", "alvara_ampliacao"]:
         return
 
     INDENT = INDENT_PADRAO
-    add_section_heading(doc, "Da Análise Legal e Técnica")
+    add_section_heading(doc, "Da Análise Legal e Técnica", fill='1F3864') # Azul Institucional
 
-    # Base legal padrão e simplificada exigida em todos os pareceres
-    p_padrao = add_para(doc, line=LINE_SPC, before=0, after=PAR_AFTER, indent_cm=INDENT)
+    # Base legal padrão e simplificada — DECRETO 4.149 em primeiro lugar
+    p_padrao = add_para(doc, line=LINE_SPC, before=80, after=PAR_AFTER, indent_cm=INDENT)
     r_bullet_padrao = add_run(p_padrao, "▪ ", size=SZ_CORPO, bold=True)
     r_bullet_padrao.font.color.rgb = COR_LABEL_FONT
-    texto_padrao = "A análise técnica pautou-se no **Código de Obras** (Lei nº 1.544/86), na **LUOS** (Lei Complementar nº 267/19) e no **Decreto nº 4.149/19**."
+    texto_padrao = "A presente análise técnica pautou-se primordialmente no **Decreto Municipal nº 4.149/2019**, bem como no **Código de Obras** (Lei nº 1.544/1986) e na **LUOS** (Lei Complementar nº 267/2019)."
     rich_segments(p_padrao, texto_padrao, size=SZ_CORPO)
 
-    for fund in _ensure_list(d["fundamentacao_legal"]):
-        fund_limpo = fund.lstrip("•- \t") # Limpa marcadores se o GEM tiver colocado
-        p_fund = add_para(doc, line=LINE_SPC, before=0,
-                          after=PAR_AFTER, indent_cm=INDENT)
-        r_bullet = add_run(p_fund, "▪ ", size=SZ_CORPO, bold=True)
-        r_bullet.font.color.rgb = COR_LABEL_FONT
-        rich_segments(p_fund, fund_limpo, size=SZ_CORPO)
+    if d.get("fundamentacao_legal"):
+        for fund in _ensure_list(d["fundamentacao_legal"]):
+            fund_limpo = fund.lstrip("•- \t")
+            # Se já for o Decreto ou Lei que citamos acima, pula para não duplicar
+            if re.search(r'4\.149|1\.544|267', fund_limpo) and len(fund_limpo) < 60:
+                continue
+                
+            p_fund = add_para(doc, line=LINE_SPC, before=0,
+                              after=PAR_AFTER, indent_cm=INDENT)
+            r_bullet = add_run(p_fund, "▪ ", size=SZ_CORPO, bold=True)
+            r_bullet.font.color.rgb = COR_LABEL_FONT
+            rich_segments(p_fund, fund_limpo, size=SZ_CORPO)
 
 
 # ═══════════════════════════════════════════════════════════
@@ -457,8 +490,25 @@ def build_conclusao_e_docs(doc, d):
         r_dt.font.color.rgb = COR_LABEL_FONT
 
         # 4º Lista de documentos
+        _map_nomes = {
+            "parecer_tecnico": "Parecer Técnico (SMOSU)",
+            "habitese_comum": "Carta de Habite-se",
+            "certidao_averbacao": "Certidão de Averbação de Área",
+            "alvara_aprovacao": "Alvará de Construção",
+            "alvara_regularizacao": "Alvará de Regularização As-Built",
+            "comunicado_pendencia": "Comunicado de Pendência Documental"
+        }
         for item in d.get("documentos_emitir", []):
-            add_doc_item(doc, item.get("tipo", ""), item.get("obs") or None)
+            tipo_id = item if isinstance(item, str) else item.get("tipo", "")
+            descricao = ""
+            if isinstance(item, dict):
+                descricao = item.get("descricao") or item.get("nome")
+            
+            if not descricao:
+                descricao = _map_nomes.get(tipo_id, tipo_id.replace("_", " ").title())
+                
+            obs = item.get("obs") if isinstance(item, dict) else None
+            add_doc_item(doc, descricao, obs)
 
     # 5º Assinatura
     build_assinatura(doc, d)
