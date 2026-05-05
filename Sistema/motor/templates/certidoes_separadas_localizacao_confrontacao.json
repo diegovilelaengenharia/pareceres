@@ -1,0 +1,32 @@
+{
+  "titulo_documento": "PARECER ADMINISTRATIVO",
+  "assunto": "Parecer para emissão de Certidões de Localização e Confrontação",
+  
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, no uso de suas atribuições e em resposta ao pedido formulado pela requerente, apresenta análise técnica visando a retificação de dados cadastrais e a emissão das peças técnicas necessárias para o fiel reflexo da realidade fática do imóvel.",
+
+  "considerandos": [
+    "Que a requerente apresentou processo solicitando certidões de localização e confrontação para o imóvel, visando sanar exigências da Nota Devolutiva do Serviço Registral de Imóveis;",
+    "Que as divergências apontadas referem-se à denominação do bairro, à situação de esquina do lote e às múltiplas numerações prediais;",
+    "Que o Parecer Fiscal emitido por esta Secretaria atesta a localização correta no bairro Centro e a situação de esquina entre os logradouros indicados;",
+    "Que os registros do Cadastro Imobiliário Municipal confirmam as numerações prediais ativas vinculadas à mesma inscrição cadastral."
+  ],
+
+  "fundamentacao_legal": [
+    "__Poder de Polícia Administrativa__: Compete ao Município a organização e manutenção do cadastro técnico imobiliário.",
+    "__Lei Complementar nº 267/2019__: Dispõe sobre o uso e ocupação do solo e a regularidade cadastral.",
+    "__Decreto Municipal nº 4.149/2019__: Base para a emissão de certidões e peças técnicas informativas."
+  ],
+
+  "conclusao": "Diante do exposto, este Setor Técnico manifesta-se de forma **FAVORÁVEL** à retificação cadastral solicitada, recomendando-se a emissão dos seguintes documentos: 1) Certidão de Localização; e 2) Certidão de Confrontação, conforme detalhado abaixo.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Localização",
+      "obs": "Certificar bairro Centro, situação de esquina e unificação de numerações prediais."
+    },
+    {
+      "tipo": "Certidão de Confrontação",
+      "obs": "Certificar as confrontações atuais em relação aos logradouros públicos conforme Parecer Fiscal."
+    }
+  ]
+}
