@@ -82,19 +82,32 @@ This document outlines the phased execution plan.
 
 *Objetivo: Garantir que o GEM entregue textos finais prontos para emissão, respeitando a hierarquia normativa e o padrão de redação tripartite (Fato -> Artigo -> Cálculo).*
 
-### Phase 02.1: Inteligência e Prompts (v2.1)
+### ✅ Phase 02.1: Inteligência e Prompts (v2.1) *(concluída 2026-05-05)*
 - **Goal**: Atualizar o motor de inteligência para gerar campos narrativos sem placeholders, priorizando o Decreto 4.149/2019 e aplicando o estilo tripartite nos considerandos.
 - **Requirements**: INT-01
-- **Status**: [planned]
+- **Status**: [complete]
 - **Plans**: 1 plan
-    - [ ] 02.1-01-PLAN.md — Atualização de Prompts e Gabaritos (Texto Final)
+    - [x] 02.1-01-PLAN.md — Atualização de Prompts e Gabaritos (Texto Final)
 
-### Phase 02.2: Refatoração do Motor (Surgical Update) (v2.1)
+### ✅ Phase 02.2: Refatoração do Motor (Surgical Update) (v2.1) *(concluída 2026-05-05)*
 - **Goal**: Ajustar o comportamento do motor para respeitar a soberania do conteúdo gerado pela IA, tornando prefixos opcionais e suprimindo marcadores intrusivos.
+- **Requirements**: INT-01
+- **Status**: [complete]
+- **Plans**: 1 plan
+    - [x] 02.2-01-PLAN.md — Inteligência de Prefixo, Supressão de Marcadores e Auditoria
+
+---
+
+## Milestone v2.2 — Automação e Fluxo Contínuo
+
+*Objetivo: Integrar as ferramentas MCP ao fluxo de análise interativa, eliminando a subjetividade e garantindo precisão matemática e legal.*
+
+### Phase 03.1: Integração de Ferramentas MCP (SIA v1.1)
+- **Goal**: Sincronizar o SIA com as ferramentas do servidor MCP SMOSU para cálculos, validações e fundamentação legal automática.
 - **Requirements**: INT-01
 - **Status**: [planned]
 - **Plans**: 1 plan
-    - [ ] 02.2-01-PLAN.md — Inteligência de Prefixo, Supressão de Marcadores e Auditoria
+    - [ ] 02.2-02-PLAN.md — Integração de Ferramentas MCP e Protocolo de Rigor
 
 ---
 
