@@ -303,6 +303,22 @@ body {
   letter-spacing: 0.3px;
 }
 
+/* ── BATCH BANNER ── */
+.batch-banner {
+  background: #E3F2FD;
+  color: #0D47A1;
+  border: 1px solid #BBDEFB;
+  padding: 12px 20px;
+  margin: 15px auto;
+  border-radius: 6px;
+  max-width: 900px;
+  font-size: 10.5pt;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
 /* ── CARD DO DOCUMENTO ── */
 .doc-card-wrapper {
   background: white;
@@ -522,6 +538,16 @@ def gerar_preview(dados: dict, alertas: list[dict] | None = None, destino: str |
     """
     alertas = alertas or []
 
+    # Detecta geração em lote
+    docs_emitir = dados.get("documentos_emitir", [])
+    batch_notice = ""
+    if isinstance(docs_emitir, list) and len(docs_emitir) > 1:
+        batch_notice = f"""
+        <div class="batch-banner">
+          🚀 <strong>GERAÇÃO EM LOTE DETECTADA:</strong> Este processo irá gerar {len(docs_emitir)} arquivos DOCX separados.
+        </div>
+        """
+
     # Monta o HTML por partes
     html_alertas   = _html_alertas(alertas)
     html_id        = _html_identificacao(dados)
@@ -558,6 +584,8 @@ def gerar_preview(dados: dict, alertas: list[dict] | None = None, destino: str |
     <span>Tipo: <strong>{tipo_doc}</strong> &nbsp;|&nbsp; Processo: <strong>{processo}</strong> &nbsp;|&nbsp; Requerente: <strong>{requerente}</strong></span>
     <span class="preview-tag">⚡ PREVIEW — revise antes de gerar o DOCX</span>
   </div>
+
+  {batch_notice}
 
   <!-- Corpo do documento -->
   <div class="doc-card-wrapper">
