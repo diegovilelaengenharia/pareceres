@@ -139,6 +139,9 @@ TIPOS_DOCUMENTO = {
     "alvara_substituicao_projeto":        "parecer_tecnico",
     "alvara_troca_responsavel_tecnico":   "parecer_simples",
     "regularizacao_complexa_multipla":    "parecer_tecnico",
+    # ── Pareceres Administrativos (Layout limpo para certidões) ──
+    "parecer_administrativo":             "parecer_administrativo",
+    "certidoes_separadas_localizacao_confrontacao": "parecer_administrativo",
 
     # ── Pareceres Simples (sem dados do carimbo) ──
     "certidao_numero_2via":               "parecer_simples",
@@ -151,7 +154,6 @@ TIPOS_DOCUMENTO = {
     "certidao_averbacao":                 "parecer_simples",
     "certidao_decadencia":                "parecer_simples",
     "certidao_averbacao_decadencia":      "parecer_simples",
-    "certidoes_separadas_localizacao_confrontacao": "parecer_tecnico",
     "habitese_comum":                     "parecer_simples",
     "habitese_condominio":                "parecer_simples",
     "habitese_multa":                     "parecer_simples",
