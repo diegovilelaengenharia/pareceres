@@ -16,7 +16,7 @@ PROJECT_ROOT    = os.path.dirname(PROJECT_DIR)  # pasta raiz: 02. Pareceres
 PASTA_ENTRADA        = os.path.join(PROJECT_ROOT, "Entrada")
 PASTA_SAIDA          = os.path.join(PROJECT_ROOT, "Saida")
 PASTA_MODELOS        = os.path.join(PROJECT_DIR, "modelos")
-PASTA_TREINO         = os.path.join(PROJECT_ROOT, "Sistema", "inteligencia")
+PASTA_TREINO         = os.path.join(PROJECT_ROOT, "Sistema", "inteligencia", "Treinar GEM")
 PASTA_BASE_CONHECIMENTO = os.path.join(PROJECT_ROOT, "Sistema", "base_conhecimento")
 PASTA_LOGS           = os.path.join(PROJECT_ROOT, "Sistema", "logs")
 PASTA_HISTORICO      = os.path.join(PROJECT_ROOT, "Saida", "_Historico")
@@ -127,6 +127,7 @@ CIDADE = "Oliveira"
 """Dicionário mestre que define quais peças técnicas o sistema é capaz de gerar."""
 TIPOS_DOCUMENTO = {
     # ── Pareceres Técnicos (completos, com dados do carimbo) ──
+    "parecer_tecnico":                    "parecer_tecnico",
     "alvara_aprovacao":                   "parecer_tecnico",
     "alvara_mcmv":                        "parecer_tecnico",
     "alvara_construcao_comercial":        "parecer_tecnico",
@@ -143,14 +144,19 @@ TIPOS_DOCUMENTO = {
     "certidao_numero_2via":               "parecer_simples",
     "certidao_nome_rua":                  "parecer_simples",
     "certidao_localizacao":               "parecer_simples",
+    "certidao_confrontacao":              "parecer_simples",
+    "certidao_localizacao_corretiva":     "parecer_simples",
     "certidao_conjunta":                  "parecer_simples",
     "certidao_numero_comercial":          "parecer_simples",
+    "certidao_averbacao":                 "parecer_simples",
+    "certidao_decadencia":                "parecer_simples",
+    "certidao_averbacao_decadencia":      "parecer_simples",
+    "certidoes_separadas_localizacao_confrontacao": "parecer_tecnico",
     "habitese_comum":                     "parecer_simples",
     "habitese_condominio":                "parecer_simples",
     "habitese_multa":                     "parecer_simples",
-    "certidao_averbacao_decadencia":      "parecer_simples",
     "habitese_2via":                      "parecer_simples",
-    "habitese_inclusao_area":             "parecer_simples",
+    "habitese_inclusao_area":             "parecer_tecnico",
     "alvara_renovacao":                   "parecer_simples",
     "alvara_cancelamento":                "parecer_simples",
     "alvara_substituicao_titular":        "parecer_simples",
@@ -171,5 +177,7 @@ TIPOS_DOCUMENTO = {
     # ── Comunicados ──
     "comunicado_indeferimento":           "comunicado",
     "comunicado_pendencia":               "comunicado_pendencia",
+    "comunicado_baixa_cei":               "comunicado",
+    "comunicado_decadencia":              "comunicado",
 }
 
