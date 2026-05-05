@@ -1,0 +1,52 @@
+{
+  "_comentario": "MODELO 16 — Emissão de Múltiplas Certidões Separadas (Localização, Confrontação e Parecer). Caso Maria Lúcia (4467/2026).",
+
+  "tipo_relatorio": "certidoes_separadas_localizacao_confrontacao",
+  "numero_processo": "4467/2026",
+  "data_processo": "15 de março de 2026",
+  "assunto": "Certidões de Localização e Confrontação (Peças Separadas)",
+  "requerente": "MARIA LÚCIA DA SILVA",
+
+  "logradouro": "Rua das Flores, nº 123",
+  "bairro": "Centro",
+  "inscricao_municipal": "01.02.003.0456",
+  "matricula_sri": "12345",
+  "lote": "05",
+  "quadra": "A",
+
+  "zona_uso": "ZUR-1",
+  "area_terreno": "360,00m²",
+
+  "paragrafo_abertura": "Trata-se de solicitação de MARIA LÚCIA DA SILVA para emissão de Certidões de Localização e Confrontação referentes ao imóvel localizado na Rua das Flores, nº 123, Centro, nesta cidade, cadastrado sob a inscrição municipal 01.02.003.0456.",
+
+  "considerandos": [
+    "Que a requerente apresentou Matrícula nº 12345 do SRI de Oliveira, comprovando a propriedade do imóvel.",
+    "Que o imóvel está devidamente cadastrado no sistema tributário municipal sob o boletim de cadastro imobiliário nº 01.02.003.0456.",
+    "Que foi realizada conferência técnica e verificado que as confrontações constantes no cadastro municipal e na matrícula coincidem com a situação fática."
+  ],
+
+  "fundamentacao_legal": [
+    "__Lei Complementar nº 267/2019__ (Uso e Ocupação do Solo): estabelece os parâmetros para localização e zoneamento do imóvel.",
+    "__Código Tributário Municipal__: base legal para emissão de certidões cadastrais."
+  ],
+
+  "conclusao": "Diante da regularidade documental e cadastral, profiro parecer técnico **FAVORÁVEL** à emissão das certidões solicitadas em peças separadas.",
+
+  "documentos_emitir": [
+    "parecer_tecnico",
+    "certidao_localizacao",
+    "certidao_confrontacao"
+  ],
+
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "MARIA LÚCIA DA SILVA",
+      "qualidade": "Proprietária"
+    },
+    "assinante_parecer": {
+      "nome": "Diego Tarcísio Nunes Vilela",
+      "titulo": "Engenheiro Civil",
+      "registro": "CREA 235.474/D"
+    }
+  }
+}
