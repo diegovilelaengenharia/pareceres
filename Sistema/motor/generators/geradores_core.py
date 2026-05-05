@@ -30,6 +30,7 @@ from generators.componentes import (
     build_conclusao_e_docs, build_conclusao_simples, build_assinatura,
     build_comunicado_pendencia,
     build_partes_envolvidas, build_historico_cronologico,
+    build_memoria_calculo,
 )
 
 # ═══════════════════════════════════════════════════════════
@@ -138,6 +139,39 @@ def gerar_parecer_tecnico(doc, dados, template):
     if dados.get("historico_cronologico"):
         build_historico_cronologico(doc, dados["historico_cronologico"])
     build_corpo(doc, dados)
+    build_memoria_calculo(doc, dados)
+    build_conclusao_e_docs(doc, dados)
+
+
+def gerar_parecer_administrativo(doc, dados, template):
+    """
+    Parecer administrativo (Layout limpo para certidões):
+    Header → Título → Identificação → [Partes] → [Histórico] → Corpo → Conclusão+Docs
+    (Omite Dados do Carimbo e Memória de Cálculo)
+    """
+    titulo = template.get("titulo_documento", "PARECER ADMINISTRATIVO - SMOSU")
+
+    build_header(doc)
+    add_page_number_footer(doc)
+    build_titulo(doc, titulo)
+    build_identificacao(doc, dados)
+    
+    partes = dados.get("partes_envolvidas")
+    if not partes and (dados.get("agentes_fiscais") or dados.get("responsavel_tecnico")):
+        partes = {
+            "requerente": {"nome": dados.get("requerente", "")},
+            "responsavel_tecnico": {"nome": dados.get("responsavel_tecnico", dados.get("profissional_nome", ""))},
+            "agentes_fiscais": dados.get("agentes_fiscais") if isinstance(dados.get("agentes_fiscais"), list) else [dados.get("agentes_fiscais")],
+            "assinante_parecer": {"nome": dados.get("assinante_parecer", "")}
+        }
+    if partes:
+        build_partes_envolvidas(doc, partes)
+        
+    if dados.get("historico_cronologico"):
+        build_historico_cronologico(doc, dados["historico_cronologico"])
+    build_corpo(doc, dados)
+    
+    # build_memoria_calculo omitida propositalmente per D-02
     build_conclusao_e_docs(doc, dados)
 
 
@@ -153,6 +187,7 @@ def gerar_parecer_simples(doc, dados, template):
     build_titulo(doc, titulo)
     build_identificacao(doc, dados)
     build_corpo(doc, dados)
+    build_memoria_calculo(doc, dados)
 
     if dados.get("documentos_emitir"):
         build_conclusao_e_docs(doc, dados)
@@ -211,6 +246,7 @@ def gerar_comunicado_pendencia(doc, dados, template):
 GERADORES = {
     "parecer_tecnico":      gerar_parecer_tecnico,
     "parecer_simples":      gerar_parecer_simples,
+    "parecer_administrativo": gerar_parecer_administrativo,
     "oficio":               gerar_oficio,
     "comunicado":           gerar_comunicado,
     "comunicado_pendencia": gerar_comunicado_pendencia,
@@ -287,30 +323,59 @@ def gerar(dados, caminho_saida=None):
     obrigatorios = template.get("campos_obrigatorios", [])
     
     # Resolver aliases antes de checar campos faltantes
-    from _aliases import normalizar_dados
+    from generators._aliases import normalizar_dados
     dados = normalizar_dados(dados)
+
+    # Campos que se faltarem, o documento fica "quebrado" ou ilegal (identificação)
+    CRITICOS = {
+        "numero_processo", "requerente", "logradouro", "bairro", 
+        "profissional_nome", "art_rrt", "zona_uso"
+    }
 
     campos_faltantes = [c for c in obrigatorios if not dados.get(c)]
     
     if campos_faltantes:
-        print("\n" + "="*70)
-        print("  [AVISO ESTRUTURAL] VALIDAÇÃO DE CHAVES JSON - PREENCHIMENTO AUTOMÁTICO")
-        print("="*70)
-        print("  O Assistente GEM não incluiu algumas chaves obrigatórias.")
-        print(f"  Tipo do Documento: {tipo}")
-        print(f"  Chaves Faltantes : {', '.join(campos_faltantes)}")
-        print("-" * 70)
-        print("  [Ação] O sistema irá preencher esses campos com marcadores [PREENCHER].")
-        print("         Você poderá editar o documento Word gerado e preencher manualmente.")
-        print("="*70 + "\n")
+        faltantes_criticos = [c for c in campos_faltantes if c in CRITICOS]
+        
+        if faltantes_criticos:
+            print("\n" + "="*70)
+            print("  [AVISO ESTRUTURAL] DADOS CRÍTICOS AUSENTES NO JSON")
+            print("="*70)
+            print(f"  Tipo do Documento: {tipo}")
+            print(f"  Campos Críticos Faltantes: {', '.join(faltantes_criticos)}")
+            print("-" * 70)
+            print("  [Ação] O sistema irá preencher esses campos com marcadores [PREENCHER].")
+            print("="*70 + "\n")
+            
+            for c in faltantes_criticos:
+                dados[c] = f"[PREENCHER: {c}]"
+        
+        # Para campos de texto (considerandos, etc), não injetamos marcadores se houver 
+        # algum conteúdo substancial no documento, assumindo que o GEM consolidou o texto.
+        tem_texto_base = bool(dados.get("paragrafo_abertura") or dados.get("considerandos"))
         
         for c in campos_faltantes:
+            if c in CRITICOS: continue # já tratado acima
+            
             if c == "documentos_emitir":
-                dados[c] = [{"tipo": "[PREENCHER: documento a emitir]"}]
+                if not dados.get("documentos_emitir"):
+                    dados[c] = [{"tipo": "[PREENCHER: documento a emitir]"}]
             elif c in ["considerandos", "fundamentacao_legal", "paragrafos_adicionais"]:
-                dados[c] = [f"[PREENCHER: {c}]"]
+                # Se já tem abertura, não polui o documento com "[PREENCHER: considerandos]"
+                if not tem_texto_base:
+                    dados[c] = [f"[PREENCHER: {c}]"]
+                else:
+                    # Deixa como lista vazia se for lista, ou string vazia se for string, para não sujar o parecer do GEM
+                    if isinstance(template.get(c), list) or c in ["considerandos", "fundamentacao_legal"]:
+                         dados[c] = []
+                    else:
+                         dados[c] = ""
             else:
-                dados[c] = f"[PREENCHER: {c}]"
+                # Outros campos técnicos menores
+                if c not in ["inscricao_municipal", "matricula_sri"]:
+                    dados[c] = f"[PREENCHER: {c}]"
+                else:
+                    dados[c] = "" # Omitir se for opcional/técnico e faltar
 
 
     # Criar documento base
@@ -339,70 +404,74 @@ def gerar(dados, caminho_saida=None):
 
 def _gerar_pdf(caminho_docx: str) -> str | None:
     """
-    Tenta converter o DOCX em PDF usando comtypes/Word COM.
-    Copia para um diretório temporário curto quando o caminho excede 220 chars
-    (Word COM falha com caminhos > 255 caracteres).
+    Tenta converter o DOCX em PDF.
+    Pipeline: Word COM (Windows) -> LibreOffice Headless (Multiplataforma) -> docx2pdf.
     """
-    import os, shutil, tempfile
+    import os, shutil, tempfile, subprocess
     base, _ = os.path.splitext(caminho_docx)
     caminho_pdf = base + ".pdf"
     abs_docx    = os.path.abspath(caminho_docx)
     abs_pdf     = os.path.abspath(caminho_pdf)
 
-    print(f"  [.] Convertendo DOCX para PDF (via Word)...")
-
-    # Word COM não suporta paths > 255 chars; usa temp se necessário
-    if len(abs_docx) > 220 or len(abs_pdf) > 220:
-        tmp_dir  = tempfile.gettempdir()
-        tmp_docx = os.path.join(tmp_dir, "gem_conv.docx")
-        tmp_pdf  = os.path.join(tmp_dir, "gem_conv.pdf")
-        shutil.copy2(abs_docx, tmp_docx)
-        docx_conv, pdf_conv = tmp_docx, tmp_pdf
-        usar_temp = True
-    else:
-        docx_conv, pdf_conv = abs_docx, abs_pdf
+    # 1. Tentar via Word COM (Apenas Windows)
+    if os.name == 'nt':
+        print(f"  [.] Convertendo DOCX para PDF (via Word COM)...")
+        # Word COM não suporta paths > 255 chars; usa temp se necessário
         usar_temp = False
+        docx_conv, pdf_conv = abs_docx, abs_pdf
+        if len(abs_docx) > 220 or len(abs_pdf) > 220:
+            tmp_dir  = tempfile.gettempdir()
+            tmp_docx = os.path.join(tmp_dir, "gem_conv.docx")
+            tmp_pdf  = os.path.join(tmp_dir, "gem_conv.pdf")
+            shutil.copy2(abs_docx, tmp_docx)
+            docx_conv, pdf_conv = tmp_docx, tmp_pdf
+            usar_temp = True
 
+        try:
+            import comtypes.client
+            word = comtypes.client.CreateObject("Word.Application")
+            word.Visible = False
+            word.DisplayAlerts = 0
+            try:
+                doc_w = word.Documents.Open(docx_conv, ConfirmConversions=False, ReadOnly=True, AddToRecentFiles=False)
+                doc_w.SaveAs(pdf_conv, FileFormat=17)  # 17 = wdFormatPDF
+                doc_w.Close(0)
+                if usar_temp:
+                    shutil.move(pdf_conv, abs_pdf)
+                print(f"  [+] Documento PDF gerado: {caminho_pdf}")
+                return caminho_pdf
+            finally:
+                word.Quit(0)
+                if usar_temp and os.path.exists(tmp_docx): os.remove(tmp_docx)
+        except (ImportError, Exception) as e:
+            print(f"  [!] Word COM falhou ou não disponível: {e}")
+
+    # 2. Fallback: LibreOffice Headless (soffice)
+    print(f"  [.] Tentando conversão via LibreOffice Headless...")
     try:
-        import comtypes.client
-        word = comtypes.client.CreateObject("Word.Application")
-        word.Visible = False
-        word.DisplayAlerts = 0
-        try:
-            doc_w = word.Documents.Open(docx_conv, ConfirmConversions=False, ReadOnly=True, AddToRecentFiles=False)
-            doc_w.SaveAs(pdf_conv, FileFormat=17)  # 17 = wdFormatPDF
-            doc_w.Close(0)
-        finally:
-            word.Quit(0)
+        # Comando varia conforme o SO, soffice é comum em ambos
+        cmd = ["soffice", "--headless", "--convert-to", "pdf", "--outdir", os.path.dirname(abs_pdf), abs_docx]
+        # Tenta rodar de forma silenciosa
+        result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+        if result.returncode == 0 and os.path.exists(abs_pdf):
+            print(f"  [+] Documento PDF gerado via LibreOffice: {caminho_pdf}")
+            return caminho_pdf
+    except (FileNotFoundError, subprocess.TimeoutExpired, Exception):
+        print(f"  [!] LibreOffice (soffice) não encontrado ou falhou.")
 
-        if usar_temp:
-            shutil.move(pdf_conv, abs_pdf)
-            try: os.remove(tmp_docx)
-            except OSError: pass
-
-        print(f"  [+] Documento PDF gerado: {caminho_pdf}")
-        return caminho_pdf
-    except ImportError:
-        print("[!] Biblioteca 'comtypes' não instalada. Execute: pip install comtypes")
-        return None
-    except Exception as e:
-        if usar_temp:
-            for f in (tmp_docx, tmp_pdf):
-                try: os.remove(f)
-                except OSError: pass
-        print(f"[!] Erro ao gerar PDF pelo Word COM: {e}")
-
-        # Fallback para docx2pdf
-        try:
-            from docx2pdf import convert
-            convert(abs_docx, abs_pdf)
+    # 3. Fallback Final: docx2pdf (wrapper de Word/Mac)
+    try:
+        print(f"  [.] Tentando conversão via docx2pdf...")
+        from docx2pdf import convert
+        convert(abs_docx, abs_pdf)
+        if os.path.exists(abs_pdf):
             print(f"  [+] Documento PDF gerado via docx2pdf: {caminho_pdf}")
             return caminho_pdf
-        except ImportError:
-            print("[!] docx2pdf não instalado.")
-        except Exception as e2:
-            print(f"[!] docx2pdf também falhou: {e2}")
+    except (ImportError, Exception):
+        print(f"  [!] docx2pdf falhou.")
 
-    print("[!] PDF NÃO GERADO. O Word pode estar bloqueando a automação no fundo.")
+    print("\n[!] AVISO: PDF NÃO FOI GERADO AUTOMATICAMENTE.")
+    print("    O documento DOCX está íntegro na pasta de saída.")
+    print("    Para suporte a PDF em servidores Linux, instale o LibreOffice (sudo apt install libreoffice).")
     return None
 
