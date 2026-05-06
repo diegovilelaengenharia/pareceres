@@ -1,94 +1,71 @@
 # Testing Patterns
 
-**Analysis Date:** 2026-05-01
+**Analysis Date:** 2026-05-06 (atualizado pós-Milestone v3.0)
 
 ## Test Framework
 
 **Runner:**
-- Custom test runner: `run_tests.py`
+- Custom test runner: `Sistema/motor/scripts/run_tests.py`
+- Golden Dataset: `Sistema/motor/tests/golden_dataset/`
+- Validador de Fidelidade: `Sistema/motor/scripts/validador_fidelidade.py`
 
 **Assertion Library:**
-- Built-in conditional checks (no formal framework like `pytest` or `unittest` yet, but plans for expansion).
+- Checks condicionais built-in + validação de existência/tamanho de arquivos.
+- MCP-SMOSU usa assertions próprias em `test_tools.py`.
 
 **Run Commands:**
 ```bash
-python _Sistema_Interno/01_Motor_Python/run_tests.py           # Run all tests
-python _Sistema_Interno/01_Motor_Python/run_tests.py --limpar  # Run and clean outputs
-python _Sistema_Interno/01_Motor_Python/run_tests.py --motor   # Structured motor only
-python _Sistema_Interno/01_Motor_Python/run_tests.py --livre   # Free mode only
+# A partir da raiz do projeto
+python Sistema/motor/scripts/run_tests.py           # Todos os testes
+python Sistema/motor/scripts/run_tests.py --limpar   # Testes + limpar outputs
+python Sistema/motor/scripts/run_tests.py --motor    # Apenas motor estruturado
+python Sistema/motor/scripts/run_tests.py --livre    # Apenas modo livre
+
+# Validação de fidelidade (Golden Dataset)
+python Sistema/motor/scripts/validador_fidelidade.py
+
+# Testes do MCP-SMOSU
+cd Sistema/mcp-smosu
+python test_tools.py
 ```
 
 ## Test File Organization
 
 **Location:**
-- Test data: `_Sistema_Interno/01_Motor_Python/json/`
-- Test outputs: `_Sistema_Interno/01_Motor_Python/json/_output_testes/`
+- Test data: `Sistema/motor/json/` (matriz documental)
+- Test outputs: `Sistema/motor/json/_output_testes/`
+- Golden Dataset: `Sistema/motor/tests/golden_dataset/` (3 casos padrão-ouro)
+- MCP tests: `Sistema/mcp-smosu/test_*.py`
 
 **Naming:**
-- `TESTE-[NOME].json`: Structured tests.
-- `TESTE-LIVRE-[NOME].json`: Free mode tests.
-- `TESTE-INVALIDO-[NOME].json`: Negative tests (schema validation expected to fail).
-
-## Test Structure
-
-**Suite Organization:**
-O `run_tests.py` descobre arquivos JSON por globbing e executa em loops baseados no prefixo do arquivo.
-
-```python
-def _rodar_suite(titulo, arquivos, fn_teste):
-    # Loop over files
-    for caminho in arquivos:
-        passou, msg, t = fn_teste(caminho)
-        # Log result
-```
-
-**Patterns:**
-- **Setup**: `os.makedirs(OUTPUT_DIR, exist_ok=True)`
-- **Execution**: Chama a função `gerar()` do motor ou `gerar_livre()`.
-- **Teardown**: Remoção opcional da pasta de saída via flag `--limpar`.
-- **Assertion**: Verifica existência do arquivo de saída, tamanho em KB e ausência de exceções.
-
-## Mocking
-
-**Framework:** None.
-
-**What to Mock:**
-- Não há mocking de IO ou bibliotecas externas. Os testes são de integração real (End-to-End para o motor).
-
-**What NOT to Mock:**
-- `python-docx` e `os.path` são usados diretamente para garantir que o documento final seja legível pelo Word.
-
-## Fixtures and Factories
-
-**Test Data:**
-Arquivos JSON estáticos em `_Sistema_Interno/01_Motor_Python/json/`. Representam casos reais de uso (Alvarás, Certidões, etc.).
-
-## Coverage
-
-**Requirements:** None enforced.
-
-**View Coverage:**
-- Manual verification of generated files in `_output_testes/`.
+- `TESTE-[NOME].json`: Testes estruturados (motor).
+- `TESTE-LIVRE-[NOME].json`: Testes em modo livre.
+- `TESTE-INVALIDO-[NOME].json`: Testes negativos (rejeição esperada).
 
 ## Test Types
 
-**Unit Tests:**
-- Validação de Schema (via `schema_validator.validar`).
-
-**Integration Tests:**
-- Fluxo completo do JSON até o DOCX final.
-
-**E2E Tests:**
-- `run_tests.py` cobre o fluxo completo do ponto de vista do motor.
+| Tipo | Cobertura | Ferramenta |
+|------|-----------|------------|
+| E2E (Motor) | JSON → DOCX completo | `run_tests.py` |
+| Fidelidade | JSON ↔ DOCX (campos críticos) | `validador_fidelidade.py` |
+| Dessincronização | Template ↔ Gerador | `template_checker.py` |
+| MCP Tools | Ferramentas individuais | `test_tools.py` |
+| Schema | Validação de tipos JSON | `schema_validator.py` |
 
 ## Common Patterns
 
-**Async Testing:**
-- N/A (System is synchronous).
+**E2E Test Flow:**
+1. Setup: `os.makedirs(OUTPUT_DIR, exist_ok=True)`
+2. Execution: `gerar(dados)` — chama o pipeline completo
+3. Assertion: Arquivo existe, tamanho > 0, sem exceções
+4. Teardown: Remoção opcional via `--limpar`
 
-**Error Testing:**
-- Arquivos `TESTE-INVALIDO-*.json` verificam se o sistema rejeita corretamente dados malformados ou incompletos.
+**Golden Dataset Flow:**
+1. Gerar DOCX a partir dos 3 JSONs padrão-ouro
+2. Extrair texto do DOCX gerado
+3. Verificar presença de campos críticos (número do processo, requerente, conclusão)
+4. Score de fidelidade: 100% = todos os campos encontrados
 
 ---
 
-*Testing analysis: 2026-05-01*
+*Testing analysis: 2026-05-06 (pós-Milestone v3.0)*

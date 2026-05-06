@@ -1,19 +1,32 @@
-# Continue — Fase 14 (Emissão de Certidões em Lote)
+# Continue — Estado Atual (Pós-Milestone v3.0)
 
 ## Última Ação
-Concluí a **Fase 3.1 (Integração MCP)**. O SIA v1.1 está publicado e validado, com 13 ferramentas operacionais e o Protocolo de Rigor Técnico implementado. A IA agora é capaz de realizar análises matemáticas e legais infalíveis via MCP.
+Concluída a **auditoria completa do projeto** em 06/05/2026. Todos os milestones (v1.0 → v3.0) foram completados com sucesso. Foram executadas 17 fases e ~25 planos.
+
+**Ações de limpeza realizadas:**
+- Removidos caches (`__pycache__/`, `.pytest_cache/`)
+- Removido arquivo de rascunho `habitese_text.txt`
+- Criado `.gitignore` consolidado na raiz
+- Documentação `.planning/` reescrita para refletir estrutura atual
+
+## Estado do Projeto
+O sistema está **operacional e estável** com:
+- 53 modelos de documento
+- 42 templates JSON com enricher
+- Pipeline completo: JSON → Validação → Preview HTML → DOCX
+- Servidor MCP com 13 ferramentas
+- Base de conhecimento jurídica com ~39 documentos
+- Painel GEM (interface web)
 
 ## Próxima Ação
-Iniciar a **Fase 14: Emissão de Certidões em Lote**.
-
-**Passos imediatos:**
-1. Analisar os requisitos da Fase 14 (emissão de múltiplas certidões — ex: Localização + Confrontação — a partir de um único processo/JSON).
-2. Criar a SPEC da Fase 14.
-3. Ajustar o `motor/generators/geradores_core.py` (ou script de orquestração) para iterar sobre a lista `documentos_emitir` do JSON e gerar múltiplos arquivos DOCX de uma só vez.
-
-## Por Que
-Atualmente, o motor gera um arquivo por execução. A Fase 14 permitirá que processos complexos que exigem várias certidões sejam resolvidos em um único clique, aumentando drasticamente a produtividade.
+**Definir o Milestone v4.0** — possíveis direções:
+1. Testes unitários automatizados (pytest)
+2. Validação automática de templates DOCX vs JSON
+3. Dashboard de métricas de produção
+4. Exportação PDF nativa sem Word COM
+5. Histórico/indexação de processos analisados
 
 ## Open Threads
-- Definir como o motor deve nomear os arquivos múltiplos na pasta `Saida/`.
-- Verificar se os modelos de certidão isolada (Localização, Confrontação, etc.) já possuem os campos mapeados corretamente no JSON unificado.
+- Shim `componentes.py` pode ser removido quando todas as referências importarem diretamente do pacote `componentes/`
+- Planos antigos em `.gemini/plans/` podem ser migrados ou removidos
+- Separação `base_conhecimento/` vs `inteligencia/Knowledge/` precisa de documentação clara

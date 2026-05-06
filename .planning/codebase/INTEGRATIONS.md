@@ -1,65 +1,52 @@
 # External Integrations
 
-**Analysis Date:** 2026-05-01
+**Analysis Date:** 2026-05-06 (atualizado pós-Milestone v3.0)
 
 ## APIs & External Services
 
-**None:**
-- O sistema opera de forma local e offline para processamento de JSON.
+**Gemini API:**
+- Usado pelo SIA (Sistema Interativo de Análise) para leitura de PDFs e geração de JSON.
+- Não é dependência do motor de geração — a geração funciona 100% offline.
+- Configuração: via chave de API no ambiente do Gemini CLI.
+
+**MCP SMOSU (Model Context Protocol):**
+- Servidor local com 13 ferramentas de cálculo e validação.
+- Location: `Sistema/mcp-smosu/server.py`
+- Ferramentas incluem: cálculo de índices urbanísticos, validação de conformidade legal, fundamentação jurídica automática, busca semântica na base de conhecimento.
 
 ## Data Storage
 
 **Databases:**
-- N/A (JSON files used as data sources)
+- N/A (arquivos JSON como fonte de dados)
 
 **File Storage:**
-- Local filesystem only.
-  - Entradas: `1_Colar_JSON_Aqui/`
-  - Saídas: `2_Documentos_Prontos/`
-  - Modelos: `0_Modelos_Prontos/`
+- Filesystem local (sincronizado via Google Drive)
+  - Entradas: `Entrada/`
+  - Saídas: `Saida/`
+  - Modelos: `Sistema/modelos/`
+  - Templates: `Sistema/motor/templates/`
+  - Base de conhecimento: `Sistema/base_conhecimento/`
 
-**Caching:**
-- None
-
-## Authentication & Identity
-
-**Auth Provider:**
-- None (Local access)
+**Indices:**
+- FAISS: `Sistema/mcp-smosu/vector_index.faiss` (busca vetorial)
+- Metadata: `Sistema/mcp-smosu/vector_metadata.pkl`
 
 ## Monitoring & Observability
 
 **Error Tracking:**
-- Custom logger in `_Sistema_Interno/01_Motor_Python/logger.py`
-- Persistent log file in `_Sistema_Interno/01_Motor_Python/motor.log`
+- Custom logger em `Sistema/motor/core/logger.py`
+- Log textual: `Sistema/logs/motor.log`
+- Log JSON: `Sistema/logs/motor.json.log`
 
 **Logs:**
-- Console output via `colorama`
-- File logging in `motor.log`
+- Console output via `colorama` (com ícones e cores)
+- File logging persistente
 
 ## CI/CD & Deployment
 
-**Hosting:**
-- Local Windows Machine
-
-**CI Pipeline:**
-- None (Manual testing via `run_tests.py`)
-
-## Environment Configuration
-
-**Required env vars:**
-- N/A (Configuration is file-based in `config.py`)
-
-**Secrets location:**
-- N/A (No secrets detected)
-
-## Webhooks & Callbacks
-
-**Incoming:**
-- None
-
-**Outgoing:**
-- None
+**Hosting:** Local Windows Machine
+**CI Pipeline:** Nenhum (testes manuais via `run_tests.py`)
+**Deploy:** Cópia via Google Drive para Desktop
 
 ---
-
-*Integration audit: 2026-05-01*
+*Integration audit: 2026-05-06*

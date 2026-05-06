@@ -1,65 +1,74 @@
 # Codebase Concerns
 
-**Analysis Date:** 2026-05-01
+**Analysis Date:** 2026-05-06 (atualizado pós-Milestone v3.0)
 
-## Tech Debt
+## Resolved Issues (Histórico)
 
-**Módulos sem Docstrings:**
-- Issue: Nem todos os módulos Python possuem docstrings de nível de módulo conforme exigido pelos requisitos de qualidade.
-- Files: `_Sistema_Interno/01_Motor_Python/*.py`
-- Impact: Dificulta a manutenção e o entendimento rápido por novos desenvolvedores ou IAs.
-- Fix approach: Executar a Fase 6 do Roadmap para documentar todos os módulos e funções públicas.
+| Issue | Resolução | Fase |
+|-------|-----------|------|
+| Paths hardcoded | Portabilidade via `pathlib`/`config.py` | Fase 3 (v2.0) |
+| Lógica legada no compilador | Consolidado em `TIPOS_DOCUMENTO` | Fase 4 (v2.0) |
+| Falta de template checker | `template_checker.py` criado | Fase 5 (v2.0) |
+| Modelo narrativo insatisfatório | Reescrita tripartite + enricher | Fases 11, 02.1, 16 |
 
-**Lógica Legada no Compilador:**
-- Issue: Presença de código de despacho para "tipos descritivos legados" que não seguem o novo padrão `config.TIPOS_DOCUMENTO`.
-- Files: `_Sistema_Interno/01_Motor_Python/compilador.py`
-- Impact: Aumenta a complexidade do orquestrador e dificulta a manutenção dos tipos de documento.
-- Fix approach: Executar a Fase 4 do Roadmap para consolidação total em `config.py`.
+## Tech Debt Atual
+
+**Shim de Compatibilidade `componentes.py`:**
+- Issue: O arquivo `generators/componentes.py` é um shim DEPRECATED que re-exporta funções do pacote `generators/componentes/`.
+- Files: `Sistema/motor/generators/componentes.py`
+- Impact: Confusão — existem dois "componentes" (arquivo e pasta). Imports antigos continuam funcionando, mas novos devem usar o pacote diretamente.
+- Fix: Verificar se algum import ainda usa o shim e removê-lo quando seguro.
+
+**Ausência de Testes Unitários:**
+- Issue: Apenas testes E2E (JSON→DOCX). Funções individuais de cálculo, aliases e enricher não possuem testes isolados.
+- Files: `calculadora_indices.py`, `_aliases.py`, `enricher.py`
+- Impact: Regressões em lógicas internas podem passar despercebidas.
+- Priority: Medium — mitigado pelo Golden Dataset.
+
+**Duas bases de conhecimento sem separação clara:**
+- Issue: `Sistema/base_conhecimento/` (39 docs) e `Sistema/inteligencia/Knowledge/` (8 docs) coexistem sem documentação de propósito.
+- Impact: Dificulta manutenção e pode causar redundância.
+- Fix: Documentar que `base_conhecimento/` é o corpus jurídico bruto e `Knowledge/` são instruções processadas para o SIA.
 
 ## Known Bugs
 
 **Conversão PDF via Word COM:**
-- Issue: O bloqueio na conversão automática para PDF via Word COM é um problema pré-existente e ainda não resolvido.
-- Files: N/A (Impacta o fluxo de saída)
-- Symptoms: Falha ao tentar exportar diretamente para PDF em algumas máquinas.
-- Workaround: Exportação manual via Word ou uso de bibliotecas alternativas (pendente análise).
+- Issue: O bloqueio na conversão automática para PDF via Word COM persiste em algumas máquinas.
+- Workaround: A geração de PDF foi desativada por solicitação do usuário. O DOCX é o formato final.
+- Status: Aceito como limitação.
 
 ## Security Considerations
 
 **Acesso ao Sistema de Arquivos:**
-- Risk: O sistema executa operações de escrita e leitura baseadas em caminhos construídos dinamicamente.
-- Files: `config.py`, `compilador.py`, `run_tests.py`.
-- Current mitigation: Caminhos são validados e centralizados em `config.py`.
-- Recommendations: Implementar verificações de "path traversal" se o sistema for exposto a entradas não confiáveis.
+- Risk: Caminhos construídos dinamicamente a partir de dados do JSON.
+- Current mitigation: Caminhos centralizados em `config.py`, caracteres perigosos sanitizados em `_gerar_nome_saida()`.
+- Recommendations: Se o sistema for exposto a entradas não confiáveis, adicionar validação de path traversal.
 
 ## Fragile Areas
 
-**Sincronização de Templates (.docx):**
-- Files: `0_Modelos_Prontos/*.docx` vs `_Sistema_Interno/01_Motor_Python/geradores/`.
-- Why fragile: Alterações nos placeholders dos arquivos Word podem quebrar os geradores sem aviso prévio (falha silenciosa ou erro de execução).
-- Safe modification: Atualmente requer teste manual após cada alteração de template.
-- Test coverage: Gaps na verificação automática de placeholders. (Phase 5 do Roadmap visa resolver isso).
+**Sincronização Templates JSON ↔ Componentes DOCX:**
+- Files: `motor/templates/*.json` vs `generators/componentes/`
+- Why fragile: Adicionar um campo no template sem atualizar o componente resulta em omissão silenciosa.
+- Mitigation: `template_checker.py` + Golden Dataset com `validador_fidelidade.py`.
 
-## Missing Critical Features
-
-**Detector de Dessincronização de Templates:**
-- Problem: Não há uma ferramenta que garanta que todos os campos exigidos por um template Word estão sendo fornecidos pelo gerador JSON.
-- Blocks: Garantia de qualidade visual e técnica dos documentos gerados.
-- Phase 5 do Roadmap.
+**Mapeamento TIPOS_DOCUMENTO em config.py:**
+- Files: `core/config.py` (linhas 128-195)
+- Why fragile: Cada novo tipo requer entrada manual no dicionário. Tipo não mapeado causa `ValueError`.
+- Mitigation: Mensagem de erro clara com lista de tipos disponíveis.
 
 ## Test Coverage Gaps
 
-**Testes Unitários:**
-- What's not tested: Funções individuais de cálculo e validação não possuem testes unitários isolados, apenas testes de integração E2E.
-- Files: `calculadora_indices.py`, `alertas_decadencia.py`.
-- Risk: Regressões em lógicas de cálculo podem passar despercebidas se o resultado final do documento parecer correto.
-- Priority: Medium.
+**Cobertura por módulo:**
 
-### C-05 — Insatisfação com Modelo de Parecer Narrativo
-- **Symptom**: O modelo v5.0 (narrativo e com bullets administrativos) não atingiu as expectativas do usuário em termos de clareza ou utilidade.
-- **Context**: Tentativa de consolidar todo o dossiê em um único texto fluído falhou em agradar esteticamente ou funcionalmente.
-- **Action**: Marcar para refatoração completa do motor de templates e da lógica de construção de texto. Evitar o uso do prefixo "Considerando que" de forma rígida.
+| Módulo | Cobertura | Tipo |
+|--------|-----------|------|
+| `geradores_core.py` | ✅ Alta | E2E via Golden Dataset |
+| `enricher.py` | ⚠️ Baixa | Apenas via integração |
+| `_aliases.py` | ⚠️ Baixa | Apenas via integração |
+| `calculadora_indices.py` | ⚠️ Baixa | Apenas via integração |
+| `componentes/` | ✅ Média | Via geração de DOCX |
+| `mcp-smosu/tools.py` | ✅ Média | Testes próprios em test_tools.py |
 
 ---
 
-*Concerns audit: 2026-05-01*
+*Concerns audit: 2026-05-06 (pós-Milestone v3.0)*

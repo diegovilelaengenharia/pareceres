@@ -1,0 +1,43 @@
+# ═══════════════════════════════════════════════════════════
+#  Cache e Artefatos de Build
+# ═══════════════════════════════════════════════════════════
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+venv/
+.env
+
+# ═══════════════════════════════════════════════════════════
+#  Saída e Logs (não rastrear dados de produção)
+# ═══════════════════════════════════════════════════════════
+Saida/
+Sistema/logs/
+Sistema/motor/Saida/
+Sistema/motor/json/_output_testes/
+
+# ═══════════════════════════════════════════════════════════
+#  Sistema Operacional
+# ═══════════════════════════════════════════════════════════
+desktop.ini
+.DS_Store
+Thumbs.db
+
+# ═══════════════════════════════════════════════════════════
+#  Temporários do Office e Editor
+# ═══════════════════════════════════════════════════════════
+~*.docx
+~$*.docx
+*.tmp
+
+# ═══════════════════════════════════════════════════════════
+#  Índices vetoriais (grandes, reconstruíveis)
+# ═══════════════════════════════════════════════════════════
+Sistema/mcp-smosu/vector_index.faiss
+Sistema/mcp-smosu/vector_metadata.pkl
+
+# ═══════════════════════════════════════════════════════════
+#  Dados sensíveis de produção
+# ═══════════════════════════════════════════════════════════
+Entrada/_Arquivo/
+PARECERES PEDRO/

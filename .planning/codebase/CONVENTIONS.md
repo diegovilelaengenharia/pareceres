@@ -1,6 +1,6 @@
 # Coding Conventions
 
-**Analysis Date:** 2026-05-01
+**Analysis Date:** 2026-05-06 (atualizado pós-Milestone v3.0)
 
 ## Naming Patterns
 
@@ -47,7 +47,7 @@
 
 ## Logging
 
-**Framework:** Custom logger (`_Sistema_Interno/01_Motor_Python/logger.py`)
+**Framework:** Custom logger (`Sistema/motor/core/logger.py`)
 
 **Patterns:**
 - Uso de funções curtas prefixadas com underscore para logs coloridos: `_ok()`, `_warn()`, `_err()`, `_info()`.
@@ -73,4 +73,4 @@
 
 ---
 
-*Convention analysis: 2026-05-01*
+*Convention analysis: 2026-05-06*

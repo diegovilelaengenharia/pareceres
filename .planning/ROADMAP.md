@@ -153,4 +153,35 @@ This document outlines the phased execution plan.
     - [x] 17-01 — Registrar `substituicao_projeto` em config.py; criar MODELO_17/18/19; validar geração
 
 ---
-*Roadmap updated: 2026-05-06*
+
+## Milestone v4.0 — Robustez e Produtividade *(planejado)*
+
+*Objetivo: Elevar a confiabilidade via testes automatizados, melhorar a produtividade com ferramentas de consulta e monitoramento, e resolver limitações técnicas pendentes.*
+
+### Phase 18: Testes Unitários Automatizados
+- **Goal**: Criar suite pytest para funções isoladas — calculadora de índices, aliases, enricher, schema_validator — com cobertura mínima de 80%.
+- **Requirements**: Confiabilidade, regressão zero
+- **Status**: [planned]
+
+### Phase 19: Validação Automática de Templates
+- **Goal**: Expandir o `template_checker.py` para varredura completa dos 42 templates JSON vs componentes DOCX, gerando relatório de cobertura de campos.
+- **Requirements**: Qualidade, sincronização
+- **Status**: [planned]
+
+### Phase 20: Dashboard de Métricas de Produção
+- **Goal**: Criar painel de métricas que mostra quantidade de documentos gerados, tipos mais frequentes, taxa de erros, e tempo médio de geração por tipo.
+- **Requirements**: Observabilidade, produtividade
+- **Status**: [planned]
+
+### Phase 21: Histórico e Consulta de Processos
+- **Goal**: Indexar todos os processos já analisados (JSONs de Saida/_Historico/) para consulta rápida por número, requerente ou tipo. Integrar como ferramenta MCP.
+- **Requirements**: Produtividade, rastreabilidade
+- **Status**: [planned]
+
+### Phase 22: Wizard de Análise Interativa (Painel GEM v2)
+- **Goal**: Expandir o Painel GEM com campo de observações do engenheiro, checklists dinâmicos e tela de revisão interativa do texto da IA antes da geração.
+- **Requirements**: UX, qualidade da análise
+- **Status**: [planned]
+
+---
+*Roadmap updated: 2026-05-06 (auditoria completa + planejamento v4.0)*

@@ -1,89 +1,72 @@
 # Codebase Structure
 
-**Analysis Date:** 2026-05-01
+**Analysis Date:** 2026-05-06 (atualizado pós-Milestone v3.0)
 
 ## Directory Layout
 
 ```text
-[project-root]/
-├── 0_Modelos_Prontos/       # Modelos Word (.docx) com placeholders
-├── 1_Colar_JSON_Aqui/       # Pasta de entrada para arquivos JSON
-├── 2_Documentos_Prontos/    # Pasta de saída para documentos gerados
-├── 3_Treinar_Inteligencia/   # Instruções e contextos para IA (GSD2)
-├── _Sistema_Interno/
-│   ├── 01_Motor_Python/     # Núcleo do motor de geração
-│   │   ├── geradores/       # Lógica específica por tipo de documento
-│   │   ├── logos/           # Imagens institucionais para o cabeçalho
-│   │   └── templates/       # Templates HTML para preview
-│   └── 03_Retroalimentacao/ # Base de conhecimento e histórico
-├── .gemini/
-│   └── plans/               # Planejamento GSD2 (Roadmap, States, Phases)
-└── GERAR_DOCUMENTOS.bat     # Atalho para execução pelo usuário
+02. Pareceres/                          <- RAIZ
+├── GERAR_DOCUMENTOS.bat                <- Entry point
+├── Entrada/                            <- JSONs de entrada
+├── Saida/                              <- DOCX gerados
+├── PARECERES PEDRO/                    <- Dados de produção
+├── Sistema/
+│   ├── AJUDA.md                        <- Manual do usuário
+│   ├── base_conhecimento/              <- 39 docs legais
+│   ├── inteligencia/Knowledge/         <- 8 docs do SIA
+│   ├── logs/                           <- motor.log
+│   ├── mcp-smosu/                      <- Servidor MCP (13 tools)
+│   ├── modelos/                        <- 53 modelos JSON
+│   └── motor/
+│       ├── core/                       <- config, logger, schema, consistencia
+│       ├── generators/                 <- compilador, geradores, enricher, aliases
+│       │   └── componentes/            <- Blocos visuais DOCX
+│       ├── analyzers/                  <- Análise de PDFs e triagem
+│       ├── extractors/                 <- OCR e extração
+│       ├── utils/                      <- Cálculos, alertas, multas
+│       ├── ui/                         <- Painel GEM + preview HTML
+│       ├── templates/                  <- 42 templates JSON por tipo
+│       ├── tests/                      <- Testes + golden dataset
+│       ├── scripts/                    <- Utilitários (validador, checker)
+│       ├── json/                       <- Matriz documental
+│       └── logos/                      <- Imagens institucionais
+└── .planning/                          <- Infraestrutura GSD
 ```
-
-## Directory Purposes
-
-**_Sistema_Interno/01_Motor_Python/:**
-- Purpose: Contém toda a lógica executável do sistema.
-- Contains: Scripts Python, arquivos de configuração e utilitários.
-- Key files: `compilador.py`, `config.py`, `logger.py`.
-
-**0_Modelos_Prontos/:**
-- Purpose: Repositório de templates oficiais em formato Word.
-- Contains: Arquivos `.docx` que servem de base para a geração.
-
-**1_Colar_JSON_Aqui/:**
-- Purpose: Interface de entrada de dados para o usuário.
-- Contains: Arquivos JSON exportados pelo agente de triagem ou preenchidos manualmente.
-
-**.gemini/plans/:**
-- Purpose: Governança do projeto seguindo a metodologia GSD2.
-- Contains: Documentos de arquitetura, roadmaps e histórico de fases.
 
 ## Key File Locations
 
 **Entry Points:**
-- `_Sistema_Interno/01_Motor_Python/compilador.py`: Ponto de entrada principal do motor.
-- `GERAR_DOCUMENTOS.bat`: Interface simplificada para o usuário final.
+- `GERAR_DOCUMENTOS.bat` → abre o Painel GEM
+- `Sistema/motor/ui/painel_gem.py` → servidor HTTP do painel
+- `Sistema/motor/generators/compilador.py` → orquestrador central
 
 **Configuration:**
-- `_Sistema_Interno/01_Motor_Python/config.py`: Definições globais de caminhos, estilos e tipos.
+- `Sistema/motor/core/config.py` → caminhos, cores, fontes, TIPOS_DOCUMENTO
 
 **Core Logic:**
-- `_Sistema_Interno/01_Motor_Python/calculadora_indices.py`: Lógica matemática urbana.
-- `_Sistema_Interno/01_Motor_Python/geradores/`: Implementações de preenchimento.
+- `Sistema/motor/generators/geradores_core.py` → despacho + geração DOCX
+- `Sistema/motor/generators/enricher.py` → enriquecimento via templates
+- `Sistema/motor/generators/_aliases.py` → normalização de variáveis
 
 **Testing:**
-- `_Sistema_Interno/01_Motor_Python/run_tests.py`: Suite de testes automatizados.
-
-## Naming Conventions
-
-**Files:**
-- Python: `snake_case.py` (ex: `analisador_pdf.py`)
-- JSON: `PROCESSO_ANO.json` ou `NOME.json`
-
-**Directories:**
-- Prefixo numérico para ordem de importância/fluxo: `0_...`, `1_...`.
+- `Sistema/motor/scripts/run_tests.py` → testes E2E
+- `Sistema/motor/tests/test_geradores.py` → testes automatizados
 
 ## Where to Add New Code
 
-**New Document Type:**
-1. Adicionar template `.docx` em `0_Modelos_Prontos/`.
-2. Mapear o tipo em `config.py` (`TIPOS_DOCUMENTO`).
-3. Se necessário, criar/ajustar gerador em `geradores/`.
+**Novo tipo de documento:**
+1. Modelo JSON em `Sistema/modelos/MODELO_NN_*.json`
+2. Mapear em `core/config.py` → `TIPOS_DOCUMENTO`
+3. Template JSON em `motor/templates/` (se necessário)
+4. Atualizar `catalogo_modelos.json`
 
-**New Business Rule:**
-- Criar novo módulo em `_Sistema_Interno/01_Motor_Python/` e importar no `compilador.py`.
+**Nova regra de validação:**
+- Adicionar em `motor/utils/` ou `core/consistencia.py`
+- Integrar no pré-voo do `compilador.py`
 
-**Utilities:**
-- Adicionar em `_Sistema_Interno/01_Motor_Python/componentes.py` se for relacionado a Word ou em novo arquivo utilitário.
-
-## Special Directories
-
-**.gemini/:**
-- Purpose: Metadados e planos do projeto.
-- Committed: Sim.
+**Novo componente visual:**
+- Criar em `motor/generators/componentes/`
+- Re-exportar no `componentes/__init__.py`
 
 ---
-
-*Structure analysis: 2026-05-01*
+*Structure analysis: 2026-05-06*
