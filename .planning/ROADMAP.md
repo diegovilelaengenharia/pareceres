@@ -158,10 +158,10 @@ This document outlines the phased execution plan.
 
 *Objetivo: Transformar o sistema de um gerador de documentos em um analista completo (Pilar 1 a Pilar 5).*
 
-### Phase 18: Ingestão Inteligente e Decisão (Sprint 1)
+### ✅ Phase 18: Ingestão Inteligente e Decisão (Sprint 1)
 - **Goal**: Implementar Classificador de Documentos (P1-A) para triagem de PDFs e Árvore de Decisão automática (P3-A) para os 5 tipos de processos mais comuns.
 - **Requirements**: P1-A, P3-A
-- **Status**: [planned]
+- **Status**: [complete]
 
 ### Phase 19: Contexto Cadastral e Pendências (Sprint 2)
 - **Goal**: Criar banco de dados local SQLite de Lotes/Matrículas (P2-A) e o Detector Automático de Pendências (P3-B) baseado no checklist.
