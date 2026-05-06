@@ -1,29 +1,21 @@
 # Project State
 
 ## Current Position
-- **Milestone**: v2.0 — Qualidade Interna e Manutenibilidade (COMPLETE)
-- **Next Milestone**: v3.0 — Expansão da Inteligência e Geoprocessamento
-- **Phase**: 08 (Planned)
-- **Status**: pending_phase_08
+- **Milestone**: v3.0 — Expansão da Inteligência e Geoprocessamento
+- **Next Phase**: 8 (Expansão da Inteligência — Legislações 2025) ou 14 (Certidões Separadas)
+- **Status**: phase_13_complete
 
 ## Recent Accomplishments
-- [2026-05-02] **Fase 07 concluída**: Integração de OCR Local (Docling) para processamento de PDFs complexos sem dependência externa.
-- [2026-05-02] **Fase 11 concluída**: Qualidade e Inteligência dos Pareceres — Wizard interativo, novos prompts, gabaritos e cálculos detalhados implementados.
-- [2026-05-02] **Fase 10 concluída**: Manutenção e Finalização — UI polida, documentação completa e limpeza de mocks.
-- [2026-05-02] **Fase 05 concluída**: Detector de Dessincronização de Templates (`template_checker.py`) integrado à suíte de testes.
-- [2026-05-02] **Fase 09 concluída**: Reorganização estrutural em subpacotes e consolidação do planejamento.
-- [2026-05-02] **Fase 06 concluída**: Implementados `BaseEngine` e `gerar_esquema_base.py`.
-- [2026-05-01] **Fase 3 concluída**: Portabilidade de paths e constantes centralizadas.
-- [2026-05-02] **Fase 4 concluída**: Limpeza de lógica legada no compilador.
+- [2026-05-06] **Fase 13 — Excelência Operacional e Conformidade Legal**: 3 planos concluídos.
+  - 13-01: Templates e validação de conformidade com Dec. 4.149/2019.
+  - 13-02: Golden Dataset (3 casos) + validador_fidelidade.py — auditoria 3/3 PASS, fidelidade 100%.
+  - 13-03: Manual de Operação v2.0 + Relatório de Conformidade Legal completo.
+- [2026-05-06] **Bug corrigido**: `comunicado.py` linha 143 — COR_PENDENCIA_BORDA como string hex em .font.color.rgb.
 
 ## Blocking Issues
 - N/A
 
 ## Key Decisions
-- **Priorização da Fase 10**: Decidido focar na polidez final e documentação para garantir que o sistema seja uma ferramenta profissional pronta para uso.
-- **Estrutura Modular**: O sistema agora segue o padrão de subpacotes Python (core, extractors, generators, ui, utils).
-- v3.0 focará em Geoprocessamento básico e atualização legal.
-
-## Technical Justification (Next Step)
-A Fase 10 é essencial para transformar o motor técnico em um produto final amigável. Sem a documentação adequada (README, Troubleshooting) e a aba de Ajuda, o sistema teria uma curva de aprendizado alta e geraria muitos chamados de suporte. O refinamento de código (remoção de mocks) garante a integridade da arquitetura para manutenções futuras.
-
+- **Golden Dataset**: 3 JSONs padrão-ouro cobrem os principais casos de uso (Alvará, Habite-se, Comunicado de Pendência).
+- **Validador de Fidelidade**: Script de auditoria cruzada JSON↔DOCX garante que dados críticos aparecem corretamente no documento gerado.
+- **Conformidade Legal**: Motor v2.0 auditado e aprovado contra todos os artigos relevantes do Decreto 4.149/2019.

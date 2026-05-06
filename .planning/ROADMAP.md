@@ -67,14 +67,14 @@ This document outlines the phased execution plan.
     - [ ] 11-02-PLAN.md — Novos Modelos JSON (alvará_regularização, habitese_multa)
 - **Context**: [11-CONTEXT.md](phases/11-qualidade-inteligencia/11-CONTEXT.md)
 
-### Phase 13: Excelência Operacional e Conformidade Legal
+### ✅ Phase 13: Excelência Operacional e Conformidade Legal *(concluída 2026-05-06)*
 - **Goal**: Garantir que todos os pareceres sigam o Decreto 4.149/2019, implementar validação cruzada JSON vs DOCX, atualizar templates para nova estrutura GEM e consolidar o Golden Dataset de auditoria.
 - **Requirements**: conformidade legal, excelência operacional, design impecável
-- **Status**: [planned]
+- **Status**: [complete]
 - **Plans**: 3 plans
-    - [ ] 13-01-PLAN.md — Alinhamento Legal e Evolução de Templates
-    - [ ] 13-02-PLAN.md — Golden Dataset e Validação Cruzada
-    - [ ] 13-03-PLAN.md — Excelência Visual e Documentação Final
+    - [x] 13-01-PLAN.md — Alinhamento Legal e Evolução de Templates
+    - [x] 13-02-PLAN.md — Golden Dataset e Validação Cruzada
+    - [x] 13-03-PLAN.md — Excelência Visual e Documentação Final
 
 ---
 
@@ -102,12 +102,12 @@ This document outlines the phased execution plan.
 
 *Objetivo: Integrar as ferramentas MCP ao fluxo de análise interativa, eliminando a subjetividade e garantindo precisão matemática e legal.*
 
-### Phase 03.1: Integração de Ferramentas MCP (SIA v1.1)
+### ✅ Phase 03.1: Integração de Ferramentas MCP (SIA v1.1) *(concluída 2026-05-06)*
 - **Goal**: Sincronizar o SIA com as ferramentas do servidor MCP SMOSU para cálculos, validações e fundamentação legal automática.
 - **Requirements**: INT-01
-- **Status**: [planned]
+- **Status**: [complete]
 - **Plans**: 1 plan
-    - [ ] 02.2-02-PLAN.md — Integração de Ferramentas MCP e Protocolo de Rigor
+    - [x] 02.2-02-PLAN.md — Integração de Ferramentas MCP e Protocolo de Rigor
 
 ---
 
@@ -134,12 +134,12 @@ This document outlines the phased execution plan.
 - **Plans**:
     - [x] 14-01-PLAN.md — Implementação do Pipeline de Certidões em Lote
 
-### Phase 15: Refino de Layout Administrativo
+### ✅ Phase 15: Refino de Layout Administrativo *(concluída 2026-05-06)*
 - **Goal**: Implementar o layout "Parecer Administrativo" (limpo) para processos de certidões, removendo tabelas de índices urbanísticos desnecessárias.
 - **Requirements**: FR-01, FR-02, ARCH-01
-- **Status**: [planned]
+- **Status**: [complete]
 - **Plans**:
-    - [ ] 15-01-PLAN.md — Criação do Layout Administrativo Limpo
+    - [x] 15-01-PLAN.md — Criação do Layout Administrativo Limpo
 
 ### ✅ Phase 16: Refatoração do Gerador DOCX *(concluída 2026-05-05)*
 - **Goal**: Refatorar completamente o pipeline de geração DOCX para corrigir problemas de conteúdo/texto nos pareceres, simplificar os modelos, melhorar o preview HTML e criar um fluxo mais inteligente de template → preview → DOCX.
