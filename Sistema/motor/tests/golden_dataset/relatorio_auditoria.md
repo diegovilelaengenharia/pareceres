@@ -1,6 +1,6 @@
 # Relatório de Auditoria — Golden Dataset SMOSU
 
-**Data:** 06/05/2026 13:43  
+**Data:** 06/05/2026 13:47  
 **Total de casos:** 3  
 **Aprovados (PASS):** 3  
 **Reprovados (FAIL):** 0  

@@ -32,18 +32,7 @@
     "A edificação projetada atende aos parâmetros urbanísticos da ZR1, com Taxa de Ocupação de 33,47% (máx. 60%), Taxa de Permeabilidade de 25,14% (mín. 20%) e Coeficiente de Aproveitamento de 0,33 (máx. 1,0), conforme Decreto nº 4.149/2019 e Lei nº 267/2019.",
     "A memória de cálculo confirma: Área projetada de cobertura = 120,50 m² (TO = 120,50 / 360,00 = 33,47%); Área permeável prevista = 90,50 m² (TP = 90,50 / 360,00 = 25,14%); CA = 120,50 / 360,00 = 0,33."
   ],
-  "memoria_calculo": {
-    "area_terreno_m2": 360.00,
-    "area_construida_m2": 120.50,
-    "area_permeavel_m2": 90.50,
-    "taxa_ocupacao_pct": 33.47,
-    "taxa_permeabilidade_pct": 25.14,
-    "coeficiente_aproveitamento": 0.33,
-    "to_maximo_permitido_pct": 60.0,
-    "tp_minima_exigida_pct": 20.0,
-    "ca_maximo_permitido": 1.0,
-    "observacao": "Todos os índices dentro dos limites da ZR1 (Dec. 4.149/2019, Art. 11)"
-  },
+  "memoria_de_calculo": "Área do Terreno: 360,00 m²\nÁrea Construída (projetada): 120,50 m²\nÁrea Permeável (prevista): 90,50 m²\n\nTO = 120,50 / 360,00 = 33,47% ≤ 60% (ZR1) ✓\nTP = 90,50 / 360,00 = 25,14% ≥ 20% (ZR1) ✓\nCA = 120,50 / 360,00 = 0,33 ≤ 1,0 (ZR1) ✓\n\nBase legal: Decreto 4.149/2019, Art. 11 — todos os índices dentro dos limites da ZR1.",
   "documentos_emitir": [
     {
       "tipo": "Alvará de Construção de Residência Unifamiliar de 120,50 m² válido por 01 ano",
