@@ -1,0 +1,29 @@
+{
+  "_comentario": "Certidão de Averbação com ressalva de área permeável não respeitada (não bloqueia emissão). Caso real: proc. 1462/2026 (Diego Henrique Salete Silva).",
+
+  "tipo_relatorio": "certidao_averbacao",
+  "numero_processo": "1462/2026",
+  "data_processo": "06 de Fevereiro de 2026",
+  "assunto": "Certidão de Averbação",
+  "requerente": "DIEGO HENRIQUE SALETE SILVA",
+
+  "logradouro": "Alameda das Hortênsias, nº 219",
+  "bairro": "Recanto da Serra",
+  "inscricao_municipal": "01.01.279.0090",
+  "matricula_sri": "32.683",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 019/2024, localizada na Alameda das Hortênsias, nº 219, Bairro Recanto da Serra, Oliveira/MG, foi concluída e está habitável, porém foi identificado que não foi respeitada a área permeável total aprovada em projeto.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Certidão de Matrícula SRI de Inteiro Teor de imóvel em seu nome, registrado sob nº 32.683, Inscrição Cadastral 01.01.279.0090."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Certidão de Averbação referente à obra licenciada pelo Alvará de Construção nº 019/2024.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Averbação — Alvará de Construção nº 019/2024",
+      "obs": "Ressalva: área permeável total aprovada em projeto não foi respeitada, conforme parecer fiscal. Matrícula SRI nº 32.683."
+    }
+  ]
+}

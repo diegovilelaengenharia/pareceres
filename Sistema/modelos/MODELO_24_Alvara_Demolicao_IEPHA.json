@@ -1,0 +1,35 @@
+{
+  "_comentario": "Alvará de Demolição com anuência do IEPHA (imóvel histórico). Caso real: proc. 2065/2026 (Mirian Silveira Castro). RRT de Arquiteto.",
+
+  "tipo_relatorio": "alvara_demolicao",
+  "numero_processo": "2065/2026",
+  "data_processo": "19 de Fevereiro de 2026",
+  "assunto": "Alvará de Demolição",
+  "requerente": "MIRIAN SILVEIRA CASTRO",
+
+  "logradouro": "Travessa Aristóteles Barros, nº 179A e 179B",
+  "bairro": "Centro",
+  "inscricao_municipal": "01.04.013.0353",
+  "matricula_sri": "1.280",
+
+  "area_demolicao": "136,00 m²",
+  "art_rrt": "2026 16597945",
+  "profissional_nome": "Antônio José de Oliveira Almeida",
+  "profissional_registro": "CAU A1430939",
+
+  "considerandos": [
+    "não há óbice à autorização da demolição pretendida e que a demolição não foi iniciada, de acordo com o parecer fiscal.",
+    "o requerente apresentou título de propriedade em seu nome sendo uma Matrícula de Inteiro Teor SRI nº 1.280, e Inscrição Cadastral 01.04.013.0353.",
+    "a Nota Técnica do IEPHA nº 219/2019, datada de 14 de Outubro de 2019, onde o órgão responsável não se opõe à demolição da mesma.",
+    "o requerente apresentou RRT nº 2026 16597945 referente à atividade de execução de obra de demolição, referente à área de 136,00 m², sob responsabilidade do Arquiteto e Urbanista Antônio José de Oliveira Almeida, CAU A1430939."
+  ],
+
+  "conclusao": "Diante disto, poderá ser expedido Alvará de Demolição referente à área total da RRT que é de 136,00 m², para o endereço: Travessa Aristóteles Barros, nº 179A e 179B, Bairro Centro, Oliveira/MG.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Alvará de Demolição — 136,00 m²",
+      "obs": "Área conforme RRT nº 2026 16597945. Responsável técnico: Arq. Urb. Antônio José de Oliveira Almeida, CAU A1430939. Anuência IEPHA Nota Técnica nº 219/2019."
+    }
+  ]
+}

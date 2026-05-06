@@ -1,0 +1,33 @@
+{
+  "_comentario": "Certidão de Averbação + Certidão de Decadência. Habite-se antigo (2018, 8 anos). Caso real: proc. 3732/2026 (Vanessa Aparecida dos Santos).",
+
+  "tipo_relatorio": "certidao_averbacao_decadencia",
+  "numero_processo": "3732/2026",
+  "data_processo": "24 de Março de 2026",
+  "assunto": "Certidão de Averbação e Certidão de Decadência",
+  "requerente": "VANESSA APARECIDA DOS SANTOS",
+
+  "logradouro": "Rua Goitacazes, nº 166",
+  "bairro": "Caetano Mascarenhas",
+  "inscricao_municipal": "01.01.081.0150",
+  "matricula_sri": "18.107",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Habite-se nº 4941/2018, com área liberada de 138,06 m², emitido em 11/10/2018, referente ao projeto aprovado no processo 2956/2012, localizada na Rua Goitacazes, nº 166, Bairro Caetano Mascarenhas, Oliveira/MG, foi concluída e está habitável.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Certidão de Matrícula SRI de Inteiro Teor de imóvel em seu nome, registrado sob nº 18.107, Inscrição Cadastral 01.01.081.0150."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Certidão de Averbação e Certidão de Decadência referente à área total do Habite-se nº 4941/2018, contendo 138,06 m².",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Averbação",
+      "obs": "Referente à área de 138,06 m² do Habite-se nº 4941/2018 (emitido em 11/10/2018). Matrícula SRI nº 18.107."
+    },
+    {
+      "tipo": "Certidão de Decadência",
+      "obs": "Referente à área de 138,06 m² do Habite-se nº 4941/2018. Decadência configurada nos termos do Art. 150, §4º do CTN — mais de 5 anos decorridos desde a emissão."
+    }
+  ]
+}

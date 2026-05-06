@@ -1,0 +1,38 @@
+{
+  "_comentario": "Alvará de Demolição. Caso real: proc. 997/2026 (Antônio Donisete da Paixão Oliveira).",
+
+  "tipo_relatorio": "alvara_demolicao",
+  "numero_processo": "997/2026",
+  "data_processo": "27 de Janeiro de 2026",
+  "assunto": "Alvará de Demolição",
+  "requerente": "ANTÔNIO DONISETE DA PAIXÃO OLIVEIRA",
+
+  "logradouro": "⚠️ VERIFICAR",
+  "bairro": "⚠️ VERIFICAR",
+  "inscricao_municipal": "01.04.035.0565",
+  "matricula_sri": "21.883",
+
+  "area_demolicao": "98,60 m²",
+  "art_rrt": "2026 64642000",
+  "profissional_nome": "Pedro Henrique Silva Barros",
+  "profissional_registro": "CREA 224.769/D",
+
+  "considerandos": [
+    "não há óbice à autorização da demolição pretendida e que a demolição não foi iniciada, de acordo com o parecer fiscal.",
+    "o requerente apresentou título de propriedade em seu nome sendo uma Matrícula de Inteiro Teor SRI nº 21.883, e Inscrição Cadastral 01.04.035.0565.",
+    "o requerente apresentou ART nº 2026 64642000 referente à atividade de execução de obra de demolição, referente à área de 98,60 m², sob responsabilidade do Engenheiro Civil Pedro Henrique Silva Barros, CREA 224.769/D."
+  ],
+
+  "conclusao": "Diante disto, poderá ser expedido Alvará de Demolição referente à área total da ART que é de 98,60 m².",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Alvará de Demolição — 98,60 m²",
+      "obs": "Área conforme ART nº 2026 64642000. Responsável técnico: Eng. Civil Pedro Henrique Silva Barros, CREA 224.769/D."
+    },
+    {
+      "tipo": "Comunicado de Indeferimento — Certidão de Demolição",
+      "obs": "A Certidão de Demolição somente poderá ser emitida após a conclusão da demolição e nova solicitação do requerente."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "_comentario": "2ª via de múltiplas certidões — espólio com despacho judicial como inventariante. Caso real: proc. 2673/2024 (Espólio de Geraldo Moura Costa).",
+
+  "tipo_relatorio": "habitese_2via",
+  "numero_processo": "2673/2024",
+  "data_processo": "19 de Março de 2024",
+  "assunto": "Segunda Via — Alvará de Construção, Habite-se e Certidão de Averbação e Decadência",
+  "requerente": "ESPÓLIO DE GERALDO MOURA COSTA",
+
+  "logradouro": "⚠️ VERIFICAR",
+  "bairro": "⚠️ VERIFICAR",
+  "inscricao_municipal": "01.03.028.2486",
+  "matricula_sri": "14.530",
+
+  "considerandos": [
+    "a solicitação do requerente por meio de ofício, anexado ao processo físico, página 43, datado de 23 de Fevereiro de 2026.",
+    "o requerente apresentou título de propriedade do terreno sendo um Despacho Judicial, nomeando-a como Inventariante do imóvel registrado sob nº 14.530, Inscrição Cadastral 01.03.028.2486.",
+    "todos os trâmites realizados no processo de Regularização de Obra 2673/2024."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Segunda Via do Alvará de Construção, Certidão de Habite-se, Certidão de Averbação e Decadência.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "2ª Via — Alvará de Construção",
+      "obs": "Referente ao processo de Regularização de Obra 2673/2024. Matrícula SRI nº 14.530."
+    },
+    {
+      "tipo": "2ª Via — Certidão de Habite-se",
+      "obs": "Para arquivo do requerente (Espólio de Geraldo Moura Costa, representado pela Inventariante)."
+    },
+    {
+      "tipo": "Certidão de Averbação e Decadência",
+      "obs": "Referente à área regularizada no processo 2673/2024."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "_comentario": "Certidão de Averbação (parcial, com área pré-existente) + 2ª via Habite-se + Certidão de Localização Corretiva (correção de número). Título: Certidão de Transcrição (sem Matrícula). Caso real: proc. 3398/2026 (Maria Lucia Santos e Outros).",
+
+  "tipo_relatorio": "habitese_2via",
+  "numero_processo": "3398/2026",
+  "data_processo": "17 de Março de 2026",
+  "assunto": "Certidão de Averbação e Segunda Via de Habite-se",
+  "requerente": "MARIA LUCIA SANTOS E OUTROS",
+
+  "logradouro": "Rua da Misericórdia, nº 620",
+  "bairro": "Centro",
+  "inscricao_municipal": "01.03.011.0833",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Habite-se nº 5590/2020, localizada na Rua da Misericórdia, nº 620, Bairro Centro, Oliveira/MG, foi concluída e está habitável.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Certidão de Transcrição em seu nome, registrada sob nº de ordem 20.401, haja vista o terreno não possuir Matrícula, Inscrição Cadastral 01.03.011.0833."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Certidão de Averbação, Segunda Via da Carta de Habite-se e Certidão de Localização.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Averbação — 128,00 m²",
+      "obs": "Constando a observação: Já existem averbados 70,00 m²; área a ser averbada: 128,00 m²; totalizando 198,00 m². Referência: Habite-se nº 5590/2020. Transcrição nº 20.401."
+    },
+    {
+      "tipo": "2ª Via — Carta de Habite-se nº 5590/2020",
+      "obs": "Para arquivo do requerente."
+    },
+    {
+      "tipo": "Certidão de Localização",
+      "obs": "Constando a seguinte observação: 'Edificação encontra-se na Rua da Misericórdia, nº 620, e não no nº 810.'"
+    }
+  ]
+}

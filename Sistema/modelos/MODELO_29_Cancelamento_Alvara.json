@@ -1,0 +1,39 @@
+{
+  "_comentario": "Cancelamento de Alvará de Construção (obra não iniciada). Caso real: proc. 2977/2026 (Adrianno Belux Bicalho Luz). Título: Escritura Pública de Compra e Venda.",
+
+  "tipo_relatorio": "alvara_cancelamento",
+  "numero_processo": "2977/2026",
+  "data_processo": "07 de Março de 2026",
+  "assunto": "Cancelamento de Alvará de Construção",
+  "requerente": "ADRIANNO BELUX BICALHO LUZ",
+
+  "logradouro": "Rua Salatiel Fernal Lobato, nº 257",
+  "bairro": "Residencial Oliveira",
+  "inscricao_municipal": "01.05.202.0260.001",
+  "matricula_sri": "30.074",
+
+  "numero_alvara": "354/2022",
+  "area_liberada": "⚠️ VERIFICAR",
+  "titulo_propriedade_tipo": "Escritura Pública de Compra e Venda em nome do requerente, assinada por ambas as partes, sob Matrícula nº 30.074",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra localizada na Rua Salatiel Fernal Lobato, nº 257, Bairro Residencial Oliveira (Lote 10, Quadra 01), não foi iniciada.",
+    "o requerente apresentou título de propriedade do imóvel em seu nome sendo uma Escritura Pública de Compra e Venda, assinada por ambas as partes, sob Matrícula nº 30.074 e Inscrição Cadastral 01.05.202.0260.001."
+  ],
+
+  "conclusao": "Diante disto, poderá ser cancelado o Alvará de Construção nº 354/2022 no sistema SISOBRAS. Emitir Certidão de Cancelamento do Alvará e comunicado de cancelamento de CEI junto à RFB, justificado pela não execução da obra.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Cancelamento do Alvará nº 354/2022 no sistema SISOBRAS"
+    },
+    {
+      "tipo": "Certidão de Cancelamento do Alvará nº 354/2022"
+    },
+    {
+      "tipo": "Comunicado de Cancelamento de CEI junto à RFB",
+      "obs": "Justificativa: não execução da obra. Lote 10, Quadra 01, Bairro Residencial Oliveira."
+    }
+  ]
+}
