@@ -8,5 +8,18 @@
     "allow": [
       "Bash(*)"
     ]
+  },
+  "hooksConfig": {
+    "disabled": [
+      "node \"C:/Users/diego/.gemini/hooks/gsd-prompt-guard.js\"",
+      "node \"C:/Users/diego/.gemini/hooks/gsd-read-guard.js\"",
+      "node \"C:/Users/diego/.gemini/hooks/gsd-workflow-guard.js\"",
+      "node \"C:/Users/diego/.gemini/hooks/gsd-validate-commit.js\"",
+      "node \"C:/Users/diego/.gemini/hooks/gsd-context-monitor.js\"",
+      "node \"C:/Users/diego/.gemini/hooks/gsd-read-injection-scanner.js\"",
+      "node \"C:/Users/diego/.gemini/hooks/gsd-phase-boundary.js\"",
+      "node \"C:/Users/diego/.gemini/hooks/gsd-check-update.js\"",
+      "node \"C:/Users/diego/.gemini/hooks/gsd-session-state.js\""
+    ]
   }
 }

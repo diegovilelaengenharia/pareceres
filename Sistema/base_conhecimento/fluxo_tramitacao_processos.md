@@ -98,9 +98,16 @@ ANÁLISE (1ª passagem)
 > (ex: *"Cancelar/dar baixa no Alvará de Construção nº XX/AAAA — CEI"*) a fim de
 > evitar duplicidade no sistema da prefeitura.
 
+**Evento especial — Substituição de Projeto Sem Alteração de Área:**
+> Quando o requerente deseja alterar o layout de um projeto já aprovado sem alterar a área total:
+> - O Alvará de Construção original permanece vigente (não emitir novo alvará).
+> - O Parecer Técnico deve autorizar a "Aprovação e Carimbo nas novas pranchas".
+> - Deve constar nota explícita de que a obra será regida pelas pranchas atualizadas, mas sob o alvará original.
+> - Se houver alteração de área, o processo deve ser reclassificado para "Substituição com Alteração de Área".
+
 ---
 
-### Fase 4 — Parecer Final, Emissão, Cadastro e Arquivo
+## Regra de Decisão de Tipo de Documento e Destino
 
 ```
 ANÁLISE (2ª passagem)

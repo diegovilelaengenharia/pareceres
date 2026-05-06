@@ -1,0 +1,41 @@
+{
+  "LC 267/2019": {
+    "nome": "Lei Complementar nº 267/2019 (Uso e Ocupação do Solo)",
+    "relacionadas": [
+      {"id": "Decreto 4149/2019", "motivo": "Procedimentos de aprovação e revalidação de alvarás"},
+      {"id": "Lei 1.544/86", "motivo": "Código de Obras - regramento de multas e fiscalização complementar"},
+      {"id": "Lei 3971/2023", "motivo": "Regras de APP Urbana e AUC (Área Urbana Consolidada)"},
+      {"id": "LOM Art. 227", "motivo": "Delimitação do Centro Histórico e ADE Cultural"}
+    ]
+  },
+  "Lei 1.544/86": {
+    "nome": "Lei nº 1.544/86 (Código de Obras)",
+    "relacionadas": [
+      {"id": "LC 267/2019", "motivo": "Parâmetros de ocupação (TO/CA) e multas cumulativas (Art. 79 §3º)"},
+      {"id": "Decreto 4149/2019", "motivo": "Novos procedimentos de análise de projeto e RT obrigatória"},
+      {"id": "Código Civil", "motivo": "Afastamentos em lotes <= 220m² (Arts. 1.299-1.301)"}
+    ]
+  },
+  "Decreto 4149/2019": {
+    "nome": "Decreto nº 4.149/2019 (Procedimentos de Aprovação)",
+    "relacionadas": [
+      {"id": "Lei 1.544/86", "motivo": "Base legal para licenciamento e prazos de renovação"},
+      {"id": "LC 267/2019", "motivo": "Conformidade obrigatória com os novos parâmetros zonais"},
+      {"id": "LC 216/2014", "motivo": "Documentação para parcelamento do solo (Art. 24)"}
+    ]
+  },
+  "Lei 1.788/89": {
+    "nome": "Lei nº 1.788/89 (Código de Posturas)",
+    "relacionadas": [
+      {"id": "LC 267/2019", "motivo": "Uso comercial e impacto de vizinhança (EIV)"},
+      {"id": "Lei 1.544/86", "motivo": "Ocupação de calçadas e logradouros por obras"}
+    ]
+  },
+  "Lei 3971/2023": {
+    "nome": "Lei nº 3.971/2023 (APP Urbana)",
+    "relacionadas": [
+      {"id": "LC 267/2019", "motivo": "Regularização em áreas de Preservação e AUC"},
+      {"id": "Código Florestal", "motivo": "Base federal para delimitação de APPs"}
+    ]
+  }
+}

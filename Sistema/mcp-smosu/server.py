@@ -173,6 +173,14 @@ def estruturar_historico_cronologico(eventos_raw: List[Dict[str, str]]) -> str:
     """
     return tools.estruturar_historico_cronologico(eventos_raw)
 
+@mcp.tool()
+def buscar_modelo_parecer(contexto_caso: str) -> str:
+    """
+    Busca os melhores modelos de parecer/certidão baseados no contexto do caso (ex: 'habite-se multa permeável').
+    Retorna os 3 modelos mais similares do catálogo da SMOSU.
+    """
+    return tools.buscar_modelo_parecer(contexto_caso)
+
 if __name__ == "__main__":
     # MCP servers on stdio are common for local integrations
     mcp.run()

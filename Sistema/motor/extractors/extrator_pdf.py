@@ -9,8 +9,9 @@ import sys
 import glob
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-if SCRIPT_DIR not in sys.path:
-    sys.path.insert(0, SCRIPT_DIR)
+ENGINE_ROOT = os.path.dirname(SCRIPT_DIR)
+if ENGINE_ROOT not in sys.path:
+    sys.path.insert(0, ENGINE_ROOT)
 
 from core.config import PASTA_ENTRADA, PASTA_MODELOS, PASTA_TREINO
 
@@ -41,35 +42,19 @@ def _extrair_com_pypdf(pdf_path: str) -> str:
 
 def extrair_texto(pdf_path: str) -> tuple[str | None, str]:
     """
-    Tenta extrair texto do PDF.
-    Retorna (texto, metodo_usado) ou (None, mensagem_de_erro).
+    Tenta extrair texto do PDF usando o motor híbrido.
     """
-    nome = os.path.basename(pdf_path)
-
-    # Tenta pdfplumber primeiro (melhor qualidade, preserva layout)
+    nome_base = os.path.splitext(os.path.basename(pdf_path))[0]
+    txt_path  = os.path.join(os.path.dirname(pdf_path), f"{nome_base}_TEXTO_EXTRAIDO.txt")
+    
     try:
-        import pdfplumber
-        texto = _extrair_com_pdfplumber(pdf_path)
-        if texto.strip():
-            return texto, "pdfplumber"
-        # pdfplumber funcionou mas retornou vazio (PDF de imagem)
-        return None, "pdf_escaneado"
-    except ImportError:
-        pass  # biblioteca não instalada, tentar próxima
+        from extractors.hybrid_extractor import HybridExtractor
+        extractor = HybridExtractor(pdf_path)
+        texto = extractor.fusion()
+        metodo = extractor.resultados.get("metodo_principal", "Híbrido")
+        return texto, metodo
     except Exception as e:
-        print(f"  [!] pdfplumber falhou: {e}")
-
-    # Fallback: pypdf
-    try:
-        from pypdf import PdfReader
-        texto = _extrair_com_pypdf(pdf_path)
-        if texto.strip():
-            return texto, "pypdf"
-        return None, "pdf_escaneado"
-    except ImportError:
-        return None, "sem_biblioteca"
-    except Exception as e:
-        return None, f"erro: {e}"
+        return None, f"erro_hibrido: {e}"
 
 
 def _detectar_tipo_processo(nome_arquivo: str) -> str | None:
@@ -177,6 +162,9 @@ def processar_pdfs(pasta: str = PASTA_ENTRADA) -> list[str]:
         if texto and metodo.startswith("erro"):
             print(f"  [ERRO] {metodo}")
             continue
+
+        if not texto:
+            texto = ""
 
         # Sucesso — salvar texto
         conteudo = _cabecalho_txt(os.path.basename(pdf_path), metodo) + texto

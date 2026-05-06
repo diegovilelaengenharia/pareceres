@@ -85,5 +85,33 @@ Estrutura para as certidões gerais emitidas do balcão:
 }
 ```
 
+## 4. CERTIDÕES DE TOPOGRAFIA E SRI (certidao_topografia_oficial)
+Estrutura para Desmembramento, Unificação, Retificação e Usucapião:
+
+```json
+{
+  "tipo_relatorio": "certidao_topografia_oficial",
+  "titulo_documento": "CERTIDÃO DE [DESMEMBRAMENTO/UNIFICAÇÃO/RETIFICAÇÃO/USUCAPIÃO]",
+  "numero_processo": "XXX/XXXX",
+  "proprietario_nome": "Nome completo",
+  "matricula_sri": "Matrícula mãe ou objeto",
+  "texto_certidao": "Texto técnico contendo a descrição do perímetro, confrontações e o veredito municipal.",
+  "clausulas_especificas": [
+    "VALIDADE REGISTRAL: 180 dias (Lei 6.766/79) - Aplicável a Desmembramentos.",
+    "ANUÊNCIA DE CONFRONTANTE: Município atesta alinhamento predial - Aplicável a Retificações.",
+    "NÃO CONSTITUI TÍTULO DE PROPRIEDADE - Obrigatório para Usucapião."
+  ],
+  "assinantes": [
+    { "nome": "Engenheiro Responsável", "titulo": "Cargo/Registro" },
+    { "nome": "Secretário Municipal", "titulo": "Secretário de Obras" }
+  ]
+}
+```
+
+### DICA PARA O GEM:
+Sempre inclua o campo `solicitacoes_administrativas` no JSON de resposta (Parecer Técnico) com o resumo formatado conforme o **ANEXO: ORIENTAÇÕES AO SETOR ADMINISTRATIVO** do arquivo `padroes_certidoes.md`. Isso permite que o administrativo identifique instantaneamente o que deve ser feito sem ler o parecer técnico inteiro.
+
+---
 ### IMPORTANTE AO RESPONDER
 Não utilize a marcação `"⚠️ VERIFICAR"` se puder evitar cruzando as informações do processo em PDF. Se estiver em dúvida entre o Requerente inicial e o Proprietário real na matrícula, assuma o Proprietário conforme matrícula/certidão e entregue os dados finais e diretos. As chaves devem ter esses nomes EXATOS para o script de compilação em Python do setor ler o seu JSON corretamente na prefeitura.
+

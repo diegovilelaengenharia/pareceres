@@ -13,7 +13,7 @@ from pathlib import Path
 
 # Ajustar sys.path para o motor
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-ENGINE_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+ENGINE_ROOT = os.path.dirname(SCRIPT_DIR)
 if ENGINE_ROOT not in sys.path:
     sys.path.insert(0, ENGINE_ROOT)
 

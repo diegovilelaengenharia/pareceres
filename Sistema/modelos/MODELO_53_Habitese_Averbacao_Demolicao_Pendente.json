@@ -1,0 +1,34 @@
+{
+  "_comentario": "Habite-se + Averbação. Demolição pendente de averbação anterior. Caso real: proc. 315/2026 (Camila Caetano da Silva).",
+
+  "tipo_relatorio": "habitese_averbacao_demolicao_pendente",
+  "numero_processo": "315/2026",
+  "data_processo": "12 de Janeiro de 2026",
+  "assunto": "Carta de Habite-se e Certidão de Averbação",
+  "requerente": "CAMILA CAETANO DA SILVA",
+
+  "logradouro": "Rua Júlio Ferreira Carvalho, nº 44",
+  "bairro": "Cabrais",
+  "inscricao_municipal": "01.05.039.0086",
+  "matricula_sri": "39.995",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 269/2024, com área liberada de 59,97 m², válido até 28/08/2025, referente ao projeto aprovado no processo 7375/2025, localizada na Rua Júlio Ferreira Carvalho, nº 44, Bairro Cabrais, Oliveira/MG, foi concluída e está habitável.",
+    "houve uma demolição constatada no processo anterior, porém a mesma não foi averbada.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Certidão de Matrícula SRI de Inteiro Teor em seu nome, sob nº 39.995 e Inscrição Cadastral 01.05.039.0086."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Carta de Habite-se (59,97 m²) e Certidão de Averbação. O processo deve ser enviado para a comissão de avaliação.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Carta de Habite-se — 59,97 m²",
+      "obs": ""
+    },
+    {
+      "tipo": "Certidão de Averbação — 59,97 m²",
+      "obs": "Encaminhar à comissão de avaliação para laudo."
+    }
+  ]
+}

@@ -10,15 +10,33 @@ import webbrowser
 import tempfile
 from datetime import datetime
 
+import sys as _sys
+import os as _os
+_UI_DIR = _os.path.dirname(_os.path.abspath(__file__))
+_MOTOR_DIR = _os.path.dirname(_UI_DIR)
+if _MOTOR_DIR not in _sys.path:
+    _sys.path.insert(0, _MOTOR_DIR)
+
+try:
+    from core.config import TIPOS_DOCUMENTO as _TIPOS_DOCUMENTO
+except ImportError:
+    _TIPOS_DOCUMENTO = {}
+
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
 def _md_inline(texto: str) -> str:
-    """Converte **negrito** e __itálico__ para HTML."""
+    """Converte **negrito**, __itálico__ e *itálico* para HTML."""
     if not texto:
         return ""
+    # Ordem importa: negrito primeiro
     texto = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', texto)
+    # Itálico duplo
     texto = re.sub(r'__(.+?)__', r'<em>\1</em>', texto)
+    # Itálico simples (asterisco)
+    texto = re.sub(r'\*(.+?)\*', r'<em>\1</em>', texto)
+    # Itálico simples (underscore) - apenas se cercado por espaços ou início/fim para evitar conflitos em IDs
+    texto = re.sub(r'(^|\s)_(.+?)_(\s|$)', r'\1<em>\2</em>\3', texto)
     return texto
 
 
@@ -93,33 +111,124 @@ def _html_identificacao(d: dict) -> str:
 
 
 def _html_carimbo(d: dict) -> str:
+    """Tabela Inteligente HTML: Oculta campos vazios e agrupa os preenchidos em 4 colunas."""
     logradouro = _safe(d.get("logradouro"), "")
     bairro     = _safe(d.get("bairro"), "")
     endereco   = f"{logradouro} — {bairro}" if logradouro != "—" and bairro != "—" else (logradouro if logradouro != "—" else bairro)
 
-    linhas = [
-        ("Endereço",        endereco,                           "Inscrição Mun.",   _safe(d.get("inscricao_municipal"))),
-        ("Proprietário",    _safe(d.get("proprietario", d.get("requerente"))),
-                                                                "Resp. Técnico",    _safe(d.get("profissional_nome", d.get("responsavel_tecnico")))),
-        ("Lote",            _safe(d.get("lote")),               "Quadra",           _safe(d.get("quadra"))),
-        ("Área Terreno",    _safe(d.get("area_terreno")),       "Área Total Const.", _safe(d.get("area_total_construida"))),
-        ("Taxa Ocupação",   _safe(d.get("taxa_ocupacao")),      "Coef. Aproveita.", _safe(d.get("coef_aproveitamento"))),
-        ("Permeabilidade",  _safe(d.get("taxa_permeabilidade")),"Pavimentos",       _safe(d.get("pavimentos"))),
-        ("Vagas Garagem",   _safe(d.get("vagas_garagem")),      "Zona de Uso",      _safe(d.get("zona_uso"))),
-        ("ART/RRT",         _safe(d.get("art_rrt_numero")),     "Multa Específica", _safe(d.get("tipo_multa_especifica"))),
+    # 1. Lista de candidatos (Label, Valor)
+    candidatos = [
+        ("Endereço",        endereco),
+        ("Inscrição Mun.",   _safe(d.get("inscricao_municipal"))),
+        ("Proprietário",    _safe(d.get("proprietario", d.get("requerente")))),
+        ("Resp. Técnico",    _safe(d.get("profissional_nome", d.get("responsavel_tecnico")))),
+        ("Lote",            _safe(d.get("lote"))),
+        ("Quadra",           _safe(d.get("quadra"))),
+        ("Área Terreno",    _safe(d.get("area_terreno"))),
+        ("Área Total Const.", _safe(d.get("area_total_construida"))),
+        ("Taxa Ocupação",   _safe(d.get("taxa_ocupacao"))),
+        ("Coef. Aproveita.", _safe(d.get("coef_aproveitamento"))),
+        ("Permeabilidade",  _safe(d.get("taxa_permeabilidade"))),
+        ("Pavimentos",       _safe(d.get("pavimentos"))),
+        ("Vagas Garagem",   _safe(d.get("vagas_garagem"))),
+        ("Zona de Uso",      _safe(d.get("zona_uso"))),
+        ("ART/RRT",         _safe(d.get("art_rrt_numero"))),
+        ("Multa Específica", _safe(d.get("tipo_multa_especifica"))),
     ]
 
+    # 2. Filtragem (Remove o que estiver vazio ou com marcador de preenchimento)
+    def eh_valido(v):
+        if not v or v == "—": return False
+        v_str = str(v).strip().lower()
+        return v_str not in ["", "-", "—", "[preencher]", "n/a", "não informado"]
+
+    validos = [(l, v) for l, v in candidatos if eh_valido(v)]
+    if not validos:
+        return ""
+
+    # 3. Agrupamento em pares (L1, V1, L2, V2)
     rows = ""
-    for l1, v1, l2, v2 in linhas:
-        rows += f"""<tr>
-          <td class="car-label">{l1}</td><td class="car-value">{v1}</td>
-          <td class="car-label">{l2}</td><td class="car-value">{v2}</td>
-        </tr>"""
+    for i in range(0, len(validos), 2):
+        l1, v1 = validos[i]
+        l2, v2 = validos[i+1] if (i+1) < len(validos) else ("", "")
+        
+        row_html = f'<tr><td class="car-label">{l1}</td><td class="car-value">{v1}</td>'
+        if l2:
+            row_html += f'<td class="car-label">{l2}</td><td class="car-value">{v2}</td>'
+        else:
+            row_html += '<td class="car-label"></td><td class="car-value"></td>'
+        row_html += '</tr>'
+        rows += row_html
 
     return f"""
     <section class="section-carimbo">
       <div class="section-header">📋 DADOS TÉCNICOS DO PROJETO (Ref. Decreto nº 4.149/2019)</div>
       <table class="car-table">{rows}</table>
+    </section>"""
+
+
+
+def _html_partes_envolvidas(d: dict) -> str:
+    """Seção de Partes Envolvidas — espelha build_partes_envolvidas() do DOCX."""
+    partes = d.get("partes_envolvidas")
+    if not partes:
+        return ""
+
+    # Normalizar: pode ser string (nome simples) ou lista de dicts
+    if isinstance(partes, str):
+        partes = [{"papel": "Interessado", "nome": partes}]
+    elif isinstance(partes, dict):
+        partes = [partes]
+
+    linhas = ""
+    for p in partes:
+        papel = _safe(p.get("papel", "Parte"), "Parte")
+        nome  = _safe(p.get("nome", "—"))
+        cpf   = p.get("cpf_cnpj", "")
+        cpf_html = f'<span style="color:#666;font-size:9pt"> — {cpf}</span>' if cpf else ""
+        linhas += f"""
+        <tr>
+          <td class="id-label">{papel}</td>
+          <td class="id-value">{nome}{cpf_html}</td>
+        </tr>"""
+
+    return f"""
+    <section class="section-id">
+      <div class="section-header">PARTES ENVOLVIDAS</div>
+      <table class="id-table">{linhas}
+      </table>
+    </section>"""
+
+
+def _html_historico_cronologico(d: dict) -> str:
+    """Seção de Histórico Cronológico — espelha build_historico_cronologico() do DOCX."""
+    historico = d.get("historico_cronologico")
+    if not historico:
+        return ""
+
+    # Normalizar: pode ser lista de dicts ou lista de strings
+    if isinstance(historico, str):
+        historico = [{"evento": historico}]
+
+    linhas = ""
+    for item in historico:
+        if isinstance(item, str):
+            item = {"evento": item}
+        data      = _safe(item.get("data", ""), "—")
+        evento    = _safe(item.get("evento", ""))
+        referencia = item.get("referencia", "")
+        ref_html  = f'<br><span style="font-size:8.5pt;color:#888">{referencia}</span>' if referencia else ""
+        linhas += f"""
+        <tr>
+          <td class="id-label" style="width:90px;white-space:nowrap">{data}</td>
+          <td class="id-value">{evento}{ref_html}</td>
+        </tr>"""
+
+    return f"""
+    <section class="section-id">
+      <div class="section-header">HISTÓRICO CRONOLÓGICO</div>
+      <table class="id-table">{linhas}
+      </table>
     </section>"""
 
 
@@ -137,14 +246,29 @@ def _html_corpo(d: dict) -> str:
 
         partes.append('<div class="subsec-header subsec-blue">CONSIDERANDOS</div>')
         for c in considerandos:
-            limpo = c
-            if limpo.lower().startswith("considerando que "):
-                limpo = limpo[17:].strip()
-            elif limpo.lower().startswith("considerando "):
-                limpo = limpo[13:].strip()
+            cons_limpo = c.strip()
+            
+            # 1. Remoção robusta de prefixos redundantes (Sincronizado com corpo.py)
+            cons_limpo = re.sub(r'^(considerando\s+(que\s+)?)+', '', cons_limpo, flags=re.IGNORECASE).strip()
+            cons_limpo = re.sub(r'^que\s+', '', cons_limpo, flags=re.IGNORECASE).strip()
+            
+            # 2. Primeira letra em maiúscula
+            if cons_limpo and not cons_limpo.startswith('**') and not re.match(r'^(\d+\.|[A-Za-z]\.|\d+\s*\-)', cons_limpo):
+                cons_limpo = cons_limpo[0].upper() + cons_limpo[1:]
+
+            # 3. Inteligência de Prefixo (Sincronizado com corpo.py)
+            ja_tem_prefixo   = re.match(r'^considerando\b', c.strip(), re.I)
+            eh_lista         = re.match(r'^(\d+\.|[A-Za-z]\.|\*\*|\d+\s*\-|\*|\-)', cons_limpo)
+            comeca_maiuscula = cons_limpo and cons_limpo[0].isupper() and not cons_limpo.startswith('**')
+            tem_abertura     = bool(d.get("paragrafo_abertura"))
+
+            prefixo_html = ""
+            if not (ja_tem_prefixo or eh_lista or comeca_maiuscula or tem_abertura):
+                prefixo_html = '<span class="kw-considerando">Considerando que</span> '
+
             partes.append(
                 f'<p class="par-considerando">'
-                f'<span class="kw-considerando">Considerando que</span> {_md_inline(limpo)}'
+                f'{prefixo_html}{_md_inline(cons_limpo)}'
                 f'</p>'
             )
 
@@ -174,6 +298,11 @@ def _html_corpo(d: dict) -> str:
         for f in fund:
             limpo = f.lstrip("•▪- \t")
             partes.append(f'<p class="par-fund">▪ {_md_inline(limpo)}</p>')
+
+    merito = d.get("analise_merito", "")
+    if merito:
+        partes.append('<div class="subsec-header subsec-blue" style="border-left-color:var(--accent2)">ANÁLISE DE MÉRITO TÉCNICO</div>')
+        partes.append(f'<p class="par-merito" style="font-style:italic; border-left: 3px solid var(--accent2); padding-left: 15px; margin-left: 5px;">{_md_inline(merito)}</p>')
 
     conclusao = d.get("conclusao", "")
     if conclusao:
@@ -229,15 +358,21 @@ def _html_assinatura(d: dict) -> str:
 
 
 def _html_memoria(d: dict) -> str:
-    mem = d.get("memoria_de_calculo", "")
-    if not mem or mem.strip() == "PREENCHER":
+    """
+    Renderiza a memória de cálculo inline (sempre visível), espelhando
+    build_memoria_calculo() do DOCX que usa uma caixa destacada.
+    """
+    memoria = d.get("memoria_de_calculo")
+    if not memoria:
         return ""
+    # Escapa HTML básico para segurança (a memória pode ter <, >, &)
+    memoria_esc = str(memoria).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     return f"""
     <section class="section-memoria">
-      <details>
-        <summary>🧮 Memória de Cálculo (clique para expandir)</summary>
-        <pre class="memoria-pre">{mem}</pre>
-      </details>
+      <div class="section-header">MEMÓRIA DE CÁLCULO E ÍNDICES URBANÍSTICOS</div>
+      <div style="padding: 12px 20px 16px;">
+        <pre class="memoria-pre">{memoria_esc}</pre>
+      </div>
     </section>"""
 
 
@@ -484,17 +619,11 @@ section:last-child { border-bottom: none; }
 
 /* ── MEMÓRIA DE CÁLCULO ── */
 .section-memoria { background: #fafafa; }
-.section-memoria details { padding: 10px 20px; }
-.section-memoria summary {
-  cursor: pointer; color: #1F3864; font-weight: bold; font-size: 9pt;
-  padding: 6px 0;
-}
 .memoria-pre {
   font-size: 8.5pt;
   background: #f0f0f0;
   padding: 10px 14px;
   border-radius: 4px;
-  margin-top: 8px;
   white-space: pre-wrap;
   word-break: break-word;
   color: #333;
@@ -538,23 +667,21 @@ def gerar_preview(dados: dict, alertas: list[dict] | None = None, destino: str |
     """
     alertas = alertas or []
 
-    # Detecta geração em lote
-    docs_emitir = dados.get("documentos_emitir", [])
+    # Detecta geração em lote (Removido por solicitação do usuário - gera apenas Parecer Único)
     batch_notice = ""
-    if isinstance(docs_emitir, list) and len(docs_emitir) > 1:
-        batch_notice = f"""
-        <div class="batch-banner">
-          🚀 <strong>GERAÇÃO EM LOTE DETECTADA:</strong> Este processo irá gerar {len(docs_emitir)} arquivos DOCX separados.
-        </div>
-        """
 
     # Monta o HTML por partes
-    html_alertas   = _html_alertas(alertas)
-    html_id        = _html_identificacao(dados)
-    html_carimbo   = _html_carimbo(dados) if dados.get("tipo_relatorio", "").startswith(("alvara", "regularizacao")) else ""
-    html_corpo     = _html_corpo(dados)
-    html_docs      = _html_documentos(dados)
-    html_memoria   = _html_memoria(dados)
+    html_alertas    = _html_alertas(alertas)
+    html_id         = _html_identificacao(dados)
+    # Usar TIPOS_DOCUMENTO para determinar categoria (correto) em vez de startswith (bugado)
+    _tipo           = dados.get("tipo_relatorio", "")
+    _categoria      = _TIPOS_DOCUMENTO.get(_tipo, "")
+    html_carimbo    = _html_carimbo(dados) if _categoria == "parecer_tecnico" else ""
+    html_partes     = _html_partes_envolvidas(dados)
+    html_historico  = _html_historico_cronologico(dados)
+    html_corpo      = _html_corpo(dados)
+    html_docs       = _html_documentos(dados)
+    html_memoria    = _html_memoria(dados)
     html_assinatura = _html_assinatura(dados)
 
     tipo_doc   = dados.get("tipo_relatorio", "documento").replace("_", " ").upper()
@@ -592,6 +719,8 @@ def gerar_preview(dados: dict, alertas: list[dict] | None = None, destino: str |
     {html_alertas}
     {html_id}
     {html_carimbo}
+    {html_partes}
+    {html_historico}
     {html_corpo}
     {html_docs}
     {html_memoria}

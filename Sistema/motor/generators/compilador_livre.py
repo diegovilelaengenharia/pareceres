@@ -31,6 +31,10 @@ import os
 from pathlib import Path
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MOTOR_DIR = os.path.dirname(SCRIPT_DIR)
+
+if MOTOR_DIR not in sys.path:
+    sys.path.insert(0, MOTOR_DIR)
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
@@ -42,8 +46,9 @@ from cabecalho     import build_header, add_page_number_footer
 from componentes   import (
     build_titulo, build_identificacao, build_dados_carimbo,
     build_conclusao_e_docs, build_assinatura,
-    add_doc_item, _ensure_list, _build_conclusao_bloco
+    add_doc_item, _ensure_list
 )
+from componentes.conclusao import _build_conclusao_bloco
 from formatacao    import add_para, add_run, rich_segments, set_spacing, set_font
 from geradores_core import _criar_documento_base, _gerar_pdf
 from core.config   import (
@@ -168,8 +173,8 @@ def gerar_livre(dados: dict, caminho_saida: str = None) -> str:
     doc.save(caminho_saida)
     print(f"[+] Documento DOCX (modo livre) gerado: {caminho_saida}")
 
-    # ── Converter para PDF (mesmo pipeline robusto do compilador.py) ──
-    _gerar_pdf(caminho_saida)
+    # Geração de PDF removida por solicitação do usuário
+    # _gerar_pdf(caminho_saida)
 
     return caminho_saida
 

@@ -1,0 +1,34 @@
+{
+  "_comentario": "Habite-se + 2ª Via de Alvará. Área permeável não respeitada (multa paga). Caso real: proc. 1462/2026 (Diego Henrique Salete Silva).",
+
+  "tipo_relatorio": "habitese_2via_alvara_multa",
+  "numero_processo": "1462/2026",
+  "data_processo": "06 de Fevereiro de 2026",
+  "assunto": "Carta de Habite-se e Segunda Via de Alvará",
+  "requerente": "DIEGO HENRIQUE SALETE SILVA",
+
+  "logradouro": "Alameda Das Hortênsias, nº 219",
+  "bairro": "Recanto da Serra",
+  "inscricao_municipal": "01.01.279.0090",
+  "matricula_sri": "32.683",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 019/2024, localizada na Alameda Das Hortênsias, nº 219, Bairro Recanto da Serra, Oliveira/MG, foi concluída e está habitável, porém foi identificada que não foi respeitada a área permeável total aprovada em projeto.",
+    "o requerente efetuou o pagamento da multa referente à área permeável não respeitada e detectada pela fiscalização.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Certidão de Matrícula SRI de Inteiro Teor em seu nome, sob nº 32.683 e Inscrição Cadastral 01.01.279.0090."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Carta de Habite-se referente à área total do alvará (135,72 m²) e Segunda Via do Alvará de Construção.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Carta de Habite-se — 135,72 m²",
+      "obs": ""
+    },
+    {
+      "tipo": "2ª Via — Alvará de Construção nº 019/2024",
+      "obs": "Para arquivo do requerente."
+    }
+  ]
+}

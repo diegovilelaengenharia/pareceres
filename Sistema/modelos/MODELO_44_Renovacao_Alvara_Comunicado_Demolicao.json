@@ -1,0 +1,33 @@
+{
+  "_comentario": "Renovação de Alvará (180 dias) com comunicado de pendência de demolição futura. Caso real: proc. 2139/2026 (Maria Marcia Leão).",
+
+  "tipo_relatorio": "renovacao_alvara",
+  "numero_processo": "2139/2026",
+  "data_processo": "20 de Fevereiro de 2026",
+  "assunto": "Renovação de Alvará",
+  "requerente": "MARIA MARCIA LEÃO",
+
+  "logradouro": "Rua Bento Gonçalves, nº 54 e 59, aptos 101 e 201",
+  "bairro": "Centro (Morro do Ferro)",
+  "inscricao_municipal": "02.01.012.0360.001",
+  "matricula_sri": "38.414",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 270/2024, referente ao projeto aprovado no processo 5493/2024 com área liberada de 459,20 m², não foi concluída estando em fase de execução, localizada na Rua Bento Gonçalves, nº 54 e 59, aptos 101 e 201, Distrito de Morro do Ferro, Bairro Centro, Oliveira/MG.",
+    "o requerente apresentou título de propriedade do imóvel sendo uma Escritura Pública de Divisão Amigável em seu nome, assinada por todas as partes, sob Matrícula nº 38.414 e Inscrição Cadastral 02.01.012.0360.001."
+  ],
+
+  "conclusao": "Diante disto, poderá ser expedida a Renovação do Alvará de Construção por 180 dias, conforme Lei 1.544 de 04/03/86. Deverá ser emitido comunicado informando sobre a necessidade de futura Certidão de Demolição.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Renovação de Alvará de Construção (180 dias)",
+      "obs": "Constar observação: 'Alvará prorrogado por 180 dias'. Informar nova data de validade."
+    },
+    {
+      "tipo": "Comunicado ao Requerente",
+      "obs": "Informar que no momento da emissão do Habite-se, o mesmo deve solicitar a Certidão de Demolição referente ao Alvará 271/2024 que encontra-se em aberto."
+    }
+  ]
+}

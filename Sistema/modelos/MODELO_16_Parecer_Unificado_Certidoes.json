@@ -1,0 +1,49 @@
+{
+  "tipo_relatorio": "certidoes_separadas_localizacao_confrontacao",
+  "numero_processo": "4467/2026",
+  "data_processo": "15 de abril de 2026",
+  "requerente": "MARIA LUCIA DE FATIMA SILVA",
+  "proprietario": "MARIA LUCIA DE FATIMA SILVA",
+  "proprietario_cpf_cnpj": "908.538.736-15",
+  "logradouro": "Rua Prefeito José Silveira, esquina com Avenida Miguel Resende",
+  "bairro": "Centro",
+  "inscricao_municipal": "01.05.170.0051",
+  "lote": "-",
+  "quadra": "-",
+  "matricula_sri": "12.414",
+  "zona_uso": "Marrom",
+  "area_terreno": "510,00 m²",
+  "area_total_construida": "669,08 m²",
+  "profissional_nome": "Não se aplica",
+  "memoria_de_calculo": "Processo administrativo de parecer técnico para fundamentar a emissão de certidões retificativas em atendimento à Nota Devolutiva (Protocolo 105.319).",
+  "historico_cronologico": [
+    {
+      "data": "19 de março de 2026",
+      "evento": "Emissão de Nota Devolutiva pelo SRI (Protocolo 105.319) apontando divergências.",
+      "tipo": "exigencia_cartorio"
+    },
+    {
+      "data": "15 de abril de 2026",
+      "evento": "Vistoria fiscal in loco atestando bairro Centro e situação de esquina.",
+      "tipo": "vistoria"
+    }
+  ],
+  "considerandos": [
+    "Que a requerente MARIA LUCIA DE FATIMA SILVA solicita retificação cadastral para atender à Nota Devolutiva (Protocolo 105.319) do SRI;",
+    "Que o Parecer Fiscal de 15/04/2026 atesta que o imóvel se localiza no bairro Centro e faz esquina entre a Rua Prefeito José Silveira e a Av. Miguel Resende;",
+    "Que as numerações 232, 232A, 05, 21 e 27 estão todas vinculadas ao mesmo imóvel no Cadastro Municipal."
+  ],
+  "conclusao": "Manifesto-me de forma **FAVORÁVEL** à retificação, solicitando aos auxiliares a emissão da Certidão de Localização e da Certidão de Confrontação conforme fundamentado.",
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Localização",
+      "obs": "Corrigir bairro para Centro e incluir via de esquina e numerações unificadas."
+    },
+    {
+      "tipo": "Certidão de Confrontação",
+      "obs": "Atestar confrontações com base no levantamento fiscal da SMOSU."
+    }
+  ],
+  "assinante_parecer": "Diego Tarcísio Nunes Vilela",
+  "profissional_registro": "CREA 235.474/D"
+}

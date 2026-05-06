@@ -37,15 +37,23 @@ ESQUEMA_BASE = carregar_esquema_base()
 CHAVES_CONHECIDAS = set(ESQUEMA_BASE.get("todas_chaves", []))
 TIPOS_CONHECIDOS = set(ESQUEMA_BASE.get("tipos_disponiveis", []))
 
+# Adicionar novas chaves do plano de melhoria v8.0
+CHAVES_CONHECIDAS.update([
+    "memoria_de_calculo", "restricoes_especiais", 
+    "logradouro_verificado", "cei_ativo", "historico_cronologico", "partes_envolvidas"
+])
+
 # ── Chaves obrigatórias por categoria de gerador ────────────────────────────
 _CHAVES_CATEGORIA = {
     "parecer_tecnico": [
         "numero_processo", "requerente",
         "paragrafo_abertura", "considerandos", "conclusao",
+        "memoria_de_calculo",
     ],
     "parecer_simples": [
         "numero_processo", "requerente",
         "paragrafo_abertura", "considerandos", "conclusao",
+        "memoria_de_calculo",
     ],
     "oficio": [
         "numero_processo", "considerandos", "conclusao",
@@ -85,11 +93,13 @@ _DEVE_SER_LISTA = [
     "considerandos", "fundamentacao_legal",
     "documentos_emitir", "areas_matriz", "assinantes",
     "observacoes_finais", "multas_calculadas", "excecoes_aplicadas",
+    "restricoes_especiais", "historico_cronologico",
 ]
 
 # Chaves que devem ser strings
 _DEVE_SER_STRING = [
-    "numero_processo", "requerente", "paragrafo_abertura", "conclusao"
+    "numero_processo", "requerente", "paragrafo_abertura", "conclusao",
+    "memoria_de_calculo"
 ]
 
 # ── Criticidade de dados ausentes (⚠️ VERIFICAR) ────────────────────────────
@@ -103,7 +113,8 @@ _TIER_B_CAMPOS = {
     "desenhista", "lote", "quadra",
     "zona_uso", "pavimentos", "vagas_garagem",
     "tipo_multa_especifica", "modo_recebimento_projeto",
-    "assinante_parecer"
+    "assinante_parecer",
+    "memoria_de_calculo", "logradouro_verificado", "cei_ativo"
 }
 
 
@@ -250,6 +261,30 @@ def validar(dados: dict) -> tuple:
                     f"considerandos[{i}] usa '__' (itálico) onde provavelmente deveria usar '**' (negrito). "
                     f"O engine do comunicado exige '**texto**' para destacar os títulos dos itens."
                 )
+
+    # ── 11. Conformidade Decreto 4.149/2019 (Art. 11) ───────────────────────
+    if categoria == "parecer_tecnico":
+        campos_legais = ["taxa_ocupacao", "taxa_permeabilidade", "coef_aproveitamento", "area_total_construida"]
+        for campo in campos_legais:
+            if not dados.get(campo):
+                avisos.append(
+                    f"⚠️ Não conformidade com Decreto 4.149/2019: Campo '{campo}' ausente. "
+                    "O Art. 11 exige a indicação dos índices urbanísticos em pareceres técnicos."
+                )
+
+    # ── 12. Validar formato do historico_cronologico ────────────────────────
+    historico = dados.get("historico_cronologico", [])
+    if isinstance(historico, list):
+        for i, item in enumerate(historico):
+            if isinstance(item, dict):
+                for sub in ("data", "evento", "referencia"):
+                    if sub not in item:
+                        avisos.append(
+                            f"historico_cronologico[{i}] incompleto. "
+                            f"Deve conter {{data, evento, referencia}}. Faltando: '{sub}'"
+                        )
+            elif item:
+                avisos.append(f"historico_cronologico[{i}] deve ser um objeto {{data, evento, referencia}}.")
 
     return erros, avisos
 

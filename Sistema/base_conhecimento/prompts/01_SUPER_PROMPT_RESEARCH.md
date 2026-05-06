@@ -1,9 +1,9 @@
 # ⚠️ ARQUIVO LEGADO — USE O SIA v1.0
 
 > Este arquivo foi substituído pelo **SIA — Sistema Interativo de Análise v1.0**.
-> Novo arquivo: `Sistema/inteligencia/SIA_v1.0.md`
+> Novo arquivo: `Sistema/inteligencia/Knowledge/00_SISTEMA_INTERATIVO.md`
 >
-> Para configurar o Gemini Gem, copie o conteúdo de `SIA_v1.0.md` nas System Instructions.
+> Para configurar o Gemini Gem, copie o conteúdo de `00_SISTEMA_INTERATIVO.md` nas System Instructions.
 > Os Knowledge Files permanecem os mesmos — veja seção abaixo.
 
 ---
@@ -66,8 +66,8 @@ Para que o Gem funcione com excelência, suba os seguintes arquivos do diretóri
 4. `base_conhecimento/codex_legal.json` (Dicionário de infrações e multas)
 
 ### 🧠 RACIOCÍNIO E ESTILO (Inteligência)
-1. `inteligencia/Treinar GEM/GABARITOS.md` (Exemplos de perfeição textual)
-2. `inteligencia/Treinar GEM/REFERENCIA.md` (Estrutura do JSON)
+1. `inteligencia/Knowledge/02_GABARITOS_E_ESTILO.md` (Exemplos de perfeição textual)
+2. `inteligencia/Knowledge/03_RETROALIMENTACAO.md` (Lições aprendidas)
 3. `base_conhecimento/estilo_narrativo_pareceres.md` (Como o Eng. Diego escreve)
 4. `base_conhecimento/raciocinio_regularizacao_asbuilt.md` (Lógica de multas e áreas)
 

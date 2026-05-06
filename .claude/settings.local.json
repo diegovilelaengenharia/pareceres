@@ -22,7 +22,35 @@
       "Bash(sed -i 's/02_GEM_REFERENCIA\\\\.md/REFERENCIA.md/g' 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/motor/analyzers/analisador_gemini.py')",
       "Bash(sed -i 's/01_GEM_INSTRUCOES\\\\.md/TRIGGER.md/g' 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/motor/analyzers/analisador_pdf.py')",
       "Bash(sed -i 's/02_GEM_REFERENCIA\\\\.md/REFERENCIA.md/g' 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/motor/analyzers/analisador_pdf.py')",
-      "Bash(sed -i 's/01_GEM_INSTRUCOES\\\\.md/TRIGGER.md/g' 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/motor/extractors/extrator_pdf.py')"
+      "Bash(sed -i 's/01_GEM_INSTRUCOES\\\\.md/TRIGGER.md/g' 'c:/Users/diego/Meu Drive/02. Trabalho \\(Engenheiro Civil\\)/02. Prefeitura \\(PMO\\)/1. Gemini/02. Pareceres/Sistema/motor/extractors/extrator_pdf.py')",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\diego\\\\Meu Drive\\\\02. Trabalho \\(Engenheiro Civil\\)\\\\02. Prefeitura \\(PMO\\)\\\\1. Gemini\\\\02. Pareceres\\\\Sistema\\\\mcp-smosu\" -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Sort-Object FullName)",
+      "Bash(python3 -c ' *)",
+      "Bash(python -c \"import sys; sys.path.insert\\(0, '.'\\); import Sistema.mcp-smosu.tools\")",
+      "Bash(python -c \"import importlib.util, sys; spec = importlib.util.spec_from_file_location\\('tools', 'Sistema/mcp-smosu/tools.py'\\); mod = importlib.util.module_from_spec\\(spec\\); spec.loader.exec_module\\(mod\\); print\\('OK — tools.py carregado sem erros'\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\diego\\\\Meu Drive\\\\02. Trabalho \\(Engenheiro Civil\\)\\\\02. Prefeitura \\(PMO\\)\\\\1. Gemini\\\\02. Pareceres\" -Recurse -ErrorAction SilentlyContinue)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\diego\\\\Meu Drive\\\\02. Trabalho \\(Engenheiro Civil\\)\\\\02. Prefeitura \\(PMO\\)\\\\1. Gemini\\\\02. Pareceres\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\diego\\\\Meu Drive\\\\02. Trabalho \\(Engenheiro Civil\\)\\\\02. Prefeitura \\(PMO\\)\\\\1. Gemini\\\\02. Pareceres\\\\Sistema\\\\motor\\\\generators\" -File)",
+      "Bash(Select-Object Name)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\diego\\\\Meu Drive\\\\02. Trabalho \\(Engenheiro Civil\\)\\\\02. Prefeitura \\(PMO\\)\\\\1. Gemini\\\\02. Pareceres\\\\Saida\\\\_Testes\" -File)",
+      "Bash(Sort-Object LastWriteTime -Descending)",
+      "Bash(Select-Object Name, LastWriteTime)",
+      "Bash(Head -20)",
+      "Bash(dir *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\diego\\\\Meu Drive\\\\02. Trabalho \\(Engenheiro Civil\\)\\\\02. Prefeitura \\(PMO\\)\\\\1. Gemini\\\\02. Pareceres\" -Recurse -Force)",
+      "Bash(Select-Object -Property FullName)",
+      "Skill(gsd-plan-phase)",
+      "Skill(gsd-progress)",
+      "Bash(Remove-Item *)",
+      "Bash(Get-ChildItem *)",
+      "Bash(Select-Object FullName, Directory)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "smosu-conhecimento"
+  ]
 }

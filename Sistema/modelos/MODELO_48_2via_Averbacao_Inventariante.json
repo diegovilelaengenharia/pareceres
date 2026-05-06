@@ -1,0 +1,29 @@
+{
+  "_comentario": "2ª Via de Certidão de Averbação. Requerente como Inventariante (Carta de Adjudicação). Caso real: proc. 860/2026 (Ana Maria de Oliveira Sant'Anna).",
+
+  "tipo_relatorio": "2via_certidao_averbacao",
+  "numero_processo": "860/2026",
+  "data_processo": "22 de Janeiro de 2026",
+  "assunto": "Segunda Via Certidão de Averbação",
+  "requerente": "ANA MARIA DE OLIVEIRA SANT'ANNA",
+
+  "logradouro": "Rua Antônio de Oliveira, nº 151",
+  "bairro": "Conjunto Habitacional João Paulo II",
+  "inscricao_municipal": "01.01.113.0315",
+  "matricula_sri": "33.559",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra liberada pelo Habite-se nº 157/2023 (proc. 4653/2023), com área liberada de 85,44 m², localizada na Rua Antônio de Oliveira, nº 151, Bairro Conjunto Habitacional João Paulo II, Oliveira/MG, segue sem alteração desde a emissão de seu Habite-se.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Carta de Adjudicação onde denomina a requerente como Inventariante, sob Matrícula nº 33.559 e Inscrição Cadastral 01.01.113.0315."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Segunda Via da Certidão de Averbação. O processo deve ser encaminhado à comissão de avaliação para laudo.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "2ª Via — Certidão de Averbação",
+      "obs": "Encaminhar à comissão de avaliação para laudo."
+    }
+  ]
+}

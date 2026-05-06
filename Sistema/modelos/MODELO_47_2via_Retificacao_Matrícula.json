@@ -1,0 +1,46 @@
+{
+  "_comentario": "Retificação de documentos (2ª via) por encerramento/troca de Matrícula (27.109 para 32.544). Caso real: proc. 3241/2025 (Ranulfo Martins).",
+
+  "tipo_relatorio": "retificacao_documentos_matricula",
+  "numero_processo": "3241/2025",
+  "data_processo": "30 de Abril de 2025",
+  "assunto": "Alterações de Documentos devido Mudança de nº de Matrícula",
+  "requerente": "RANULFO MARTINS",
+
+  "logradouro": "Unidades nº 392 e 398",
+  "bairro": "",
+  "inscricao_municipal": "01.01.161.0244.001 e 002",
+  "matricula_sri": "32.544 (Antiga 27.109)",
+
+  "considerandos": [
+    "a solicitação do requerente para a retificação dos documentos expedidos no encerramento do presente processo de regularização.",
+    "a apresentação da Certidão de Inteiro Teor da Matrícula nº 32.544 (emitida em 24/04/2026), que comprova sua abertura em 09/10/2014 devido à averbação de retificação de área [AV-1-32544], ocasionando o encerramento da matrícula anterior nº 27.109.",
+    "a Certidão de Decadência e as Certidões de Averbação expedidas anteriormente (Dez/2025 e Jan/2026) mencionaram erroneamente a Matrícula nº 27.109, que já estava encerrada.",
+    "o imóvel possui as Inscrições Cadastrais Municipais nº 01.01.161.0244.001 (unidade nº 398) e nº 01.01.161.0244.002 (unidade nº 392)."
+  ],
+
+  "conclusao": "Diante disso, poderão ser emitidas as segundas vias dos documentos retificados com a nova matrícula nº 32.544.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "2ª Via — Alvará 327/2025",
+      "obs": ""
+    },
+    {
+      "tipo": "2ª Via — Carta de Habite-se 284/2025",
+      "obs": ""
+    },
+    {
+      "tipo": "2ª Via — Certidão de Averbação nº 392",
+      "obs": "Constar nova Matrícula 32.544."
+    },
+    {
+      "tipo": "2ª Via — Certidão de Averbação nº 398",
+      "obs": "Constar nova Matrícula 32.544."
+    },
+    {
+      "tipo": "2ª Via — Certidão de Decadência",
+      "obs": "Constar nova Matrícula 32.544."
+    }
+  ]
+}

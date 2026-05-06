@@ -13,7 +13,12 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MOTOR_DIR = os.path.dirname(SCRIPT_DIR)
 
+# Adiciona o diretório motor ao path para encontrar core, analyzers, etc.
+if MOTOR_DIR not in sys.path:
+    sys.path.insert(0, MOTOR_DIR)
+# Mantém ui no path para compatibilidade local se necessário
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
@@ -42,7 +47,8 @@ def api_status():
             if arqs:
                 docs.append({"pasta": os.path.basename(pasta),
                              "arquivos": [os.path.basename(a) for a in arqs]})
-    modelos = [os.path.basename(m) for m in sorted(glob.glob(os.path.join(PASTA_MODELOS, "*.json")))]
+    modelos = [os.path.basename(m) for m in sorted(glob.glob(os.path.join(PASTA_MODELOS, "*.json")))
+               if os.path.basename(m) != "catalogo_modelos.json"]
     return {"pdfs": [{"nome": os.path.basename(p), "kb": round(os.path.getsize(p)/1024,1)} for p in pdfs],
             "jsons": [{"nome": os.path.basename(j)} for j in jsons],
             "docs": docs, "modelos": modelos}
@@ -55,7 +61,7 @@ def api_salvar_json(nome, conteudo):
         dados = json.loads(conteudo)
 
         # --- CARREGAMENTO DE CHAVES CONHECIDAS (DINÂMICO) ---
-        esquema_path = os.path.join(SCRIPT_DIR, "templates", "_esquema_base.json")
+        esquema_path = os.path.join(MOTOR_DIR, "templates", "_esquema_base.json")
         chaves_conhecidas = set()
         if os.path.exists(esquema_path):
             try:
@@ -73,7 +79,7 @@ def api_salvar_json(nome, conteudo):
                 "area_terreno", "area_total_construida", "taxa_ocupacao",
                 "coef_aproveitamento", "taxa_permeabilidade", "zona_uso",
                 "profissional_nome", "profissional_registro", "art_rrt", "desenhista",
-                "paragrafo_abertura", "considerandos", "fundamentacao_legal", "conclusao",
+                "paragrafo_abertura", "considerandos", "fundamentacao_legal", "analise_merito", "conclusao",
                 "documentos_emitir", "observacoes_finais", "multas_calculadas", "excecoes_aplicadas",
                 "areas_matriz"
             }
@@ -108,7 +114,7 @@ def _compilar_script(script_name, script_args=None):
     try:
         env = os.environ.copy()
         env["PYTHONIOENCODING"] = "utf-8"
-        cmd = [sys.executable, os.path.join(SCRIPT_DIR, script_name), "--sem-preview"]
+        cmd = [sys.executable, os.path.join(MOTOR_DIR, "generators", script_name), "--sem-preview"]
         if script_args:
             cmd.extend(script_args)
         result = subprocess.run(
@@ -201,31 +207,44 @@ def api_abrir_pasta(qual):
         return {"ok": False, "erro": str(e)}
 
 def api_limpar_entrada():
-    """Remove todos os arquivos PDF e JSON da pasta de entrada."""
+    """Arquiva todos os arquivos PDF e JSON da pasta de entrada para o histórico."""
+    import shutil
+    from datetime import datetime
+    
     arquivos = glob.glob(os.path.join(PASTA_ENTRADA, "*.pdf")) + \
                glob.glob(os.path.join(PASTA_ENTRADA, "*.json"))
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    pasta_destino = os.path.join(PASTA_HIST, f"Limpeza_{timestamp}")
+    
     removidos = 0
     erros = 0
+    
+    if arquivos:
+        os.makedirs(pasta_destino, exist_ok=True)
+        
     for arq in arquivos:
         if os.path.basename(arq).startswith("_"): continue
         try:
-            os.remove(arq)
+            shutil.move(arq, os.path.join(pasta_destino, os.path.basename(arq)))
             removidos += 1
-        except:
+        except Exception as e:
+            print(f"Erro ao mover {arq}: {e}")
             erros += 1
-    return {"ok": True, "removidos": removidos, "erros": erros}
+            
+    return {"ok": True, "removidos": removidos, "erros": erros, "pasta": os.path.basename(pasta_destino)}
 
 def api_listar_docs():
     """Lista arquivos de documentação Markdown."""
-    docs_dir = os.path.join(os.path.dirname(SCRIPT_DIR), "docs")
-    if not os.path.exists(docs_dir): return {"ok": False, "erro": "Pasta docs não encontrada."}
+    docs_dir = os.path.join(PROJECT_ROOT, "Sistema", "inteligencia", "Knowledge")
+    if not os.path.exists(docs_dir): return {"ok": False, "erro": "Pasta de manuais não encontrada."}
     arquivos = [f for f in os.listdir(docs_dir) if f.endswith(".md")]
     return {"ok": True, "docs": sorted(arquivos)}
 
 def api_ler_doc(nome):
     """Lê o conteúdo de um arquivo de documentação específico."""
     nome = os.path.basename(nome) # Segurança: evita directory traversal
-    docs_dir = os.path.join(os.path.dirname(SCRIPT_DIR), "docs")
+    docs_dir = os.path.join(PROJECT_ROOT, "Sistema", "inteligencia", "Knowledge")
     caminho = os.path.join(docs_dir, nome)
     if not os.path.exists(caminho): return {"ok": False, "erro": "Documento não encontrado."}
     try:
@@ -371,7 +390,7 @@ def api_registro_sistema():
     
     # ── Logs estruturados (JSON) ──
     logs_json = []
-    log_file = os.path.join(SCRIPT_DIR, "motor.json.log")
+    log_file = os.path.join(PASTA_LOGS, "motor.json.log")
     if os.path.exists(log_file):
         try:
             with open(log_file, encoding="utf-8") as f:

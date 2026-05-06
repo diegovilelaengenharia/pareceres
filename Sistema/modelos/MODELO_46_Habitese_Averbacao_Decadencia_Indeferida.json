@@ -1,0 +1,42 @@
+{
+  "_comentario": "Habite-se + Averbação + Nome de Rua. Indeferimento de Decadência por falta de provas. Caso real: proc. 1316/2026 (Sid Assis Castro).",
+
+  "tipo_relatorio": "habitese_averbacao_nome_rua",
+  "numero_processo": "1316/2026",
+  "data_processo": "04 de Fevereiro de 2026",
+  "assunto": "Carta de Habite-se, Certidão de Averbação e Certidão de Decadência",
+  "requerente": "SID ASSIS CASTRO",
+
+  "logradouro": "Rua Luis Carlos Guimarães Cambraia, nº 79",
+  "bairro": "Condomínio Rocha Costa",
+  "inscricao_municipal": "01.04.113.0374",
+  "matricula_sri": "15.113",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 4986/2013, com área liberada de 280,00 m², válido até 18/12/2014, referente ao projeto aprovado no processo 4836/2013, localizada na Rua Luis Carlos Guimarães Cambraia, nº 79, Condomínio Rocha Costa, Oliveira/MG, foi concluída e está habitável.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Certidão de Matrícula SRI de Inteiro Teor de imóvel em seu nome, sob nº 15.113 e Inscrição Cadastral 01.04.113.0374.",
+    "a emissão de Certidão de Decadência fica indeferida por não haver documento comprobatório em data decadencial nos arquivos da Prefeitura Municipal de Oliveira/MG."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Carta de Habite-se (280,00 m²), Certidão de Averbação (280,00 m²) e Certidão de Nome de Rua. O pedido de Decadência deve ser indeferido.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Carta de Habite-se — 280,00 m²",
+      "obs": "Referente ao Alvará nº 4986/2013."
+    },
+    {
+      "tipo": "Certidão de Averbação — 280,00 m²",
+      "obs": ""
+    },
+    {
+      "tipo": "Certidão de Nome de Rua",
+      "obs": ""
+    },
+    {
+      "tipo": "Comunicado de Indeferimento",
+      "obs": "Referente ao pedido de Certidão de Decadência (ausência de comprovantes de data decadencial)."
+    }
+  ]
+}

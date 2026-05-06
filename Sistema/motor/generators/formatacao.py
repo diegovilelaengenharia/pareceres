@@ -90,8 +90,20 @@ def bold_segments(p, text, size=None, color=None):
 
 
 def rich_segments(p, text, size=None, color=None, base_italic=False):
-    """Processa **negrito** e __itálico__ inline em um parágrafo."""
-    bold_parts = text.split('**')
+    """Processa **negrito**, __itálico__, *itálico* e _itálico_ inline em um parágrafo."""
+    if not text:
+        return
+
+    # 1. Normalização de delimitadores para facilitar o split
+    # Protege o negrito **
+    t = text.replace('**', '@@BOLD@@')
+    # Converte variações de itálico para o padrão duplo
+    t = t.replace('__', '@@ITA@@').replace('*', '@@ITA@@').replace('_', '@@ITA@@')
+    # Restaura o negrito e define itálico final
+    t = t.replace('@@BOLD@@', '**').replace('@@ITA@@', '__')
+
+    # 2. Split e renderização (Suporta aninhamento de negrito + itálico)
+    bold_parts = t.split('**')
     for bi, bpart in enumerate(bold_parts):
         is_bold = (bi % 2 == 1)
         italic_parts = bpart.split('__')

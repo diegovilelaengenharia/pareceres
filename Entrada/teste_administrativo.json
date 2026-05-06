@@ -1,0 +1,21 @@
+{
+  "tipo_relatorio": "certidoes_separadas_localizacao_confrontacao",
+  "numero_processo": "4467",
+  "data_processo": "06/05/2026",
+  "assunto": "Certidões de Localização e Confrontação",
+  "requerente": "MARIA LUCIA DE FATIMA SILVA",
+  "logradouro": "Rua Tiradentes, nº 100",
+  "bairro": "Centro",
+  "lote": "05",
+  "quadra": "02",
+  "paragrafo_abertura": "Trata-se de solicitação de **MARIA LUCIA DE FATIMA SILVA** para emissão de Certidões de Localização e Confrontação.",
+  "considerandos": [
+    "O imóvel está devidamente cadastrado sob a Inscrição nº 01.02.003.0040.",
+    "A análise técnica confirma os limites do lote conforme planta aprovada."
+  ],
+  "conclusao": "Diante do exposto, *FAVORÁVEL* à emissão das certidões solicitadas.",
+  "documentos_emitir": [
+    { "tipo": "Certidão de Localização" },
+    { "tipo": "Certidão de Confrontação" }
+  ]
+}

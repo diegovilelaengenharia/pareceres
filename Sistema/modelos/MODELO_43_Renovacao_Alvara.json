@@ -1,0 +1,29 @@
+{
+  "_comentario": "Renovação de Alvará de Construção (180 dias). Caso real: proc. 20/2024 (João Batista Machado).",
+
+  "tipo_relatorio": "renovacao_alvara",
+  "numero_processo": "20/2024",
+  "data_processo": "02 de Janeiro de 2024",
+  "assunto": "Renovação de Alvará",
+  "requerente": "JOÃO BATISTA MACHADO",
+
+  "logradouro": "Rua Petrónio Fernal, esquina com Rua Torquato, nº 701, 703, 705 e 06",
+  "bairro": "Aparecida",
+  "inscricao_municipal": "01.02.045.0088",
+  "matricula_sri": "8.403",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 195/2024, referente ao projeto aprovado no processo 20/2024 com área liberada de 356,46 m², não foi concluída estando em fase de execução, localizada na Rua Petrónio Fernal, esquina com Rua Torquato, nº 701, 703, 705 e 06, Bairro Aparecida, Oliveira/MG.",
+    "o requerente apresentou título de propriedade do imóvel sendo Matrícula SRI de Inteiro Teor nº 8.403 e Inscrição Cadastral 01.02.045.0088."
+  ],
+
+  "conclusao": "Diante disto, poderá ser expedida a renovação do alvará de construção por 180 dias, conforme Lei 1.544 de 04/03/86.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Renovação de Alvará de Construção (180 dias)",
+      "obs": "Constar observação: 'Alvará prorrogado por 180 dias'. Informar nova data de validade."
+    }
+  ]
+}

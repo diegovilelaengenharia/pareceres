@@ -13,12 +13,57 @@ logger.setLevel(logging.INFO)
 _vector_model = None
 _vector_index = None
 _vector_metadata = None
+_knowledge_cache = {}       # Cache para linhas dos arquivos (List[str])
+_knowledge_text_cache = {}  # Cache para texto completo (str)
+_json_cache = {}            # Cache para objetos JSON (Dict)
 
 # Base Knowledge paths
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_CONHECIMENTO_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "base_conhecimento")
 
 _VECTOR_LOAD_FAILED = False  # evita retentativas após falha
+
+def _load_knowledge_to_cache():
+    """Carrega todos os arquivos da base de conhecimento para a memória."""
+    global _knowledge_cache, _knowledge_text_cache
+    if _knowledge_cache:
+        return
+    
+    logger.info("Populando cache da base de conhecimento...")
+    arquivos = glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*.md")) + \
+               glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*.txt"))
+    
+    for filepath in arquivos:
+        nome = os.path.basename(filepath)
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+                _knowledge_text_cache[nome] = content
+                _knowledge_cache[nome] = content.splitlines(keepends=True)
+        except Exception as e:
+            logger.warning(f"Erro ao carregar {filepath} para o cache: {e}")
+
+def _load_json(filename: str) -> Optional[Dict[str, Any]]:
+    """Carrega JSON com sistema de cache."""
+    global _json_cache
+    if filename in _json_cache:
+        return _json_cache[filename]
+
+    filepath = os.path.join(BASE_CONHECIMENTO_DIR, filename)
+    if not os.path.exists(filepath):
+        logger.error(f"Arquivo não encontrado: {filepath}")
+        return None
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            _json_cache[filename] = data
+            return data
+    except json.JSONDecodeError as e:
+        logger.error(f"Erro de parse JSON em {filepath}: {e}")
+        return None
+    except Exception as e:
+        logger.error(f"Erro inesperado ao carregar {filepath}: {e}", exc_info=True)
+        return None
 
 def _get_vector_resources():
     global _vector_model, _vector_index, _vector_metadata, _VECTOR_LOAD_FAILED
@@ -69,31 +114,23 @@ def _get_vector_resources():
     return _vector_model, _vector_index, _vector_metadata
 
 def _busca_conceito_por_keywords(query: str) -> str:
-    """Fallback: busca por palavras-chave quando o modelo semântico não está disponível."""
+    """Fallback: busca por palavras-chave usando o cache em memória."""
+    _load_knowledge_to_cache()
     palavras = [p for p in query.lower().split() if len(p) > 3]
     if not palavras:
         palavras = query.lower().split()
 
-    arquivos = (
-        glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*.md"))
-        + glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*.txt"))
-    )
     resultados = []
-    for filepath in arquivos:
-        try:
-            with open(filepath, 'r', encoding='utf-8') as f:
-                linhas = f.readlines()
-            for i, linha in enumerate(linhas):
-                linha_lower = linha.lower()
-                if any(p in linha_lower for p in palavras):
-                    start = max(0, i - 1)
-                    end = min(len(linhas), i + 3)
-                    trecho = "".join(linhas[start:end]).strip()
-                    resultados.append(f"[{os.path.basename(filepath)} | Linha {i+1}]:\n{trecho}")
-                    if len(resultados) >= 8:
-                        break
-        except Exception:
-            continue
+    for nome_arq, linhas in _knowledge_cache.items():
+        for i, linha in enumerate(linhas):
+            linha_lower = linha.lower()
+            if any(p in linha_lower for p in palavras):
+                start = max(0, i - 1)
+                end = min(len(linhas), i + 3)
+                trecho = "".join(linhas[start:end]).strip()
+                resultados.append(f"[{nome_arq} | Linha {i+1}]:\n{trecho}")
+                if len(resultados) >= 8:
+                    break
         if len(resultados) >= 8:
             break
 
@@ -236,7 +273,7 @@ def prever_pendencias_recorrentes(tipo_processo: str, zona: str = None, area_ter
     if "reforma" in tipo_processo:
         alertas.append("- [DICA] Confira se a matrícula no SRI está em nome do requerente. Divergência de titularidade barra a reforma.")
 
-    # 2. Regras por Zona
+    # 2. Regras por Zone
     if "ZC" in zona or "ZAE" in zona:
         alertas.append("- [CONFLITO] Zonas comerciais/industriais costumam ter 'Abertura na Divisa'. Exija Termo de Anuência se não houver recuo lateral.")
         
@@ -245,22 +282,6 @@ def prever_pendencias_recorrentes(tipo_processo: str, zona: str = None, area_ter
 
     return "=== Inteligência Preditiva: Pendências Prováveis ===\n\n" + "\n".join(alertas) + \
            "\n\nNota: Estas sugestões baseiam-se em padrões estatísticos da base de conhecimento evolutiva."
-
-# Keep other tools unchanged...
-def _load_json(filename: str) -> Optional[Dict[str, Any]]:
-    filepath = os.path.join(BASE_CONHECIMENTO_DIR, filename)
-    if not os.path.exists(filepath):
-        logger.error(f"Arquivo não encontrado: {filepath}")
-        return None
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except json.JSONDecodeError as e:
-        logger.error(f"Erro de parse JSON em {filepath}: {e}")
-        return None
-    except Exception as e:
-        logger.error(f"Erro inesperado ao carregar {filepath}: {e}", exc_info=True)
-        return None
 
 def _normalize(text: str) -> str:
     import re
@@ -366,25 +387,17 @@ def consultar_indices_urbanisticos(zona_ou_bairro: str) -> str:
 def buscar_diretriz_processo(tipo_processo: str) -> str:
     """
     Retorna o raciocínio exigido para aprovar ou regularizar um tipo específico de projeto.
-    Lê arquivos .md como raciocinio_regularizacao_asbuilt.md.
+    Usa o cache em memória.
     """
     logger.info(f"buscar_diretriz_processo invocado para: '{tipo_processo}'")
-    arquivos_alvo = glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*.md"))
+    _load_knowledge_to_cache()
     termo = tipo_processo.lower()
     
     resultados = []
-    for filepath in arquivos_alvo:
-        nome_arquivo = os.path.basename(filepath).lower()
-        # Prioritize files with 'raciocinio' or 'fluxo' that match the process type
-        if termo in nome_arquivo:
-            try:
-                with open(filepath, 'r', encoding='utf-8') as f:
-                    conteudo = f.read()
-                    resumo = conteudo[:2000] + "\n...[conteúdo truncado]..." if len(conteudo) > 2000 else conteudo
-                    resultados.append(f"--- Diretriz: {os.path.basename(filepath)} ---\n{resumo}")
-            except Exception as e:
-                logger.error(f"Falha ao ler diretriz {filepath}: {e}", exc_info=True)
-                continue
+    for nome_arq, conteudo in _knowledge_text_cache.items():
+        if nome_arq.endswith(".md") and termo in nome_arq.lower():
+            resumo = conteudo[:2000] + "\n...[conteúdo truncado]..." if len(conteudo) > 2000 else conteudo
+            resultados.append(f"--- Diretriz: {nome_arq} ---\n{resumo}")
             
     if not resultados:
          logger.warning(f"Nenhuma diretriz encontrada para '{tipo_processo}'.")
@@ -394,31 +407,22 @@ def buscar_diretriz_processo(tipo_processo: str) -> str:
 
 def pesquisa_livre_leis_txt(palavra_chave: str) -> str:
     """
-    Varre todos os arquivos .md e .txt na pasta base_conhecimento buscando o termo.
+    Varre os arquivos do cache buscando o termo.
     """
     logger.info(f"pesquisa_livre_leis_txt invocado para chave: '{palavra_chave}'")
-    arquivos = glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*.md")) + glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*.txt"))
+    _load_knowledge_to_cache()
     termo = palavra_chave.lower()
     
     resultados = []
-    for filepath in arquivos:
-        try:
-            with open(filepath, 'r', encoding='utf-8') as f:
-                linhas = f.readlines()
-                for i, linha in enumerate(linhas):
-                    if termo in linha.lower():
-                        # Context: 1 line before and after
-                        start = max(0, i - 1)
-                        end = min(len(linhas), i + 2)
-                        trecho = "".join(linhas[start:end]).strip()
-                        resultados.append(f"[{os.path.basename(filepath)} | Linha {i+1}]:\n{trecho}")
-                        if len(resultados) >= 8: break
-        except UnicodeDecodeError as e:
-            logger.warning(f"Erro de encoding no arquivo {filepath}: {e}")
-            continue
-        except Exception as e:
-            logger.error(f"Falha ao realizar busca livre no arquivo {filepath}: {e}")
-            continue
+    for nome_arq, linhas in _knowledge_cache.items():
+        for i, linha in enumerate(linhas):
+            if termo in linha.lower():
+                # Context: 1 line before and after
+                start = max(0, i - 1)
+                end = min(len(linhas), i + 2)
+                trecho = "".join(linhas[start:end]).strip()
+                resultados.append(f"[{nome_arq} | Linha {i+1}]:\n{trecho}")
+                if len(resultados) >= 8: break
         if len(resultados) >= 8: break
         
     if not resultados:
@@ -478,12 +482,13 @@ def calcular_multas_processo(
     tem_decadencia: bool = False
 ) -> str:
     """
-    Calcula multas do Art. 79 (Lei 1.544) e Art. 39 (LC 267/2019).
-    Retorna memória de cálculo formatada para o parecer.
+    Calcula multas do Art. 79 (Lei 1.544) e Art. 39 (LC 267/2019) com valores oficiais 2026.
+    Lógica acumulativa para Art. 39 conforme manual técnico.
     """
     URM_2026 = 102.42
+    TAXA_APROVACAO = 4.48
     
-    # Multa Art. 79
+    # --- 1. Multa Art. 79 (Obra sem Licença) ---
     multa_art79 = 0.0
     memoria_79 = ""
     if not tem_decadencia:
@@ -491,53 +496,82 @@ def calcular_multas_processo(
         elif area_irregular <= 75: fator = 0.03
         elif area_irregular <= 100: fator = 0.04
         else:                       fator = 0.05
-        multa_art79 = area_irregular * fator * URM_2026
-        memoria_79 = f"  → Faixa {fator*100:.0f}% × URM por m²\n  → {area_irregular:.2f} × {fator} × R$ {URM_2026} = R$ {multa_art79:,.2f}"
+        multa_art79 = area_irregular * (fator * URM_2026)
+        memoria_79 = f"  → Faixa {fator*100:.0f}% URM/m² (R$ {fator * URM_2026:.2f}/m²)\n  → {area_irregular:.2f} m² × R$ {fator * URM_2026:.2f} = R$ {multa_art79:,.2f}"
     else:
         memoria_79 = "  → ISENTO por Decadência (CTN Art. 150 §4º)"
 
-    # Multa Art. 39 (Parâmetros)
+    # --- 2. Multa Art. 39 (Infração Urbanística - Acumulativa) ---
     codex = _load_json("codex_legal.json")
-    params = codex.get("parametros_zonais", {}).get(zona.upper(), {})
+    params = codex.get("parametros_zonais", {}).get(zona.upper(), {}) if codex else {}
     to_max = params.get("to_max_pct", 70)
     tp_min = params.get("tp_min_pct", 20)
     
     to_projeto = (area_ocupada / area_terreno) * 100 if area_terreno > 0 else 0
     tp_projeto = (area_permeavel / area_terreno) * 100 if area_terreno > 0 else 0
     
-    violacoes = 0
-    detalhe_39 = []
-    if to_projeto > to_max:
-        violacoes += 1
-        detalhe_39.append(f"  → TO calculado: {to_projeto:.2f}% > limite {to_max}% ← VIOLAÇÃO")
-    if tp_projeto < tp_min:
-        violacoes += 1
-        detalhe_39.append(f"  → TP calculado: {tp_projeto:.2f}% < limite {tp_min}% ← VIOLAÇÃO")
-        
-    fator_39 = 0
-    if area_irregular <= 40:   fator_39 = 1
-    elif area_irregular <= 80: fator_39 = 3
-    elif area_irregular <= 100: fator_39 = 6
-    else:                       fator_39 = 10
+    violacoes = []
+    area_em_desacordo = 0.0
     
-    # Assume taxa base de alvará simbólica ou busca em tabela (padrão 1 URM para cálculo simples)
-    taxa_base_alvara = URM_2026 * 0.5 # Exemplo estimado
-    multa_art39 = violacoes * fator_39 * taxa_base_alvara
+    if to_projeto > to_max:
+        area_excesso_to = (to_projeto - to_max) / 100 * area_terreno
+        violacoes.append(f"  → TO: {to_projeto:.2f}% > {to_max}% (Excesso: {area_excesso_to:.2f} m²) ← VIOLAÇÃO")
+        area_em_desacordo += area_excesso_to
+        
+    if tp_projeto < tp_min:
+        area_falta_tp = (tp_min - tp_projeto) / 100 * area_terreno
+        violacoes.append(f"  → TP: {tp_projeto:.2f}% < {tp_min}% (Falta: {area_falta_tp:.2f} m²) ← VIOLAÇÃO")
+        area_em_desacordo += area_falta_tp
 
+    multa_art39 = 0.0
+    memoria_39 = []
+    
+    if area_em_desacordo > 0:
+        # Lógica Acumulativa (Brackets)
+        restante = area_em_desacordo
+        
+        # Faixa 1: até 40m² (1x)
+        f1 = min(restante, 40.0)
+        v1 = f1 * (1 * TAXA_APROVACAO)
+        multa_art39 += v1
+        if f1 > 0: memoria_39.append(f"    - Faixa 1 (até 40m²): {f1:.2f} m² × R$ {TAXA_APROVACAO:.2f} = R$ {v1:.2f}")
+        restante -= f1
+        
+        # Faixa 2: 40 a 80m² (3x)
+        f2 = min(restante, 40.0)
+        v2 = f2 * (3 * TAXA_APROVACAO)
+        multa_art39 += v2
+        if f2 > 0: memoria_39.append(f"    - Faixa 2 (40-80m²): {f2:.2f} m² × R$ {3*TAXA_APROVACAO:.2f} = R$ {v2:.2f}")
+        restante -= f2
+        
+        # Faixa 3: 80 a 100m² (6x)
+        f3 = min(restante, 20.0)
+        v3 = f3 * (6 * TAXA_APROVACAO)
+        multa_art39 += v3
+        if f3 > 0: memoria_39.append(f"    - Faixa 3 (80-100m²): {f3:.2f} m² × R$ {6*TAXA_APROVACAO:.2f} = R$ {v3:.2f}")
+        restante -= f3
+        
+        # Faixa 4: acima 100m² (10x)
+        f4 = restante
+        v4 = f4 * (10 * TAXA_APROVACAO)
+        multa_art39 += v4
+        if f4 > 0: memoria_39.append(f"    - Faixa 4 (> 100m²): {f4:.2f} m² × R$ {10*TAXA_APROVACAO:.2f} = R$ {v4:.2f}")
+    
     resumo = [
-        "=== MEMÓRIA DE CÁLCULO DE MULTAS ===",
-        f"Área Irregular: {area_irregular:.2f} m²",
-        f"Zona: {zona.upper()} | TO máx: {to_max}% | TP mín: {tp_min}%",
+        "=== MEMÓRIA DE CÁLCULO DE MULTAS (Oficial 2026) ===",
+        f"Área Irregular (Art. 79): {area_irregular:.2f} m²",
+        f"Área em Desacordo (Art. 39): {area_em_desacordo:.2f} m²",
+        f"Zona: {zona.upper()} | URM 2026: R$ {URM_2026}",
         "",
         "[MULTA ART. 79 — Lei 1.544/1986]",
         memoria_79,
         "",
         "[MULTA ART. 39 — LC 267/2019]",
-        "\n".join(detalhe_39) if detalhe_39 else "  → Nenhuma violação de parâmetros detectada.",
-        f"  → Fator de Multa: {fator_39}× taxa alvará ({violacoes} violações)",
-        f"  → Valor Estimado Art. 39: R$ {multa_art39:,.2f}",
+        "\n".join(violacoes) if violacoes else "  → Nenhuma violação de parâmetros detectada.",
+        "\n".join(memoria_39) if memoria_39 else "  → Valor: R$ 0,00",
+        f"  → Total Art. 39: R$ {multa_art39:,.2f}",
         "",
-        f"TOTAL ESTIMADO: R$ {(multa_art79 + multa_art39):,.2f}",
+        f"TOTAL GERAL ESTIMADO: R$ {(multa_art79 + multa_art39):,.2f}",
         "BASE LEGAL: Art. 79, Lei 1.544/1986; Arts. 38-39, LC 267/2019"
     ]
     return "\n".join(resumo)
@@ -557,11 +591,13 @@ def validar_checklist_documentos(tipo_processo: str, documentos_apresentados: st
     bloqueios = []
     
     for doc in regras.get("obrigatorios_bloqueantes", []):
-        if _normalize(doc) not in _normalize(docs_user):
+        parts = [p.strip() for p in doc.split("//")]
+        if not any(_normalize(p) in _normalize(docs_user) for p in parts):
             bloqueios.append(f"❌ BLOQUEIO: {doc}")
             
     for doc in regras.get("obrigatorios", []):
-        if _normalize(doc) not in _normalize(docs_user):
+        parts = [p.strip() for p in doc.split("//")]
+        if not any(_normalize(p) in _normalize(docs_user) for p in parts):
             pendencias.append(f"⚠️ PENDENTE: {doc}")
             
     status = "APROVADO PARA ANÁLISE" if not bloqueios and not pendencias else "PENDÊNCIAS DETECTADAS"
@@ -815,38 +851,27 @@ def verificar_excecoes_lote_pequeno(area_terreno: float, tipo_processo: str, zon
 
 def buscar_logradouro_oficial(nome_rua: str) -> str:
     """
-    Verifica o nome oficial de um logradouro na base de denominações.
-    Detecta se há decreto de renomeação e sugere emissão de Certidão de Nome de Rua.
+    Verifica o nome oficial de um logradouro na base de denominações usando o cache.
     """
+    _load_knowledge_to_cache()
     nome_norm = _normalize(nome_rua)
-
-    # Busca em arquivos de logradouros/decretos
-    arquivos_alvo = (
-        glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*rua*"))
-        + glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*logradouro*"))
-        + glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*decreto*"))
-        + glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*denominacao*"))
-        + glob.glob(os.path.join(BASE_CONHECIMENTO_DIR, "*.md"))
-    )
-    arquivos_alvo = list(dict.fromkeys(arquivos_alvo))  # dedup
 
     resultados = []
     indicadores_mudanca = ["antiga", "anterior", "denominada", "decreto", "passou a", "renomeada"]
 
-    for filepath in arquivos_alvo:
-        try:
-            with open(filepath, "r", encoding="utf-8") as f:
-                linhas = f.readlines()
-            for i, linha in enumerate(linhas):
-                if nome_norm in _normalize(linha):
-                    start = max(0, i - 2)
-                    end = min(len(linhas), i + 4)
-                    trecho = "".join(linhas[start:end]).strip()
-                    resultados.append((trecho, filepath))
-                    if len(resultados) >= 6:
-                        break
-        except Exception:
+    for nome_arq, linhas in _knowledge_cache.items():
+        # Filtro de arquivos relevantes
+        if not any(k in nome_arq.lower() for k in ["rua", "logradouro", "decreto", "denominacao"]) and not nome_arq.endswith(".md"):
             continue
+
+        for i, linha in enumerate(linhas):
+            if nome_norm in _normalize(linha):
+                start = max(0, i - 2)
+                end = min(len(linhas), i + 4)
+                trecho = "".join(linhas[start:end]).strip()
+                resultados.append((trecho, nome_arq))
+                if len(resultados) >= 6:
+                    break
         if len(resultados) >= 6:
             break
 
@@ -860,8 +885,8 @@ def buscar_logradouro_oficial(nome_rua: str) -> str:
 
     linhas_saida = [f"=== Logradouro: '{nome_rua}' ===", ""]
     tem_mudanca = False
-    for trecho, origem in resultados:
-        linhas_saida.append(f"[Fonte: {os.path.basename(origem)}]")
+    for trecho, nome_arq in resultados:
+        linhas_saida.append(f"[Fonte: {nome_arq}]")
         linhas_saida.append(trecho)
         linhas_saida.append("")
         if any(ind in trecho.lower() for ind in indicadores_mudanca):
@@ -924,3 +949,41 @@ def estruturar_historico_cronologico(eventos_raw: List[Dict[str, str]]) -> str:
         estruturado.append({"data": data, "evento": ev.get("txt"), "tipo": tipo})
         
     return json.dumps(estruturado, indent=2, ensure_ascii=False)
+
+def buscar_modelo_parecer(contexto_caso: str) -> str:
+    """
+    Busca os melhores modelos de parecer/certidão baseados no contexto do caso.
+    Lê o catálogo mestre e ranqueia por similaridade de palavras-chave.
+    """
+    caminho_catalogo = os.path.join(os.path.dirname(__file__), "..", "modelos", "catalogo_modelos.json")
+    if not os.path.exists(caminho_catalogo):
+        return "Erro: Catálogo de modelos não encontrado. Gere o catálogo primeiro."
+
+    with open(caminho_catalogo, 'r', encoding='utf-8') as f:
+        catalogo = json.load(f)
+
+    palavras_chave = _normalize(contexto_caso).split()
+    ranking = []
+
+    for nome_arquivo, info in catalogo.items():
+        score = 0
+        texto_busca = _normalize(f"{info.get('assunto', '')} {info.get('descricao', '')} {' '.join(info.get('tags', []))}")
+        
+        for p in palavras_chave:
+            if p in texto_busca:
+                score += 1
+        
+        if score > 0:
+            ranking.append((score, nome_arquivo, info))
+
+    # Ordenar por score (maior primeiro)
+    ranking.sort(key=lambda x: x[0], reverse=True)
+
+    if not ranking:
+        return "Nenhum modelo específico encontrado para este contexto. Tente palavras-chave mais genéricas."
+
+    resultado = ["=== Modelos Recomendados ==="]
+    for score, nome, info in ranking[:3]:
+        resultado.append(f"\n[{nome}]\n- Assunto: {info.get('assunto')}\n- Descrição: {info.get('descricao')}\n- Tags: {', '.join(info.get('tags', []))}")
+
+    return "\n".join(resultado)

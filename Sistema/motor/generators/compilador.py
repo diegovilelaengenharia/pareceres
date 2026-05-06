@@ -81,13 +81,15 @@ def _relatorio_pos(dados: dict, caminho_doc: str, resumo_cob: dict):
         caminho_doc: Caminho do arquivo gerado.
         resumo_cob: Dados do relatório de cobertura.
     """
-    print(f"\n{_BLUE}{'─' * 62}{_RESET}")
-    
+    print(f"\n{_BLUE}{'-' * 62}{_RESET}")
+
     # Link para Sero (se aplicável)
     if "alvara" in dados.get("tipo_relatorio", "") or "habitese" in dados.get("tipo_relatorio", ""):
-        gen_sero.gerar_obs_sero(dados)
+        sero_meta = dados.get("sero_metadata")
+        if sero_meta:
+            gen_sero.gerar_obs_sero(sero_meta, dados.get("area_total_construida", ""))
 
-    print(f"{_BLUE}{'─' * 62}{_RESET}")
+    print(f"{_BLUE}{'-' * 62}{_RESET}")
 
 
 # ── Fluxo Principal ───────────────────────────────────────────────────────────
@@ -158,36 +160,11 @@ def main():
 
         # ── Gerar documento ───────────────────────────────────────────────────
         caminho_saida_fornecido = dados.get("_caminho_saida")
-        caminho_gerado = caminho_saida_fornecido
         try:
-            pecas_selecionadas = dados.get("documentos_emitir", [])
-            if pecas_selecionadas and isinstance(pecas_selecionadas, list):
-                print(f"  {_INFO}Gerando MÚLTIPLAS PEÇAS ({len(pecas_selecionadas)})")
-                for item in pecas_selecionadas:
-                    # Suporte para string (novo padrão do painel) ou dict (padrão antigo do Gemini)
-                    peca = item if isinstance(item, str) else item.get("tipo", "")
-                    if not peca: continue
-                    
-                    dados_temp = dados.copy()
-                    
-                    # Validar se o ID técnico é reconhecido pelo motor
-                    if peca not in TIPOS_DOCUMENTO:
-                        print(f"  {_ERR}ID técnico inválido em documentos_emitir: {peca}")
-                        continue
-                        
-                    dados_temp["tipo_relatorio"] = peca
-                    
-                    try:
-                        caminho_peca = gerar(dados_temp, caminho_saida_fornecido)
-                        print(f"  {_OK}Peça gerada: {os.path.basename(caminho_peca)}")
-                        sucessos += 1
-                    except Exception as e_peca:
-                        print(f"  {_ERR}Erro na peça {peca}: {e_peca}")
-                        erros += 1
-            else:
-                caminho_gerado = gerar(dados, caminho_saida_fornecido)
-                print(f"  {_OK}DOCX gerado: {os.path.basename(caminho_gerado or arquivo)}")
-                sucessos += 1
+            # Força a geração de um único documento baseado no tipo_relatorio original do JSON
+            caminho_gerado = gerar(dados, caminho_saida_fornecido)
+            print(f"  {_OK}DOCX gerado: {os.path.basename(caminho_gerado or arquivo)}")
+            sucessos += 1
         except Exception as e:
             print(f"  {_ERR}Falha ao compilar {os.path.basename(arquivo)}: {e}")
             erros += 1

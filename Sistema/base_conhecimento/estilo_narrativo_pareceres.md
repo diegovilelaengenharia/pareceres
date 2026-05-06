@@ -12,11 +12,20 @@
 - **Linguagem:** Formal, impessoal, técnica e objetiva. Nunca use coloquialismo.
 - **Voz:** Preferencialmente passiva ou impessoal: "foi emitida", "atesta-se que", "constatou-se".
 - **Tempo verbal:** Pretérito perfeito para fatos já ocorridos; presente para declarações em vigor.
-- **Negrito:** Usar **apenas** em dados críticos — números de documentos, áreas em m², valores em R$, artigos de lei, nomes de profissionais/partes. Nunca negrito em texto narrativo comum.
+- **Negrito:** Usar em **todas as informações variáveis** do processo para destaque visual imediato:
+  - Números de documentos (Ex: **Processo nº 123/2026**, **Matrícula nº 45.987**).
+  - Áreas e Valores (Ex: **154,08m²**, **R$ 1.250,00**).
+  - Nomes de partes e profissionais (Ex: **JOÃO DA SILVA**, **Eng. DIEGO VILELA**).
+  - Datas e prazos (Ex: **06/05/2026**, **180 dias**).
+  - Artigos de lei (Ex: **Art. 79 da Lei 1.544/86**).
+- **Itálico:** Usar exclusivamente para **textos que serão transcritos literalmente** para documentos finais (certidões, alvarás, ofícios):
+  - Trechos de certidões sugeridos (Ex: *"Certificamos que o imóvel situado à..."*).
+  - Observações que devem constar no rodapé do documento (Ex: *"Válido para fins de ligação de SAAE/CEMIG"*).
+  - Citações diretas de leis ou decretos.
 - **Numerais:** Escrever por extenso entre parênteses quando relevante para segurança jurídica:
-  - Área: **154,08m²** (cento e cinquenta e quatro metros e oito centímetros quadrados) — em certidões
-  - Valor: R$ 1.281,32 (hum mil duzentos e oitenta e um reais e trinta e dois centavos) — em certidões
-  - Para pareceres internos, a versão numérica com destaque em negrito é suficiente
+  - Área: **154,08m²** (cento e cinquenta e quatro metros e oito centímetros quadrados) — em certidões.
+  - Valor: **R$ 1.281,32** (hum mil duzentos e oitenta e um reais e trinta e dois centavos) — em certidões.
+  - Para pareceres internos, a versão numérica com destaque em negrito é suficiente.
 - **Datas:** No corpo do parecer usar "dd/mm/yyyy". No cabeçalho formal usar "dd de mês de yyyy".
 - **Áreas:** Sempre com vírgula decimal e "m²" junto: **154,08m²** — nunca "154.08 m²" nem "154m²".
 
@@ -228,3 +237,34 @@ Para saber se o processo está completo para emissão dos documentos finais, ver
 7. ✅ Parecer final favorável → emissão dos documentos
 
 Se qualquer etapa estiver faltando → modo `MODO_CONDICIONADO` ou `comunicado_pendencia`.
+
+---
+
+## 9. FRASES PARA RESTRIÇÕES AMBIENTAIS E ESPECIAIS
+
+### Seção 9 — Frases para Restrições Ambientais
+
+"Estando o imóvel situado em Área de Preservação Permanente (APP) urbana, conforme definido pelo __Art. 4º da Lei Federal nº 12.651/2012__ e __Lei Municipal nº 3.971/2023__, é necessária a determinação do recuo mínimo pelo CODEMA, previamente à análise dos parâmetros urbanísticos;"
+
+### Seção 10 — Frases para Imóvel em ZC-2 (IEPHA)
+
+"O imóvel localiza-se na Zona Central de Consolidação 2 (ZC-2), que integra a área de tombamento histórico sujeita à análise do Instituto Estadual do Patrimônio Histórico e Artístico (IEPHA-MG). A continuidade do processo está condicionada à apresentação de Nota Técnica emitida pelo IEPHA autorizando a intervenção pretendida;"
+
+### Seção 11 — Frases para Divergência de Bairro (SRI vs Cadastro)
+
+"Observa-se divergência entre o bairro constante da matrícula nº **[X]** do Serviço Registral de Imóveis (**[bairro SRI]**) e o cadastro municipal IPTU (**[bairro cadastro]**). Para prevenir a rejeição da averbação registral, será emitida Certidão de Localização Corretiva, confirmando tratar-se do mesmo imóvel (Diretriz nº 04/2026/SMOSU);"
+
+### Seção 12 — Frases para Decadência Parcial
+
+"A edificação apresenta duas parcelas de área: **[X] m²** construídos anteriormente a **[ano]**, comprovados mediante **[tipo de prova]**, alcançados pela decadência tributária (__Art. 150, §4º do CTN__); e **[Y] m²** construídos recentemente, não alcançados pela decadência, para os quais incide a multa do __Art. 79 da Lei Municipal nº 1.544/1986__;"
+
+### Seção 13 — Frases para Substituição de Projeto (Sem alteração de área)
+
+**Abertura:**
+"analisa o pedido de Substituição de Projeto Arquitetônico referente à edificação residencial unifamiliar já licenciada através do **Alvará de Construção nº [XXX/XXXX]** (emitido em [dd/mm/yyyy]), no imóvel localizado no [Lote/Quadra/Endereço], bairro [X];"
+
+**Considerando de área e layout:**
+"conforme verificado nas pranchas anexadas e declarado pelo Responsável Técnico, não houve acréscimo ou supressão na área total construída, mantendo-se os exatos **[X]m²** originalmente aprovados, bem como as áreas permeáveis e a configuração estrutural principal, consistindo a alteração apenas em [descrever a mudança, ex: adequação de layout interno / afastamentos];"
+
+**Conclusão e nota de vigência:**
+"somos de parecer **FAVORÁVEL** à aprovação do projeto substitutivo, devendo ser procedida a aprovação e carimbo nas novas pranchas. Nota: O **Alvará de Construção nº [XXX/XXXX]** permanece vigente com suas datas e metragens originais inalteradas, devendo o requerente apenas respeitar o novo layout aprovado;"

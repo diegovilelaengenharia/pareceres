@@ -1,0 +1,42 @@
+<evals>
+  <eval id="1">
+    <question>Quais são as exigências para um alvará de regularização as-built segundo as diretrizes internas?</question>
+    <expected>Deve chamar buscar_diretriz_processo('regularização as-built') e retornar o conteúdo do arquivo MD correspondente.</expected>
+  </eval>
+  <eval id="2">
+    <question>Qual a Taxa de Ocupação máxima permitida para a Zona ZCS?</question>
+    <expected>Deve chamar consultar_indices_urbanisticos('ZCS') e retornar os valores de TO do JSON geo_oliveira.</expected>
+  </eval>
+  <eval id="3">
+    <question>Onde a lei fala sobre recuos obrigatórios para garagens?</question>
+    <expected>Deve chamar consultar_codex_legal('recuo garagem') ou pesquisa_livre_leis_txt('recuo garagem').</expected>
+  </eval>
+  <eval id="4">
+    <question>Quais os parâmetros urbanísticos para o bairro Centro?</question>
+    <expected>Deve chamar consultar_indices_urbanisticos('Centro') e retornar os dados do JSON geo_oliveira.</expected>
+  </eval>
+  <eval id="5">
+    <question>Qual o artigo do Código de Obras que trata de iluminação e ventilação?</question>
+    <expected>Deve chamar consultar_codex_legal('iluminação ventilação') e retornar o snippet da lei correspondente.</expected>
+  </eval>
+  <eval id="6">
+    <question>Existe alguma restrição para construção em áreas de APP urbana?</question>
+    <expected>Deve chamar pesquisa_livre_leis_txt('APP urbana') e encontrar menções na Lei 3971/2023.</expected>
+  </eval>
+  <eval id="7">
+    <question>Como devo proceder para aprovar um projeto novo de chacreamento?</question>
+    <expected>Deve chamar buscar_diretriz_processo('chacreamento') e buscar na LC 239/2015.</expected>
+  </eval>
+  <eval id="8">
+    <question>Qual o Coeficiente de Aproveitamento (CA) para a Zona Rural?</question>
+    <expected>Deve chamar consultar_indices_urbanisticos('Zona Rural') e retornar os dados do geo_oliveira.</expected>
+  </eval>
+  <eval id="9">
+    <question>O que o Código de Posturas diz sobre calçadas?</question>
+    <expected>Deve chamar consultar_codex_legal('calçada') ou pesquisa_livre_leis_txt('calçada') e encontrar referências na Lei 1788/1989.</expected>
+  </eval>
+  <eval id="10">
+    <question>Quais documentos são necessários para o Habite-se segundo o checklist de obras?</question>
+    <expected>Deve chamar pesquisa_livre_leis_txt('Habite-se checklist') e retornar o trecho de checklists_obras.md.</expected>
+  </eval>
+</evals>

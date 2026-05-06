@@ -1,0 +1,332 @@
+{
+  "MODELO_01_Alvara_Aprovacao.json": {
+    "tipo_relatorio": "alvara_aprovacao",
+    "assunto": "Alvará de Construção e Certidão de Número",
+    "descricao": "GABARITO — baseado no processo real 108/2026 (Juliana Borges Sílvio, ZUR-3). Use como few-shot: substitua os campos para cada processo novo, mantendo a estrutura e qualidade dos considerandos.",
+    "tags": ["alvará de construção", "certidão de número", "aprovação", "projeto", "residencial", "unifamiliar", "zur-3", "gabarito", "certidão de localização"]
+  },
+  "MODELO_02_Habite-se_Comum.json": {
+    "tipo_relatorio": "habitese_comum",
+    "assunto": "Habite-se — Conclusão de Obra ⚠️ VERIFICAR (residencial/comercial)",
+    "descricao": null,
+    "tags": ["habite-se", "conclusão de obra", "residencial", "comercial"]
+  },
+  "MODELO_03_Certidao_Localizacao.json": {
+    "tipo_relatorio": "certidao_localizacao",
+    "assunto": "Certidão de Localização e Confrontações",
+    "descricao": null,
+    "tags": ["certidão de localização", "confrontações", "cadastro técnico", "averbação", "financiamento", "regularização"]
+  },
+  "MODELO_04_Certidao_Decadencia.json": {
+    "tipo_relatorio": "certidao_averbacao_decadencia",
+    "assunto": "Certidão de Averbação por Decadência — Art. 150 §4º CTN",
+    "descricao": null,
+    "tags": ["certidão de averbação", "decadência", "ctn", "art. 150", "crédito tributário", "regularização fiscal", "cartório", "receita federal"]
+  },
+  "MODELO_05_Comunicado_Pendencia.json": {
+    "tipo_relatorio": "comunicado_pendencia",
+    "assunto": "Comunicado de Pendência Documental — ⚠️ VERIFICAR (tipo de solicitação)",
+    "descricao": null,
+    "tags": ["comunicado", "pendência", "documental", "aguardo"]
+  },
+  "MODELO_06_Oficio_Meio_Ambiente.json": {
+    "tipo_relatorio": "oficio_meio_ambiente",
+    "assunto": "Encaminhamento para Análise Ambiental — ⚠️ VERIFICAR (motivo: APP / Curso d'água / Vegetação)",
+    "descricao": null,
+    "tags": ["ofício", "meio ambiente", "análise ambiental", "app", "vegetação", "licença ambiental", "codema"]
+  },
+  "MODELO_07_Memorando.json": {
+    "tipo_relatorio": "memorando",
+    "assunto": "⚠️ VERIFICAR — Assunto do Memorando (ex: Solicitação de Materiais / Informação / Providência)",
+    "descricao": null,
+    "tags": ["memorando", "interno", "solicitação", "providência"]
+  },
+  "MODELO_08_Alvara_MCMV.json": {
+    "tipo_relatorio": "alvara_mcmv",
+    "assunto": null,
+    "descricao": null,
+    "tags": ["alvará", "mcmv", "minha casa minha vida"]
+  },
+  "MODELO_09_Alvara_Construcao_Comercial.json": {
+    "tipo_relatorio": "alvara_construcao_comercial",
+    "assunto": null,
+    "descricao": null,
+    "tags": ["alvará", "construção", "comercial"]
+  },
+  "MODELO_10_Parecer_Juridico.json": {
+    "tipo_relatorio": "parecer_juridico",
+    "assunto": "⚠️ VERIFICAR — ex: Parecer Técnico para Usucapião / Retificação de Área / Inventário",
+    "descricao": null,
+    "tags": ["parecer", "jurídico", "usucapião", "retificação de área", "inventário", "interesse público"]
+  },
+  "MODELO_11_Oficio_Juridico_Embargo.json": {
+    "tipo_relatorio": "oficio_juridico_embargo",
+    "assunto": "Encaminhamento à Procuradoria — Obra Irregular — ⚠️ VERIFICAR (endereço da obra)",
+    "descricao": null,
+    "tags": ["ofício", "jurídico", "embargo", "obra irregular", "procuradoria", "demolição"]
+  },
+  "MODELO_12_Oficio_Interno_Materiais.json": {
+    "tipo_relatorio": "oficio_interno_materiais",
+    "assunto": "Solicitação de Materiais de Expediente — SMOSU",
+    "descricao": null,
+    "tags": ["ofício", "materiais", "expediente", "interno"]
+  },
+  "MODELO_13_Oficio_Decreto_Utilidade.json": {
+    "tipo_relatorio": "oficio_decreto_utilidade",
+    "assunto": "Solicitação de Decreto de Utilidade Pública — ⚠️ VERIFICAR (área / bairro / logradouro)",
+    "descricao": null,
+    "tags": ["ofício", "decreto", "utilidade pública", "desapropriação", "procuradoria"]
+  },
+  "MODELO_14_Habitese_Multa.json": {
+    "tipo_relatorio": "habitese_multa",
+    "assunto": "Habite-se — Residência Unifamiliar (com regularização de infração)",
+    "descricao": "GABARITO — habite-se com infração de taxa de permeabilidade (TP abaixo do mínimo). Use como few-shot: substitua os campos, mantendo a estrutura dos considerandos e o registro explícito do pagamento da multa.",
+    "tags": ["habite-se", "multa", "infração", "taxa de permeabilidade", "residencial", "unifamiliar", "regularização", "gabarito"]
+  },
+  "MODELO_15_Reforma_Ampliacao.json": {
+    "tipo_relatorio": "alvara_reforma_demolicao_ampliacao",
+    "assunto": "Alvará de Reforma, Demolição e Ampliação",
+    "descricao": "GABARITO — baseado no processo real 12329/2025 (Késsia Maria Cândido Salviano, ZUR3). Caso de reforma + demolição parcial + ampliação. Use como few-shot: substitua os campos, mantendo a estrutura e a decomposição de área (existente − demolição + ampliação = total final).",
+    "tags": ["alvará de reforma", "demolição", "ampliação", "unifamiliar", "residencial", "zur-3", "gabarito"]
+  },
+  "MODELO_16_Certidoes_Separadas.json": {
+    "tipo_relatorio": "certidoes_separadas_localizacao_confrontacao",
+    "assunto": "Certidões de Localização e Confrontação (Peças Separadas)",
+    "descricao": "MODELO 16 — Emissão de Múltiplas Certidões Separadas (Localização, Confrontação e Parecer). Caso Maria Lúcia (4467/2026).",
+    "tags": ["certidão", "peças separadas", "localização", "confrontação", "parecer técnico"]
+  },
+  "MODELO_16_Parecer_Unificado_Certidoes.json": {
+    "tipo_relatorio": "certidoes_separadas_localizacao_confrontacao",
+    "assunto": null,
+    "descricao": null,
+    "tags": ["parecer unificado", "certidão", "localização", "confrontação", "retificação", "nota devolutiva"]
+  },
+  "MODELO_17_Substituicao_Projeto.json": {
+    "tipo_relatorio": "substituicao_projeto",
+    "assunto": "Substituição de Projeto",
+    "descricao": "GABARITO — baseado no processo real 12453/2025 (Eduardo Augusto Severino). Use para Substituição de Projeto SEM alteração de área.",
+    "tags": ["substituição de projeto", "sem alteração de área", "alvará", "gabarito", "financiamento", "cef"]
+  },
+  "MODELO_18_Parecer_Topografia_Unificado.json": {
+    "tipo_relatorio": "parecer_topografia_unificado",
+    "assunto": "Parecer Técnico de Topografia e Parcelamento do Solo",
+    "descricao": "MODELO 18 — Parecer Técnico Unificado para Topografia (Desmembramento, Divisão, Unificação e Retificação).",
+    "tags": ["topografia", "parcelamento do solo", "desmembramento", "unificação", "retificação de área", "sri"]
+  },
+  "MODELO_19_Certidao_Usucapiao.json": {
+    "tipo_relatorio": "parecer_usucapiao",
+    "assunto": "Parecer Técnico para Instrução de Processo de Usucapião",
+    "descricao": "MODELO 19 — Parecer Técnico para Fins de Usucapião (Judicial ou Extrajudicial).",
+    "tags": ["usucapião", "interesse público", "certidão", "inexistência de interesse público"]
+  },
+  "MODELO_20_Certidao_Localizacao_Nome_Rua.json": {
+    "tipo_relatorio": "certidao_localizacao_nome_rua",
+    "assunto": "Carta de Habite-se e Certidão de Nome de Rua",
+    "descricao": "Certidão combinada: Localização + Nome de Rua. Caso real: proc. 971-2026 (Reinaldo Alerson).",
+    "tags": ["certidão de localização", "nome de rua", "decreto", "combinada"]
+  },
+  "MODELO_21_Triagem_Aprovacao_Projeto.json": {
+    "tipo_relatorio": "triagem_aprovacao_projeto",
+    "assunto": null,
+    "descricao": "Triagem Pedro — Aprovação de Projeto. Caso real: proc. 4097-2026 (Ronaldo Malfitano).",
+    "tags": ["triagem", "aprovação", "projeto", "pendências"]
+  },
+  "MODELO_22_Triagem_Regularizacao_Obra.json": {
+    "tipo_relatorio": "triagem_regularizacao_obra",
+    "assunto": null,
+    "descricao": "Triagem Pedro — Regularização de Obra. Caso real: proc. 4578-2026 (José Ananias da Silva).",
+    "tags": ["triagem", "regularização", "obra", "as-built", "pendências"]
+  },
+  "MODELO_23_Alvara_Demolicao.json": {
+    "tipo_relatorio": "alvara_demolicao",
+    "assunto": "Alvará de Demolição",
+    "descricao": "Alvará de Demolição. Caso real: proc. 997/2026 (Antônio Donisete da Paixão Oliveira).",
+    "tags": ["alvará de demolição", "demolição", "indeferimento", "certidão de demolição"]
+  },
+  "MODELO_24_Alvara_Demolicao_IEPHA.json": {
+    "tipo_relatorio": "alvara_demolicao",
+    "assunto": "Alvará de Demolição",
+    "descricao": "Alvará de Demolição com anuência do IEPHA (imóvel histórico). Caso real: proc. 2065/2026 (Mirian Silveira Castro). RRT de Arquiteto.",
+    "tags": ["alvará de demolição", "demolição", "iepha", "imóvel histórico"]
+  },
+  "MODELO_25_Certidao_Averbacao_Decadencia.json": {
+    "tipo_relatorio": "certidao_averbacao_decadencia",
+    "assunto": "Certidão de Averbação e Certidão de Decadência",
+    "descricao": "Certidão de Averbação + Certidão de Decadência. Habite-se antigo (2018, 8 anos). Caso real: proc. 3732/2026 (Vanessa Aparecida dos Santos).",
+    "tags": ["certidão de averbação", "certidão de decadência", "habite-se antigo", "decadência", "ctn"]
+  },
+  "MODELO_26_Habitese_2via_Espolio.json": {
+    "tipo_relatorio": "habitese_2via",
+    "assunto": "Segunda Via — Alvará de Construção, Habite-se e Certidão de Averbação e Decadência",
+    "descricao": "2ª via de múltiplas certidões — espólio com despacho judicial como inventariante. Caso real: proc. 2673/2024 (Espólio de Geraldo Moura Costa).",
+    "tags": ["segunda via", "espólio", "inventariante", "alvará de construção", "habite-se", "averbação", "decadência"]
+  },
+  "MODELO_27_Averbacao_2via_Localizacao_Corretiva.json": {
+    "tipo_relatorio": "habitese_2via",
+    "assunto": "Certidão de Averbação e Segunda Via de Habite-se",
+    "descricao": "Certidão de Averbação (parcial, com área pré-existente) + 2ª via Habite-se + Certidão de Localização Corretiva (correção de número). Título: Certidão de Transcrição (sem Matrícula). Caso real: proc. 3398/2026 (Maria Lucia Santos e Outros).",
+    "tags": ["averbação", "segunda via", "habite-se", "certidão de localização", "corretiva", "transcrição"]
+  },
+  "MODELO_28_Certidao_Averbacao_Area_Permeavel.json": {
+    "tipo_relatorio": "certidao_averbacao",
+    "assunto": "Certidão de Averbação",
+    "descricao": "Certidão de Averbação com ressalva de área permeável não respeitada (não bloqueia emissão). Caso real: proc. 1462/2026 (Diego Henrique Salete Silva).",
+    "tags": ["certidão de averbação", "área permeável", "ressalva", "habitável"]
+  },
+  "MODELO_29_Cancelamento_Alvara.json": {
+    "tipo_relatorio": "alvara_cancelamento",
+    "assunto": "Cancelamento de Alvará de Construção",
+    "descricao": "Cancelamento de Alvará de Construção (obra não iniciada). Caso real: proc. 2977/2026 (Adrianno Belux Bicalho Luz). Título: Escritura Pública de Compra e Venda.",
+    "tags": ["cancelamento", "alvará de construção", "obra não iniciada", "sisobras", "certidão de cancelamento", "rfb", "cei"]
+  },
+  "MODELO_30_Certidao_Localizacao_Duas_Frentes.json": {
+    "tipo_relatorio": "certidao_localizacao",
+    "assunto": "Certidão de Localização",
+    "descricao": "Certidão de Localização com 2 frentes (frente + fundos para ruas diferentes) e nota de renomeação de rua. Caso real: proc. 351/2026 (Maria de Fatima Salviano Resende).",
+    "tags": ["certidão de localização", "duas frentes", "renomeação de rua", "centro"]
+  },
+  "MODELO_31_Certidao_Localizacao_2Inscricoes.json": {
+    "tipo_relatorio": "certidao_localizacao",
+    "assunto": "Certidão de Localização",
+    "descricao": "Certidão de Localização com 2 inscrições imobiliárias para a mesma matrícula. Caso real: proc. 589/2026 (JM Empreendimentos e Construções Ltda).",
+    "tags": ["certidão de localização", "duas inscrições", "imobiliária", "matrícula"]
+  },
+  "MODELO_32_Certidao_Localizacao_Corretiva.json": {
+    "tipo_relatorio": "certidao_localizacao",
+    "assunto": "Certidão de Localização",
+    "descricao": "Certidão de Localização Corretiva (número e bairro errados no registro). Caso real: proc. 173/2026 (Maysa Carriço Santos).",
+    "tags": ["certidão de localização", "corretiva", "número", "bairro"]
+  },
+  "MODELO_33_Devolutiva_Retificacao_Esquina.json": {
+    "tipo_relatorio": "devolutiva_retificacao",
+    "assunto": "Certidão de Confrontações e Localização",
+    "descricao": "Devolutiva de Retificação Registral — imóvel de esquina, bairro divergente (Dom José → Centro), Nota Devolutiva SRI. Caso real: proc. 4467/2026 (Maria Lucia de Fátima Silva).",
+    "tags": ["devolutiva", "retificação", "esquina", "bairro", "sri", "confrontações", "localização"]
+  },
+  "MODELO_34_Certidao_Numero_3Unidades.json": {
+    "tipo_relatorio": "certidao_numero_comercial",
+    "assunto": "Certidão de Número",
+    "descricao": "Certidão de Número com 3 unidades (manter nº 55 e 57; novo nº 59). Caso real: proc. 377/2026 (Luis Carlos dos Santos). Alvará 111/2024, Habite-se 141/2024, área total 261,35m².",
+    "tags": ["certidão de número", "unidades", "comercial", "residencial", "saae", "cemig"]
+  },
+  "MODELO_35_Certidao_Nome_Rua.json": {
+    "tipo_relatorio": "certidao_nome_rua",
+    "assunto": "Certidão de Nome de Rua",
+    "descricao": "Certidão de Nome de Rua standalone (Travessa José Eduardo Abdo → Rua Professora Carminha Murad). Mesmo proc. 351/2026 do MODELO_30 (localização). Caso real: Maria de Fátima Salviano Resende.",
+    "tags": ["certidão de nome de rua", "decreto", "renomeação", "centro"]
+  },
+  "MODELO_36_Certidao_Decadencia.json": {
+    "tipo_relatorio": "certidao_decadencia",
+    "assunto": "Certidão de Decadência",
+    "descricao": "Certidão de Decadência (Habite-se de 2017, 9 anos). Caso real: proc. 1012/2026 (Gilson Nogueira da Silva).",
+    "tags": ["certidão de decadência", "habite-se", "ctn", "art. 150"]
+  },
+  "MODELO_37_Cancelamento_Alvara_Contrato.json": {
+    "tipo_relatorio": "alvara_cancelamento",
+    "assunto": "Cancelamento de Alvará de Construção",
+    "descricao": "Cancelamento de Alvará (obra não iniciada, título: Contrato de Compra e Venda). Caso real: proc. 2977/2026 (Cintia Noeme Gonzaga Moura Leão). Alvará 296/2021 do proc. 7766/2021.",
+    "tags": ["cancelamento", "alvará de construção", "contrato de compra e venda", "sisobras", "certidão de cancelamento", "rfb", "cei"]
+  },
+  "MODELO_38_Habitese_Averbacao_Avaliacao.json": {
+    "tipo_relatorio": "habitese_comum",
+    "assunto": "Carta de Habite-se e Certidão de Averbação",
+    "descricao": "Habite-se + Certidão de Averbação with encaminhamento à comissão de avaliação para laudo. Caso real: proc. 259/2026 (Tiago Raimundo Amaral dos Santos). Alvará 004/2026.",
+    "tags": ["habite-se", "averbação", "comissão de avaliação", "laudo"]
+  },
+  "MODELO_39_Renovacao_Alvara_2via_Numero.json": {
+    "tipo_relatorio": "alvara_renovacao",
+    "assunto": "Segunda Via Certidão de Número e Renovação de Alvará",
+    "descricao": "Renovação de Alvará (180 dias) + 2ª via certidões de número (CEMIG e SAAE, 2 números). Obra não concluída. Caso real: proc. 7035/2025 (Juliano Pereira de Morais). Alvará 383/2021.",
+    "tags": ["renovação", "alvará de construção", "segunda via", "certidão de número", "saae", "cemig"]
+  },
+  "MODELO_40_Habitese_2via_Averbacao.json": {
+    "tipo_relatorio": "habitese_2via",
+    "assunto": "Segunda Via Habite-se e Certidão de Averbação",
+    "descricao": "2ª via Habite-se + Certidão de Averbação (proc. com correções anteriores). Caso real: proc. 2999/2026 (Maria Leia de Resende). Habite-se 156/2021, 324,50m².",
+    "tags": ["segunda via", "habite-se", "averbação"]
+  },
+  "MODELO_41_Certidao_Numero_Imovel_Irregular.json": {
+    "tipo_relatorio": "certidao_numero_2via",
+    "assunto": "Segunda Via Certidões de Número",
+    "descricao": "2ª via Certidão de Número para imóvel irregular (sem lote/quadra), autorizada por despacho da Procuradoria. Caso real: proc. 96/2026 (Vera Lucia Almeida Ferreira).",
+    "tags": ["segunda via", "certidão de número", "imóvel irregular", "saae", "cemig", "procuradoria"]
+  },
+  "MODELO_42_Habitese_Certidao_Nome_Rua.json": {
+    "tipo_relatorio": "habitese_comum",
+    "assunto": "Carta de Habite-se e Certidão de Nome de Rua",
+    "descricao": "Habite-se + Certidão de Nome de Rua (Rua Três → Rua D. Vicentina Nunes Silveira, Decreto 3.218/2013). Título: Cessão de Direito/Compra e Venda. Caso real: proc. 1606/2026 (Aparecida Filomena dos Santos).",
+    "tags": ["habite-se", "nome de rua", "decreto", "averbação"]
+  },
+  "MODELO_43_Renovacao_Alvara.json": {
+    "tipo_relatorio": "renovacao_alvara",
+    "assunto": "Renovação de Alvará",
+    "descricao": "Renovação de Alvará de Construção (180 dias). Caso real: proc. 20/2024 (João Batista Machado).",
+    "tags": ["renovação", "alvará de construção", "180 dias"]
+  },
+  "MODELO_44_Renovacao_Alvara_Comunicado_Demolicao.json": {
+    "tipo_relatorio": "renovacao_alvara",
+    "assunto": "Renovação de Alvará",
+    "descricao": "Renovação de Alvará (180 dias) with comunicado de pendência de demolição futura. Caso real: proc. 2139/2026 (Maria Marcia Leão).",
+    "tags": ["renovação", "alvará de construção", "comunicado", "demolição pendente"]
+  },
+  "MODELO_45_Renovacao_Alvara_2via_Numero.json": {
+    "tipo_relatorio": "renovacao_alvara_certidao_numero",
+    "assunto": "Renovação de Alvará e Segunda Via de Certidões de Número",
+    "descricao": "Renovação de Alvará (180 dias) e Segunda Via de Certidão de Número (SAAE/CEMIG) with especificação de Lote/Quadra. Caso real: proc. 2721/2026 (Glaucia Veronez Vieira Gonçalves).",
+    "tags": ["renovação", "alvará de construção", "segunda via", "certidão de número", "saae", "cemig", "lote/quadra"]
+  },
+  "MODELO_46_Habitese_Averbacao_Decadencia_Indeferida.json": {
+    "tipo_relatorio": "habitese_averbacao_nome_rua",
+    "assunto": "Carta de Habite-se, Certidão de Averbação e Certidão de Decadência",
+    "descricao": "Habite-se + Averbação + Nome de Rua. Indeferimento de Decadência por falta de provas. Caso real: proc. 1316/2026 (Sid Assis Castro).",
+    "tags": ["habite-se", "averbação", "nome de rua", "decadência indeferida", "indeferimento"]
+  },
+  "MODELO_47_2via_Retificacao_Matrícula.json": {
+    "tipo_relatorio": "retificacao_documentos_matricula",
+    "assunto": "Alterações de Documentos devido Mudança de nº de Matrícula",
+    "descricao": "Retificação de documentos (2ª via) por encerramento/troca de Matrícula (27.109 para 32.544). Caso real: proc. 3241/2025 (Ranulfo Martins).",
+    "tags": ["segunda via", "retificação", "matrícula", "alvará", "habite-se", "averbação", "decadência"]
+  },
+  "MODELO_48_2via_Averbacao_Inventariante.json": {
+    "tipo_relatorio": "2via_certidao_averbacao",
+    "assunto": "Segunda Via Certidão de Averbação",
+    "descricao": "2ª Via de Certidão de Averbação. Requerente como Inventariante (Carta de Adjudicação). Caso real: proc. 860/2026 (Ana Maria de Oliveira Sant'Anna).",
+    "tags": ["segunda via", "averbação", "inventariante", "carta de adjudicação", "comissão de avaliação"]
+  },
+  "MODELO_49_Habitese_Averbacao_Novo_Alvara_SISOBRAS.json": {
+    "tipo_relatorio": "habitese_averbacao_novo_alvara",
+    "assunto": "Carta de Habite-se, Certidão de Averbação e Segunda Via de Alvará",
+    "descricao": "Habite-se + Averbação + Novo Alvará (SISOBRAS). Comunicado RFB. Caso real: proc. 250/2026 (Antônia Marta Bezerra Santana).",
+    "tags": ["habite-se", "averbação", "novo alvará", "sisobras", "rfb"]
+  },
+  "MODELO_50_2via_Averbacao_Unidades_Separadas.json": {
+    "tipo_relatorio": "2via_averbacao_separada",
+    "assunto": "Segunda Via Certidão de Averbação",
+    "descricao": "2ª Via de Certidão de Averbação emitida separadamente por unidades (Lojas, Salas, Salão). Caso real: proc. 9677/2025 (Rejane Santos Vieira Ribeiro e outra).",
+    "tags": ["segunda via", "averbação", "unidades separadas", "comercial", "salas", "lojas"]
+  },
+  "MODELO_51_Habitese_Averbacao_Nome_Rua.json": {
+    "tipo_relatorio": "habitese_averbacao_nome_rua",
+    "assunto": "Carta de Habite-se, Certidão de Averbação e Certidão de Nome de Rua",
+    "descricao": "Habite-se + Averbação + Certidão de Nome de Rua (Decreto 3.480/2015). Caso real: proc. 4287/2026 (Stanrlei Paulon).",
+    "tags": ["habite-se", "averbação", "nome de rua", "decreto", "portal das oliveiras"]
+  },
+  "MODELO_52_Habitese_2via_Alvara_Multa_Permeavel.json": {
+    "tipo_relatorio": "habitese_2via_alvara_multa",
+    "assunto": "Carta de Habite-se e Segunda Via de Alvará",
+    "descricao": "Habite-se + 2ª Via de Alvará. Área permeável não respeitada (multa paga). Caso real: proc. 1462/2026 (Diego Henrique Salete Silva).",
+    "tags": ["habite-se", "segunda via", "alvará", "multa", "área permeável"]
+  },
+  "MODELO_53_Habitese_Averbacao_Demolicao_Pendente.json": {
+    "tipo_relatorio": "habitese_averbacao_demolicao_pendente",
+    "assunto": "Carta de Habite-se e Certidão de Averbação",
+    "descricao": "Habite-se + Averbação. Demolição pendente de averbação anterior. Caso real: proc. 315/2026 (Camila Caetano da Silva).",
+    "tags": ["habite-se", "averbação", "demolição pendente", "comissão de avaliação"]
+  },
+  "MODELO_GABARITO_Alvara_Regularizacao.json": {
+    "tipo_relatorio": "alvara_regularizacao",
+    "assunto": "Regularização de Edificação (Habite-se e Averbação)",
+    "descricao": "GABARITO — baseado no processo real 545/2026. Use como few-shot: os campos ⚠️ devem ser preenchidos para cada processo novo.",
+    "tags": ["regularização", "habite-se", "averbação", "alvará de regularização", "certidão de decadência", "as-built", "gabarito", "zur-3"]
+  }
+}

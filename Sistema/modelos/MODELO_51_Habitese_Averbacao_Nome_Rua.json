@@ -1,0 +1,38 @@
+{
+  "_comentario": "Habite-se + Averbação + Certidão de Nome de Rua (Decreto 3.480/2015). Caso real: proc. 4287/2026 (Stanrlei Paulon).",
+
+  "tipo_relatorio": "habitese_averbacao_nome_rua",
+  "numero_processo": "4287/2026",
+  "data_processo": "07 de Março de 2026",
+  "assunto": "Carta de Habite-se, Certidão de Averbação e Certidão de Nome de Rua",
+  "requerente": "STANRLEI PAULON",
+
+  "logradouro": "Rua Almir Pinheiro Campos, nº 77",
+  "bairro": "Portal das Oliveiras",
+  "inscricao_municipal": "01.01.244.0181",
+  "matricula_sri": "31.561",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 170/2025, com área liberada de 58,75 m², válido até 03/07/2026, referente ao projeto aprovado no processo 5370/2025, localizada na Rua Almir Pinheiro Campos, nº 77, Bairro Portal das Oliveiras, Oliveira/MG, foi concluída e está habitável.",
+    "o Decreto nº 3.480 de 23 de Junho de 2015, onde a antiga 'Rua 4' passou a denominar-se Rua Almir Pinheiro Campos.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Certidão de Matrícula SRI de Inteiro Teor em seu nome, sob nº 31.561 e Inscrição Cadastral 01.01.244.0181."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Carta de Habite-se (58,75 m²), Certidão de Averbação e Certidão de Nome de Rua.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Carta de Habite-se — 58,75 m²",
+      "obs": ""
+    },
+    {
+      "tipo": "Certidão de Averbação — 58,75 m²",
+      "obs": ""
+    },
+    {
+      "tipo": "Certidão de Nome de Rua",
+      "obs": "Conforme Decreto nº 3.480 de 23 de Junho de 2015 a antiga 'Rua 4' denomina-se hoje Rua Almir Pinheiro Campos."
+    }
+  ]
+}

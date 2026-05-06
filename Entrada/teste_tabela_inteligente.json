@@ -1,0 +1,32 @@
+{
+  "tipo_relatorio": "parecer_tecnico",
+  "numero_processo": "4044",
+  "data_processo": "31/03/2026",
+  "assunto": "Certidões de Número para fins comerciais (Lojas 1, 2 e 3)",
+  "requerente": "DANIEL RESENDE CAMPOS",
+  "logradouro": "Avenida das Laranjeiras, nº 550",
+  "bairro": "Centro",
+  "inscricao_municipal": "01.04.020.0162",
+  "lote": "12",
+  "quadra": "07",
+  "area_total_construida": "1.712,96m²",
+  "paragrafo_abertura": "Trata-se de solicitação de **DANIEL RESENDE CAMPOS** para emissão de Certidões de Número para fins comerciais referentes às Lojas 1, 2 e 3 da edificação situada na Avenida das Laranjeiras, nº 550, visando a individualização de ligações junto ao SAAE e CEMIG.",
+  "considerandos": [
+    "O requerente comprovou a titularidade e regularidade do imóvel através da Matrícula de Inteiro Teor nº 42.041 do SRI e Inscrição Cadastral nº 01.04.020.0162.",
+    "A edificação possui histórico de regularidade técnica, amparada pelo Alvará de Construção nº 168/2023 e pela Carta de Habite-se nº 081/2025, com área total de 1.712,96m².",
+    "A Fiscalização de Obras, em vistoria realizada no dia 05/05/2026, atestou que a obra está em conformidade com o projeto aprovado e confirmou a divisão física das lojas mencionadas.",
+    "A numeração individualizada é requisito para a viabilização de infraestrutura básica (água e energia) de forma independente para as unidades comerciais."
+  ],
+  "memoria_de_calculo": "Área total construída da edificação: 1.712,96m². O presente parecer autoriza a individualização de 03 (três) unidades comerciais (Loja 1, Loja 2 e Loja 3), cada uma com área de 90,45m², totalizando 271,35m² de área comercial desmembrada para fins de numeração e ligações de concessionárias.",
+  "fundamentacao_legal": [
+    "Lei Municipal nº 1.544/86 (Código de Obras): estabelece as normas para licenciamento e numeração predial.",
+    "Lei Complementar nº 267/2019 (Uso e Ocupação do Solo): parâmetros para atividades comerciais em zona urbana."
+  ],
+  "conclusao": "Diante da regularidade documental e da constatação fiscal in loco, profiro parecer técnico *FAVORÁVEL* à emissão das certidões de número comercial para as Lojas 1, 2 e 3, conforme especificações técnicas.",
+  "documentos_emitir": [
+    { "tipo": "Certidão De Número Comercial - Loja 1", "obs": "Área de 90,45m², Lote 12, Quadra 07. Finalidade: SAAE/CEMIG." },
+    { "tipo": "Certidão De Número Comercial - Loja 2", "obs": "Área de 90,45m², Lote 12, Quadra 07. Finalidade: SAAE/CEMIG." },
+    { "tipo": "Certidão De Número Comercial - Loja 3", "obs": "Área de 90,45m², Lote 12, Quadra 07. Finalidade: SAAE/CEMIG." }
+  ],
+  "assinante_parecer": "Diego Tarcísio Nunes Vilela"
+}

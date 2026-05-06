@@ -1,0 +1,41 @@
+{
+  "_comentario": "Habite-se + Averbação + Novo Alvará (SISOBRAS). Comunicado RFB. Caso real: proc. 250/2026 (Antônia Marta Bezerra Santana).",
+
+  "tipo_relatorio": "habitese_averbacao_novo_alvara",
+  "numero_processo": "250/2026",
+  "data_processo": "09 de Fevereiro de 2026",
+  "assunto": "Carta de Habite-se, Certidão de Averbação e Segunda Via de Alvará",
+  "requerente": "ANTÔNIA MARTA BEZERRA SANTANA",
+
+  "logradouro": "Rua Orestes Diniz Cambraia, nº 706",
+  "bairro": "São Sebastião",
+  "inscricao_municipal": "01.05.087.0394",
+  "matricula_sri": "31.307",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 6854/2016 e aprovada pelo processo 3375/2016, localizada na Rua Orestes Diniz Cambraia, nº 706, Bairro São Sebastião, Oliveira/MG, confere com o projeto aprovado, foi concluída e está habitável.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Certidão de Matrícula SRI de Inteiro Teor de imóvel em seu nome, sob nº 31.307 e Inscrição Cadastral 01.05.087.0394."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Carta de Habite-se e Certidão de Averbação (101,92 m²), e emitido Novo Alvará devido à implementação do novo SISOBRAS. Emitir comunicado de cancelamento de CEI junto à RFB.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Carta de Habite-se — 101,92 m²",
+      "obs": ""
+    },
+    {
+      "tipo": "Certidão de Averbação — 101,92 m²",
+      "obs": ""
+    },
+    {
+      "tipo": "Novo Alvará de Construção (SISOBRAS)",
+      "obs": "Inserir informações no campo 'Outras Informações' conforme necessário."
+    },
+    {
+      "tipo": "Comunicado ao Requerente",
+      "obs": "Orientar sobre o cancelamento de CEI junto à Receita Federal (RFB)."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "_comentario": "2ª Via de Certidão de Averbação emitida separadamente por unidades (Lojas, Salas, Salão). Caso real: proc. 9677/2025 (Rejane Santos Vieira Ribeiro e outra).",
+
+  "tipo_relatorio": "2via_averbacao_separada",
+  "numero_processo": "9677/2025",
+  "data_processo": "04 de Novembro de 2025",
+  "assunto": "Segunda Via Certidão de Averbação",
+  "requerente": "REJANE SANTOS VIEIRA RIBEIRO E OUTRA",
+
+  "logradouro": "Edifício Comercial (Várias Unidades)",
+  "bairro": "",
+  "inscricao_municipal": "Diversas (conforme espelhos)",
+  "matricula_sri": "",
+
+  "considerandos": [
+    "o parecer fiscal, que entende que não houve alteração na área do imóvel regularizado por Habite-se nº 3968/2016 com 1.319,96 m².",
+    "o imóvel comercial possui salas, lojas e salão de festas já cadastrados no município conforme espelhos anexos, os quais totalizam a área do Habite-se."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida nova certidão de averbação separadamente (conforme espelho cadastral – endereço e área) em nome da requerente e outra conforme o registro apresentado.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidões de Averbação Separadas",
+      "obs": "Loja 01 (191,35m²); Loja 02 (156,49m²); Sala 101 (78,31m²); Sala 201 (65,40m²); Sala 301 (65,40m²); Sala 202 (71,47m²); Sala 302 (71,47m²); Sala 203 (70,93m²); Sala 303 (70,93m²); Sala 204 (82,51m²); Sala 304 (82,51m²); Salão de Festas (313,20m²)."
+    }
+  ]
+}

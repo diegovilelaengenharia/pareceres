@@ -148,6 +148,37 @@
 
         <!-- Visão: Novo Processo -->
         <div id="view-novo">
+          
+          <!-- NOVO: Contexto e Diretrizes Adicionais -->
+          <div class="card" style="margin-bottom:24px; border-left: 4px solid var(--accent2);">
+            <div class="card-h" style="display:flex;align-items:center;justify-content:space-between">
+              <span>🧠 Contexto e Diretrizes Adicionais</span>
+              <div class="badge badge-b">Opcional</div>
+            </div>
+            <div class="card-b">
+              <div style="margin-bottom:12px; font-size:13px; color:var(--muted)">
+                Adicione detalhes que a IA deve considerar na análise (ex: histórico verbal, nuances do terreno, ou exigências específicas do secretário).
+              </div>
+              
+              <textarea id="obs-engenheiro" style="min-height:80px; margin-bottom:16px; font-family:inherit; font-size:13px;" placeholder="Ex: Proprietário informou que a demolição foi parcial. Secretário solicitou atenção especial ao recuo frontal nesta via..."></textarea>
+              
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer">
+                  <input type="checkbox" id="check-acessibilidade" class="focus-check"> ♿ Avaliar Acessibilidade (NBR 9050)
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer">
+                  <input type="checkbox" id="check-vizinhança" class="focus-check"> 🏘️ Impacto de Vizinhança
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer">
+                  <input type="checkbox" id="check-patrimonio" class="focus-check"> 🏛️ Patrimônio Histórico (IEPHA)
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer">
+                  <input type="checkbox" id="check-ambiental" class="focus-check"> 🌳 Impacto Ambiental
+                </label>
+              </div>
+            </div>
+          </div>
+
           <div class="card" style="margin-bottom:24px;">
             <div class="card-h" style="display:flex;align-items:center;justify-content:space-between">
               <span>⚡ Extração e Dados (Novo Processo)</span>
@@ -324,6 +355,10 @@
               <div class="editor-field editor-full">
                 <label>Fundamentação Legal <span style="color:var(--muted);font-weight:400">(um por linha)</span></label>
                 <textarea id="ef-fundamentacao_legal" rows="4" style="min-height:80px"></textarea>
+              </div>
+              <div class="editor-field editor-full">
+                <label>Análise de Mérito Técnico <span style="color:var(--accent);font-weight:400">(IA + Engenheiro)</span></label>
+                <textarea id="ef-analise_merito" rows="5" style="min-height:100px; border-color:var(--accent2)" placeholder="A IA gerará o mérito técnico aqui..."></textarea>
               </div>
               <div class="editor-field editor-full">
                 <label>Conclusão / Encaminhamento</label>
@@ -985,7 +1020,28 @@ async function salvarEAvancar(){
 
 async function copiarInstrucoes(){
   const r=await api('/api/instrucoes');
-  if(r.ok){await navigator.clipboard.writeText(r.conteudo); showToast('Instruções copiadas! Cole no Gemini.','ok')}
+  if(r.ok){
+    let instructions = r.conteudo;
+    
+    // Captura Contexto Dinâmico do Wizard
+    const obs = document.getElementById('obs-engenheiro').value.trim();
+    const focuses = [];
+    if(document.getElementById('check-acessibilidade').checked) focuses.push("Acessibilidade (NBR 9050)");
+    if(document.getElementById('check-vizinhança').checked) focuses.push("Impacto de Vizinhança");
+    if(document.getElementById('check-patrimonio').checked) focuses.push("Patrimônio Histórico (IEPHA/IPHAN)");
+    if(document.getElementById('check-ambiental').checked) focuses.push("Meio Ambiente (CODEMA)");
+    
+    let extraContext = "\n\n--- DIRETRIZES EXTRAS DO ENGENHEIRO ---\n";
+    if(obs) extraContext += `OBSERVAÇÕES: ${obs}\n`;
+    if(focuses.length > 0) extraContext += `FOCO ESPECIAL NA ANÁLISE: ${focuses.join(", ")}\n`;
+    
+    if(obs || focuses.length > 0) {
+        instructions += extraContext;
+    }
+
+    await navigator.clipboard.writeText(instructions); 
+    showToast('Instruções + Contexto copiados! Cole no Gemini.', 'ok');
+  }
   else showToast(r.erro,'err');
 }
 
@@ -1205,7 +1261,7 @@ async function carregarEditorVisual(nomeJson) {
                      'logradouro','bairro','inscricao_municipal','lote','quadra',
                      'area_terreno','area_total_construida','taxa_ocupacao',
                      'coef_aproveitamento','taxa_permeabilidade','zona_uso',
-                     'profissional_nome','art_rrt','paragrafo_abertura','conclusao'];
+                     'profissional_nome','art_rrt','paragrafo_abertura','conclusao', 'analise_merito'];
     simples.forEach(k => {
         const el = document.getElementById('ef-' + k);
         if (el) el.value = d[k] || '';
@@ -1235,7 +1291,7 @@ async function salvarEdicaoVisual() {
                      'logradouro','bairro','inscricao_municipal','lote','quadra',
                      'area_terreno','area_total_construida','taxa_ocupacao',
                      'coef_aproveitamento','taxa_permeabilidade','zona_uso',
-                     'profissional_nome','art_rrt','paragrafo_abertura','conclusao'];
+                     'profissional_nome','art_rrt','paragrafo_abertura','conclusao', 'analise_merito'];
     simples.forEach(k => {
         const el = document.getElementById('ef-' + k);
         if (el) d[k] = el.value.trim() || d[k];
@@ -1568,10 +1624,10 @@ async function readDoc(nome) {
 
 // ── Manutenção ──
 async function limparPastaEntrada() {
-  if (!confirm('Deseja realmente remover todos os PDFs e JSONs da pasta de entrada? Esta ação não pode ser desfeita.')) return;
+  if (!confirm('Deseja realmente arquivar todos os PDFs e JSONs da pasta de entrada para o histórico? Isso manterá uma cópia de segurança.')) return;
   const r = await api('/api/limpar-entrada', {method:'POST'});
   if (r.ok) {
-    showToast(`Limpeza concluída! ${r.removidos} arquivos removidos.`, 'ok');
+    showToast(`Limpeza concluída! ${r.removidos} arquivos movidos para o histórico (pasta ${r.pasta}).`, 'ok');
     refresh();
   } else {
     showToast(r.erro, 'err');

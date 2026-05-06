@@ -31,9 +31,9 @@ Com esta diretriz, o sistema deixa de ser apenas um "gerador de relatórios" e p
 
 **Solução implementada:**
 
-1. **Novo `SIA_v1.0.md`** — substituiu o `01_SUPER_PROMPT_RESEARCH.md` como system instruction principal. Implementa 6 fases sequenciais com checkpoints obrigatórios. Nenhuma fase avança sem aprovação explícita do engenheiro.
+1. **Novo `00_SISTEMA_INTERATIVO.md`** — substituiu o `01_SUPER_PROMPT_RESEARCH.md` como system instruction principal. Implementa 6 fases sequenciais com checkpoints obrigatórios. Nenhuma fase avança sem aprovação explícita do engenheiro.
 
-2. **`GABARITOS.md` criado** — 5 templates estruturais (Regularização com Multa, com Decadência, Aprovação, Comunicado de Pendência, Habite-se). Estrutura 3 camadas obrigatória: Fato → Artigo → Cálculo.
+2. **`02_GABARITOS_E_ESTILO.md` criado** — 5 templates estruturais (Regularização com Multa, com Decadência, Aprovação, Comunicado de Pendência, Habite-se). Estrutura 3 camadas obrigatória: Fato → Artigo → Cálculo.
 
 3. **7 ferramentas MCP implementadas e corrigidas:**
    - `calcular_multas_processo` — Art. 79 + Art. 39, URM 2026 = R$ 102,42
@@ -320,4 +320,6 @@ O GEM gerava pareceres truncados porque os prompts impunham quotas numéricas r�
 - **Padrão aprendido:** Quando TO ou TP estão fora dos limites normativos mas há multa aplicada (regularização com penalidade), os campos da tabela de cabeçalho devem ter a anotação `(conferir zoneamento)` ao lado do valor.
 - Quando o lote se enquadra na exceção de lote pequeno (≤ 220m²), o campo `Área Terreno` deve exibir `(exceção da lei)` ao lado da metragem.
 - Esses sufixos textuais devem ser incluídos diretamente no valor do campo no JSON quando aplicáveis (ex: `"area_terreno": "144,38m² (exceção da lei)"`).
+
+exceção da lei)"`).
 

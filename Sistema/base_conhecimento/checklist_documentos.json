@@ -1,0 +1,322 @@
+{
+  "aprovacao_novo": {
+    "obrigatorios_bloqueantes": [
+      "CERTIDÃO IMOBILIÁRIA",
+      "TAXA DA LICENÇA",
+      "ART//RRT//TRT"
+    ],
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "PROJETO ARQUITETÔNICO DWG",
+      "PROJETO ARQUITETÔNICO PDF",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ",
+      "CERTIDÃO DE ÓBITO E INVENTÁRIO",
+      "NOTA TÉCNICA IEPHA",
+      "LICENÇA MEIO AMBIENTE E CODEMA"
+    ],
+    "base_legal": "Decreto 4.149/2019"
+  },
+  "regularizacao": {
+    "obrigatorios_bloqueantes": [
+      "CERTIDÃO IMOBILIÁRIA",
+      "TAXA DA LICENÇA",
+      "LAUDO TÉCNICO",
+      "ART//RRT//TRT"
+    ],
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "PROJETO AS BUILT DWG",
+      "PROJETO AS BUILT PDF",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ",
+      "CERTIDÃO DE ÓBITO E INVENTÁRIO",
+      "NOTA TÉCNICA IEPHA",
+      "LICENÇA MEIO AMBIENTE E CODEMA",
+      "CÓPIA DO ALVARÁ DE CONSTRUÇÃO",
+      "CÓPIA DA CARTA DE HABITE-SE"
+    ],
+    "base_legal": "Decreto 4.149/2019"
+  },
+  "habitese_comum": {
+    "obrigatorios_bloqueantes": [
+      "CÓPIA DO ALVARÁ DE CONSTRUÇÃO",
+      "TAXA DA LICENÇA"
+    ],
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ"
+    ],
+    "base_legal": "Decreto 4.149/2019"
+  },
+  "certificacao_averbacao": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "PROCURAÇÃO",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "CÓPIA DA CARTA DE HABITE-SE",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "CNPJ"
+    ],
+    "base_legal": "Regras SMOSU"
+  },
+  "alvara_demolicao": {
+    "obrigatorios_bloqueantes": [
+      "TAXA DA LICENÇA",
+      "ART//RRT//TRT"
+    ],
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ"
+    ],
+    "base_legal": "Código de Obras"
+  },
+  "certidao_demolicao": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "ALVARÁ DE DEMOLIÇÃO",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ"
+    ],
+    "base_legal": "Regras SMOSU"
+  },
+  "reforma": {
+    "obrigatorios_bloqueantes": [
+      "CÓPIA DO ALVARÁ DE CONSTRUÇÃO",
+      "CÓPIA DA CARTA DE HABITE-SE",
+      "LAUDO TÉCNICO",
+      "TAXA DA LICENÇA",
+      "ART//RRT//TRT"
+    ],
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "PROJETO AS BUILT DWG",
+      "PROJETO AS BUILT PDF",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ"
+    ],
+    "base_legal": "Decreto 4.149/2019"
+  },
+  "certidao_decadencia": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ",
+      "CÓPIA DA CARTA DE HABITE-SE",
+      "RELATÓRIO DE IPTU"
+    ],
+    "base_legal": "CTN Art. 150 §4º"
+  },
+  "certidao_nome_rua": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ"
+    ]
+  },
+  "certidao_localizacao": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ"
+    ]
+  },
+  "segunda_via_numero": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL",
+      "CERTIDÃO DE NÚMERO ANTERIOR OU ALVARÁ DE CONSTRUÇÃO"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ"
+    ]
+  },
+  "segunda_via_habitese": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ"
+    ]
+  },
+  "renovacao_alvara": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "CNPJ",
+      "CÓPIA DO ALVARÁ DE CONSTRUÇÃO APROVADO"
+    ]
+  },
+  "substituicao_projeto": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "PROJETO ARQUITETÔNICO DWG",
+      "PROJETO ARQUITETÔNICO PDF",
+      "ART//RRT//TRT",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO"
+    ]
+  },
+  "topografia_membramento": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO",
+      "MEMORIAL DESCRITIVO",
+      "ART//RRT//TRT",
+      "TAXA DA LICENÇA",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO"
+    ]
+  },
+  "topografia_desmembramento": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO",
+      "MEMORIAL DESCRITIVO",
+      "ART//RRT//TRT",
+      "TAXA DA LICENÇA",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO"
+    ]
+  },
+  "topografia_unificacao": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO",
+      "MEMORIAL DESCRITIVO",
+      "ART//RRT//TRT",
+      "TAXA DA LICENÇA",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO"
+    ]
+  },
+  "topografia_divisao": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO",
+      "MEMORIAL DESCRITIVO",
+      "ART//RRT//TRT",
+      "TAXA DA LICENÇA",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS",
+      "ESPELHO CADASTRAL"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO"
+    ]
+  },
+  "retificacao_area": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "CERTIDÃO IMOBILIÁRIA",
+      "LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO",
+      "MEMORIAL DESCRITIVO",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO"
+    ]
+  },
+  "usucapiao": {
+    "obrigatorios": [
+      "DOCUMENTO PESSOAL",
+      "COMPROVANTE DE ENDEREÇO ATUALIZADO",
+      "LEVANTAMENTO TOPOGRÁFICO GEORREFERENCIADO",
+      "ART//RRT//TRT",
+      "CERTIDÃO NEGATIVA DE DÉBITOS MUNICIPAIS"
+    ],
+    "condicionais": [
+      "PROCURAÇÃO",
+      "ESPELHO CADASTRAL"
+    ]
+  }
+}
