@@ -152,6 +152,7 @@ TIPOS_DOCUMENTO = {
     # ── Pareceres Administrativos (Layout limpo para certidões) ──
     "parecer_administrativo":             "parecer_administrativo",
     "certidoes_separadas_localizacao_confrontacao": "parecer_administrativo",
+    "devolutiva_retificacao":             "devolutiva_retificacao",
 
     # ── Pareceres Simples (sem dados do carimbo) ──
     "certidao_numero_2via":               "parecer_simples",

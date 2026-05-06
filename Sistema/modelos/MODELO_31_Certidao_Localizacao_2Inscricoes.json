@@ -1,0 +1,29 @@
+{
+  "_comentario": "Certidão de Localização com 2 inscrições imobiliárias para a mesma matrícula. Caso real: proc. 589/2026 (JM Empreendimentos e Construções Ltda).",
+
+  "tipo_relatorio": "certidao_localizacao",
+  "numero_processo": "589/2026",
+  "data_processo": "16 de Janeiro de 2026",
+  "assunto": "Certidão de Localização",
+  "requerente": "JM EMPREENDIMENTOS E CONSTRUÇÕES LTDA",
+
+  "logradouro": "Rua Coronel Benjamim Guimarães",
+  "bairro": "Martins",
+  "inscricao_municipal": "01.03.087.1387 e 01.03.087.1403",
+  "matricula_sri": "41.927",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que o imóvel da Matrícula 41.927, com Inscrições Imobiliárias 01.03.087.1387 e 01.03.087.1403, está localizado na Rua Coronel Benjamim Guimarães, Bairro Martins, Oliveira/MG.",
+    "a requerente apresentou título de propriedade do imóvel em seu nome, sendo uma Certidão de Inteiro Teor expedida pelo Serviço Registral de Imóveis (SRI), sob Matrícula nº 41.927."
+  ],
+
+  "conclusao": "Diante disto, poderá ser emitida a Certidão de Localização, constando a observação de que o imóvel encontra-se na Rua Coronel Benjamim Guimarães, Bairro Martins, Oliveira/MG.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Localização",
+      "obs": "Matrícula SRI nº 41.927. Inscrições Imobiliárias: 01.03.087.1387 e 01.03.087.1403. Localização: Rua Coronel Benjamim Guimarães, Bairro Martins, Oliveira/MG."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "_comentario": "Certidão de Decadência (Habite-se de 2017, 9 anos). Caso real: proc. 1012/2026 (Gilson Nogueira da Silva).",
+
+  "tipo_relatorio": "certidao_decadencia",
+  "numero_processo": "1012/2026",
+  "data_processo": "27 de Janeiro de 2026",
+  "assunto": "Certidão de Decadência",
+  "requerente": "GILSON NOGUEIRA DA SILVA",
+
+  "logradouro": "Avenida Waldemar Fernal, nº 414",
+  "bairro": "Aparecida",
+  "inscricao_municipal": "01.02.041.0300",
+  "matricula_sri": "12.799",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pela Carta de Habite-se nº 4258/2017, com área liberada de 185,10 m², expedida em 13/03/2017, referente ao projeto aprovado no processo 5303/2010, localizada na Avenida Waldemar Fernal, nº 414, Bairro Aparecida, Oliveira/MG, foi concluída, confere com o projeto aprovado e está habitável.",
+    "o requerente apresentou título de propriedade do imóvel em seu nome sendo uma Matrícula de Inteiro Teor nº 12.799 e Inscrição Cadastral 01.02.041.0300."
+  ],
+
+  "conclusao": "Diante disto, poderá ser concedida a Certidão de Decadência referente à área total do Habite-se nº 4258/2017 (185,10 m²).",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Decadência",
+      "obs": "Área de 185,10 m² — Habite-se nº 4258/2017 emitido em 13/03/2017. Decadência configurada (Art. 150, §4º CTN). Matrícula SRI nº 12.799."
+    }
+  ]
+}

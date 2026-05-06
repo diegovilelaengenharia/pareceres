@@ -1,0 +1,29 @@
+{
+  "_comentario": "Certidão de Localização Corretiva (número e bairro errados no registro). Caso real: proc. 173/2026 (Maysa Carriço Santos).",
+
+  "tipo_relatorio": "certidao_localizacao",
+  "numero_processo": "173/2026",
+  "data_processo": "09 de Janeiro de 2026",
+  "assunto": "Certidão de Localização",
+  "requerente": "MAYSA CARRIÇO SANTOS",
+
+  "logradouro": "Rua Dr. Othon Carvalhais Siqueira, nº 134",
+  "bairro": "Acácio Ribeiro",
+  "inscricao_municipal": "01.01.017.0140",
+  "matricula_sri": "4.928",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a numeração correta do imóvel está localizado na Rua Dr. Othon Carvalhais Siqueira, nº 134, Bairro Acácio Ribeiro, Oliveira/MG.",
+    "o requerente apresentou título de propriedade do imóvel em seu nome sendo uma Matrícula de Inteiro Teor SRI nº 4.928 e Inscrição Imobiliária 01.01.017.0140."
+  ],
+
+  "conclusao": "Diante disto, poderá ser emitida Certidão de Localização, constando a observação de que o imóvel encontra-se na Rua Dr. Othon Carvalhais Siqueira, nº 134, Bairro Acácio Ribeiro, Oliveira/MG, e não no nº 123, Bairro Dona Zica.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Localização",
+      "obs": "Constando: imóvel na Rua Dr. Othon Carvalhais Siqueira, nº 134, Bairro Acácio Ribeiro — e NÃO no nº 123, Bairro Dona Zica. Matrícula SRI nº 4.928."
+    }
+  ]
+}

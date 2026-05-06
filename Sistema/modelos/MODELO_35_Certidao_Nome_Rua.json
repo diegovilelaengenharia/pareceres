@@ -1,0 +1,29 @@
+{
+  "_comentario": "Certidão de Nome de Rua standalone (Travessa José Eduardo Abdo → Rua Professora Carminha Murad). Mesmo proc. 351/2026 do MODELO_30 (localização). Caso real: Maria de Fátima Salviano Resende.",
+
+  "tipo_relatorio": "certidao_nome_rua",
+  "numero_processo": "351/2026",
+  "data_processo": "13 de Janeiro de 2026",
+  "assunto": "Certidão de Nome de Rua",
+  "requerente": "MARIA DE FÁTIMA SALVIANO RESENDE",
+
+  "logradouro": "Rua Professora Carminha Murad, nº 110",
+  "bairro": "Centro",
+  "inscricao_municipal": "01.01.011.0109.001",
+  "matricula_sri": "41.835",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal que constatou que o imóvel com Inscrição Imobiliária 01.01.011.0109.001 também possui frente para a Rua Professora Carminha Murad, nº 110, Bairro Centro — rua antes conhecida como Travessa José Eduardo Abdo, que hoje se denomina Rua Professora Carminha Murad, conforme Decreto nº 2.436 de 04 de Abril de 2006.",
+    "o título de propriedade apresentado pelo requerente em seu nome sendo uma Certidão de Inteiro Teor SRI registrada sob Matrícula nº 41.835."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Certidão de Nome de Rua conforme Decreto nº 2.436/2006 e parecer fiscal.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Nome de Rua",
+      "obs": "Conforme Decreto nº 2.436 de 04/04/2006: a antiga Travessa José Eduardo Abdo denomina-se hoje Rua Professora Carminha Murad. Matrícula SRI nº 41.835."
+    }
+  ]
+}

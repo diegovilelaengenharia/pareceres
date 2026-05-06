@@ -1,0 +1,38 @@
+{
+  "_comentario": "Devolutiva de Retificação Registral — imóvel de esquina, bairro divergente (Dom José → Centro), Nota Devolutiva SRI. Caso real: proc. 4467/2026 (Maria Lucia de Fátima Silva).",
+
+  "tipo_relatorio": "devolutiva_retificacao",
+  "titulo_documento": "PARECER SETOR TÉCNICO – SMOSU",
+  "numero_processo": "4467/2026",
+  "data_processo": "10 de Abril de 2026",
+  "assunto": "Certidão de Confrontações e Localização",
+  "requerente": "MARIA LUCIA DE FÁTIMA SILVA",
+
+  "logradouro": "Rua Prefeito José Silveira, nº 232 / Av. Miguel Resende, nº 05",
+  "bairro": "Centro",
+  "inscricao_municipal": "⚠️ VERIFICAR",
+  "matricula_sri": "12.414",
+
+  "paragrafo_abertura": "Para o fiel embasamento desta análise técnica, constam apensados ao presente processo os seguintes documentos e marcos temporais:\n• 18/02/2025: Certidão de Inteiro Teor da Matrícula nº 12.414 do SRI de Oliveira/MG;\n• 19/03/2026: Nota Devolutiva do SRI (Protocolo nº 105.319), apontando divergências de bairro e omissão da situação de esquina;\n• 10/04/2026: Requerimento administrativo da proprietária solicitando as certidões municipais corretivas;\n• 15/04/2026: Parecer Fiscal de Vistoria In Loco, atestando a realidade física do imóvel e logradouros;\n• 15/04/2026: Espelhos Cadastrais do IPTU confirmando a unificação das unidades sob a mesma testada.",
+
+  "considerandos": [
+    "a requerente apresentou título de propriedade (Matrícula nº 12.414) que descreve originalmente o imóvel no antigo Bairro Dom José e com testada única para a Rua Prefeito José Silveira.",
+    "o Serviço Registral de Imóveis, através da Nota Devolutiva nº 105.319, exigiu a comprovação municipal quanto à correta denominação do bairro e à situação de esquina do lote para fins de retificação registral.",
+    "o parecer fiscal emitido após vistoria realizada em 15/04/2026 atesta de forma inequívoca que a localidade outrora denominada 'Dom José' integra atualmente o Bairro Centro.",
+    "resta fisicamente comprovado que o imóvel possui natureza de esquina, fazendo frente principal para a Rua Prefeito José Silveira e lateral esquerda para a Avenida Miguel Resende, possuindo acessos ativos e numerações oficiais (232, 232A, 05, 21 e 27) para ambos os logradouros.",
+    "o Cadastro Imobiliário Municipal atesta as seguintes confrontações consolidadas: pela frente, com a Rua Prefeito José Silveira; pelo lado direito, com o imóvel de Marlene Mendes Laranjo (01.05.170.0064.001); pelo lado esquerdo, com a Avenida Miguel Resende; e pelos fundos, com o Espólio de Dulce Leite Ribeiro (01.05.181.0359)."
+  ],
+
+  "conclusao": "Diante do exposto, este Setor Técnico manifesta-se de forma FAVORÁVEL à retificação administrativa pretendida, visando o fiel reflexo da realidade fática do imóvel nos registros públicos. DEFIRO o pedido e autorizo a emissão imediata dos seguintes documentos em peças separadas.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Localização",
+      "obs": "Atestando o enquadramento no Bairro Centro (ex-Dom José), a situação de esquina viária e as numerações prediais unificadas (232, 232A para Rua Prefeito José Silveira; 05, 21 e 27 para Av. Miguel Resende). Base: Nota Devolutiva SRI nº 105.319."
+    },
+    {
+      "tipo": "Certidão de Confrontação",
+      "obs": "Certificando os atuais limites: frente Rua Prefeito José Silveira; lado direito Marlene Mendes Laranjo (01.05.170.0064.001); lado esquerdo Av. Miguel Resende; fundos Espólio Dulce Leite Ribeiro (01.05.181.0359)."
+    }
+  ]
+}

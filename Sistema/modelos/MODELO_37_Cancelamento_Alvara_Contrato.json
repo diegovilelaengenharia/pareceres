@@ -1,0 +1,40 @@
+{
+  "_comentario": "Cancelamento de Alvará (obra não iniciada, título: Contrato de Compra e Venda). Caso real: proc. 2977/2026 (Cintia Noeme Gonzaga Moura Leão). Alvará 296/2021 do proc. 7766/2021.",
+
+  "tipo_relatorio": "alvara_cancelamento",
+  "numero_processo": "2977/2026",
+  "data_processo": "07 de Março de 2026",
+  "assunto": "Cancelamento de Alvará de Construção",
+  "requerente": "CINTIA NOEME GONZAGA MOURA LEÃO",
+
+  "logradouro": "⚠️ VERIFICAR",
+  "bairro": "⚠️ VERIFICAR",
+  "inscricao_municipal": "01.03.145.0177.001",
+  "matricula_sri": "⚠️ VERIFICAR",
+
+  "numero_alvara": "296/2021",
+  "area_liberada": "205,48 m²",
+  "titulo_propriedade_tipo": "Contrato de Compra e Venda",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "a solicitação de cancelamento do processo nº 7766/2021, que originou o Alvará de Construção nº 296/2021, referente a 205,48 m².",
+    "o requerente não iniciou as obras, conforme o parecer fiscal.",
+    "o requerente apresentou título de propriedade do imóvel sendo um Contrato de Compra e Venda, Inscrição Cadastral 01.03.145.0177.001."
+  ],
+
+  "conclusao": "Diante disto, poderá ser cancelado o Alvará de Construção nº 296/2021 no sistema SISOBRAS, bem como emitir separadamente uma Certidão de Cancelamento do Alvará e um Comunicado de Cancelamento de CEI junto à RFB, justificado pela não execução da obra.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Cancelamento do Alvará nº 296/2021 no sistema SISOBRAS"
+    },
+    {
+      "tipo": "Certidão de Cancelamento do Alvará nº 296/2021"
+    },
+    {
+      "tipo": "Comunicado de Cancelamento de CEI junto à RFB",
+      "obs": "Justificativa: não execução da obra. Proc. original 7766/2021, área 205,48 m²."
+    }
+  ]
+}

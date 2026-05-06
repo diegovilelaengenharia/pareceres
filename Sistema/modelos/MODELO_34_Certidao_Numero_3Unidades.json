@@ -1,0 +1,30 @@
+{
+  "_comentario": "Certidão de Número com 3 unidades (manter nº 55 e 57; novo nº 59). Caso real: proc. 377/2026 (Luis Carlos dos Santos). Alvará 111/2024, Habite-se 141/2024, área total 261,35m².",
+
+  "tipo_relatorio": "certidao_numero_comercial",
+  "numero_processo": "377/2026",
+  "data_processo": "13 de Janeiro de 2026",
+  "assunto": "Certidão de Número",
+  "requerente": "LUIS CARLOS DOS SANTOS",
+
+  "logradouro": "⚠️ VERIFICAR",
+  "bairro": "⚠️ VERIFICAR",
+  "inscricao_municipal": "01.01.052.0324",
+  "matricula_sri": "15.794",
+
+  "considerandos": [
+    "a solicitação do requerente por meio de ofício constante neste processo administrativo.",
+    "o requerente comprovou a titularidade e regularidade do imóvel através da Matrícula de Inteiro Teor nº 15.794 e Inscrição Cadastral nº 01.01.052.0324.",
+    "o histórico de regularidade da edificação, atestado pelo Alvará de Construção nº 111/2024 e pela Carta de Habite-se nº 141/2024, que confirmam a área total construída de 261,35 m².",
+    "o Parecer da Fiscalização de Obras datado de 20/03/2026, realizado mediante levantamento in loco, que atesta a conformidade da obra com o projeto aprovado e certifica a divisão das áreas."
+  ],
+
+  "conclusao": "Deverá ser mantida a numeração 57 para a área comercial de 52,17 m², mantida a numeração 55 para a área residencial de 115,65 m² e autorizada a emissão de Certidão de Número constando o novo número 59 para a área residencial de 93,52 m² (Lote 11, Quadra 15).",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Número — nº 59 (nova)",
+      "obs": "Área residencial de 93,52 m² (Lote 11, Quadra 15). Constar no campo de observações a área residencial individualizada de 93,52 m² para fins de ligação de água (SAAE) e luz (CEMIG). Numerações mantidas: nº 57 (comercial 52,17 m²) e nº 55 (residencial 115,65 m²)."
+    }
+  ]
+}

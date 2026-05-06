@@ -1,0 +1,29 @@
+{
+  "_comentario": "Certidão de Localização com 2 frentes (frente + fundos para ruas diferentes) e nota de renomeação de rua. Caso real: proc. 351/2026 (Maria de Fatima Salviano Resende).",
+
+  "tipo_relatorio": "certidao_localizacao",
+  "numero_processo": "351/2026",
+  "data_processo": "13 de Janeiro de 2026",
+  "assunto": "Certidão de Localização",
+  "requerente": "MARIA DE FATIMA SALVIANO RESENDE",
+
+  "logradouro": "Rua Coronel Benjamim Guimarães, nº 96A",
+  "bairro": "Centro",
+  "inscricao_municipal": "01.01.011.0109.001",
+  "matricula_sri": "41.853",
+
+  "considerandos": [
+    "a solicitação da requerente.",
+    "o parecer fiscal, que certifica que o imóvel com Inscrição Imobiliária 01.01.011.0109.001, localizado na Rua Coronel Benjamim Guimarães, nº 96A, Bairro Centro, também possui fundos para a Rua Professora Carminha Murad, nº 110, Bairro Centro (antes conhecida como Travessa José Eduardo Abdo, conforme Decreto nº 2.436 de 04 de Abril de 2006).",
+    "a requerente apresentou título de propriedade do imóvel em seu nome, sendo uma Certidão de Inteiro Teor expedida pelo Serviço Registral de Imóveis (SRI), sob Matrícula nº 41.853 e Inscrição Cadastral 01.01.011.0109.001."
+  ],
+
+  "conclusao": "Diante disto, poderá ser emitida a Certidão de Localização, constando a observação de que o imóvel encontra-se na Rua Coronel Benjamim Guimarães, nº 96A, Bairro Centro, possuindo também fundos para a Rua Professora Carminha Murad, nº 110, Bairro Centro, cidade de Oliveira/MG.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Localização",
+      "obs": "Constando: imóvel na Rua Coronel Benjamim Guimarães, nº 96A, Bairro Centro, com fundos para a Rua Professora Carminha Murad, nº 110, Bairro Centro. Nota: Rua Professora Carminha Murad era anteriormente denominada Travessa José Eduardo Abdo, conforme Decreto nº 2.436 de 04/04/2006."
+    }
+  ]
+}
