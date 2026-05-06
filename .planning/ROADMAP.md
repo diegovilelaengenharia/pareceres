@@ -60,7 +60,7 @@ This document outlines the phased execution plan.
 
 ### ✅ Phase 11: Qualidade e Inteligência dos Pareceres *(concluída 2026-05-02)*
 - **Goal**: Elevar a qualidade dos documentos gerados pelo GEM — reescrever prompts, criar gabaritos, adicionar cálculos explícitos (TO, CA, TP, multas), formato de considerandos narrativo+legal, fluxo de confirmação de documentos antes da geração do JSON.
-- **Requirements**: FR-01, FR-02, FR-06
+- **Requirements**: FR-01, FR-02
 - **Status**: [complete]
 - **Plans**:
     - [x] 11-01-PLAN.md — Reescrita de Prompts e Gabarito de Qualidade
@@ -113,24 +113,17 @@ This document outlines the phased execution plan.
 
 ## Milestone v3.0 — Expansão da Inteligência e Geoprocessamento
 
-*Objetivo: Integrar legislações de 2025, diretrizes de preservação histórica (IEPHA) e automação de cruzamento geográfico.*
+*Objetivo: Expandir os tipos de documento suportados e elevar a fidelidade visual e técnica dos documentos gerados.*
 
 ### ✅ Phase 12: Upgrade dos Compiladores DOCX/PDF *(concluída 2026-05-03)*
 - **Goal**: Elevar a fidelidade visual e robustez técnica dos documentos gerados. Corrigir bugs de layout (margens de célula, largura de rodapé/cards), adicionar section headings coloridos para multas (vermelho) e condicionantes (verde), caixa sombreada para memória de cálculo, borda lateral nos itens de documentos, e unificar `compilador_livre.py` com o pipeline principal.
 - **Requirements**: qualidade visual, fidelidade DOCX/PDF, profissionalismo dos pareceres
 - **Status**: [complete]
 
-### Phase 8: Expansão da Inteligência e Integração de Legislações
-- **Goal**: Processar a pasta "LEGISLAÇÕES PARA TREINAR E REVISAR", extrair informações cruciais e atualizar a base de conhecimento e lógica do motor (IEPHA, Multas 2025, LEI 4.071/2025).
-- **Requirements**: FR-06, FR-07
-- **Status**: [planned]
-- **Plans**:
-    - [ ] 08-01-PLAN.md — Integração de Legislações 2025 e IEPHA
-
-### Phase 14: Suporte a Múltiplas Certidões Separadas
+### ✅ Phase 14: Suporte a Múltiplas Certidões Separadas *(concluída 2026-05-06)*
 - **Goal**: Implementar a geração de múltiplos documentos (Parecer, Localização, Confrontação) a partir de um único JSON usando o tipo mestre `certidoes_separadas_localizacao_confrontacao`.
 - **Requirements**: FR-01, FR-02, ARCH-01
-- **Status**: [planned]
+- **Status**: [complete]
 - **Plans**:
     - [x] 14-01-PLAN.md — Implementação do Pipeline de Certidões em Lote
 

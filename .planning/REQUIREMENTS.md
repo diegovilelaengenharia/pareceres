@@ -40,20 +40,6 @@
 
 ---
 
-## Functional Requirements (v3.0)
-
-### FR-06 — Integração de Legislações 2025
-- O sistema deve incorporar a LEI Nº 4.071/2025 e atualizar valores de URM/VRM para o exercício de 2025/2026.
-- A base RAG `02_GEM_REFERENCIA.md` deve ser a fonte da verdade para estas citações.
-- **Acceptance:** O motor calcula multas usando os novos índices e cita a LEI 4.071 nos pareceres de teste.
-
-### FR-07 — Inteligência Geográfica (IEPHA e Zoneamento)
-- Implementar mecanismo de cruzamento de endereços com áreas de preservação do IEPHA e zoneamento específico.
-- O sistema deve alertar automaticamente se um imóvel estiver em área de proteção histórica.
-- **Acceptance:** Processar um logradouro no "Centro" dispara um aviso de restrição IEPHA no parecer gerado.
-
----
-
 ## Non-Functional Requirements
 
 ### NFR-01 — Sem Quebra de Compatibilidade
