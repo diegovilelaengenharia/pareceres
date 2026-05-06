@@ -1,0 +1,37 @@
+{
+  "_comentario": "Habite-se + Certidão de Averbação com encaminhamento à comissão de avaliação para laudo. Caso real: proc. 259/2026 (Tiago Raimundo Amaral dos Santos). Alvará 004/2026.",
+
+  "tipo_relatorio": "habitese_comum",
+  "numero_processo": "259/2026",
+  "data_processo": "10 de Janeiro de 2026",
+  "assunto": "Carta de Habite-se e Certidão de Averbação",
+  "requerente": "TIAGO RAIMUNDO AMARAL DOS SANTOS",
+
+  "logradouro": "Rua Cacá Lobato, nº 205",
+  "bairro": "Oscar Faria Lobato",
+  "inscricao_municipal": "01.05.114.0042",
+  "matricula_sri": "41.428",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 004/2026, com área liberada de 61,00 m², válido até 09/07/2026, referente ao projeto aprovado no processo 12.102/2025, localizada na Rua Cacá Lobato, nº 205, Bairro Oscar Faria Lobato, Oliveira/MG, foi concluída e está habitável.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Certidão de Matrícula SRI de Inteiro Teor de imóvel em seu nome, registrado sob nº 41.428, Inscrição Cadastral 01.05.114.0042."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Carta de Habite-se referente à área total do alvará contendo 61,00 m² e Certidão de Averbação. Encaminhar à comissão de avaliação para laudo.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Carta de Habite-se — 61,00 m²",
+      "obs": "Referente ao Alvará de Construção nº 004/2026 (proc. 12.102/2025). Matrícula SRI nº 41.428."
+    },
+    {
+      "tipo": "Certidão de Averbação — 61,00 m²",
+      "obs": "Referente à obra licenciada pelo Alvará nº 004/2026."
+    },
+    {
+      "tipo": "Encaminhamento à Comissão de Avaliação",
+      "obs": "Para laudo de avaliação do imóvel."
+    }
+  ]
+}

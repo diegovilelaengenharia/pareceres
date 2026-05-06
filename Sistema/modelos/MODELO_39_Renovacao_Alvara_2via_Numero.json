@@ -1,0 +1,41 @@
+{
+  "_comentario": "Renovação de Alvará (180 dias) + 2ª via certidões de número (CEMIG e SAAE, 2 números). Obra não concluída. Caso real: proc. 7035/2025 (Juliano Pereira de Morais). Alvará 383/2021.",
+
+  "tipo_relatorio": "alvara_renovacao",
+  "numero_processo": "7035/2025",
+  "data_processo": "13 de Agosto de 2025",
+  "assunto": "Segunda Via Certidão de Número e Renovação de Alvará",
+  "requerente": "JULIANO PEREIRA DE MORAIS",
+
+  "logradouro": "Alameda Manoela Santos do Rosário, nº 162 e 156 (Apartamento 01)",
+  "bairro": "Acácio Ribeiro II",
+  "inscricao_municipal": "01.01.182.0379",
+  "matricula_sri": "25.824",
+
+  "numero_alvara": "383/2021",
+  "area_liberada": "164,00 m²",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 383/2021, referente ao projeto aprovado no processo apenso 9104/2021, com 164,00 m², não foi concluída, localizada na Alameda Manoela Santos do Rosário, nº 162 e 156 (Apartamento 01), Bairro Acácio Ribeiro II.",
+    "o requerente apresentou título de propriedade do imóvel sendo uma Escritura Pública de Compra e Venda, sob Matrícula 25.824 e Inscrição Cadastral 01.01.182.0379.",
+    "o Alvará em questão foi renovado em 17 de Setembro de 2025, válido até 17/03/2026."
+  ],
+
+  "conclusao": "Diante disto, poderá ser expedida a Renovação do Alvará de Construção nº 383/2021 por 180 dias, conforme Lei nº 1.544 de 04/03/1986, e a segunda via de certidões de número para CEMIG e SAAE para ambos os números (162 e 156).",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Renovação do Alvará de Construção nº 383/2021 — 180 dias",
+      "obs": "Constar no campo observação: 'Alvará prorrogado por 180 dias' com data de validade a contar da data do parecer. Base legal: Lei nº 1.544 de 04/03/1986."
+    },
+    {
+      "tipo": "2ª Via — Certidão de Número nº 162 (CEMIG e SAAE)",
+      "obs": "Alameda Manoela Santos do Rosário, nº 162, Bairro Acácio Ribeiro II. Matrícula 25.824."
+    },
+    {
+      "tipo": "2ª Via — Certidão de Número nº 156 / Apartamento 01 (CEMIG e SAAE)",
+      "obs": "Alameda Manoela Santos do Rosário, nº 156, Apartamento 01, Bairro Acácio Ribeiro II."
+    }
+  ]
+}
