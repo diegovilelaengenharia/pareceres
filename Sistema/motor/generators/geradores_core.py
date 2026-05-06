@@ -12,6 +12,7 @@ import datetime
 
 from docx import Document
 from docx.shared import Pt, Cm
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 import sys as _sys
 import os as _os
@@ -32,6 +33,7 @@ from generators.componentes import (
     build_partes_envolvidas, build_historico_cronologico,
     build_memoria_calculo,
 )
+from generators.enricher import enriquecer_dados
 
 # ═══════════════════════════════════════════════════════════
 #  TEMPLATES
@@ -239,17 +241,135 @@ def gerar_comunicado_pendencia(doc, dados, template):
     build_comunicado_pendencia(doc, dados)
 
 
+def gerar_triagem(doc, dados, template):
+    """
+    TRIAGEM SMOSU (Pedro Barros):
+    Header → Título → Parágrafo fixo → Checkbox → [Pendências] → Assinatura
+    """
+    from generators.formatacao import add_para, rich_segments
+
+    build_header(doc)
+    add_page_number_footer(doc)
+    build_titulo(doc, "TRIAGEM - SMOSU")
+
+    # Parágrafo fixo sobre o Decreto
+    p_dec = add_para(doc, after=120, indent_cm=0)
+    p_dec.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    rich_segments(p_dec,
+        "Conforme Decreto n°4.149 de 19 de dezembro de 2019, estabelece procedimentos "
+        "e critérios para a concessão da aprovação de projetos e dá outras providências, "
+        "e vistoria do setor de Fiscalização.", size=11)
+
+    # Linha de documentação
+    p_doc = add_para(doc, before=160, after=80, indent_cm=0)
+    rich_segments(p_doc, "Documentação para análise técnica:", size=11)
+
+    # Checkbox deferido / indeferido
+    deferido = dados.get("deferido", False)
+    if deferido:
+        checkbox = "( X ) Deferida           (    ) Indeferida"
+    else:
+        checkbox = "(    ) Deferida           (   X   ) Indeferida"
+    p_cb = add_para(doc, after=120, indent_cm=0)
+    rich_segments(p_cb, checkbox, size=11)
+
+    # Pendências (somente se indeferido)
+    if not deferido:
+        pendencias = dados.get("pendencias", [])
+        if pendencias:
+            p_comm = add_para(doc, before=120, after=80, indent_cm=0)
+            rich_segments(p_comm, "Comunicado visto o Indeferimento:", size=11)
+            for item in pendencias:
+                p_it = add_para(doc, after=80, indent_cm=0.63)
+                rich_segments(p_it, f"- {item}", size=11)
+
+    build_assinatura(doc, dados)
+
+
+def gerar_devolutiva_retificacao(doc, dados, template):
+    """
+    Gera a Devolutiva de Retificação com layout visual completo:
+    1. DOCUMENTAÇÃO VERIFICADA E CRONOLOGIA
+    2. FUNDAMENTAÇÃO TÉCNICA
+    3. CONCLUSÃO
+
+    Lê conteúdo de `dados` com fallback para `template`.
+    """
+    from generators.formatacao import add_section_heading, add_para, rich_segments, set_font
+    from generators.componentes import _ensure_list, add_doc_item
+
+    titulo = dados.get("titulo_documento") or template.get("titulo_documento", "PARECER SETOR TÉCNICO – SMOSU")
+
+    build_header(doc)
+    add_page_number_footer(doc)
+    build_titulo(doc, titulo)
+    build_identificacao(doc, dados)
+
+    # ── 1. DOCUMENTAÇÃO VERIFICADA E CRONOLOGIA ──────────────────────────────
+    add_section_heading(doc, "1. Documentação Verificada e Cronologia")
+
+    abertura = dados.get("paragrafo_abertura") or template.get("paragrafo_abertura", "")
+    if abertura:
+        for linha in [l.strip() for l in abertura.split('\n') if l.strip()]:
+            p_ab = add_para(doc, after=120, indent_cm=1.25)
+            p_ab.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+            rich_segments(p_ab, linha, size=11)
+
+    # ── 2. FUNDAMENTAÇÃO TÉCNICA ─────────────────────────────────────────────
+    add_section_heading(doc, "2. Fundamentação Técnica")
+
+    considerandos = _ensure_list(dados.get("considerandos") or template.get("considerandos", []))
+    for cons in considerandos:
+        p_cons = add_para(doc, after=120, indent_cm=1.25)
+        p_cons.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        rich_segments(p_cons, cons, size=11)
+
+    # ── 3. CONCLUSÃO ─────────────────────────────────────────────────────────
+    add_section_heading(doc, "3. Conclusão")
+
+    concl = dados.get("conclusao") or template.get("conclusao", "")
+    if concl:
+        p_c = add_para(doc, after=120, indent_cm=1.25)
+        p_c.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        rich_segments(p_c, concl, size=11)
+
+    # ── Emissão de Documentos + Assinatura ───────────────────────────────────
+    docs = dados.get("documentos_emitir") or template.get("documentos_emitir", [])
+    if docs:
+        from core.config import FONT_TITULO, SZ_CORPO, COR_LABEL_FONT
+        p_doc_tit = doc.add_paragraph()
+        p_doc_tit.paragraph_format.page_break_before = True
+        from generators.formatacao import set_spacing
+        set_spacing(p_doc_tit, line=276, before=200, after=80)
+        r_dt = p_doc_tit.add_run("Emissão de Documentos:")
+        set_font(r_dt, name=FONT_TITULO, size=SZ_CORPO, bold=True)
+        r_dt.font.color.rgb = COR_LABEL_FONT
+
+        for item in docs:
+            if isinstance(item, dict):
+                descricao = item.get("descricao") or item.get("tipo", "")
+                obs = item.get("obs") or item.get("observacao") or None
+            else:
+                descricao = str(item)
+                obs = None
+            add_doc_item(doc, descricao, obs)
+
+    build_assinatura(doc, dados)
+
+
 # ═══════════════════════════════════════════════════════════
 #  MAPEAMENTO E DESPACHO
 # ═══════════════════════════════════════════════════════════
 
 GERADORES = {
-    "parecer_tecnico":      gerar_parecer_tecnico,
-    "parecer_simples":      gerar_parecer_simples,
+    "parecer_tecnico":        gerar_parecer_tecnico,
+    "parecer_simples":        gerar_parecer_simples,
     "parecer_administrativo": gerar_parecer_administrativo,
-    "oficio":               gerar_oficio,
-    "comunicado":           gerar_comunicado,
-    "comunicado_pendencia": gerar_comunicado_pendencia,
+    "devolutiva_retificacao": gerar_devolutiva_retificacao,
+    "oficio":                 gerar_oficio,
+    "comunicado":             gerar_comunicado,
+    "comunicado_pendencia":   gerar_comunicado_pendencia,
+    "triagem":                gerar_triagem,
 }
 
 
@@ -326,6 +446,9 @@ def gerar(dados, caminho_saida=None):
     from generators._aliases import normalizar_dados
     dados = normalizar_dados(dados)
 
+    # Enriquecer dados ausentes com modelos narrativos do template (Fase 16)
+    dados = enriquecer_dados(dados, template)
+
     # Campos que se faltarem, o documento fica "quebrado" ou ilegal (identificação)
     CRITICOS = {
         "numero_processo", "requerente", "logradouro", "bairro", 
@@ -361,7 +484,7 @@ def gerar(dados, caminho_saida=None):
                 if not dados.get("documentos_emitir"):
                     dados[c] = [{"tipo": "[PREENCHER: documento a emitir]"}]
             elif c in ["considerandos", "fundamentacao_legal", "paragrafos_adicionais"]:
-                # Se já tem abertura, não polui o documento com "[PREENCHER: considerandos]"
+                # Se já tem abertura ou considerandos, não polui o documento com "[PREENCHER]" nesses campos narrativos
                 if not tem_texto_base:
                     dados[c] = [f"[PREENCHER: {c}]"]
                 else:
@@ -392,8 +515,8 @@ def gerar(dados, caminho_saida=None):
     doc.save(caminho_saida)
     print(f"[+] Documento DOCX gerado: {caminho_saida}")
 
-    # Gerar PDF automaticamente
-    _gerar_pdf(caminho_saida)
+    # Geração de PDF removida por solicitação do usuário
+    # _gerar_pdf(caminho_saida)
 
     return caminho_saida
 

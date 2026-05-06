@@ -1,0 +1,19 @@
+{
+  "_comentario": "Triagem Pedro — Aprovação de Projeto. Caso real: proc. 4097-2026 (Ronaldo Malfitano).",
+
+  "tipo_relatorio": "triagem_aprovacao_projeto",
+  "numero_processo": "4097/2026",
+  "data_processo": "07 de Abril de 2026",
+  "requerente": "RONALDO MALFITANO HOLDING LTDA",
+
+  "deferido": false,
+  "pendencias": [
+    "Anexar ao Processo Cessão de Direitos referente ao Lote 17 - Matrícula 39.109."
+  ],
+
+  "assinante": {
+    "nome": "Pedro Henrique Silva Barros",
+    "titulo": "Engenheiro Civil - Triagem",
+    "registro": "Secretaria Municipal de Obras e Serviços Urbanos"
+  }
+}

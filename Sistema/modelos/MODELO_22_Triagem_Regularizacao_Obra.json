@@ -1,0 +1,24 @@
+{
+  "_comentario": "Triagem Pedro — Regularização de Obra. Caso real: proc. 4578-2026 (José Ananias da Silva).",
+
+  "tipo_relatorio": "triagem_regularizacao_obra",
+  "numero_processo": "4578/2026",
+  "data_processo": "16 de Abril de 2026",
+  "requerente": "JOSÉ ANANIAS DA SILVA",
+
+  "deferido": false,
+  "pendencias": [
+    "Conforme Parecer Fiscal que identificou a edificação como Habitável, o requerente deve apresentar Taxa de Habite-se e Comprovante de Pagamento.",
+    "Anexar ao processo digital CND — Certidão Negativa de Débitos Municipais do Imóvel (Atualizada Max. 30 Dias).",
+    "Anexar ao processo digital Matrícula do imóvel SRI (Atualizada Max. 30 Dias).",
+    "Anexar ao processo digital ART/RRT/TRT de projeto As Built.",
+    "Anexar ao processo digital Laudo Técnico de Estabilidade da Edificação.",
+    "Apresentar Projeto Assinado pelo Requerente."
+  ],
+
+  "assinante": {
+    "nome": "Pedro Henrique Silva Barros",
+    "titulo": "Engenheiro Civil - Triagem",
+    "registro": "Secretaria Municipal de Obras e Serviços Urbanos"
+  }
+}

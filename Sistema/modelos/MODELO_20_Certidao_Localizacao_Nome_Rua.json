@@ -1,0 +1,33 @@
+{
+  "_comentario": "Certidão combinada: Localização + Nome de Rua. Caso real: proc. 971-2026 (Reinaldo Alerson).",
+
+  "tipo_relatorio": "certidao_localizacao_nome_rua",
+  "numero_processo": "971/2026",
+  "data_processo": "13 de Março de 2026",
+  "requerente": "REINALDO ALERSON VASCONCELOS",
+  "logradouro": "Rua Maria Aparecida Pereira",
+  "bairro": "Residencial Saraiva",
+  "inscricao_municipal": "01.03.191.0468.001",
+  "matricula_sri": "32.362",
+  "lote": "25",
+  "quadra": "10",
+
+  "considerandos": [
+    "Que o imóvel cadastrado sob a Inscrição Imobiliária 01.03.191.0468.001 está fisicamente localizado na antiga 'Rua 04', Quadra 10, Lote 25, do Bairro Residencial Saraiva, e não na 'Rua Nove' como consta em seu registro original, conforme Parecer Fiscal emitido em 06/03/2026.",
+    "Que a referida Rua '04' passou a denominar-se oficialmente Rua Maria Aparecida Pereira, conforme estabelecido pelo Decreto nº 3.634 de 14 de Setembro de 2016.",
+    "Que o requerente apresentou título de propriedade do terreno (Matrícula de Inteiro Teor sob nº 32.362)."
+  ],
+
+  "conclusao": "Diante do exposto, somos de parecer favorável à emissão da Certidão de Nome de Rua, constando a observação de que, conforme Decreto nº 3.634/2016, a antiga Rua 04 denomina-se hoje Rua Maria Aparecida Pereira. E a emissão da Certidão de Localização, certificando para os devidos fins de regularização registral que o imóvel correspondente à Matrícula 32.362 (Quadra 10, Lote 25) encontra-se localizado na Rua Maria Aparecida Pereira, Bairro Residencial Saraiva, retificando a informação de localização na 'Rua Nove'.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Nome de Rua",
+      "obs": "Conforme Decreto nº 3.634 de 14 de Setembro de 2016, a antiga Rua 04 denomina-se hoje Rua Maria Aparecida Pereira."
+    },
+    {
+      "tipo": "Certidão de Localização",
+      "obs": "Certificando que o imóvel da Matrícula 32.362 (Lote 25, Quadra 10) está localizado na Rua Maria Aparecida Pereira, Bairro Residencial Saraiva."
+    }
+  ]
+}

@@ -142,6 +142,12 @@ TIPOS_DOCUMENTO = {
     "alvara_substituicao_projeto":        "parecer_tecnico",
     "substituicao_projeto":               "parecer_tecnico",
     "alvara_troca_responsavel_tecnico":   "parecer_simples",
+    # ── Certidões Rápidas (Diego) ──
+    "certidao_localizacao_nome_rua":      "parecer_administrativo",
+    # ── Triagem (Pedro Barros) ──
+    "triagem_aprovacao_projeto":          "triagem",
+    "triagem_regularizacao":              "triagem",
+    "triagem_regularizacao_obra":         "triagem",
     "regularizacao_complexa_multipla":    "parecer_tecnico",
     # ── Pareceres Administrativos (Layout limpo para certidões) ──
     "parecer_administrativo":             "parecer_administrativo",
