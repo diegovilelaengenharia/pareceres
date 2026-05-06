@@ -1,0 +1,58 @@
+{
+  "_comentario": "MODELO 18 — Parecer Técnico Unificado para Topografia (Desmembramento, Divisão, Unificação e Retificação).",
+
+  "tipo_relatorio": "parecer_topografia_unificado",
+  "numero_processo": "[numero_processo]",
+  "data_processo": "[data_atual]",
+  "assunto": "Parecer Técnico de Topografia e Parcelamento do Solo",
+  "requerente": "[nome_requerente]",
+
+  "logradouro": "[logradouro]",
+  "bairro": "[bairro]",
+  "inscricao_municipal": "[inscricao_municipal]",
+  "matricula_sri": "[matricula_mae]",
+  "area_total_terreno": "[area_total]",
+
+  "finalidade_topografia": "Retificação de Área / Desmembramento / Unificação",
+  
+  "memoria_de_calculo": "Descrever as áreas resultantes e a conformidade com as testadas mínimas (Art. 10 Lei 1788/89 - 10,00m e 360m²).",
+
+  "paragrafo_abertura": "Trata-se de processo administrativo para fins de [finalidade], referente ao imóvel situado na [logradouro], de propriedade de [requerente], visando a adequação registrária junto ao SRI conforme levantamento topográfico apresentado.",
+
+  "considerandos": [
+    "Que o levantamento topográfico apresentado por [profissional] (ART [numero_art]) descreve fielmente o polígono e suas confrontações.",
+    "Que, em caso de Retificação, foi verificado que o imóvel respeita o alinhamento predial e não invade área de domínio público municipal.",
+    "Que, em caso de Parcelamento (Desmembramento/Divisão), os lotes resultantes atendem aos parâmetros da Lei 1.788/89 e LC 267/2019.",
+    "Que o Município atesta a anuência como confrontante das vias públicas lindeiras."
+  ],
+
+  "fundamentacao_legal": [
+    "__Lei Federal nº 6.015/73__ (Registros Públicos): base para retificações de área.",
+    "__Lei Federal nº 6.766/79__, Art. 18: prazo de 180 dias para registro de parcelamentos.",
+    "__Lei Municipal nº 1.788/89__, Art. 10: parâmetros mínimos de testada e área para desmembramentos.",
+    "__Lei Complementar nº 267/2019__: parâmetros de ocupação e zoneamento."
+  ],
+
+  "conclusao": "Manifesto-me de forma **FAVORÁVEL** à pretensão, condicionada à emissão da Certidão correspondente para fins de registro imobiliário.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de [Desmembramento/Unificação/Retificação]",
+      "obs": "Incluir descrição técnica completa no corpo do documento."
+    }
+  ],
+
+  "solicitacoes_administrativas": "RESUMO PARA EMISSÃO (ADMIN):\n- **Tipo**: [Tipo da Certidão]\n- **Status**: DEFERIDO\n- **Dados Chave**: Área Total: [area] | Matrícula: [matricula]\n- **OBS**: [Observações pertinentes]",
+
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "[nome_requerente]",
+      "qualidade": "Proprietário"
+    },
+    "responsavel_tecnico": {
+      "nome": "[nome_profissional]",
+      "titulo": "[titulo]",
+      "registro": "[registro_crea_cau]"
+    }
+  }
+}

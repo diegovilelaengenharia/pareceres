@@ -145,5 +145,12 @@ This document outlines the phased execution plan.
     - [x] 16-03-PLAN.md — Quebrar componentes.py em pacote componentes/
     - [x] 16-04-PLAN.md — Limpar templates JSON e validar pipeline end-to-end
 
+### ✅ Phase 17: Novos Tipos de Documento *(concluída 2026-05-06)*
+- **Goal**: Suportar 3 novos tipos de parecer — Substituição de Projeto, Topografia Unificada e Usucapião — adicionando-os ao motor e criando modelos de referência com casos reais.
+- **Requirements**: FR-01, FR-02
+- **Status**: [complete]
+- **Plans**:
+    - [x] 17-01 — Registrar `substituicao_projeto` em config.py; criar MODELO_17/18/19; validar geração
+
 ---
-*Roadmap updated: 2026-05-05*
+*Roadmap updated: 2026-05-06*

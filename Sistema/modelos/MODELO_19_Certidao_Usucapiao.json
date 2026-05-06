@@ -1,0 +1,48 @@
+{
+  "_comentario": "MODELO 19 — Parecer Técnico para Fins de Usucapião (Judicial ou Extrajudicial).",
+
+  "tipo_relatorio": "parecer_usucapiao",
+  "numero_processo": "[numero_processo]",
+  "data_processo": "[data_atual]",
+  "assunto": "Parecer Técnico para Instrução de Processo de Usucapião",
+  "requerente": "[nome_posseiro]",
+
+  "logradouro": "[logradouro]",
+  "bairro": "[bairro]",
+  "inscricao_municipal": "[inscricao_municipal_se_houver]",
+  "area_objeto": "[area_m2]",
+
+  "memoria_de_calculo": "Atestar se o polígono está inserido em perímetro urbano, zona de uso e se há interferência com bens públicos.",
+
+  "paragrafo_abertura": "A Secretaria Municipal de Obras, em atenção ao processo administrativo nº [numero], manifesta-se tecnicamente sobre a área de [area] localizada na [logradouro], para fins de instrução de ação de usucapião.",
+
+  "considerandos": [
+    "Que o imóvel está localizado em perímetro urbano, conforme Lei Municipal nº 1.788/89 e LC 267/2019.",
+    "Que o Município de Oliveira NÃO POSSUI interesse público sobre a área delimitada no levantamento topográfico anexo, visto que não há sobreposição com ruas, praças ou áreas institucionais.",
+    "Que a presente análise não atesta o domínio ou a propriedade, limitando-se aos aspectos urbanísticos e de interesse público municipal."
+  ],
+
+  "fundamentacao_legal": [
+    "__Constituição Federal__, Art. 183: Usucapião Urbano.",
+    "__Lei Federal nº 6.015/73__, Art. 216-A: Usucapião Extrajudicial.",
+    "__Provimento nº 65 do CNJ__: diretrizes para anuência do Município no Usucapião Extrajudicial."
+  ],
+
+  "conclusao": "Manifesto-me de forma **FAVORÁVEL** à emissão da Certidão de Inexistência de Interesse Público para fins de Usucapião.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Certidão de Usucapião (Inexistência de Interesse Público)",
+      "obs": "Não esquecer da cláusula de não-reconhecimento de domínio."
+    }
+  ],
+
+  "solicitacoes_administrativas": "RESUMO PARA EMISSÃO (ADMIN):\n- **Tipo**: Certidão de Usucapião\n- **Status**: DEFERIDO\n- **Dados Chave**: Área: [area] | Bairro: [bairro]\n- **OBS**: Atestar apenas a localização e ausência de interesse público.",
+
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "[nome_posseiro]",
+      "qualidade": "Posseiro / Requerente"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "_comentario": "GABARITO — baseado no processo real 12453/2025 (Eduardo Augusto Severino). Use para Substituição de Projeto SEM alteração de área.",
+
+  "memoria_de_calculo": "Alvará original: 044/2026. Área original: 62,27m². Área proposta: 62,27m². Diferença: 0,00m². Modificação: Afastamento de 75cm na área de serviço para adequação CEF. Parâmetros da Lei 1544/1986 e Lei 267/2019 mantidos.",
+
+  "tipo_relatorio": "substituicao_projeto",
+  "numero_processo": "12453/2025",
+  "data_processo": "22 de dezembro de 2025",
+  "assunto": "Substituição de Projeto",
+  "requerente": "EDUARDO AUGUSTO SEVERINO",
+
+  "logradouro": "Rua Felipe Murad, 397",
+  "bairro": "Residencial Portal das Oliveiras",
+  "matricula_sri": "31.521",
+  "lote": "41",
+  "quadra": "A",
+  "zona_uso": "ZUR-02",
+
+  "alvara_original_numero": "044/2026",
+  "alvara_original_data": "09/03/2026",
+  "area_total_aprovada": "62,27m²",
+  "motivo_substituicao": "adequação física às exigências de financiamento habitacional da Caixa Econômica Federal (CEF)",
+  "descricao_alteracao": "afastamento perpendicular de 75 cm da área de serviço em relação ao limite da divisa",
+
+  "profissional_nome": "Samuel Dias",
+  "profissional_titulo": "Engenheiro Civil",
+  "art_rrt": "MG20264735084",
+
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face do requerimento protocolado em 30 de abril de 2026, analisa o pedido de Substituição de Projeto Arquitetônico referente à edificação residencial unifamiliar já licenciada através do Alvará de Construção nº 044/2026 (emitido em 09/03/2026). O imóvel encontra-se localizado no Lote 41, Quadra 'A', na Rua Felipe Murad, nº 397, bairro Residencial Portal das Oliveiras (Zoneamento ZUR02).",
+
+  "considerandos": [
+    "Que a alteração solicitada pelo Responsável Técnico tem como escopo exclusivo a adequação física às exigências de financiamento habitacional da Caixa Econômica Federal (CEF), consistindo no afastamento perpendicular de 75 cm da área de serviço em relação ao limite da divisa.",
+    "Que conforme verificado nas pranchas anexadas e declarado pelo RT, não houve acréscimo ou supressão na área total construída, mantendo-se os exatos 62,27 m² originalmente aprovados, bem como as áreas permeáveis e a configuração estrutural principal.",
+    "Que a Anotação de Responsabilidade Técnica (ART) nº MG20264735084, sob responsabilidade do Eng. Civil Samuel Dias, permanece válida e vinculada a esta execução.",
+    "Que o projeto substitutivo atende aos parâmetros do Código de Obras do Município de Oliveira (Lei nº 1.544/1986) e à Lei de Uso e Ocupação do Solo (Lei nº 267/2019)."
+  ],
+
+  "conclusao": "Diante do exposto e atestada a regularidade técnica da adequação, somos de parecer FAVORÁVEL à aprovação do projeto substitutivo, podendo ser emitido:",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Aprovação e Carimbo nas novas pranchas do projeto arquitetônico substitutivo",
+      "obs": "O Processo Administrativo informando que a obra será regida pelas pranchas atualizadas. Nota: O Alvará de Construção nº 044/2026 permanece vigente com suas datas e metragens originais inalteradas, devendo o requerente apenas respeitar o novo layout aprovado."
+    }
+  ],
+
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "EDUARDO AUGUSTO SEVERINO",
+      "qualidade": "proprietário conforme Matrícula 31.521"
+    },
+    "responsavel_tecnico": {
+      "nome": "Samuel Dias",
+      "titulo": "Engenheiro Civil",
+      "registro": "MG20264735084"
+    },
+    "assinante_parecer": {
+      "nome": "Diego Tarcísio Nunes Vilela",
+      "titulo": "Engenheiro Civil",
+      "registro": "CREA 235.474/D"
+    }
+  }
+}

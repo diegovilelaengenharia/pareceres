@@ -2,8 +2,8 @@
 
 ## Current Position
 - **Milestone**: v3.0 — Expansão da Inteligência e Geoprocessamento
-- **Next Phase**: nenhuma fase planejada (Phase 8 cancelada a pedido do usuário; Phase 14 concluída)
-- **Status**: milestone_v3_complete
+- **Next Phase**: nenhuma fase planejada
+- **Status**: phase_17_complete
 
 ## Recent Accomplishments
 - [2026-05-06] **Fase 13 — Excelência Operacional e Conformidade Legal**: 3 planos concluídos.

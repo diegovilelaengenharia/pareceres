@@ -186,8 +186,11 @@ O `schema_validator.py` emite aviso de **"Não conformidade com Decreto 4.149/20
 | `alvara_regularizacao` | Parecer + Alvará de Regularização | `parecer_tecnico` |
 | `alvara_construcao_comercial` | Alvará Comercial | `parecer_tecnico` |
 | `alvara_mcmv` | MCMV — Minha Casa Minha Vida | `parecer_tecnico` |
+| `substituicao_projeto` | Substituição de Projeto (sem alteração de área) | `parecer_tecnico` |
+| `parecer_topografia_unificado` | Parecer de Topografia (desmembramento, divisão, unificação, retificação) | `parecer_tecnico` |
+| `parecer_usucapiao` | Certidão de Usucapião (ausência de interesse público municipal) | `parecer_tecnico` |
 | `habitese_comum` | Habite-se e Averbação | `parecer_simples` |
-| `certidoes_separadas_localizacao_confrontacao` | Certidões Separadas | `parecer_administrativo` |
+| `certidoes_separadas_localizacao_confrontacao` | Certidões Separadas (Localização + Confrontação) | `parecer_administrativo` |
 | `comunicado_pendencia` | Comunicado de Pendência Documental | `comunicado_pendencia` |
 | `parecer_tecnico` | Parecer Técnico Genérico | `parecer_tecnico` |
 

@@ -128,6 +128,9 @@ CIDADE = "Oliveira"
 TIPOS_DOCUMENTO = {
     # ── Pareceres Técnicos (completos, com dados do carimbo) ──
     "parecer_tecnico":                    "parecer_tecnico",
+    "parecer_tecnico_unificado":          "parecer_tecnico",
+    "parecer_topografia_unificado":       "parecer_tecnico",
+    "parecer_usucapiao":                  "parecer_tecnico",
     "alvara_aprovacao":                   "parecer_tecnico",
     "alvara_mcmv":                        "parecer_tecnico",
     "alvara_construcao_comercial":        "parecer_tecnico",
@@ -137,6 +140,7 @@ TIPOS_DOCUMENTO = {
     "alvara_galpao_comercial":            "parecer_tecnico",
     "alvara_reforma_demolicao_ampliacao": "parecer_tecnico",
     "alvara_substituicao_projeto":        "parecer_tecnico",
+    "substituicao_projeto":               "parecer_tecnico",
     "alvara_troca_responsavel_tecnico":   "parecer_simples",
     "regularizacao_complexa_multipla":    "parecer_tecnico",
     # ── Pareceres Administrativos (Layout limpo para certidões) ──
