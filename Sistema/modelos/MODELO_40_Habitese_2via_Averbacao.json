@@ -1,0 +1,34 @@
+{
+  "_comentario": "2ª via Habite-se + Certidão de Averbação (proc. com correções anteriores). Caso real: proc. 2999/2026 (Maria Leia de Resende). Habite-se 156/2021, 324,50m².",
+
+  "tipo_relatorio": "habitese_2via",
+  "numero_processo": "2999/2026",
+  "data_processo": "09 de Março de 2026",
+  "assunto": "Segunda Via Habite-se e Certidão de Averbação",
+  "requerente": "MARIA LEIA DE RESENDE",
+
+  "logradouro": "Rua Dr. João Batista, nº 276/278",
+  "bairro": "Centro",
+  "inscricao_municipal": "01.01.141.0175",
+  "matricula_sri": "42.123",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "todos os trâmites anteriores e deliberações do processo 2999/2026, onde foram identificados erros e feitas as devidas correções.",
+    "o parecer fiscal, que certifica que as obras liberadas pelo Habite-se nº 156/2021, com área resultante de 324,50 m², localizada na Rua Dr. João Batista, nº 276/278, Bairro Centro, Oliveira/MG, seguem sem alteração desde a emissão do Habite-se.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Matrícula SRI de Inteiro Teor, nº 42.123, Inscrição Cadastral 01.01.141.0175."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida 2ª Via da Carta de Habite-se nº 156/2021 e Certidão de Averbação referente a 324,50 m².",
+
+  "documentos_emitir": [
+    {
+      "tipo": "2ª Via — Carta de Habite-se nº 156/2021",
+      "obs": "Área de 324,50 m². Rua Dr. João Batista, nº 276/278, Bairro Centro. Matrícula SRI nº 42.123."
+    },
+    {
+      "tipo": "Certidão de Averbação — 324,50 m²",
+      "obs": "Referente ao Habite-se nº 156/2021."
+    }
+  ]
+}

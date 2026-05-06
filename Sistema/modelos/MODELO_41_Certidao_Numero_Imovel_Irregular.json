@@ -1,0 +1,30 @@
+{
+  "_comentario": "2ª via Certidão de Número para imóvel irregular (sem lote/quadra), autorizada por despacho da Procuradoria. Caso real: proc. 96/2026 (Vera Lucia Almeida Ferreira).",
+
+  "tipo_relatorio": "certidao_numero_2via",
+  "numero_processo": "96/2026",
+  "data_processo": "08 de Janeiro de 2026",
+  "assunto": "Segunda Via Certidões de Número",
+  "requerente": "VERA LUCIA ALMEIDA FERREIRA",
+
+  "logradouro": "Rua Xavante, nº 195",
+  "bairro": "São Geraldo",
+  "inscricao_municipal": "01.01.191.0464",
+  "matricula_sri": "20.441",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, onde foi realizado levantamento in loco na Rua Xavante, nº 195, Bairro São Geraldo, Oliveira/MG, com área total do terreno de 220,00 m² e área construída de 65,30 m², construção em andamento.",
+    "trata-se de imóvel irregular, no entanto foi autorizada a emissão de Certidões de Número mediante despacho da Procuradoria Municipal datado de 24 de Janeiro de 2024 (páginas 33 e 34 do processo físico 12.155/2023).",
+    "o requerente apresentou título de propriedade do imóvel sendo um Contrato Particular de Compromisso de Compra e Venda, sob Matrícula nº 20.441 e Inscrição Cadastral 01.01.191.0464."
+  ],
+
+  "conclusao": "Diante disto, poderá ser concedida Segunda Via de Certidão de Número para SAAE e CEMIG, para Rua Xavante, nº 195, Bairro São Geraldo, Oliveira/MG.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "2ª Via — Certidão de Número nº 195 (SAAE e CEMIG)",
+      "obs": "Constar as observações: (1) 'Não Possui Lote e Quadra cadastrados no município de Oliveira/MG'; (2) 'Imóvel Irregular'. Autorizada por despacho da Procuradoria Municipal de 24/01/2024 (proc. físico 12.155/2023, pgs. 33-34)."
+    }
+  ]
+}

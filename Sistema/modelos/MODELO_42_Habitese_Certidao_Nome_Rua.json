@@ -1,0 +1,34 @@
+{
+  "_comentario": "Habite-se + Certidão de Nome de Rua (Rua Três → Rua D. Vicentina Nunes Silveira, Decreto 3.218/2013). Título: Cessão de Direito/Compra e Venda. Caso real: proc. 1606/2026 (Aparecida Filomena dos Santos).",
+
+  "tipo_relatorio": "habitese_comum",
+  "numero_processo": "1606/2026",
+  "data_processo": "10 de Fevereiro de 2026",
+  "assunto": "Carta de Habite-se e Certidão de Nome de Rua",
+  "requerente": "APARECIDA FILOMENA DOS SANTOS",
+
+  "logradouro": "Rua Dona Vicentina Nunes Silveira",
+  "bairro": "Jardins",
+  "inscricao_municipal": "01.01.222.0010",
+  "matricula_sri": "30.472",
+
+  "considerandos": [
+    "a solicitação do requerente.",
+    "o parecer fiscal, que certifica que a obra licenciada pelo Alvará de Construção nº 105/2024, com área liberada de 149,63 m², válido até 03/04/2025, referente ao projeto aprovado no processo 12632/2023, localizada na Rua Dona Vicentina Nunes Silveira, Bairro Jardins, Oliveira/MG, foi concluída e está habitável.",
+    "na Matrícula ainda consta o nome 'Rua Três', e segundo o Decreto nº 3.218/2013 (cópia do decreto constante no processo físico) a mesma passou a denominar-se Rua D. Vicentina Nunes Silveira.",
+    "o requerente apresentou título de propriedade do terreno sendo uma Cessão de Direito — Contrato de Compra e Venda em seu nome, sob Matrícula nº 30.472 e Inscrição Cadastral 01.01.222.0010."
+  ],
+
+  "conclusao": "Diante disso, poderá ser emitida Carta de Habite-se referente à área total do alvará contendo 149,63 m² e Certidão de Nome de Rua.",
+
+  "documentos_emitir": [
+    {
+      "tipo": "Carta de Habite-se — 149,63 m²",
+      "obs": "Referente ao Alvará de Construção nº 105/2024 (proc. 12632/2023). Matrícula nº 30.472."
+    },
+    {
+      "tipo": "Certidão de Nome de Rua",
+      "obs": "Conforme Decreto nº 3.218/2013: a antiga 'Rua Três' denomina-se hoje Rua Dona Vicentina Nunes Silveira, Bairro Jardins."
+    }
+  ]
+}
