@@ -1,0 +1,76 @@
+{
+  "tipo_relatorio": "habitese_comum",
+  "numero_processo": "5678/2025",
+  "data_processo": "06/05/2026",
+  "assunto": "Habite-se e Averbação",
+  "requerente": "José Roberto Alves Pereira",
+  "logradouro": "Av. Getúlio Vargas",
+  "bairro": "Centro",
+  "numero_porta": "820",
+  "inscricao_municipal": "02.45.678.9012.00",
+  "matricula_sri": "34.567",
+  "area_total_construida": "248,30 m²",
+  "numero_alvara": "Alvará de Construção nº 089/2022",
+  "data_complemento": "28/04/2026",
+  "agentes_fiscais": ["Ana Paula Martins (Mat. 1067)", "Fernando Costa (Mat. 1082)"],
+  "data_parecer_fiscal": "28/04/2026",
+  "observacao_fiscal": "escada de acesso frontal dentro dos recuos laterais conforme projeto aprovado",
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face do Processo Administrativo nº 5678/2025, onde o requerente JOSÉ ROBERTO ALVES PEREIRA solicita a emissão de Habite-se referente à edificação comercial/residencial com área total de 248,30 m², na Av. Getúlio Vargas, nº 820, Bairro Centro.",
+  "considerandos": [
+    "Conforme complemento anexado aos autos, datado de 28/04/2026, e de acordo com o último parecer fiscal emitido pelos Agentes Fiscais Ana Paula Martins (Mat. 1067) e Fernando Costa (Mat. 1082), datado de 28/04/2026, a construção confere com o projeto aprovado, cuja área construída é 248,30 m², e encontra-se concluída. Observação do fiscal: escada de acesso frontal dentro dos recuos laterais conforme projeto aprovado.",
+    "O imóvel possui Alvará de Construção nº 089/2022 em nome do requerente, JOSÉ ROBERTO ALVES PEREIRA, referente ao projeto aprovado neste processo, na Av. Getúlio Vargas, nº 820.",
+    "O requerente apresentou como título de propriedade a certidão de matrícula do Serviço Registral de Imóveis (SRI), em seu nome, como proprietário, registrada sob Matrícula 34.567, com Inscrição Cadastral 02.45.678.9012.00."
+  ],
+  "documentos_emitir": [
+    {
+      "tipo": "Carta de Habite-se — área total de 248,30 m²",
+      "obs": "Averbação Cartorária: Este Habite-se não exime a aferição da obra no sistema SERO da RFB para emissão da CND, documento obrigatório para averbação no Cartório de Registro de Imóveis (Lei 14.382/2022)."
+    },
+    {
+      "tipo": "Certidão de Averbação",
+      "obs": "Valor total do imóvel conforme Laudo de Avaliação da Comissão de Avaliação da Prefeitura Municipal de Oliveira."
+    }
+  ],
+  "historico_cronologico": [
+    {
+      "data": "10/08/2022",
+      "evento": "Emissão do Alvará de Construção nº 089/2022 para edificação de uso misto com 248,30 m²",
+      "referencia": "fls. 30-31"
+    },
+    {
+      "data": "05/01/2026",
+      "evento": "Protocolo de requerimento de Habite-se com documentação completa",
+      "referencia": "fls. 45-52"
+    },
+    {
+      "data": "20/03/2026",
+      "evento": "Primeira vistoria de campo — identificada pendência de acabamento em área de escada",
+      "referencia": "fls. 58-60"
+    },
+    {
+      "data": "28/04/2026",
+      "evento": "Segunda vistoria de campo — obra concluída e conforme o projeto aprovado, emissão de Parecer Fiscal favorável",
+      "referencia": "fls. 65-67"
+    },
+    {
+      "data": "06/05/2026",
+      "evento": "Análise técnica concluída — Habite-se e Certidão de Averbação autorizados",
+      "referencia": "fls. 70-71"
+    }
+  ],
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "José Roberto Alves Pereira",
+      "cpf": "987.654.321-00",
+      "papel": "Requerente / Proprietário"
+    },
+    "agentes_fiscais": ["Ana Paula Martins (Mat. 1067)", "Fernando Costa (Mat. 1082)"],
+    "assinante_parecer": {
+      "nome": "Diego Nunes Vilela",
+      "cargo": "Engenheiro Civil / SMOSU",
+      "registro": "CREA-MG 123456"
+    }
+  },
+  "assinante_parecer": "Diego Nunes Vilela",
+  "cargo_assinante": "Engenheiro Civil — CREA-MG 123456"
+}

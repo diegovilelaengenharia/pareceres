@@ -1,0 +1,101 @@
+{
+  "tipo_relatorio": "alvara_aprovacao",
+  "numero_processo": "1234/2026",
+  "data_processo": "06/05/2026",
+  "assunto": "Aprovação de Projeto e Emissão de Alvará de Construção",
+  "requerente": "Maria Aparecida de Souza",
+  "logradouro": "Rua das Acácias",
+  "bairro": "Jardim Oliveira",
+  "lote": "15",
+  "quadra": "08",
+  "inscricao_municipal": "01.23.456.7890.00",
+  "matricula_sri": "12.345",
+  "zona_uso": "ZR1 — Zona Residencial 1",
+  "area_terreno": "360,00 m²",
+  "area_total_construida": "120,50 m²",
+  "taxa_ocupacao": "33,47%",
+  "taxa_permeabilidade": "25,14%",
+  "coef_aproveitamento": "0,33",
+  "profissional_nome": "Carlos Eduardo Ferreira",
+  "art_rrt": "RRT nº 2026-MG-12345",
+  "titulo_profissional": "Arquiteto e Urbanista",
+  "registro_crea_cau_cft": "CAU A012345-6/MG",
+  "proprietario": "Maria Aparecida de Souza",
+  "numero_da_porta": "145",
+  "nomes_e_matriculas_dos_fiscais": "Agente Fiscal João Silva (Mat. 1023) e Agente Fiscal Paulo Ramos (Mat. 1045)",
+  "agentes_fiscais": ["João Silva (Mat. 1023)", "Paulo Ramos (Mat. 1045)"],
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face do Processo Administrativo nº 1234/2026, onde a requerente MARIA APARECIDA DE SOUZA solicita a aprovação de projeto de edificação residencial com área total construída de 120,50 m², no Lote 15, Quadra 08, em terreno localizado na Zona ZR1, com área total de 360,00 m², taxa de ocupação de 33,47%, taxa de permeabilidade de 25,14% e coeficiente de aproveitamento de 0,33, situado na Rua das Acácias, Bairro Jardim Oliveira.",
+  "considerandos": [
+    "De acordo com o PARECER FISCAL emitido pelos Agentes Fiscais João Silva (Mat. 1023) e Paulo Ramos (Mat. 1045), a construção ainda não foi iniciada, sendo tirado o número de porta 145 para a referida edificação.",
+    "A requerente apresentou título de propriedade através de MATRÍCULA DE INTEIRO TEOR com registro nº 12.345 do SRI, e INSCRIÇÃO IMOBILIÁRIA 01.23.456.7890.00.",
+    "Para o projeto apresentado, foi emitida a RRT nº 2026-MG-12345 para as atividades de Projeto Arquitetônico pela Arquiteta e Urbanista CARLOS EDUARDO FERREIRA, Registro Nacional nº CAU A012345-6/MG.",
+    "A edificação projetada atende aos parâmetros urbanísticos da ZR1, com Taxa de Ocupação de 33,47% (máx. 60%), Taxa de Permeabilidade de 25,14% (mín. 20%) e Coeficiente de Aproveitamento de 0,33 (máx. 1,0), conforme Decreto nº 4.149/2019 e Lei nº 267/2019.",
+    "A memória de cálculo confirma: Área projetada de cobertura = 120,50 m² (TO = 120,50 / 360,00 = 33,47%); Área permeável prevista = 90,50 m² (TP = 90,50 / 360,00 = 25,14%); CA = 120,50 / 360,00 = 0,33."
+  ],
+  "memoria_calculo": {
+    "area_terreno_m2": 360.00,
+    "area_construida_m2": 120.50,
+    "area_permeavel_m2": 90.50,
+    "taxa_ocupacao_pct": 33.47,
+    "taxa_permeabilidade_pct": 25.14,
+    "coeficiente_aproveitamento": 0.33,
+    "to_maximo_permitido_pct": 60.0,
+    "tp_minima_exigida_pct": 20.0,
+    "ca_maximo_permitido": 1.0,
+    "observacao": "Todos os índices dentro dos limites da ZR1 (Dec. 4.149/2019, Art. 11)"
+  },
+  "documentos_emitir": [
+    {
+      "tipo": "Alvará de Construção de Residência Unifamiliar de 120,50 m² válido por 01 ano",
+      "obs": "Válido até 06/05/2027. A edificação possui área total de 120,50 m², devendo atender à taxa de permeabilidade mínima de 20% do terreno que corresponde a 72,00 m² (o projeto prevê 90,50 m²), respeitando o projeto aprovado."
+    },
+    {
+      "tipo": "Certidão de Número: 145 para o SAAE e CEMIG"
+    },
+    {
+      "tipo": "Certidão de Localização"
+    }
+  ],
+  "historico_cronologico": [
+    {
+      "data": "15/03/2026",
+      "evento": "Abertura do processo pelo requerente com protocolo de documentação inicial",
+      "referencia": "fls. 01-05"
+    },
+    {
+      "data": "02/04/2026",
+      "evento": "Vistoria de terreno e emissão de Parecer Fiscal pelos agentes João Silva e Paulo Ramos — constatada ausência de início de obras",
+      "referencia": "fls. 12-14"
+    },
+    {
+      "data": "20/04/2026",
+      "evento": "Protocolo de projeto arquitetônico completo com RRT do responsável técnico",
+      "referencia": "fls. 20-38"
+    },
+    {
+      "data": "06/05/2026",
+      "evento": "Análise técnica concluída — projeto aprovado, emissão de Alvará e Certidões autorizada",
+      "referencia": "fls. 40-41"
+    }
+  ],
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "Maria Aparecida de Souza",
+      "cpf": "123.456.789-00",
+      "papel": "Requerente / Proprietária"
+    },
+    "responsavel_tecnico": {
+      "nome": "Carlos Eduardo Ferreira",
+      "registro": "CAU A012345-6/MG",
+      "papel": "Responsável Técnico (Arquitetura)"
+    },
+    "agentes_fiscais": ["João Silva (Mat. 1023)", "Paulo Ramos (Mat. 1045)"],
+    "assinante_parecer": {
+      "nome": "Diego Nunes Vilela",
+      "cargo": "Engenheiro Civil / SMOSU",
+      "registro": "CREA-MG 123456"
+    }
+  },
+  "assinante_parecer": "Diego Nunes Vilela",
+  "cargo_assinante": "Engenheiro Civil — CREA-MG 123456"
+}

@@ -1,0 +1,42 @@
+{
+  "tipo_relatorio": "comunicado_pendencia",
+  "numero_processo": "9012/2026",
+  "data_processo": "06/05/2026",
+  "assunto": "Pendência Documental — Alvará de Construção",
+  "requerente": "Construtora Horizonte Ltda.",
+  "logradouro": "Rua XV de Novembro",
+  "bairro": "Santa Luzia",
+  "paragrafo_abertura": "A Secretaria Municipal de Obras e Serviços Urbanos, através do Departamento Técnico, em face do Processo Administrativo nº 9012/2026, onde a requerente CONSTRUTORA HORIZONTE LTDA. solicita aprovação de projeto comercial na Rua XV de Novembro, Bairro Santa Luzia, verificou as seguintes pendências documentais que impedem a análise técnica conclusiva.",
+  "considerandos": [
+    "ART/RRT de Projeto Arquitetônico ausente. Obrigatória para edificações comerciais conforme Art. 5º, IV do Decreto nº 4.149/2019. Prazo para regularização: 15 dias corridos a contar desta notificação.",
+    "Certidão de Inteiro Teor da Matrícula do Imóvel com validade vencida (emitida há mais de 90 dias). Necessário retirar nova certidão atualizada. Prazo: 15 dias corridos.",
+    "Memorial Descritivo assinado pelo Responsável Técnico ausente. Exigido pelo Art. 6º, II do Decreto nº 4.149/2019. Prazo: 15 dias corridos."
+  ],
+  "conclusao": "O requerente deverá apresentar os documentos acima no balcão da SMOSU ou via protocolo digital, em até 15 dias corridos desta notificação. O não atendimento no prazo ensejará o arquivamento do processo (Art. 8º, §2º, Dec. 4.149/2019), podendo ser reaberto mediante novo protocolo.",
+  "historico_cronologico": [
+    {
+      "data": "10/04/2026",
+      "evento": "Protocolo inicial do processo com documentação incompleta",
+      "referencia": "fls. 01-08"
+    },
+    {
+      "data": "06/05/2026",
+      "evento": "Análise técnica — identificadas 3 pendências documentais críticas, emissão de comunicado de pendência",
+      "referencia": "fls. 10-11"
+    }
+  ],
+  "partes_envolvidas": {
+    "requerente": {
+      "nome": "Construtora Horizonte Ltda.",
+      "cnpj": "12.345.678/0001-90",
+      "papel": "Requerente"
+    },
+    "assinante_parecer": {
+      "nome": "Diego Nunes Vilela",
+      "cargo": "Engenheiro Civil / SMOSU",
+      "registro": "CREA-MG 123456"
+    }
+  },
+  "assinante_parecer": "Diego Nunes Vilela",
+  "cargo_assinante": "Engenheiro Civil — CREA-MG 123456"
+}
