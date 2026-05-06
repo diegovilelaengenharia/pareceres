@@ -96,11 +96,13 @@ def _relatorio_pos(dados: dict, caminho_doc: str, resumo_cob: dict):
 
 def main():
     """Ponto de entrada do compilador. Processa todos os arquivos JSON na pasta de entrada."""
-    # Lista arquivos JSON na pasta de entrada
-    arquivos = glob.glob(os.path.join(PASTA_ENTRADA, "*.json"))
+    # Lista arquivos JSON e PDF na pasta de entrada
+    arquivos_json = glob.glob(os.path.join(PASTA_ENTRADA, "*.json"))
+    arquivos_pdf = glob.glob(os.path.join(PASTA_ENTRADA, "*.pdf"))
+    arquivos = arquivos_json + arquivos_pdf
     
     if not arquivos:
-        print(f"\n  {_WARN}Nenhum arquivo JSON encontrado em: {PASTA_ENTRADA}")
+        print(f"\n  {_WARN}Nenhum arquivo JSON ou PDF encontrado em: {PASTA_ENTRADA}")
         return
 
     print(f"\n[>] MODO EM LOTE: Escaneando pasta '{PASTA_ENTRADA}'")
@@ -115,13 +117,53 @@ def main():
 
         print(f"\n[>] Processando arquivo: {os.path.basename(arquivo)}")
         
-        try:
-            with open(arquivo, "r", encoding="utf-8") as f:
-                dados = json.load(f)
-        except Exception as e:
-            print(f"  {_ERR}Erro ao ler JSON: {e}")
-            erros += 1
-            continue
+        if arquivo.lower().endswith(".pdf"):
+            print(f"\n[>] Analisando PDF: {os.path.basename(arquivo)}")
+            from analyzers.pdf_classifier import PDFClassifier
+            from analyzers.decision_tree import DecisionTree
+            
+            classificador = PDFClassifier()
+            res_class = classificador.classify_pdf(arquivo)
+            tipo_detectado = res_class.get("tipo_processo", "desconhecido")
+            print(f"  {_INFO}Classificador (IA): {tipo_detectado}")
+            
+            # Estrutura inicial (Extrator de campos completo será no Sprint 3)
+            dados = {
+                "tipo_relatorio": tipo_detectado,
+                "numero_processo": "Automático (PDF)",
+                "requerente_nome": "Extração pendente (P1-B)",
+                "_arquivo_origem": arquivo
+            }
+            
+            arvore = DecisionTree()
+            res_arvore = arvore.evaluate(dados, tipo_detectado)
+            dados["recomendacao_ia"] = res_arvore
+            print(f"  {_INFO}Decisão Automática: {res_arvore['recomendacao']} - {res_arvore['motivo']}")
+            
+        else:
+            try:
+                with open(arquivo, "r", encoding="utf-8") as f:
+                    dados = json.load(f)
+            except Exception as e:
+                print(f"  {_ERR}Erro ao ler JSON: {e}")
+                erros += 1
+                continue
+                
+            # Aplica Árvore de Decisão também nos processos via JSON
+            from analyzers.decision_tree import DecisionTree
+            arvore = DecisionTree()
+            tipo = dados.get("tipo_relatorio", "")
+            res_arvore = arvore.evaluate(dados, tipo)
+            dados["recomendacao_ia"] = res_arvore
+            print(f"  {_INFO}Decisão Automática: {res_arvore['recomendacao']}")
+
+        # Injeta a recomendação na conclusão do documento
+        if "recomendacao_ia" in dados:
+            rec_text = f"\n\n[ANÁLISE AUTOMÁTICA]: {dados['recomendacao_ia']['recomendacao']} - {dados['recomendacao_ia']['motivo']}"
+            if "conclusao" in dados and dados["conclusao"]:
+                dados["conclusao"] += rec_text
+            else:
+                dados["conclusao"] = rec_text
 
         # ── Suporte a Bundling (Emissão Múltipla) ──────────────────────────────
         # Se for o tipo mestre e não houver lista explícita, injeta o padrão
