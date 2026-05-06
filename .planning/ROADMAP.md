@@ -154,34 +154,39 @@ This document outlines the phased execution plan.
 
 ---
 
-## Milestone v4.0 — Robustez e Produtividade *(planejado)*
+## Milestone v4.0 — O Analista Digital *(planejado)*
 
-*Objetivo: Elevar a confiabilidade via testes automatizados, melhorar a produtividade com ferramentas de consulta e monitoramento, e resolver limitações técnicas pendentes.*
+*Objetivo: Transformar o sistema de um gerador de documentos em um analista completo (Pilar 1 a Pilar 5).*
 
-### Phase 18: Testes Unitários Automatizados
-- **Goal**: Criar suite pytest para funções isoladas — calculadora de índices, aliases, enricher, schema_validator — com cobertura mínima de 80%.
-- **Requirements**: Confiabilidade, regressão zero
+### Phase 18: Ingestão Inteligente e Decisão (Sprint 1)
+- **Goal**: Implementar Classificador de Documentos (P1-A) para triagem de PDFs e Árvore de Decisão automática (P3-A) para os 5 tipos de processos mais comuns.
+- **Requirements**: P1-A, P3-A
 - **Status**: [planned]
 
-### Phase 19: Validação Automática de Templates
-- **Goal**: Expandir o `template_checker.py` para varredura completa dos 42 templates JSON vs componentes DOCX, gerando relatório de cobertura de campos.
-- **Requirements**: Qualidade, sincronização
+### Phase 19: Contexto Cadastral e Pendências (Sprint 2)
+- **Goal**: Criar banco de dados local SQLite de Lotes/Matrículas (P2-A) e o Detector Automático de Pendências (P3-B) baseado no checklist.
+- **Requirements**: P2-A, P3-B
 - **Status**: [planned]
 
-### Phase 20: Dashboard de Métricas de Produção
-- **Goal**: Criar painel de métricas que mostra quantidade de documentos gerados, tipos mais frequentes, taxa de erros, e tempo médio de geração por tipo.
-- **Requirements**: Observabilidade, produtividade
+### Phase 20: Gestão Visual e Extração de Dados (Sprint 3)
+- **Goal**: Implementar Fila de Processos no Painel GEM (P4-A) e extratores de dados especializados por tipo documental (P1-B).
+- **Requirements**: P4-A, P1-B
 - **Status**: [planned]
 
-### Phase 21: Histórico e Consulta de Processos
-- **Goal**: Indexar todos os processos já analisados (JSONs de Saida/_Historico/) para consulta rápida por número, requerente ou tipo. Integrar como ferramenta MCP.
-- **Requirements**: Produtividade, rastreabilidade
+### Phase 21: Zoneamento e Multas (Sprint 4)
+- **Goal**: Integrar parâmetros urbanísticos por zona no mapa geo_oliveira.json (P2-C) e implementar a Calculadora de Multas completa do Dec. 4.149 (P3-C).
+- **Requirements**: P2-C, P3-C
 - **Status**: [planned]
 
-### Phase 22: Wizard de Análise Interativa (Painel GEM v2)
-- **Goal**: Expandir o Painel GEM com campo de observações do engenheiro, checklists dinâmicos e tela de revisão interativa do texto da IA antes da geração.
-- **Requirements**: UX, qualidade da análise
+### Phase 22: Visão Computacional e Jurisprudência (Sprint 5)
+- **Goal**: Utilizar IA multimodal (Gemini Vision) para leitura de Plantas Arquitetônicas (P1-C) e criar o Banco de Precedentes Ativo (P5-B).
+- **Requirements**: P1-C, P5-B
+- **Status**: [planned]
+
+### Phase 23: Produtividade e Aprendizado (Sprint 6+)
+- **Goal**: Finalizar o Montador de Dossiês (P1-D), o Registro de Correções DOCX (P5-A) e o Modo Fila Rápida no Painel GEM (P4-D).
+- **Requirements**: P1-D, P5-A, P4-D
 - **Status**: [planned]
 
 ---
-*Roadmap updated: 2026-05-06 (auditoria completa + planejamento v4.0)*
+*Roadmap updated: 2026-05-06 (início do Plano Estratégico v4.0)*
